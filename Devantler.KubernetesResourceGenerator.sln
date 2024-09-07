@@ -7,14 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesResourc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesResourceGenerator.Configs.K3d.Tests", "Devantler.KubernetesResourceGenerator.Configs.K3d.Tests\Devantler.KubernetesResourceGenerator.Configs.K3d.Tests.csproj", "{2E407F64-15F9-4E2E-8893-FFC46AEA09F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesResourceGenerator.CustomResources.Flux", "Devantler.KubernetesResourceGenerator.CustomResources.Flux\Devantler.KubernetesResourceGenerator.CustomResources.Flux.csproj", "{1353E5F1-C3A5-469A-8214-8B22403B8FC1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesResourceGenerator.CustomResources.Flux.Tests", "Devantler.KubernetesResourceGenerator.CustomResources.Flux.Tests\Devantler.KubernetesResourceGenerator.CustomResources.Flux.Tests.csproj", "{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesResourceGenerator.Native", "Devantler.KubernetesResourceGenerator.Native\Devantler.KubernetesResourceGenerator.Native.csproj", "{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesResourceGenerator.Native.Tests", "Devantler.KubernetesResourceGenerator.Native.Tests\Devantler.KubernetesResourceGenerator.Native.Tests.csproj", "{03B83E8E-900D-435E-A198-D908ADB97ADF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesResourceGenerator.Core", "Devantler.KubernetesResourceGenerator.Core\Devantler.KubernetesResourceGenerator.Core.csproj", "{C5301CA2-B479-49F5-9958-FBDFCEC700AA}"
 EndProject
 Global
@@ -31,22 +23,6 @@ Global
 		{2E407F64-15F9-4E2E-8893-FFC46AEA09F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E407F64-15F9-4E2E-8893-FFC46AEA09F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E407F64-15F9-4E2E-8893-FFC46AEA09F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1353E5F1-C3A5-469A-8214-8B22403B8FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1353E5F1-C3A5-469A-8214-8B22403B8FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1353E5F1-C3A5-469A-8214-8B22403B8FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1353E5F1-C3A5-469A-8214-8B22403B8FC1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03B83E8E-900D-435E-A198-D908ADB97ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03B83E8E-900D-435E-A198-D908ADB97ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03B83E8E-900D-435E-A198-D908ADB97ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03B83E8E-900D-435E-A198-D908ADB97ADF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C5301CA2-B479-49F5-9958-FBDFCEC700AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5301CA2-B479-49F5-9958-FBDFCEC700AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5301CA2-B479-49F5-9958-FBDFCEC700AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
