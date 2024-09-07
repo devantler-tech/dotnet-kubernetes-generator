@@ -22,7 +22,7 @@ jobs:
     if: github.event.pull_request.draft == false
     steps:
       - name: 📑 Support longpaths for checkout
-        run: git config --system core.longpaths true
+        run: sudo git config --system core.longpaths true
       - name: 📑 Checkout
         uses: actions/checkout@v4
       - name: ⚙️ Setup .NET
