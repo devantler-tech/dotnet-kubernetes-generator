@@ -40,12 +40,70 @@ A simple code generator that can generate Kubernetes resources.
 To get started, you can install the packages from NuGet.
 
 ```bash
+# For the Native Kubernetes Generator
+dotnet add package Devantler.KubernetesGenerator.Native
+
+# For the Flux Custom Resource Generator
+dotnet add package Devantler.KubernetesGenerator.CustomResources.Flux
+
 # For the K3d Config Generator
 dotnet add package Devantler.KubernetesGenerator.Configs.K3d
 ```
 
 ## Usage
 
-```bash
+To use the generators, all you need to do is to create and use a new instance of the generator for the specific resource you want to generate. For example, to generate a new ConfigMap resource, you can use the `ConfigMapKubernetesGenerator`.
 
+```csharp
+using Devantler.KubernetesGenerator.Native;
+
+var generator = new ConfigMapKubernetesGenerator();
+
+var configMap = new ConfigMap
+{
+    Metadata = new ObjectMeta
+    {
+        Name = "my-config-map",
+        Namespace = "default"
+    },
+    Data = new Dictionary<string, string>
+    {
+        { "key1", "value1" },
+        { "key2", "value2" }
+    }
+};
+
+await generator.GenerateAsync(configMap, "path/to/output/config-map.yaml");
 ```
+
+This will generate a new ConfigMap resource at the specified path.
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config-map
+  namespace: default
+data:
+  key1: value1
+  key2: value2
+```
+
+### Native Kubernetes Generators
+
+- ConfigMapKubernetesGenerator (To be implemented)
+- SecretKubernetesGenerator (To be implemented)
+- DeploymentKubernetesGenerator (To be implemented)
+- ServiceKubernetesGenerator (To be implemented)
+- And more...
+
+### Custom Resource Generators
+
+- FluxKustomizationKubernetesGenerator (To be implemented)
+- FluxHelmReleaseKubernetesGenerator (To be implemented)
+- FluxHelmRepositoryKubernetesGenerator (To be implemented)
+- And more...
+
+### Config Generators
+
+- K3dConfigKubernetesGenerator
