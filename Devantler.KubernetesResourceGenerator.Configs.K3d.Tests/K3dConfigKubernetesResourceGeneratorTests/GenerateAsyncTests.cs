@@ -9,7 +9,7 @@ public class GenerateAsyncTests
 {
   K3dConfigKubernetesResourceGenerator K3dConfigKubernetesResourceGenerator { get; } = new();
   /// <summary>
-  /// Tests that <see cref="K3dConfigKubernetesResourceGenerator.GenerateAsync(K3dConfig, string, CancellationToken)"/> generates a valid K3d cluster configuration.
+  /// Tests that <see cref="K3dConfigKubernetesResourceGenerator.GenerateAsync(K3dConfig, string, CancellationToken)"/> generates a valid K3d cluster configuration with all properties set.
   /// </summary>
   [Fact]
   public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidFullK3dConfigFile()
@@ -205,6 +205,10 @@ public class GenerateAsyncTests
     File.Delete(filePath);
   }
 
+  /// <summary>
+  /// Tests that <see cref="K3dConfigKubernetesResourceGenerator.GenerateAsync(K3dConfig, string, CancellationToken)"/> generates a valid K3d cluster configuration with minimal properties set.
+  /// </summary>
+  /// <returns></returns>
   [Fact]
   public async Task GenerateAsync_WithMinimalPropertiesSet_ShouldGenerateAValidMinimalK3dConfigFile()
   {
