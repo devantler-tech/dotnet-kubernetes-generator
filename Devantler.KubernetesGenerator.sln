@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.Configs.K3d", "Devantler.KubernetesGenerator.Configs.K3d\Devantler.KubernetesGenerator.Configs.K3d.csproj", "{5FFAA1C6-FA4D-448B-904E-4CC015742CA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.Configs.K3d.Tests", "Devantler.KubernetesGenerator.Configs.K3d.Tests\Devantler.KubernetesGenerator.Configs.K3d.Tests.csproj", "{2E407F64-15F9-4E2E-8893-FFC46AEA09F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.CustomResources.Flux", "Devantler.KubernetesGenerator.CustomResources.Flux\Devantler.KubernetesGenerator.CustomResources.Flux.csproj", "{1353E5F1-C3A5-469A-8214-8B22403B8FC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.CustomResources.Flux.Tests", "Devantler.KubernetesGenerator.CustomResources.Flux.Tests\Devantler.KubernetesGenerator.CustomResources.Flux.Tests.csproj", "{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.Native", "Devantler.KubernetesGenerator.Native\Devantler.KubernetesGenerator.Native.csproj", "{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.Native.Tests", "Devantler.KubernetesGenerator.Native.Tests\Devantler.KubernetesGenerator.Native.Tests.csproj", "{03B83E8E-900D-435E-A198-D908ADB97ADF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.Core", "Devantler.KubernetesGenerator.Core\Devantler.KubernetesGenerator.Core.csproj", "{C5301CA2-B479-49F5-9958-FBDFCEC700AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FFAA1C6-FA4D-448B-904E-4CC015742CA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FFAA1C6-FA4D-448B-904E-4CC015742CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FFAA1C6-FA4D-448B-904E-4CC015742CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FFAA1C6-FA4D-448B-904E-4CC015742CA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E407F64-15F9-4E2E-8893-FFC46AEA09F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E407F64-15F9-4E2E-8893-FFC46AEA09F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E407F64-15F9-4E2E-8893-FFC46AEA09F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E407F64-15F9-4E2E-8893-FFC46AEA09F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1353E5F1-C3A5-469A-8214-8B22403B8FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1353E5F1-C3A5-469A-8214-8B22403B8FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1353E5F1-C3A5-469A-8214-8B22403B8FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1353E5F1-C3A5-469A-8214-8B22403B8FC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DD010D-DBBB-484C-89CB-4D8B2F66C40E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC033A1-29A5-499A-AFF3-0C9899B16DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03B83E8E-900D-435E-A198-D908ADB97ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B83E8E-900D-435E-A198-D908ADB97ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B83E8E-900D-435E-A198-D908ADB97ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B83E8E-900D-435E-A198-D908ADB97ADF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5301CA2-B479-49F5-9958-FBDFCEC700AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5301CA2-B479-49F5-9958-FBDFCEC700AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5301CA2-B479-49F5-9958-FBDFCEC700AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5301CA2-B479-49F5-9958-FBDFCEC700AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
