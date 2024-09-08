@@ -1,4 +1,4 @@
-namespace Devantler.KubernetesGenerator.Kustomize.Models;
+namespace Devantler.KubernetesGenerator.Kustomize.Models.Generators;
 
 /// <summary>
 /// A kustomize feature to generate Secret resources from files or literals.

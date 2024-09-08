@@ -1,3 +1,6 @@
+using Devantler.KubernetesGenerator.Kustomize.Models.Generators;
+using Devantler.KubernetesGenerator.Kustomize.Models.Patches;
+
 namespace Devantler.KubernetesGenerator.Kustomize.Models;
 
 /// <summary>
@@ -30,12 +33,7 @@ public class KustomizeComponent
   public IEnumerable<KustomizeConfigMapGenerator>? ConfigMapGenerator { get; set; }
 
   /// <summary>
-  /// A kustomize feature to apply customizations to existing resources. (strategic-merge-patch)
+  /// A kustomize feature to apply customizations to existing resources.
   /// </summary>
   public IEnumerable<KustomizePatch>? Patches { get; set; }
-
-  /// <summary>
-  /// A kustomize feature to apply customizations to existing resources. (json-6902)
-  /// </summary>
-  public IEnumerable<KustomizePatchJson6902>? PatchesJson6902 { get; set; }
 }
