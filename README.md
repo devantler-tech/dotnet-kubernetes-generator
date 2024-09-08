@@ -10,24 +10,29 @@ A simple code generator that can generate Kubernetes resources.
   <summary>Show/hide folder structure</summary>
 
 <!-- readme-tree start -->
-
 ```
 .
 ├── .github
 │   └── workflows
-├── Devantler.KubernetesGenerator.Configs.K3d
-│   └── Models
-├── Devantler.KubernetesGenerator.Configs.K3d.Tests
-│   └── K3dConfigResourceGeneratorTests
 ├── Devantler.KubernetesGenerator.Core
-├── Devantler.KubernetesGenerator.CustomResources.Flux
-├── Devantler.KubernetesGenerator.CustomResources.Flux.Tests
+├── Devantler.KubernetesGenerator.Flux
+├── Devantler.KubernetesGenerator.Flux.Tests
+├── Devantler.KubernetesGenerator.K3d
+│   └── Models
+├── Devantler.KubernetesGenerator.K3d.Tests
+│   └── K3dConfigResourceGeneratorTests
+├── Devantler.KubernetesGenerator.Kustomize
+│   └── Models
+│       ├── Generators
+│       └── Patches
+├── Devantler.KubernetesGenerator.Kustomize.Tests
+│   └── KustomizeComponentKubernetesGeneratorTests
 ├── Devantler.KubernetesGenerator.Native
+│   └── Models
 └── Devantler.KubernetesGenerator.Native.Tests
 
-11 directories
+18 directories
 ```
-
 <!-- readme-tree end -->
 
 </details>
