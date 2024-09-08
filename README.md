@@ -60,7 +60,7 @@ var generator = new ConfigMapKubernetesGenerator();
 
 var configMap = new ConfigMap
 {
-    Metadata = new ObjectMeta
+    Metadata = new Metadata
     {
         Name = "my-config-map",
         Namespace = "default"
