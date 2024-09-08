@@ -10,6 +10,7 @@ A simple code generator that can generate Kubernetes resources.
   <summary>Show/hide folder structure</summary>
 
 <!-- readme-tree start -->
+
 ```
 .
 ├── .github
@@ -26,6 +27,7 @@ A simple code generator that can generate Kubernetes resources.
 
 11 directories
 ```
+
 <!-- readme-tree end -->
 
 </details>
@@ -96,13 +98,17 @@ data:
 - ServiceKubernetesGenerator (To be implemented)
 - And more...
 
-### Custom Resource Generators
+### Flux Kubernetes Generators
 
 - FluxKustomizationKubernetesGenerator (To be implemented)
 - FluxHelmReleaseKubernetesGenerator (To be implemented)
 - FluxHelmRepositoryKubernetesGenerator (To be implemented)
 - And more...
 
-### Config Generators
+### K3d Kubernetes Generators
 
 - K3dConfigKubernetesGenerator
+
+### Kustomize Kubernetes Generators
+
+- KustomizeComponentKubernetesGenerator
