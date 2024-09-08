@@ -45,8 +45,17 @@ jobs:
           echo "COVERAGE_FILES=$coverage_files" >> "$GITHUB_OUTPUT"
       - name: 📄 Upload Code Coverage to CodeCov
         uses: codecov/codecov-action@v4
+        if: matrix.os != 'windows-latest'
         with:
           files: ${{ steps.get_coverage_files.outputs.COVERAGE_FILES }}
+          fail_ci_if_error: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: 📄 Upload Code Coverage to CodeCov on Windows
+        uses: codecov/codecov-action@v4
+        if: matrix.os == 'windows-latest'
+        with:
+          files: ${{ steps.get_coverage_files_windows.outputs.COVERAGE_FILES }}
           fail_ci_if_error: true
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
