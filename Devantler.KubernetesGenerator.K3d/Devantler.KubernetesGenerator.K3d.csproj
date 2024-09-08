@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="YAMLDotNet" Version="16.1.0" />
+    <ProjectReference Include="../Devantler.KubernetesGenerator.Core/Devantler.KubernetesGenerator.Core.csproj" />
   </ItemGroup>
 
 </Project>
