@@ -195,16 +195,19 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string filePath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
-    File.Delete(filePath);
-    await K3dConfigKubernetesGenerator.GenerateAsync(config, filePath);
-    string k3dConfigFromFile = await File.ReadAllTextAsync(filePath);
+    string outputPath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
+    if (File.Exists(outputPath))
+    {
+      File.Delete(outputPath);
+    }
+    await K3dConfigKubernetesGenerator.GenerateAsync(config, outputPath);
+    string k3dConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
     _ = await Verify(k3dConfigFromFile);
 
     // Cleanup
-    File.Delete(filePath);
+    File.Delete(outputPath);
   }
 
   /// <summary>
@@ -224,15 +227,18 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string filePath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
-    File.Delete(filePath);
-    await K3dConfigKubernetesGenerator.GenerateAsync(config, filePath, true);
-    string k3dConfigFromFile = await File.ReadAllTextAsync(filePath);
+    string outputPath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
+    if (File.Exists(outputPath))
+    {
+      File.Delete(outputPath);
+    }
+    await K3dConfigKubernetesGenerator.GenerateAsync(config, outputPath, true);
+    string k3dConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
     _ = await Verify(k3dConfigFromFile);
 
     // Cleanup
-    File.Delete(filePath);
+    File.Delete(outputPath);
   }
 }

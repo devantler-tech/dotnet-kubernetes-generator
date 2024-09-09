@@ -84,7 +84,10 @@ public class GenerateAsyncTests
 
     // Act
     string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
-    File.Delete(outputPath);
+    if (File.Exists(outputPath))
+    {
+      File.Delete(outputPath);
+    }
     await _generator.GenerateAsync(component, outputPath);
     string fileContent = await File.ReadAllTextAsync(outputPath);
 
@@ -109,7 +112,10 @@ public class GenerateAsyncTests
 
     // Act
     string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
-    File.Delete(outputPath);
+    if (File.Exists(outputPath))
+    {
+      File.Delete(outputPath);
+    }
     await _generator.GenerateAsync(component, outputPath, true);
     string fileContent = await File.ReadAllTextAsync(outputPath);
 
