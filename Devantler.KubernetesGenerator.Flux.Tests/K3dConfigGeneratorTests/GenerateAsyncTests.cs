@@ -50,7 +50,7 @@ public class GenerateAsyncTests
         ],
         SourceRef = new FluxKustomizationSpecSourceRef
         {
-          Kind = FluxSourceType.GitRepository,
+          Kind = FluxSource.GitRepository,
           Name = "my-git-repo",
           Namespace = "my-git-repo-namespace"
         },
@@ -146,7 +146,11 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "kustomization.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
+    if (File.Exists(outputPath))
+    {
+      File.Delete(outputPath);
+    }
     await _generator.GenerateAsync(fluxKustomization, outputPath);
     string kustomizationFromFile = await File.ReadAllTextAsync(outputPath);
 
@@ -177,15 +181,19 @@ public class GenerateAsyncTests
         Path = "my-path",
         SourceRef = new FluxKustomizationSpecSourceRef
         {
-          Kind = FluxSourceType.GitRepository,
+          Kind = FluxSource.GitRepository,
           Name = "my-git-repo",
         }
       }
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "kustomization.yaml");
-    await _generator.GenerateAsync(fluxKustomization, outputPath);
+    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
+    if (File.Exists(outputPath))
+    {
+      File.Delete(outputPath);
+    }
+    await _generator.GenerateAsync(fluxKustomization, outputPath, true);
     string kustomizationFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert

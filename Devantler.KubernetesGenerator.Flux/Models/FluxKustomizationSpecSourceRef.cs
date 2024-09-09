@@ -10,7 +10,7 @@ public class FluxKustomizationSpecSourceRef
   /// <summary>
   /// The kind of the source reference.
   /// </summary>
-  public required FluxSourceType Kind { get; set; }
+  public required FluxSource Kind { get; set; }
 
   /// <summary>
   /// The name of the source reference.
