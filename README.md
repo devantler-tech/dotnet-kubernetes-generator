@@ -95,25 +95,12 @@ data:
   key2: value2
 ```
 
-### Native Kubernetes Generators
+## Supported Generators
 
-- ConfigMapKubernetesGenerator (To be implemented)
-- SecretKubernetesGenerator (To be implemented)
-- DeploymentKubernetesGenerator (To be implemented)
-- ServiceKubernetesGenerator (To be implemented)
-- And more...
+### K3d
 
-### Flux Kubernetes Generators
+- `K3dConfigKubernetesGenerator`
 
-- FluxKustomizationKubernetesGenerator (To be implemented)
-- FluxHelmReleaseKubernetesGenerator (To be implemented)
-- FluxHelmRepositoryKubernetesGenerator (To be implemented)
-- And more...
+### Kustomize
 
-### K3d Kubernetes Generators
-
-- K3dConfigKubernetesGenerator
-
-### Kustomize Kubernetes Generators
-
-- KustomizeComponentKubernetesGenerator
+- `KustomizeComponentKubernetesGenerator`
