@@ -16,22 +16,30 @@ A simple code generator that can generate Kubernetes resources.
 │   └── workflows
 ├── Devantler.KubernetesGenerator.Core
 ├── Devantler.KubernetesGenerator.Flux
+│   └── Models
+│       ├── Dependencies
+│       ├── Images
+│       ├── KubeConfig
+│       ├── Metadata
+│       ├── Patches
+│       ├── SecretRef
+│       └── Sources
 ├── Devantler.KubernetesGenerator.Flux.Tests
+│   └── K3dConfigGeneratorTests
 ├── Devantler.KubernetesGenerator.K3d
 │   └── Models
 ├── Devantler.KubernetesGenerator.K3d.Tests
-│   └── K3dConfigResourceGeneratorTests
+│   └── K3dConfigGeneratorTests
 ├── Devantler.KubernetesGenerator.Kustomize
 │   └── Models
 │       ├── Generators
 │       └── Patches
 ├── Devantler.KubernetesGenerator.Kustomize.Tests
-│   └── KustomizeComponentKubernetesGeneratorTests
+│   └── KustomizeComponentGeneratorTests
 ├── Devantler.KubernetesGenerator.Native
-│   └── Models
 └── Devantler.KubernetesGenerator.Native.Tests
 
-18 directories
+26 directories
 ```
 <!-- readme-tree end -->
 
