@@ -12,7 +12,7 @@ public class GenerateAsyncTests
   readonly KustomizeComponentGenerator _generator = new();
 
   /// <summary>
-  /// Verifies the generated kustomization file.
+  /// Tests that <see cref="KustomizeComponentGenerator"/> generates a valid Kustomize component configuration with all properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -84,6 +84,32 @@ public class GenerateAsyncTests
 
     // Act
     string outputPath = Path.Combine(Path.GetTempPath(), "kustomization.yaml");
+    File.Delete(outputPath);
+    await _generator.GenerateAsync(component, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Tests that <see cref="KustomizeComponentGenerator"/> generates a valid Kustomize component configuration with minimal properties set.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithMinimalPropertiesSet_ShouldGenerateAValidMinimalKustomizeComponentFile()
+  {
+    // Arrange
+    var component = new KustomizeComponent
+    {
+    };
+
+    // Act
+    string outputPath = Path.Combine(Path.GetTempPath(), "kustomization.yaml");
+    File.Delete(outputPath);
     await _generator.GenerateAsync(component, outputPath);
     string fileContent = await File.ReadAllTextAsync(outputPath);
 

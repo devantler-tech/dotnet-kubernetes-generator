@@ -196,6 +196,7 @@ public class GenerateAsyncTests
 
     // Act
     string filePath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
+    File.Delete(filePath);
     await K3dConfigKubernetesGenerator.GenerateAsync(config, filePath);
     string k3dConfigFromFile = await File.ReadAllTextAsync(filePath);
 
@@ -224,6 +225,7 @@ public class GenerateAsyncTests
 
     // Act
     string filePath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
+    File.Delete(filePath);
     await K3dConfigKubernetesGenerator.GenerateAsync(config, filePath);
     string k3dConfigFromFile = await File.ReadAllTextAsync(filePath);
 

@@ -3,7 +3,7 @@ namespace Devantler.KubernetesGenerator.Flux.Models.Sources;
 /// <summary>
 /// The type of the source reference.
 /// </summary>
-public enum FluxSourceType
+public enum FluxSource
 {
   /// <summary>
   /// The source reference is a GitRepository.

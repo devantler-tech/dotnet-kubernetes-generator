@@ -20,8 +20,9 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
   /// </summary>
   /// <param name="model"></param>
   /// <param name="outputPath"></param>
+  /// <param name="overwrite"></param>
   /// <param name="cancellationToken"></param>
-  public async Task GenerateAsync(T model, string outputPath, CancellationToken cancellationToken = default)
+  public async Task GenerateAsync(T model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     string outputDirectory = Path.GetDirectoryName(outputPath) ?? throw new InvalidOperationException("Output path is invalid.");
     if (!Directory.Exists(outputDirectory))
@@ -29,6 +30,18 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
       _ = Directory.CreateDirectory(outputDirectory);
     }
     string yaml = _serializer.Serialize(model);
-    await File.WriteAllTextAsync(outputPath, yaml, cancellationToken).ConfigureAwait(false);
+    // Append all text starting with ---
+    if (!yaml.StartsWith("---", StringComparison.Ordinal))
+    {
+      yaml = $"---{Environment.NewLine}" + yaml;
+    }
+    if (overwrite)
+    {
+      await File.WriteAllTextAsync(outputPath, yaml, cancellationToken).ConfigureAwait(false);
+    }
+    else
+    {
+      await File.AppendAllTextAsync(outputPath, yaml, cancellationToken).ConfigureAwait(false);
+    }
   }
 }

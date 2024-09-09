@@ -11,7 +11,8 @@ public interface IKubernetesGenerator<TModel>
   /// </summary>
   /// <param name="model"></param>
   /// <param name="outputPath"></param>
+  /// <param name="overwrite"></param>
   /// <param name="cancellationToken"></param>
   /// <returns></returns>
-  Task GenerateAsync(TModel model, string outputPath, CancellationToken cancellationToken = default);
+  Task GenerateAsync(TModel model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default);
 }

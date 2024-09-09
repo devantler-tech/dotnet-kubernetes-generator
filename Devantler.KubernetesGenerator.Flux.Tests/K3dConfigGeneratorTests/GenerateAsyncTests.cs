@@ -50,7 +50,7 @@ public class GenerateAsyncTests
         ],
         SourceRef = new FluxKustomizationSpecSourceRef
         {
-          Kind = FluxSourceType.GitRepository,
+          Kind = FluxSource.GitRepository,
           Name = "my-git-repo",
           Namespace = "my-git-repo-namespace"
         },
@@ -147,6 +147,7 @@ public class GenerateAsyncTests
 
     // Act
     string outputPath = Path.Combine(Path.GetTempPath(), "kustomization.yaml");
+    File.Delete(outputPath);
     await _generator.GenerateAsync(fluxKustomization, outputPath);
     string kustomizationFromFile = await File.ReadAllTextAsync(outputPath);
 
@@ -177,7 +178,7 @@ public class GenerateAsyncTests
         Path = "my-path",
         SourceRef = new FluxKustomizationSpecSourceRef
         {
-          Kind = FluxSourceType.GitRepository,
+          Kind = FluxSource.GitRepository,
           Name = "my-git-repo",
         }
       }
@@ -185,6 +186,7 @@ public class GenerateAsyncTests
 
     // Act
     string outputPath = Path.Combine(Path.GetTempPath(), "kustomization.yaml");
+    File.Delete(outputPath);
     await _generator.GenerateAsync(fluxKustomization, outputPath);
     string kustomizationFromFile = await File.ReadAllTextAsync(outputPath);
 
