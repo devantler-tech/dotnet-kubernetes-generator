@@ -99,12 +99,12 @@ data:
 
 ### Flux
 
-- `FluxKustomizationKubernetesGenerator`
+- `FluxKustomizationGenerator`
 
 ### K3d
 
-- `K3dConfigKubernetesGenerator`
+- `K3dConfigGenerator`
 
 ### Kustomize
 
-- `KustomizeComponentKubernetesGenerator`
+- `KustomizeComponentGenerator`
