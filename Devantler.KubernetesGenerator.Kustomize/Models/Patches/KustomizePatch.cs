@@ -1,3 +1,6 @@
+using YamlDotNet.Core;
+using YamlDotNet.Serialization;
+
 namespace Devantler.KubernetesGenerator.Kustomize.Models.Patches;
 
 /// <summary>
@@ -13,6 +16,7 @@ public class KustomizePatch
   /// <summary>
   /// Inline patch content.
   /// </summary>
+  [YamlMember(ScalarStyle = ScalarStyle.Literal)]
   public string? Patch { get; set; }
 
   /// <summary>

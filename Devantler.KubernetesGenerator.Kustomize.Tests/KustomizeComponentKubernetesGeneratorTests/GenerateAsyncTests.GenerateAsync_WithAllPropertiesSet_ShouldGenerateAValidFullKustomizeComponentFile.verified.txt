@@ -22,13 +22,13 @@ configMapGenerator:
     - zone=west
 patches:
 - path: patch1.yaml
-  patch: >2-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: deployment1
-        labels:
-          app.kubernetes.io/version: 1.21.1
+  patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: deployment1
+      labels:
+        app.kubernetes.io/version: 1.21.1
   target:
     kind: Deployment
     name: deployment1

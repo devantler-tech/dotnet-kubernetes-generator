@@ -42,12 +42,12 @@ public class GenerateAsyncTests
             AnnotationSelector = "zone=west"
           },
           Patch = """
-            apiVersion: apps/v1
-            kind: Deployment
-            metadata:
-              name: deployment1
-              labels:
-                app.kubernetes.io/version: 1.21.1
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: deployment1
+            labels:
+              app.kubernetes.io/version: 1.21.1
           """,
           Options = new KustomizePatchOptions
           {
