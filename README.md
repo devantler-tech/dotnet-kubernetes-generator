@@ -97,6 +97,10 @@ data:
 
 ## Supported Generators
 
+### Flux
+
+- `FluxKustomizationKubernetesGenerator`
+
 ### K3d
 
 - `K3dConfigKubernetesGenerator`

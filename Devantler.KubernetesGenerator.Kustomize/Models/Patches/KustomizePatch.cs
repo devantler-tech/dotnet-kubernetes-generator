@@ -22,7 +22,7 @@ public class KustomizePatch
   /// <summary>
   /// The target resource(s) to apply the patch to.
   /// </summary>
-  public KustomizePatchTarget? Target { get; set; }
+  public KustomizeTarget? Target { get; set; }
 
   /// <summary>
   /// Options for the patch.

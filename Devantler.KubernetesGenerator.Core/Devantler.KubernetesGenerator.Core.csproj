@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="YAMLDotNet" Version="16.1.0" />
+    <PackageReference Include="YamlDotNet.System.Text.Json" Version="1.5.0" />
   </ItemGroup>
 
 </Project>
