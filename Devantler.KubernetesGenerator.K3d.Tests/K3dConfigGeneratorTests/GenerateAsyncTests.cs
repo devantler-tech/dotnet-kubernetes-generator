@@ -1,13 +1,14 @@
 using Devantler.KubernetesGenerator.K3d.Models;
+using k8s.Models;
 
-namespace Devantler.KubernetesGenerator.K3d.Tests.K3dConfigResourceGeneratorTests;
+namespace Devantler.KubernetesGenerator.K3d.Tests.K3dConfigGeneratorTests;
 
 /// <summary>
 /// Tests for <see cref="K3dConfigKubernetesGenerator"/>.
 /// </summary>
 public class GenerateAsyncTests
 {
-  K3dConfigKubernetesGenerator K3dConfigKubernetesGenerator { get; } = new();
+  K3dConfigGenerator K3dConfigKubernetesGenerator { get; } = new();
   /// <summary>
   /// Tests that <see cref="K3dConfigKubernetesGenerator"/> generates a valid K3d cluster configuration with all properties set.
   /// </summary>
@@ -17,7 +18,7 @@ public class GenerateAsyncTests
     // Arrange
     var config = new K3dConfig
     {
-      Metadata = new K3dConfigMetadata
+      Metadata = new V1ObjectMeta
       {
         Name = "mycluster"
       },
@@ -215,7 +216,7 @@ public class GenerateAsyncTests
     // Arrange
     var config = new K3dConfig
     {
-      Metadata = new K3dConfigMetadata
+      Metadata = new V1ObjectMeta
       {
         Name = "mycluster"
       }

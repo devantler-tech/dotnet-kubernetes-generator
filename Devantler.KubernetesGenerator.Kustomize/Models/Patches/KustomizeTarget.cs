@@ -3,7 +3,7 @@ namespace Devantler.KubernetesGenerator.Kustomize.Models.Patches;
 /// <summary>
 /// The target resource(s) to apply the patch to.
 /// </summary>
-public class KustomizePatchTarget
+public class KustomizeTarget
 {
   /// <summary>
   /// The kind of the resource.
@@ -33,11 +33,13 @@ public class KustomizePatchTarget
   /// <summary>
   /// A label selector to match the resource by labels. (e.g. `app=nginx`)
   /// </summary>
-  public string? LabelSelector { get; set; }
+#pragma warning disable CA2227 // Collection properties should be read only
+  public IDictionary<string, string>? LabelSelector { get; set; }
+
 
   /// <summary>
   /// An annotation selector to match the resource by annotations. (e.g. `app=nginx`)
   /// </summary>
-  ///
-  public string? AnnotationSelector { get; set; }
+  public IDictionary<string, string>? AnnotationSelector { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
 }

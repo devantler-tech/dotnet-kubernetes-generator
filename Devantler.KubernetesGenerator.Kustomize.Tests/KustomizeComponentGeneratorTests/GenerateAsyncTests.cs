@@ -2,14 +2,14 @@ using Devantler.KubernetesGenerator.Kustomize.Models;
 using Devantler.KubernetesGenerator.Kustomize.Models.Generators;
 using Devantler.KubernetesGenerator.Kustomize.Models.Patches;
 
-namespace Devantler.KubernetesGenerator.Kustomize.Tests.KustomizeComponentKubernetesGeneratorTests;
+namespace Devantler.KubernetesGenerator.Kustomize.Tests.KustomizeComponentGeneratorTests;
 
 /// <summary>
 /// Tests for the <see cref="KustomizeComponent"/> generator.
 /// </summary>
 public class GenerateAsyncTests
 {
-  readonly KustomizeComponentKubernetesGenerator _generator = new();
+  readonly KustomizeComponentGenerator _generator = new();
 
   /// <summary>
   /// Verifies the generated kustomization file.
@@ -31,15 +31,15 @@ public class GenerateAsyncTests
         new KustomizePatch
         {
           Path = "patch1.yaml",
-          Target = new KustomizePatchTarget
+          Target = new KustomizeTarget
           {
             Name = "deployment1",
             Kind = "Deployment",
             Version = "v1",
             Namespace = "default",
             Group = "apps",
-            LabelSelector = "app=nginx",
-            AnnotationSelector = "zone=west"
+            LabelSelector = new Dictionary<string, string> { { "app", "nginx" } },
+            AnnotationSelector = new Dictionary<string, string> { { "zone", "west" } }
           },
           Patch = """
           apiVersion: apps/v1

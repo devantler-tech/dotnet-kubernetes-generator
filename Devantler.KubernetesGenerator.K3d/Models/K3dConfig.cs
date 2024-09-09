@@ -1,3 +1,5 @@
+using k8s.Models;
+
 namespace Devantler.KubernetesGenerator.K3d.Models;
 
 /// <summary>
@@ -18,7 +20,7 @@ public class K3dConfig
   /// <summary>
   /// Metadata for the K3d cluster.
   /// </summary>
-  public required K3dConfigMetadata Metadata { get; set; }
+  public required V1ObjectMeta Metadata { get; set; }
 
   /// <summary>
   /// Number of servers in the K3d cluster.

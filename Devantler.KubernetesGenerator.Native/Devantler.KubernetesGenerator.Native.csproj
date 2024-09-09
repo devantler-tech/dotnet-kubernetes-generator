@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="KubernetesClient" Version="14.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Devantler.KubernetesGenerator.Core\Devantler.KubernetesGenerator.Core.csproj" />
   </ItemGroup>
 
