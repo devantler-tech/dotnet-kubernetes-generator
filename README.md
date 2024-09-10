@@ -60,6 +60,9 @@ dotnet add package Devantler.KubernetesGenerator.Flux
 # For generating K3d resources
 dotnet add package Devantler.KubernetesGenerator.K3d
 
+# For generating KSail resources
+dotnet add package Devantler.KubernetesGenerator.KSail
+
 # For generating Kustomize resources
 dotnet add package Devantler.KubernetesGenerator.Kustomize
 
@@ -115,6 +118,10 @@ data:
 ### K3d
 
 - `K3dConfigGenerator`
+
+### KSail
+
+- `KSailClusterGenerator`
 
 ### Kustomize
 

@@ -1,0 +1,99 @@
+﻿---
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: mycluster
+servers: 1
+agents: 2
+kubeAPI:
+  host: myhost.my.domain
+  hostIP: 127.0.0.1
+  hostPort: 6445
+image: rancher/k3s:v1.20.4-k3s1
+network: my-custom-net
+subnet: 172.28.0.0/16
+token: superSecretToken
+volumes:
+- volume: /my/host/path:/path/in/node
+  nodeFilters:
+  - server:0
+  - agent:*
+ports:
+- port: 8080:80
+  nodeFilters:
+  - loadbalancer
+env:
+- envVar: bar=baz
+  nodeFilters:
+  - server:0
+files:
+- description: 'Source: Embedded, Destination: Magic shortcut path'
+  source: >2-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: foo
+  destination: k3s-manifests-custom/foo.yaml
+- description: 'Source: Relative, Destination: Absolute path, Node: Servers only'
+  source: ns-baz.yaml
+  destination: /var/lib/rancher/k3s/server/manifests/baz.yaml
+  nodeFilters:
+  - server:*
+registries:
+  create:
+    name: registry.localhost
+    host: 0.0.0.0
+    hostPort: 5000
+    proxy:
+      remoteURL: https://registry-1.docker.io
+      username: ''
+      password: ''
+    volumes:
+    - /some/path:/var/lib/registry
+  use:
+  - k3d-myotherregistry:5000
+  config: >2-
+      mirrors:
+        "my.company.registry":
+          endpoint:
+            - http://my.company.registry:5000
+hostAliases:
+- ip: 1.2.3.4
+  hostnames:
+  - my.host.local
+  - that.other.local
+- ip: 1.1.1.1
+  hostnames:
+  - cloud.flare.dns
+options:
+  k3d:
+    wait: true
+    timeout: 60s
+    disableLoadbalancer: false
+    disableImageVolume: false
+    disableRollback: false
+    loadbalancer:
+      configOverrides:
+      - settings.workerConnections=2048
+  k3s:
+    extraArgs:
+    - arg: --tls-san=my.host.domain
+      nodeFilters:
+      - server:*
+    nodeLabels:
+    - label: foo=bar
+      nodeFilters:
+      - agent:1
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true
+  runtime:
+    gPURequest: all
+    labels:
+    - label: bar=baz
+      nodeFilters:
+      - agent:1
+    ulimits:
+    - name: nofile
+      soft: 26677
+      hard: 26677
