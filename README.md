@@ -30,6 +30,10 @@ A simple code generator that can generate Kubernetes resources.
 │   └── Models
 ├── Devantler.KubernetesGenerator.K3d.Tests
 │   └── K3dConfigGeneratorTests
+├── Devantler.KubernetesGenerator.KSail
+│   └── Models
+├── Devantler.KubernetesGenerator.KSail.Tests
+│   └── KSailClusterGeneratorTests
 ├── Devantler.KubernetesGenerator.Kustomize
 │   └── Models
 │       ├── Generators
@@ -39,7 +43,7 @@ A simple code generator that can generate Kubernetes resources.
 ├── Devantler.KubernetesGenerator.Native
 └── Devantler.KubernetesGenerator.Native.Tests
 
-26 directories
+30 directories
 ```
 <!-- readme-tree end -->
 
