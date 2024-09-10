@@ -54,14 +54,17 @@ A simple code generator that can generate Kubernetes resources.
 To get started, you can install the packages from NuGet.
 
 ```bash
-# For the Native Kubernetes Generator
+# For generating Flux resources
+dotnet add package Devantler.KubernetesGenerator.Flux
+
+# For generating K3d resources
+dotnet add package Devantler.KubernetesGenerator.K3d
+
+# For generating Kustomize resources
+dotnet add package Devantler.KubernetesGenerator.Kustomize
+
+# For generating native resources
 dotnet add package Devantler.KubernetesGenerator.Native
-
-# For the Flux Custom Resource Generator
-dotnet add package Devantler.KubernetesGenerator.CustomResources.Flux
-
-# For the K3d Config Generator
-dotnet add package Devantler.KubernetesGenerator.Configs.K3d
 ```
 
 ## Usage
