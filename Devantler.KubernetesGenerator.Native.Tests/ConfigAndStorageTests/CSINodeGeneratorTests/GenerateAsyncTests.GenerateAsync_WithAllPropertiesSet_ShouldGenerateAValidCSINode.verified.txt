@@ -1,0 +1,14 @@
+﻿---
+apiVersion: v1
+kind: CSINode
+metadata:
+  name: csi-node
+  namespace: default
+spec:
+  drivers:
+  - allocatable:
+      count: 1
+    name: csi-driver
+    nodeID: node-id
+    topologyKeys:
+    - key

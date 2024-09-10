@@ -1,0 +1,11 @@
+﻿---
+apiVersion: storage.k8s.io/v1
+kind: VolumeAttachment
+metadata:
+  name: volume-attachment
+  namespace: default
+spec:
+  attacher: attacher
+  nodeName: node
+  source:
+    persistentVolumeName: persistent-volume

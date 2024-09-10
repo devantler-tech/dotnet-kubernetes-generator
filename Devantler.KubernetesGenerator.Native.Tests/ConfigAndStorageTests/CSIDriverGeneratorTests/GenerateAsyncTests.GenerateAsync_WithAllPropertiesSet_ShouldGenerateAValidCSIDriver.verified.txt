@@ -1,0 +1,18 @@
+﻿---
+apiVersion: v1
+kind: CSIDriver
+metadata:
+  name: csi-driver
+  namespace: default
+spec:
+  attachRequired: true
+  fsGroupPolicy: File
+  podInfoOnMount: true
+  requiresRepublish: true
+  seLinuxMount: true
+  storageCapacity: true
+  tokenRequests:
+  - audience: audience
+    expirationSeconds: 3600
+  volumeLifecycleModes:
+  - Ephemeral

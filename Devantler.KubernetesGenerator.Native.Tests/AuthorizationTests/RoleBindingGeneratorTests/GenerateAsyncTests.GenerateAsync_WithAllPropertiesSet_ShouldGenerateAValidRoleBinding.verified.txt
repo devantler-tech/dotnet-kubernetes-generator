@@ -1,0 +1,15 @@
+﻿---
+apiVersion: v1
+kind: RoleBinding
+metadata:
+  name: role-binding
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: role
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: user
+  namespace: default

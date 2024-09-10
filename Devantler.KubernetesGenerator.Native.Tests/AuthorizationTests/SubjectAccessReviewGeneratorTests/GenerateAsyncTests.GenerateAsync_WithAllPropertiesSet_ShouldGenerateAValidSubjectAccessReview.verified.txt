@@ -1,0 +1,15 @@
+﻿---
+apiVersion: v1
+kind: SubjectAccessReview
+metadata:
+  name: subject-access-review
+  namespace: default
+spec:
+  resourceAttributes:
+    group: group
+    name: name
+    namespace: namespace
+    resource: resource
+    subresource: subresource
+    verb: verb
+    version: version

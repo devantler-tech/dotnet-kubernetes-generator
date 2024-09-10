@@ -1,0 +1,12 @@
+﻿---
+apiVersion: v1
+kind: IPAddress
+metadata:
+  name: ip-address
+  namespace: default
+spec:
+  parentRef:
+    group: group
+    name: pod
+    namespace: default
+    resource: resource

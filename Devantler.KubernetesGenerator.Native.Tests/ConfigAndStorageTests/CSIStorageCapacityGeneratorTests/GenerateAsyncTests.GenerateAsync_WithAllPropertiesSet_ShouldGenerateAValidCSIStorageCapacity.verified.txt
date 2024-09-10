@@ -1,0 +1,14 @@
+﻿---
+apiVersion: v1
+capacity: &o0
+  format: BinarySI
+  value: 1Gi
+kind: CSIStorageCapacity
+maximumVolumeSize: *o0
+metadata:
+  name: csi-storage-capacity
+  namespace: default
+nodeTopology:
+  matchLabels:
+    key: value
+storageClassName: storage-class

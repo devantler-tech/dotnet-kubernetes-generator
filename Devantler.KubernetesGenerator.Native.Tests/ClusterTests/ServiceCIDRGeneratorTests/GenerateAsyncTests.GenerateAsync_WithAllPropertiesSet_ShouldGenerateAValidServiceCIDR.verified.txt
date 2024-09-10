@@ -1,0 +1,9 @@
+﻿---
+apiVersion: v1alpha1
+kind: ServiceCIDR
+metadata:
+  name: service-cidr
+  namespace: default
+spec:
+  cidrs:
+  - cidr

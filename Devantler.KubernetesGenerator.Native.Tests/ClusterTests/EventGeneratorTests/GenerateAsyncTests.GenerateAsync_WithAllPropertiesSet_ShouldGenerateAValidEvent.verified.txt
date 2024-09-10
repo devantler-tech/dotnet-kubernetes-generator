@@ -1,0 +1,8 @@
+﻿---
+apiVersion: v1
+kind: Event
+metadata:
+  name: event
+  namespace: default
+reason: not sure if this what you want to do
+type: Warning

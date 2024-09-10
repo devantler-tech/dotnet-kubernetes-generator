@@ -1,0 +1,19 @@
+﻿---
+apiVersion: v1
+kind: APIService
+metadata:
+  name: api-service
+  namespace: default
+spec:
+  caBundle:
+  - 1
+  - 2
+  - 3
+  group: group
+  groupPriorityMinimum: 1
+  insecureSkipTLSVerify: true
+  service:
+    name: service
+    namespace: namespace
+  version: version
+  versionPriority: 1

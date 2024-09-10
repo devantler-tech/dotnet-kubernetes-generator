@@ -1,0 +1,21 @@
+﻿---
+apiVersion: v1
+handler: handler
+kind: RuntimeClass
+metadata:
+  name: runtime-class
+  namespace: default
+overhead:
+  podFixed:
+    key:
+      format: DecimalSI
+      value: 1
+scheduling:
+  nodeSelector:
+    key: value
+  tolerations:
+  - effect: NoSchedule
+    key: key
+    operator: Exists
+    tolerationSeconds: 10
+    value: value
