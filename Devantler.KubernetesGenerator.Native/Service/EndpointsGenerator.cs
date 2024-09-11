@@ -6,6 +6,6 @@ namespace Devantler.KubernetesGenerator.Native.Service;
 /// <summary>
 /// A generator for Kubernetes Endpoint objects.
 /// </summary>
-public class EndpointGenerator : BaseKubernetesGenerator<V1Endpoint>
+public class EndpointsGenerator : BaseKubernetesGenerator<V1Endpoints>
 {
 }

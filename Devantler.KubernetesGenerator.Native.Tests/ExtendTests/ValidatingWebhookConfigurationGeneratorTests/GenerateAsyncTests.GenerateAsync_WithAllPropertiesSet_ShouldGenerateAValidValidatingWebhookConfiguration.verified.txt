@@ -1,0 +1,37 @@
+﻿---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: validating-webhook-configuration
+  namespace: default
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: mutating-webhook-service
+      namespace: default
+      path: /mutate
+  failurePolicy: Fail
+  matchConditions:
+  - expression: request.object.metadata.labels['app'] == 'nginx'
+    name: app-label
+  matchPolicy: Exact
+  name: mutating-webhook
+  namespaceSelector:
+    matchLabels:
+      app: nginx
+  objectSelector:
+    matchLabels:
+      app: nginx
+  rules:
+  - apiGroups:
+    - apps
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    resources:
+    - deployments
+  sideEffects: None
+  timeoutSeconds: 30
