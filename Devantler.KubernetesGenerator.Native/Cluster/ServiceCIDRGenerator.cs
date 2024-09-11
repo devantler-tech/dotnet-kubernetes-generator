@@ -6,6 +6,6 @@ namespace Devantler.KubernetesGenerator.Native.Cluster;
 /// <summary>
 /// A generator for Kubernetes ServiceCIDR objects.
 /// </summary>
-public class ServiceCIDRGenerator : BaseKubernetesGenerator<V1alpha1ServiceCIDR>
+public class ServiceCIDRGenerator : BaseKubernetesGenerator<V1beta1ServiceCIDR>
 {
 }

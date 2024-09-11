@@ -29,7 +29,7 @@ public class GenerateAsyncTests
       },
       Spec = new V1PersistentVolumeClaimSpec
       {
-        AccessModes = new List<string> { "ReadWriteOnce" },
+        AccessModes = ["ReadWriteOnce"],
         DataSource = new V1TypedLocalObjectReference
         {
           ApiGroup = "storage.k8s.io",

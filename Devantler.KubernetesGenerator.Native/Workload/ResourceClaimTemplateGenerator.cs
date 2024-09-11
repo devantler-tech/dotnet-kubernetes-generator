@@ -6,6 +6,6 @@ namespace Devantler.KubernetesGenerator.Native.Workload;
 /// <summary>
 /// A generator for Kubernetes ResourceClaimTemplate objects.
 /// </summary>
-public class ResourceClaimTemplateGenerator : BaseKubernetesGenerator<V1alpha2ResourceClaimTemplate>
+public class ResourceClaimTemplateGenerator : BaseKubernetesGenerator<V1alpha3ResourceClaimTemplate>
 {
 }

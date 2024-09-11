@@ -18,18 +18,18 @@ public class GenerateAsyncTests
   {
     // Arrange
     var generator = new ServiceCIDRGenerator();
-    var model = new V1alpha1ServiceCIDR
+    var model = new V1beta1ServiceCIDR
     {
-      ApiVersion = "v1alpha1",
+      ApiVersion = "v1beta1",
       Kind = "ServiceCIDR",
       Metadata = new V1ObjectMeta
       {
         Name = "service-cidr",
         NamespaceProperty = "default"
       },
-      Spec = new V1alpha1ServiceCIDRSpec
+      Spec = new V1beta1ServiceCIDRSpec
       {
-        Cidrs = ["cidr"],
+        Cidrs = ["cidr"]
       }
     };
 

@@ -6,6 +6,6 @@ namespace Devantler.KubernetesGenerator.Native.Workload;
 /// <summary>
 /// A generator for Kubernetes PodSchedulingContext objects.
 /// </summary>
-public class PodSchedulingContextGenerator : BaseKubernetesGenerator<V1alpha2PodSchedulingContext>
+public class PodSchedulingContextGenerator : BaseKubernetesGenerator<V1alpha3PodSchedulingContext>
 {
 }

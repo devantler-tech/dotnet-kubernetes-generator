@@ -6,6 +6,6 @@ namespace Devantler.KubernetesGenerator.Native.Cluster;
 /// <summary>
 /// A generator for Kubernetes IPAddress objects.
 /// </summary>
-public class IPAddressGenerator : BaseKubernetesGenerator<V1alpha1IPAddress>
+public class IPAddressGenerator : BaseKubernetesGenerator<V1beta1IPAddress>
 {
 }

@@ -18,18 +18,18 @@ public class GenerateAsyncTests
   {
     // Arrange
     var generator = new IPAddressGenerator();
-    var model = new V1alpha1IPAddress
+    var model = new V1beta1IPAddress
     {
-      ApiVersion = "v1",
+      ApiVersion = "v1beta1",
       Kind = "IPAddress",
       Metadata = new V1ObjectMeta
       {
         Name = "ip-address",
         NamespaceProperty = "default"
       },
-      Spec = new V1alpha1IPAddressSpec
+      Spec = new V1beta1IPAddressSpec
       {
-        ParentRef = new V1alpha1ParentReference
+        ParentRef = new V1beta1ParentReference
         {
           Name = "pod",
           NamespaceProperty = "default",
