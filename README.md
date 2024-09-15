@@ -27,7 +27,7 @@ A simple code generator that can generate Kubernetes resources.
 │       ├── SecretRef
 │       └── Sources
 ├── Devantler.KubernetesGenerator.Flux.Tests
-│   └── K3dConfigGeneratorTests
+│   └── FluxKustomizationGeneratorTests
 ├── Devantler.KubernetesGenerator.K3d
 │   └── Models
 ├── Devantler.KubernetesGenerator.K3d.Tests
