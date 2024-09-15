@@ -7,11 +7,10 @@ metadata:
 spec:
   egress:
   - ports:
-    - port: &o0
-        value: 80
+    - port: 80
   ingress:
   - ports:
-    - port: *o0
+    - port: 80
   podSelector:
     matchLabels:
       app: nginx

@@ -15,6 +15,7 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
 {
   readonly ISerializer _serializer = new SerializerBuilder()
     .WithTypeInspector(inner => new KubernetesTypeInspector(new SystemTextJsonTypeInspector(inner)))
+    .WithTypeConverter(new IntstrIntOrStringTypeConverter())
     .WithTypeConverter(new ResourceQuantityTypeConverter())
     .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
     .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();

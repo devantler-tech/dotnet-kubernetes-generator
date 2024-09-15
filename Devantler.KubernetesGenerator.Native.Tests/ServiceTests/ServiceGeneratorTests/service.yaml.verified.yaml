@@ -11,7 +11,6 @@ spec:
   - name: port-name
     port: 80
     protocol: TCP
-    targetPort:
-      value: 8080
+    targetPort: 8080
   selector:
     app: app

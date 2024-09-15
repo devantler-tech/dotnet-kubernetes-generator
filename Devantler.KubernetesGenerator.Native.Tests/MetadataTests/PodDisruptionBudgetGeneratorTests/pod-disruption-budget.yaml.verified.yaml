@@ -5,9 +5,8 @@ metadata:
   name: pod-disruption-budget
   namespace: default
 spec:
-  maxUnavailable: &o0
-    value: 1
-  minAvailable: *o0
+  maxUnavailable: 1
+  minAvailable: 1
   selector:
     matchLabels:
       app: nginx
