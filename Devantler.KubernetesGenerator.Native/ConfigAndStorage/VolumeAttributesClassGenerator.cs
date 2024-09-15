@@ -6,6 +6,6 @@ namespace Devantler.KubernetesGenerator.Native.ConfigAndStorage;
 /// <summary>
 /// A generator for Kubernetes VolumeAttributesClass objects.
 /// </summary>
-public class VolumeAttributesClassGenerator : BaseKubernetesGenerator<V1alpha1VolumeAttributesClass>
+public class VolumeAttributesClassGenerator : BaseKubernetesGenerator<V1beta1VolumeAttributesClass>
 {
 }

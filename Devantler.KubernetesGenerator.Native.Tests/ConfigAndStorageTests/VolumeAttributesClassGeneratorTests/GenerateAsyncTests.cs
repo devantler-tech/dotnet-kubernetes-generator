@@ -18,7 +18,7 @@ public class GenerateAsyncTests
   {
     // Arrange
     var generator = new VolumeAttributesClassGenerator();
-    var model = new V1alpha1VolumeAttributesClass
+    var model = new V1beta1VolumeAttributesClass
     {
       ApiVersion = "storage.k8s.io/v1",
       Kind = "VolumeAttributesClass",
