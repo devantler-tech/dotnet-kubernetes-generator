@@ -163,9 +163,11 @@ using Devantler.KubernetesGenerator.Native;
 
 var generator = new ConfigMapKubernetesGenerator();
 
-var configMap = new ConfigMap
+var configMap = new V1ConfigMap
 {
-    Metadata = new Metadata
+    ApiVersion = "v1",
+    Kind = "ConfigMap",
+    Metadata = new V1ObjectMeta
     {
         Name = "my-config-map",
         Namespace = "default"
