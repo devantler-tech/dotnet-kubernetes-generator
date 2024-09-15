@@ -15,6 +15,8 @@ A simple code generator that can generate Kubernetes resources.
 ├── .github
 │   └── workflows
 ├── Devantler.KubernetesGenerator.Core
+│   ├── Converters
+│   └── Inspectors
 ├── Devantler.KubernetesGenerator.Flux
 │   └── Models
 │       ├── Dependencies
@@ -123,7 +125,7 @@ A simple code generator that can generate Kubernetes resources.
         ├── ReplicationControllerGeneratorTests
         └── StatefulSetGeneratorTests
 
-110 directories
+112 directories
 ```
 <!-- readme-tree end -->
 
