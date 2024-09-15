@@ -5,6 +5,7 @@ metadata:
   name: my-cluster
 spec:
   distribution: k3d
+  gitOpsTool: flux
   registries:
   - name: ksail-registry
     hostPort: 5000
@@ -40,4 +41,3 @@ spec:
     proxy:
       url: https://quay.io/
     provider: docker
-  gitOpsTool: flux
