@@ -14,7 +14,8 @@ public class ResourceQuantityTypeConverter : IYamlTypeConverter
   public bool Accepts(Type type) => type == typeof(ResourceQuantity);
 
   /// <inheritdoc/>
-  public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer) => null;
+  public object? ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer) =>
+    parser?.Current is Scalar scalar ? new ResourceQuantity(scalar.Value) : (object?)null;
 
   /// <inheritdoc/>
   public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
