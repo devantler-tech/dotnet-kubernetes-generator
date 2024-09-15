@@ -8,27 +8,17 @@ spec:
   limits:
   - type: Pod
     default:
-      cpu: &o0
-        format: DecimalSI
-        value: 100m
-      memory: &o1
-        format: BinarySI
-        value: 100Mi
+      cpu: 100m
+      memory: 100Mi
     defaultRequest:
-      cpu: *o0
-      memory: *o1
+      cpu: 100m
+      memory: 100Mi
     max:
-      cpu:
-        format: DecimalSI
-        value: 1
-      memory:
-        format: BinarySI
-        value: 1Gi
+      cpu: 1
+      memory: 1Gi
     maxLimitRequestRatio:
-      cpu: &o2
-        format: DecimalSI
-        value: 10
-      memory: *o2
+      cpu: 10
+      memory: 10
     min:
-      cpu: *o0
-      memory: *o1
+      cpu: 100m
+      memory: 100Mi

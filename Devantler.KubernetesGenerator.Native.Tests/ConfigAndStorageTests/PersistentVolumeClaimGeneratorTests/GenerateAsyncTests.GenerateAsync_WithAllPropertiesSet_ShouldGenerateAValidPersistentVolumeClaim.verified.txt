@@ -18,9 +18,7 @@ spec:
     namespace: default
   resources:
     requests:
-      storage:
-        format: BinarySI
-        value: 1Gi
+      storage: 1Gi
   selector:
     matchLabels:
       key: value
