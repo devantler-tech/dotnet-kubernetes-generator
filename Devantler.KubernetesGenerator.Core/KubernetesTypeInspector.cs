@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using k8s.Models;
 using YamlDotNet.Serialization;
 
 namespace Devantler.KubernetesGenerator.Core;
@@ -37,6 +38,11 @@ sealed class KubernetesTypeInspector(ITypeInspector inner) : ITypeInspector
     foreach (var property in properties)
     {
       if (property.Type == typeof(Uri))
+      {
+        skipped.Add(property.Name);
+        yield return new PropertyDescriptor(property) { TypeOverride = typeof(string) };
+      }
+      if (property.Type == typeof(ResourceQuantity))
       {
         skipped.Add(property.Name);
         yield return new PropertyDescriptor(property) { TypeOverride = typeof(string) };
