@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="KubernetesClient" Version="15.0.1" />
     <PackageReference Include="YamlDotNet.System.Text.Json" Version="1.5.0" />
   </ItemGroup>
 

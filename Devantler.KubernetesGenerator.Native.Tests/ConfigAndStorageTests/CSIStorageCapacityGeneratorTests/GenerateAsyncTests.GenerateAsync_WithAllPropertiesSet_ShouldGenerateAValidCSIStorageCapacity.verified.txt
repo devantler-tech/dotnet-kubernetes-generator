@@ -4,10 +4,8 @@ kind: CSIStorageCapacity
 metadata:
   name: csi-storage-capacity
   namespace: default
-capacity: &o0
-  format: BinarySI
-  value: 1Gi
-maximumVolumeSize: *o0
+capacity: 1Gi
+maximumVolumeSize: 1Gi
 nodeTopology:
   matchLabels:
     key: value
