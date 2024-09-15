@@ -47,14 +47,15 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "endpoint-slice.yaml");
+    string fileName = "endpoint-slice.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
     await generator.GenerateAsync(model, outputPath);
     string fileContent = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(fileContent);
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
 
     // Cleanup
     File.Delete(outputPath);

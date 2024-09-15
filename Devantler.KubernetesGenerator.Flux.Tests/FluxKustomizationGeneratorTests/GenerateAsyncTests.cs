@@ -9,7 +9,7 @@ using Devantler.KubernetesGenerator.Flux.Models.Sources;
 using Devantler.KubernetesGenerator.Kustomize.Models.Patches;
 using k8s.Models;
 
-namespace Devantler.KubernetesGenerator.Flux.Tests.K3dConfigGeneratorTests;
+namespace Devantler.KubernetesGenerator.Flux.Tests.FluxKustomizationGeneratorTests;
 
 /// <summary>
 /// Tests for <see cref="FluxKustomizationGenerator"/>.
@@ -148,14 +148,12 @@ public class GenerateAsyncTests
     // Act
     string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
     if (File.Exists(outputPath))
-    {
       File.Delete(outputPath);
-    }
     await _generator.GenerateAsync(fluxKustomization, outputPath);
     string kustomizationFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(kustomizationFromFile);
+    _ = await Verify(kustomizationFromFile, extension: "yaml").UseFileName("kustomization.full.yaml");
 
     // Cleanup
     File.Delete(outputPath);
@@ -190,14 +188,12 @@ public class GenerateAsyncTests
     // Act
     string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
     if (File.Exists(outputPath))
-    {
       File.Delete(outputPath);
-    }
     await _generator.GenerateAsync(fluxKustomization, outputPath, true);
     string kustomizationFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(kustomizationFromFile);
+    _ = await Verify(kustomizationFromFile, extension: "yaml").UseFileName("kustomization.minimal.yaml");
 
     // Cleanup
     File.Delete(outputPath);

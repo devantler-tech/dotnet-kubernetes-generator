@@ -103,7 +103,7 @@ public class GenerateAsyncTests
     string ksailClusterConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(ksailClusterConfigFromFile);
+    _ = await Verify(ksailClusterConfigFromFile, extension: "yaml").UseFileName("ksail-config.full.yaml");
 
     // Cleanup
     File.Delete(outputPath);
@@ -129,7 +129,7 @@ public class GenerateAsyncTests
     string ksailClusterConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(ksailClusterConfigFromFile);
+    _ = await Verify(ksailClusterConfigFromFile, extension: "yaml").UseFileName("ksail-config.minimal.yaml");
 
     // Cleanup
     File.Delete(outputPath);
