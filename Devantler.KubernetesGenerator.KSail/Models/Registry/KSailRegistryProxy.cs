@@ -8,9 +8,7 @@ public class KSailRegistryProxy
   /// <summary>
   /// The URL of the upstream registry to proxy and cache images from.
   /// </summary>
-#pragma warning disable CA1056 // URI-like properties should not be strings
-  public string? Url { get; set; }
-#pragma warning restore CA1056 // URI-like properties should not be strings
+  public Uri? Url { get; set; }
 
   /// <summary>
   /// The username to authenticate with the upstream registry.

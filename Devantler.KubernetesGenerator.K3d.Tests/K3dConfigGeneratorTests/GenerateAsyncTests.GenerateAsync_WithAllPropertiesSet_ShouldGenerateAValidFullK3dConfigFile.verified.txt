@@ -45,7 +45,7 @@ registries:
     host: 0.0.0.0
     hostPort: 5000
     proxy:
-      remoteURL: https://registry-1.docker.io
+      remoteURL: https://registry-1.docker.io/
       username: ''
       password: ''
     volumes:

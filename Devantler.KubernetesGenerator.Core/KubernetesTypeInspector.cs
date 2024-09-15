@@ -33,8 +33,14 @@ sealed class KubernetesTypeInspector(ITypeInspector inner) : ITypeInspector
       }
     }
 
+
     foreach (var property in properties)
     {
+      if (property.Type == typeof(Uri))
+      {
+        skipped.Add(property.Name);
+        yield return new PropertyDescriptor(property) { TypeOverride = typeof(string) };
+      }
       if (!skipped.Contains(property.Name))
       {
         yield return property;

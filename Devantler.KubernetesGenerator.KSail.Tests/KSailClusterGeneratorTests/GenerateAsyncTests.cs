@@ -40,7 +40,7 @@ public class GenerateAsyncTests
             Name = "mirror-docker.io",
             Proxy = new KSailRegistryProxy
             {
-              Url = "https://registry-1.docker.io"
+              Url = new Uri("https://registry-1.docker.io")
             },
             HostPort = 5001
           },
@@ -49,7 +49,7 @@ public class GenerateAsyncTests
             Name = "mirror-registry.k8s.io",
             Proxy = new KSailRegistryProxy
             {
-              Url = "https://registry.k8s.io"
+              Url = new Uri("https://registry.k8s.io")
             },
             HostPort = 5002
           },
@@ -58,7 +58,7 @@ public class GenerateAsyncTests
             Name = "mirror-gcr.io",
             Proxy = new KSailRegistryProxy
             {
-              Url = "https://gcr.io"
+              Url = new Uri("https://gcr.io")
             },
             HostPort = 5002
           },
@@ -67,7 +67,7 @@ public class GenerateAsyncTests
             Name = "mirror-ghcr.io",
             Proxy = new KSailRegistryProxy
             {
-              Url = "https://ghcr.io"
+              Url = new Uri("https://ghcr.io")
             },
             HostPort = 5003
           },
@@ -76,7 +76,7 @@ public class GenerateAsyncTests
             Name = "mirror-mcr.microsoft.com",
             Proxy = new KSailRegistryProxy
             {
-              Url = "https://mcr.microsoft.com"
+              Url = new Uri("https://mcr.microsoft.com")
             },
             HostPort = 5004
           },
@@ -85,7 +85,7 @@ public class GenerateAsyncTests
             Name = "mirror-quay.io",
             Proxy = new KSailRegistryProxy
             {
-              Url = "https://quay.io"
+              Url = new Uri("https://quay.io")
             },
             HostPort = 5005
           }
