@@ -1,5 +1,5 @@
+#pragma warning disable CA2227
 namespace Devantler.KubernetesGenerator.Kustomize.Models.Patches;
-
 /// <summary>
 /// The target resource(s) to apply the patch to.
 /// </summary>
@@ -33,12 +33,10 @@ public class KustomizeTarget
   /// <summary>
   /// A label selector to match the resource by labels. (e.g. `app=nginx`)
   /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
   public IDictionary<string, string>? LabelSelector { get; set; }
 
   /// <summary>
   /// An annotation selector to match the resource by annotations. (e.g. `app=nginx`)
   /// </summary>
   public IDictionary<string, string>? AnnotationSelector { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
 }
