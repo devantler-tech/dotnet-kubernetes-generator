@@ -1,0 +1,23 @@
+﻿---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job
+  namespace: default
+spec:
+  completions: 1
+  parallelism: 1
+  selector:
+    matchLabels:
+      app: job
+  template:
+    metadata:
+      labels:
+        app: job
+    spec:
+      containers:
+      - command:
+        - echo
+        - hello
+        image: nginx
+        name: container

@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     var generator = new CSINodeGenerator();
     var model = new V1CSINode
     {
-      ApiVersion = "v1",
+      ApiVersion = "storage.k8s.io/v1",
       Kind = "CSINode",
       Metadata = new V1ObjectMeta
       {

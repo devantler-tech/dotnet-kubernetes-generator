@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     var generator = new APIServiceGenerator();
     var model = new V1APIService
     {
-      ApiVersion = "v1",
+      ApiVersion = "apiregistration.k8s.io/v1",
       Kind = "APIService",
       Metadata = new V1ObjectMeta
       {

@@ -1,0 +1,16 @@
+﻿---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota
+  namespace: default
+spec:
+  hard:
+    requests.cpu: &o0
+      format: DecimalSI
+      value: 1
+    requests.memory: &o1
+      format: BinarySI
+      value: 1Gi
+    limits.cpu: *o0
+    limits.memory: *o1

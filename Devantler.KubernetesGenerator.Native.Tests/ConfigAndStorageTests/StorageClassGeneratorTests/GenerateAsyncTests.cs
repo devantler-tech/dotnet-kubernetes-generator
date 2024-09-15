@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     var generator = new StorageClassGenerator();
     var model = new V1StorageClass
     {
-      ApiVersion = "v1",
+      ApiVersion = "storage.k8s.io/v1",
       Kind = "StorageClass",
       Metadata = new V1ObjectMeta
       {

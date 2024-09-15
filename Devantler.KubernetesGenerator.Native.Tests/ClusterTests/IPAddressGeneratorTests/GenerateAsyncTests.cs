@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     var generator = new IPAddressGenerator();
     var model = new V1beta1IPAddress
     {
-      ApiVersion = "v1beta1",
+      ApiVersion = "networking.k8s.io/v1beta1",
       Kind = "IPAddress",
       Metadata = new V1ObjectMeta
       {

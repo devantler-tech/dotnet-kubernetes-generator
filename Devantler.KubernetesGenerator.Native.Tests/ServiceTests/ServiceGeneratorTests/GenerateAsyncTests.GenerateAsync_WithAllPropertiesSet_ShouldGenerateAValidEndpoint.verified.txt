@@ -1,0 +1,17 @@
+﻿---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service
+  namespace: default
+spec:
+  type: ClusterIP
+  clusterIP: 192.168.34.21
+  ports:
+  - name: port-name
+    port: 80
+    protocol: TCP
+    targetPort:
+      value: 8080
+  selector:
+    app: app

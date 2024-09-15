@@ -1,0 +1,34 @@
+﻿---
+apiVersion: flowcontrol.apiserver.k8s.io/v1
+kind: FlowSchema
+metadata:
+  name: flow-schema
+  namespace: default
+spec:
+  distinguisherMethod:
+    type: ByUser
+  matchingPrecedence: 100
+  priorityLevelConfiguration:
+    name: priority-level-configuration
+  rules:
+  - nonResourceRules:
+    - nonResourceURLs:
+      - /healthz
+      verbs:
+      - get
+      - list
+    resourceRules:
+    - resources:
+      - pods
+      verbs:
+      - get
+      - list
+    subjects:
+    - kind: User
+      group:
+        name: system:authenticated
+      serviceAccount:
+        name: default
+        namespace: default
+      user:
+        name: admin

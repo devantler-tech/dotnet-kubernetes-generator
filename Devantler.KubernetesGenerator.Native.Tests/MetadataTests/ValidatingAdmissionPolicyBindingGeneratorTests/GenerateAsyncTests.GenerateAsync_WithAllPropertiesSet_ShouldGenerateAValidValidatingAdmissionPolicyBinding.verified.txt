@@ -1,0 +1,19 @@
+﻿---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingAdmissionPolicyBinding
+metadata:
+  name: validating-admission-policy-binding
+  namespace: default
+spec:
+  matchResources:
+    matchPolicy: Exact
+    namespaceSelector:
+      matchExpressions:
+      - key: env
+        operator: In
+        values:
+        - dev
+  policyName: validating-admission-policy
+  validationActions:
+  - create
+  - update

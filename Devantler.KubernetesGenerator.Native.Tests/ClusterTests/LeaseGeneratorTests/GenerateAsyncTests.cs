@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     var generator = new LeaseGenerator();
     var model = new V1Lease
     {
-      ApiVersion = "v1",
+      ApiVersion = "coordination.k8s.io/v1",
       Kind = "Lease",
       Metadata = new V1ObjectMeta
       {

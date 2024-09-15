@@ -1,0 +1,13 @@
+﻿---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: pod-disruption-budget
+  namespace: default
+spec:
+  maxUnavailable: &o0
+    value: 1
+  minAvailable: *o0
+  selector:
+    matchLabels:
+      app: nginx

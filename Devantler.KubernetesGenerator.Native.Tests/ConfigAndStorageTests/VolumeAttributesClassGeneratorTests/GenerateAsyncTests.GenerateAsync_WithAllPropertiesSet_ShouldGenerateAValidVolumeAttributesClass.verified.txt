@@ -1,9 +1,9 @@
 ﻿---
 apiVersion: storage.k8s.io/v1
-driverName: driver
 kind: VolumeAttributesClass
 metadata:
   name: volume-attributes-class
   namespace: default
+driverName: driver
 parameters:
   key: value

@@ -1,0 +1,17 @@
+﻿---
+apiVersion: flowcontrol.apiserver.k8s.io/v1
+kind: PriorityLevelConfiguration
+metadata:
+  name: priority-level-configuration
+  namespace: default
+spec:
+  type: Limited
+  exempt:
+    lendablePercent: 1
+    nominalConcurrencyShares: 1
+  limited:
+    borrowingLimitPercent: 1
+    lendablePercent: 1
+    limitResponse:
+      type: Reject
+    nominalConcurrencyShares: 1

@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     var generator = new ServiceCIDRGenerator();
     var model = new V1beta1ServiceCIDR
     {
-      ApiVersion = "v1beta1",
+      ApiVersion = "networking.k8s.io/v1beta1",
       Kind = "ServiceCIDR",
       Metadata = new V1ObjectMeta
       {

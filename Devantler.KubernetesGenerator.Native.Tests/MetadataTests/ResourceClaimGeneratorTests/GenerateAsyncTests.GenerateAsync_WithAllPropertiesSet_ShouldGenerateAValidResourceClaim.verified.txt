@@ -1,0 +1,18 @@
+﻿---
+apiVersion: resource.k8s.io/v1alpha3
+kind: ResourceClaim
+metadata:
+  name: resource-claim
+  namespace: default
+spec:
+  controller: controller
+  devices:
+    config:
+    - opaque:
+        driver: driver
+        parameters:
+          key: value
+    constraints:
+    - matchAttribute: match-attribute
+      requests:
+      - request

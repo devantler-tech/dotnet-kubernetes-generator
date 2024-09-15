@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     var generator = new CSIDriverGenerator();
     var model = new V1CSIDriver
     {
-      ApiVersion = "v1",
+      ApiVersion = "storage.k8s.io/v1",
       Kind = "CSIDriver",
       Metadata = new V1ObjectMeta
       {

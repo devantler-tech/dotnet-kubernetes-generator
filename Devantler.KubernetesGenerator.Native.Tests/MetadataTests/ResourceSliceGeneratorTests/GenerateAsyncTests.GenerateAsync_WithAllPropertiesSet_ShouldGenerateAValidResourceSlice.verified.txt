@@ -1,0 +1,16 @@
+﻿---
+apiVersion: resource.k8s.io/v1alpha3
+kind: ResourceSlice
+metadata:
+  name: resource-slice
+  namespace: default
+spec:
+  allNodes: true
+  devices:
+  - basic:
+      attributes:
+        key:
+          bool: true
+          int: 1
+          string: string
+    name: device

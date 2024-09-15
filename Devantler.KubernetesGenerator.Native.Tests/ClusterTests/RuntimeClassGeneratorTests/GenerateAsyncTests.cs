@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     var generator = new RuntimeClassGenerator();
     var model = new V1RuntimeClass
     {
-      ApiVersion = "v1",
+      ApiVersion = "node.k8s.io/v1",
       Kind = "RuntimeClass",
       Metadata = new V1ObjectMeta
       {

@@ -1,9 +1,9 @@
 ﻿---
 apiVersion: v1
-conditions:
-- status: True
-  type: Healthy
 kind: ComponentStatus
 metadata:
   name: component-status
   namespace: default
+conditions:
+- type: Healthy
+  status: True

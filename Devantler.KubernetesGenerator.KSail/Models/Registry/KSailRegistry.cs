@@ -32,6 +32,7 @@ public class KSailRegistry
 
   /// <summary>
   /// Whether this registry is the GitOps tool's OCI registry source for reconciliation.
+  /// </summary>
   public bool? IsGitOpsOCISource { get; set; }
 
   /// <summary>

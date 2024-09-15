@@ -1,8 +1,0 @@
-﻿---
-apiVersion: v1
-kind: SelfSubjectRulesReview
-metadata:
-  name: self-subject-rules-review
-  namespace: default
-spec:
-  namespace: default

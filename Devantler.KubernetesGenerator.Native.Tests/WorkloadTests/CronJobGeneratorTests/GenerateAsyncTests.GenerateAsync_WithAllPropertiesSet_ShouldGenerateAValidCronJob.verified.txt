@@ -1,0 +1,18 @@
+﻿---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-job
+  namespace: default
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - command:
+            - echo
+            - hello
+            image: nginx
+            name: container
+  schedule: '*/1 * * * *'

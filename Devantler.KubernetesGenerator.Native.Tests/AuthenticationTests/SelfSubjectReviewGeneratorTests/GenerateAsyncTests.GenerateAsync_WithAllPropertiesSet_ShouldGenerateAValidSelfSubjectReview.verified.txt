@@ -1,6 +1,0 @@
-﻿---
-apiVersion: v1
-kind: SelfSubjectReview
-metadata:
-  name: self-subject-review
-  namespace: default

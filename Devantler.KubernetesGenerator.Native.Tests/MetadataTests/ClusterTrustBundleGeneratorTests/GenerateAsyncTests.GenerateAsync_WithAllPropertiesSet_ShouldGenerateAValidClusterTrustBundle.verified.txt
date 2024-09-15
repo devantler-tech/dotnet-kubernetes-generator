@@ -1,0 +1,9 @@
+﻿---
+apiVersion: certificates.k8s.io/v1alpha1
+kind: ClusterTrustBundle
+metadata:
+  name: test-cluster-trust-bundle
+  namespace: default
+spec:
+  signerName: signer
+  trustBundle: trust-bundle

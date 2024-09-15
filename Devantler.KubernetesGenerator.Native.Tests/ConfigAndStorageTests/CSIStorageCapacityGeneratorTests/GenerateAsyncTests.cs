@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     var generator = new CSIStorageCapacityGenerator();
     var model = new V1CSIStorageCapacity
     {
-      ApiVersion = "v1",
+      ApiVersion = "storage.k8s.io/v1",
       Kind = "CSIStorageCapacity",
       Metadata = new V1ObjectMeta
       {

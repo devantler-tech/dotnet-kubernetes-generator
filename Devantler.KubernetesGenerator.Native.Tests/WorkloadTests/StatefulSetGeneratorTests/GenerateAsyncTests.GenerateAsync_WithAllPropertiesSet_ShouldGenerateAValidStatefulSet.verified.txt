@@ -1,0 +1,23 @@
+﻿---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stateful-set
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stateful-set
+  serviceName: stateful-set
+  template:
+    metadata:
+      labels:
+        app: stateful-set
+    spec:
+      containers:
+      - command:
+        - echo
+        - hello
+        image: nginx
+        name: container
