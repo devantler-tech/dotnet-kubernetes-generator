@@ -1,0 +1,29 @@
+﻿---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: persistent-volume-claim
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  dataSource:
+    kind: StorageClass
+    apiGroup: storage.k8s.io
+    name: storage-class
+  dataSourceRef:
+    kind: PersistentVolumeClaim
+    apiGroup: storage.k8s.io
+    name: pvc
+    namespace: default
+  resources:
+    requests:
+      storage:
+        format: BinarySI
+        value: 1Gi
+  selector:
+    matchLabels:
+      key: value
+  storageClassName: storage-class
+  volumeMode: Filesystem
+  volumeName: volume-name

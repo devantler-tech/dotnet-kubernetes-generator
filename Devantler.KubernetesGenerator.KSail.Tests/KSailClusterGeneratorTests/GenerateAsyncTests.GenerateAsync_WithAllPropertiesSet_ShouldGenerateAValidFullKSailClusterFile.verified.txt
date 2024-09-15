@@ -5,3 +5,39 @@ metadata:
   name: my-cluster
 spec:
   distribution: k3d
+  registries:
+  - name: ksail-registry
+    hostPort: 5000
+    isGitOpsOCISource: true
+    provider: docker
+  - name: mirror-docker.io
+    hostPort: 5001
+    proxy:
+      url: https://registry-1.docker.io/
+    provider: docker
+  - name: mirror-registry.k8s.io
+    hostPort: 5002
+    proxy:
+      url: https://registry.k8s.io/
+    provider: docker
+  - name: mirror-gcr.io
+    hostPort: 5002
+    proxy:
+      url: https://gcr.io/
+    provider: docker
+  - name: mirror-ghcr.io
+    hostPort: 5003
+    proxy:
+      url: https://ghcr.io/
+    provider: docker
+  - name: mirror-mcr.microsoft.com
+    hostPort: 5004
+    proxy:
+      url: https://mcr.microsoft.com/
+    provider: docker
+  - name: mirror-quay.io
+    hostPort: 5005
+    proxy:
+      url: https://quay.io/
+    provider: docker
+  gitOpsTool: flux

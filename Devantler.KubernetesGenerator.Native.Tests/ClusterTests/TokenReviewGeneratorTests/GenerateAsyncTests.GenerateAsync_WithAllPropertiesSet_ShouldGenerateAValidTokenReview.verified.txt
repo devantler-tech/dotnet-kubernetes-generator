@@ -1,0 +1,10 @@
+﻿---
+apiVersion: authentication.k8s.io/v1
+kind: TokenReview
+metadata:
+  name: token-review
+  namespace: default
+spec:
+  audiences:
+  - audience
+  token: token

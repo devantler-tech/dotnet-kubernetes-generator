@@ -1,0 +1,14 @@
+﻿---
+apiVersion: storage.k8s.io/v1
+kind: CSIStorageCapacity
+metadata:
+  name: csi-storage-capacity
+  namespace: default
+capacity: &o0
+  format: BinarySI
+  value: 1Gi
+maximumVolumeSize: *o0
+nodeTopology:
+  matchLabels:
+    key: value
+storageClassName: storage-class

@@ -8,9 +8,7 @@ public class K3dConfigRegistriesCreateProxy
   /// <summary>
   /// Remote URL of the proxy
   /// </summary>
-#pragma warning disable CA1056 // URI-like properties should not be strings
-  public required string RemoteURL { get; set; }
-#pragma warning restore CA1056 // URI-like properties should not be strings
+  public required Uri RemoteURL { get; set; }
 
   /// <summary>
   /// Username for the proxy

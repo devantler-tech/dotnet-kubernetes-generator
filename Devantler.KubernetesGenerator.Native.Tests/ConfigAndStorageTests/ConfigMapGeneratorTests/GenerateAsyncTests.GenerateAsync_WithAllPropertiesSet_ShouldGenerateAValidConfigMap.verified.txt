@@ -1,0 +1,14 @@
+﻿---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-map
+  namespace: default
+binaryData:
+  key:
+  - 1
+  - 2
+  - 3
+data:
+  key: value
+immutable: true

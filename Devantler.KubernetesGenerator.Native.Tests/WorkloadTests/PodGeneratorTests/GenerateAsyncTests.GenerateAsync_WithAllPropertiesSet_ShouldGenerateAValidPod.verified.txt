@@ -1,0 +1,13 @@
+﻿---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod
+  namespace: default
+spec:
+  containers:
+  - command:
+    - echo
+    - hello
+    image: nginx
+    name: container

@@ -1,4 +1,5 @@
 using Devantler.KubernetesGenerator.KSail.Models;
+using Devantler.KubernetesGenerator.KSail.Models.Registry;
 using k8s.Models;
 
 namespace Devantler.KubernetesGenerator.KSail.Tests.KSailClusterGeneratorTests;
@@ -24,7 +25,71 @@ public class GenerateAsyncTests
       },
       Spec = new KSailClusterSpec
       {
-        Distribution = KSailKubernetesDistribution.K3d
+        Distribution = KSailKubernetesDistribution.K3d,
+        GitOpsTool = KSailGitOpsTool.Flux,
+        Registries =
+        [
+          new KSailRegistry
+          {
+            Name = "ksail-registry",
+            HostPort = 5000,
+            IsGitOpsOCISource = true,
+          },
+          new KSailRegistry
+          {
+            Name = "mirror-docker.io",
+            Proxy = new KSailRegistryProxy
+            {
+              Url = new Uri("https://registry-1.docker.io")
+            },
+            HostPort = 5001
+          },
+          new KSailRegistry
+          {
+            Name = "mirror-registry.k8s.io",
+            Proxy = new KSailRegistryProxy
+            {
+              Url = new Uri("https://registry.k8s.io")
+            },
+            HostPort = 5002
+          },
+          new KSailRegistry
+          {
+            Name = "mirror-gcr.io",
+            Proxy = new KSailRegistryProxy
+            {
+              Url = new Uri("https://gcr.io")
+            },
+            HostPort = 5002
+          },
+          new KSailRegistry
+          {
+            Name = "mirror-ghcr.io",
+            Proxy = new KSailRegistryProxy
+            {
+              Url = new Uri("https://ghcr.io")
+            },
+            HostPort = 5003
+          },
+          new KSailRegistry
+          {
+            Name = "mirror-mcr.microsoft.com",
+            Proxy = new KSailRegistryProxy
+            {
+              Url = new Uri("https://mcr.microsoft.com")
+            },
+            HostPort = 5004
+          },
+          new KSailRegistry
+          {
+            Name = "mirror-quay.io",
+            Proxy = new KSailRegistryProxy
+            {
+              Url = new Uri("https://quay.io")
+            },
+            HostPort = 5005
+          }
+        ]
       }
     };
 

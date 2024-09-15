@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <AnalysisLevel>preview-all</AnalysisLevel>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
   </PropertyGroup>
@@ -17,5 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Devantler.KubernetesGenerator.Core\Devantler.KubernetesGenerator.Core.csproj" />
   </ItemGroup>
+
 
 </Project>

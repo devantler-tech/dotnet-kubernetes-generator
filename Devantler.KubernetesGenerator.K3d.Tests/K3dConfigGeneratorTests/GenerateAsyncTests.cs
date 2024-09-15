@@ -93,7 +93,7 @@ public class GenerateAsyncTests
           HostPort = "5000",
           Proxy = new K3dConfigRegistriesCreateProxy
           {
-            RemoteURL = "https://registry-1.docker.io",
+            RemoteURL = new Uri("https://registry-1.docker.io"),
             Username = "",
             Password = ""
           },

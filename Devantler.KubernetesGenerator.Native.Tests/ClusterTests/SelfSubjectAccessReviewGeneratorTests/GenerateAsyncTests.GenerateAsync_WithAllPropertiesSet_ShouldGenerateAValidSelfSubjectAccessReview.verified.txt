@@ -1,0 +1,15 @@
+﻿---
+apiVersion: authorization.k8s.io/v1
+kind: SelfSubjectAccessReview
+metadata:
+  name: self-subject-access-review
+  namespace: default
+spec:
+  resourceAttributes:
+    group: group
+    name: name
+    namespace: namespace
+    resource: resource
+    subresource: subresource
+    verb: verb
+    version: version

@@ -2,6 +2,7 @@ using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.System.Text.Json;
 
+
 namespace Devantler.KubernetesGenerator.Core;
 
 /// <summary>
@@ -11,9 +12,9 @@ namespace Devantler.KubernetesGenerator.Core;
 public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : class
 {
   readonly ISerializer _serializer = new SerializerBuilder()
+    .WithTypeInspector(inner => new KubernetesTypeInspector(new SystemTextJsonTypeInspector(inner)))
     .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
-    .WithNamingConvention(CamelCaseNamingConvention.Instance)
-    .WithTypeInspector(x => new SystemTextJsonTypeInspector(x)).Build();
+    .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
 
   /// <summary>
   /// Generates Kubernetes resources from the given model and writes them to the output path.

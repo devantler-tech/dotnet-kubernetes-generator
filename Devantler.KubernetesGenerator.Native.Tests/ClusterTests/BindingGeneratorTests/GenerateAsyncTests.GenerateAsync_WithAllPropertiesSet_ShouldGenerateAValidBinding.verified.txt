@@ -1,0 +1,12 @@
+﻿---
+apiVersion: v1
+kind: Binding
+metadata:
+  name: binding
+  namespace: default
+target:
+  apiVersion: v1
+  kind: Pod
+  name: pod-name
+  namespace: default
+  resourceVersion: 1
