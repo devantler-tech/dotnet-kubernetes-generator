@@ -133,36 +133,40 @@ data:
 
 ### Native
 
-#### Authenticaion
-
-- `CertificateSigningRequestGenerator`
-- `ClusterTrustBundleGenerator`
-- `SelfSubjectReviewGenerator`
-- `ServiceAccountGenerator`
-- `TokenReviewGenerator`
-
-#### Authorization
-
-- `ClusterRoleBindingGenerator`
-- `ClusterRoleGenerator`
-- `LocalSubjectAccessReviewGenerator`
-- `RoleBindingGenerator`
-- `RoleGenerator`
-- `SelfSubjectAccessReviewGenerator`
-- `SelfSubjectRulesReviewGenerator`
-- `SubjectAccessReviewGenerator`
+The native generators are categorized according to the groupings on [Kubernetes API Overview](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31)
 
 #### Cluster
 
 - `APIServiceGenerator`
+- `BindingGenerator`
+- `CertificateSigningRequestGenerator`
+- `ClusterRoleBindingGenerator`
+- `ClusterRoleGenerator`
 - `ComponentStatusGenerator`
-- `EventGenerator`
+- `FlowSchemaGenerator`
 - `IPAddressGenerator`
+- `LeaseCandidateGenerator`
 - `LeaseGenerator`
+- `LocalSubjectAccessReviewGenerator`
 - `NamespaceGenerator`
+- `NetworkPolicyGenerator`
 - `NodeGenerator`
+- `PersistentVolumeGenerator`
+- `PriorityLevelConfigurationGenerator`
+- `ResourceQuotaGenerator`
+- `RoleBindingGenerator`
+- `RoleGenerator`
 - `RuntimeClassGenerator`
+- `SelfSubjectAccessReviewGenerator`
+- `SelfSubjectReviewGenerator`
+- `SelfSubjectRulesReviewGenerator`
+- `ServiceAccountGenerator`
 - `ServiceCIDRGenerator`
+- `StorageVersionGenerator`
+- `StorageVersionMigrationGenerator`
+- `SubjectAccessReviewGenerator`
+- `TokenReviewGenerator`
+- `TokenRequestGenerator` ❌
 
 #### Config and Storage
 
@@ -171,29 +175,31 @@ data:
 - `CSINodeGenerator`
 - `CSIStorageCapacityGenerator`
 - `PersistentVolumeClaimGenerator`
-- `PersistentVolumeGenerator`
 - `SecretGenerator`
 - `StorageClassGenerator`
-- `StorageVersionMigrationGenerator`
 - `VolumeAttachmentGenerator`
 - `VolumeAttributesClassGenerator`
 
-#### Extend
+#### Metadata
 
+- `ClusterTrustBundleGenerator`
+- `ControllerRevisionGenerator`
 - `CustomResourceDefinitionGenerator`
-- `MutatingWebhookConfigurationGenerator`
-- `ValidatingWebhookConfigurationGenerator`
-
-#### Policy
-
-- `FlowSchemaGenerator`
+- `DeviceClassGenerator`
+- `EventGenerator`
+- `HorizontalPodAutoscalerGenerator`
 - `LimitRangeGenerator`
-- `NetworkPolicyGenerator`
+- `MutatingWebhookConfigurationGenerator`
 - `PodDisruptionBudgetGenerator`
-- `PriorityLevelConfigurationGenerator`
-- `ResourceQuotaGenerator`
+- `PodSchedulingContextGenerator`
+- `PodTemplateGenerator`
+- `PriorityClassGenerator`
+- `ResourceClaimGenerator`
+- `ResourceClaimTemplateGenerator`
+- `ResourceSliceGenerator`
 - `ValidatingAdmissionPolicyBindingGenerator`
 - `ValidatingAdmissionPolicyGenerator`
+- `ValidatingWebhookConfigurationGenerator`
 
 #### Service
 
@@ -203,140 +209,13 @@ data:
 - `IngressGenerator`
 - `ServiceGenerator`
 
-#### Workload
+#### Workloads
 
-- `BindingGenerator`
-- `ControllerRevisionGenerator`
 - `CronJobGenerator`
 - `DaemonSetGenerator`
 - `DeploymentGenerator`
-- `HorizontalPodAutoscalerGenerator`
 - `JobGenerator`
 - `PodGenerator`
-- `PodSchedulingContextGenerator`
-- `PodTemplateGenerator`
-- `PriorityClassGenerator`
 - `ReplicaSetGenerator`
 - `ReplicationControllerGenerator`
-- `ResourceClaimGenerator`
-- `ResourceClaimTemplateGenerator`
-- `ResourceSliceGenerator`
 - `StatefulSetGenerator`
-
-### To Do
-
-- `Challenge`
-- `Order`
-- `AutoscalingListener`
-- `AutoscalingRunnerSet`
-- `EphemeralRunner`
-- `EphemeralRunnerSet`
-- `ClusterComplianceReport`
-- `ClusterConfigAuditReport`
-- `ClusterInfraAssessmentReport`
-- `ClusterRbacAssessmentReport`
-- `ClusterSbomReport`
-- `ClusterVulnerabilityReport`
-- `ConfigAuditReport`
-- `ExposedSecretReport`
-- `InfraAssessmentReport`
-- `RbacAssessmentReport`
-- `SbomReport`
-- `VulnerabilityReport`
-- `VerticalPodAutoscalerCheckpoint`
-- `VerticalPodAutoscaler`
-- `CertificateRequest`
-- `Certificate`
-- `ClusterIssuer`
-- `Issuer`
-- `AuthCode`
-- `AuthRequest`
-- `Connector`
-- `DeviceRequest`
-- `DeviceToken`
-- `OAuth2Client`
-- `OfflineSessions`
-- `Password`
-- `RefreshToken`
-- `SigningKey`
-- `Executor`
-- `Webhook`
-- `GatewayClass`
-- `Gateway`
-- `GRPCRoute`
-- `HTTPRoute`
-- `ReferenceGrant`
-- `HelmChartConfig`
-- `HelmChart`
-- `HelmRelease`
-- `AccessControlPolicy`
-- `APIAccess`
-- `APIPortal`
-- `APIRateLimit`
-- `API`
-- `APIVersion`
-- `Addon`
-- `ETCDSnapshotFile`
-- `AdmissionReport`
-- `BackgroundScanReport`
-- `CleanupPolicy`
-- `ClusterAdmissionReport`
-- `ClusterBackgroundScanReport`
-- `ClusterCleanupPolicy`
-- `ClusterPolicy`
-- `GlobalContextEntry`
-- `Policy`
-- `PolicyException`
-- `UpdateRequest`
-- `NodeMetrics`
-- `PodMetrics`
-- `AlertmanagerConfig`
-- `Alertmanager`
-- `PodMonitor`
-- `Probe`
-- `PrometheusAgent`
-- `Prometheus`
-- `PrometheusRule`
-- `ScrapeConfig`
-- `ServiceMonitor`
-- `ThanosRuler`
-- `Alert`
-- `Provider`
-- `Receiver`
-- `AddonProvider`
-- `BootstrapProvider`
-- `ControlPlaneProvider`
-- `CoreProvider`
-- `InfrastructureProvider`
-- `IPAMProvider`
-- `RuntimeExtensionProvider`
-- `ClusterEphemeralReport`
-- `EphemeralReport`
-- `Bucket`
-- `GitRepository`
-- `HelmChart`
-- `HelmRepository`
-- `OCIRepository`
-- `Script`
-- `Template`
-- `TestExecution`
-- `Test`
-- `TestSource`
-- `TestSuiteExecution`
-- `TestSuite`
-- `TestTrigger`
-- `TestWorkflowExecution`
-- `TestWorkflow`
-- `TestWorkflowTemplate`
-- `IngressRoute`
-- `IngressRouteTCP`
-- `IngressRouteUDP`
-- `Middleware`
-- `MiddlewareTCP`
-- `ServersTransport`
-- `ServersTransportTCP`
-- `TLSOption`
-- `TLSStore`
-- `TraefikService`
-- `ClusterPolicyReport`
-- `PolicyReport`
