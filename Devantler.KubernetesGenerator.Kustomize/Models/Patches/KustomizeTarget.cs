@@ -36,7 +36,6 @@ public class KustomizeTarget
 #pragma warning disable CA2227 // Collection properties should be read only
   public IDictionary<string, string>? LabelSelector { get; set; }
 
-
   /// <summary>
   /// An annotation selector to match the resource by annotations. (e.g. `app=nginx`)
   /// </summary>
