@@ -7,9 +7,7 @@ metadata:
 handler: handler
 overhead:
   podFixed:
-    key:
-      format: DecimalSI
-      value: 1
+    key: 1
 scheduling:
   nodeSelector:
     key: value

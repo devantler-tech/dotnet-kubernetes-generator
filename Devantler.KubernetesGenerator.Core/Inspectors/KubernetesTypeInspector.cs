@@ -1,8 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using k8s.Models;
 using YamlDotNet.Serialization;
 
-namespace Devantler.KubernetesGenerator.Core;
+namespace Devantler.KubernetesGenerator.Core.Inspectors;
 
 /// <summary>
 /// A type inspector that prioritizes properties of Kubernetes resources, so they come first, and so they are ordered according to conventions.
@@ -34,7 +33,6 @@ sealed class KubernetesTypeInspector(ITypeInspector inner) : ITypeInspector
       }
     }
 
-
     foreach (var property in properties)
     {
       if (property.Type == typeof(Uri))
@@ -42,12 +40,7 @@ sealed class KubernetesTypeInspector(ITypeInspector inner) : ITypeInspector
         skipped.Add(property.Name);
         yield return new PropertyDescriptor(property) { TypeOverride = typeof(string) };
       }
-      if (property.Type == typeof(ResourceQuantity))
-      {
-        skipped.Add(property.Name);
-        yield return new PropertyDescriptor(property) { TypeOverride = typeof(string) };
-      }
-      if (!skipped.Contains(property.Name))
+      else if (!skipped.Contains(property.Name))
       {
         yield return property;
       }

@@ -1,3 +1,5 @@
+using Devantler.KubernetesGenerator.Core.Converters;
+using Devantler.KubernetesGenerator.Core.Inspectors;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.System.Text.Json;
@@ -13,6 +15,7 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
 {
   readonly ISerializer _serializer = new SerializerBuilder()
     .WithTypeInspector(inner => new KubernetesTypeInspector(new SystemTextJsonTypeInspector(inner)))
+    .WithTypeConverter(new ResourceQuantityTypeConverter())
     .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
     .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
 
