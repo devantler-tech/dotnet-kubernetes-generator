@@ -3,12 +3,12 @@
   "extends": ["config:recommended", ":disableDependencyDashboard"],
   "flux": {
     "fileMatch": [
-      "^k8s/.+\\.ya?ml$"
+      "^.+\\.ya?ml$"
     ]
   },
   "kubernetes": {
     "fileMatch": [
-      "^k8s/.+\\.ya?ml$"
+      "^.+\\.ya?ml$"
     ]
   },
   "github-actions": {
