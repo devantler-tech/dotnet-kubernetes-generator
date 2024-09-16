@@ -202,6 +202,11 @@ data:
 
 ## Supported Generators
 
+### Cert Manager
+
+- `CertManagerCertificateGenerator`
+- `CertManagerClusterIssuerGenerator`
+
 ### Flux
 
 - `FluxHelmReleaseGenerator`
