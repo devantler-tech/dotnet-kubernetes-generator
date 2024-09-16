@@ -1,0 +1,7 @@
+﻿---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: helm-repository
+spec:
+  url: https://my-helm-repo.com/
