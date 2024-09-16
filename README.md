@@ -203,6 +203,8 @@ data:
 
 ### Flux
 
+- `FluxHelmReleaseGenerator`
+- `FluxHelmRepositoryGenerator`
 - `FluxKustomizationGenerator`
 
 ### K3d
@@ -216,6 +218,7 @@ data:
 ### Kustomize
 
 - `KustomizeComponentGenerator`
+- `KustomizeKustomizationGenerator`
 
 ### Native
 
