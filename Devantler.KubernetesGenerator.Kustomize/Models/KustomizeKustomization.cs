@@ -4,19 +4,19 @@ using Devantler.KubernetesGenerator.Kustomize.Models.Patches;
 namespace Devantler.KubernetesGenerator.Kustomize.Models;
 
 /// <summary>
-/// A Kustomize component.
+/// A Kustomize Kustomization.
 /// </summary>
-public class KustomizeComponent
+public class KustomizeKustomization
 {
   /// <summary>
   /// API version to retrieve the Kubernetes object from.
   /// </summary>
-  public string ApiVersion { get; } = "kustomize.config.k8s.io/v1alpha1";
+  public string ApiVersion { get; } = "kustomize.config.k8s.io/v1beta1";
 
   /// <summary>
   /// Kind of Kubernetes object to retrieve.
   /// </summary>
-  public string Kind { get; } = "Component";
+  public string Kind { get; } = "Kustomization";
 
   /// <summary>
   /// Resources to include in the component.

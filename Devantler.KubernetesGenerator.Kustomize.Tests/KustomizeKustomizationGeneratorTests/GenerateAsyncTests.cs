@@ -2,24 +2,24 @@ using Devantler.KubernetesGenerator.Kustomize.Models;
 using Devantler.KubernetesGenerator.Kustomize.Models.Generators;
 using Devantler.KubernetesGenerator.Kustomize.Models.Patches;
 
-namespace Devantler.KubernetesGenerator.Kustomize.Tests.KustomizeComponentGeneratorTests;
+namespace Devantler.KubernetesGenerator.Kustomize.Tests.KustomizeKustomizationGeneratorTests;
 
 /// <summary>
-/// Tests for the <see cref="KustomizeComponent"/> generator.
+/// Tests for the <see cref="KustomizeKustomization"/> generator.
 /// </summary>
 public class GenerateAsyncTests
 {
-  readonly KustomizeComponentGenerator _generator = new();
+  readonly KustomizeKustomizationGenerator _generator = new();
 
   /// <summary>
-  /// Tests that <see cref="KustomizeComponentGenerator"/> generates a valid Kustomize component configuration with all properties set.
+  /// Tests that <see cref="KustomizeKustomizationGenerator"/> generates a valid Kustomize Kustomization with all properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidFullKustomizeComponentFile()
+  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidFullKustomizeKustomizationFile()
   {
     // Arrange
-    var component = new KustomizeComponent
+    var component = new KustomizeKustomization
     {
       Resources =
       [
@@ -80,7 +80,8 @@ public class GenerateAsyncTests
           }
         }
       ],
-      SecretGenerator = [
+      SecretGenerator =
+      [
         new KustomizeSecretGenerator
         {
           Name = "my-secret",
@@ -107,44 +108,40 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "component.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
     if (File.Exists(outputPath))
-    {
       File.Delete(outputPath);
-    }
     await _generator.GenerateAsync(component, outputPath);
     string fileContent = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName("component.full.yaml");
+    _ = await Verify(fileContent, extension: "yaml").UseFileName("kustomization.full.yaml");
 
     // Cleanup
     File.Delete(outputPath);
   }
 
   /// <summary>
-  /// Tests that <see cref="KustomizeComponentGenerator"/> generates a valid Kustomize component configuration with minimal properties set.
+  /// Tests that <see cref="KustomizeKustomizationGenerator"/> generates a valid Kustomize Kustomization with minimal properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithMinimalPropertiesSet_ShouldGenerateAValidMinimalKustomizeComponentFile()
+  public async Task GenerateAsync_WithMinimalPropertiesSet_ShouldGenerateAValidMinimalKustomizeKustomizationFile()
   {
     // Arrange
-    var component = new KustomizeComponent
+    var component = new KustomizeKustomization
     {
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "component.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
     if (File.Exists(outputPath))
-    {
       File.Delete(outputPath);
-    }
     await _generator.GenerateAsync(component, outputPath, true);
     string fileContent = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName("component.minimal.yaml");
+    _ = await Verify(fileContent, extension: "yaml").UseFileName("kustomization.minimal.yaml");
 
     // Cleanup
     File.Delete(outputPath);

@@ -1,0 +1,62 @@
+﻿---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- resource1.yaml
+- resource2.yaml
+secretGenerator:
+- name: my-secret
+  behavior: create
+  envs:
+  - .env
+  files:
+  - data.txt
+  - config.json
+  literals:
+  - KEY1=VALUE1
+  - KEY2=VALUE2
+  options:
+    disableNameSuffixHash: true
+    labels:
+    - app=nginx
+    annotations:
+    - zone=west
+configMapGenerator:
+- name: my-configmap
+  behavior: create
+  envs:
+  - .env
+  files:
+  - data.txt
+  - config.json
+  literals:
+  - KEY1=VALUE1
+  - KEY2=VALUE2
+  options:
+    disableNameSuffixHash: true
+    labels:
+    - app=nginx
+    annotations:
+    - zone=west
+patches:
+- path: patch1.yaml
+  patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: deployment1
+      labels:
+        app.kubernetes.io/version: 1.21.1
+  target:
+    kind: Deployment
+    name: deployment1
+    namespace: default
+    group: apps
+    version: v1
+    labelSelector:
+      app: nginx
+    annotationSelector:
+      zone: west
+  options:
+    allowNameChange: true
+    allowKindChange: true
