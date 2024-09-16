@@ -42,7 +42,8 @@ A simple code generator that can generate Kubernetes resources.
 │       ├── Generators
 │       └── Patches
 ├── Devantler.KubernetesGenerator.Kustomize.Tests
-│   └── KustomizeComponentGeneratorTests
+│   ├── KustomizeComponentGeneratorTests
+│   └── KustomizeKustomizationGeneratorTests
 ├── Devantler.KubernetesGenerator.Native
 │   ├── Cluster
 │   ├── ConfigAndStorage
@@ -125,7 +126,7 @@ A simple code generator that can generate Kubernetes resources.
         ├── ReplicationControllerGeneratorTests
         └── StatefulSetGeneratorTests
 
-112 directories
+113 directories
 ```
 <!-- readme-tree end -->
 
