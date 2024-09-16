@@ -27,6 +27,7 @@ A simple code generator that can generate Kubernetes resources.
 │       ├── SecretRef
 │       └── Sources
 ├── Devantler.KubernetesGenerator.Flux.Tests
+│   ├── FluxHelmReleaseGeneratorTests
 │   └── FluxKustomizationGeneratorTests
 ├── Devantler.KubernetesGenerator.K3d
 │   └── Models
@@ -126,7 +127,7 @@ A simple code generator that can generate Kubernetes resources.
         ├── ReplicationControllerGeneratorTests
         └── StatefulSetGeneratorTests
 
-113 directories
+114 directories
 ```
 <!-- readme-tree end -->
 
