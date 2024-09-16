@@ -60,3 +60,6 @@ patches:
   options:
     allowNameChange: true
     allowKindChange: true
+components:
+- component1.yaml
+- component2.yaml
