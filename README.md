@@ -149,6 +149,9 @@ A simple code generator that can generate Kubernetes resources.
 To get started, you can install the packages from NuGet.
 
 ```bash
+# For generating Cert Manager resources
+dotnet add package Devantler.KubernetesGenerator.CertManager
+
 # For generating Flux resources
 dotnet add package Devantler.KubernetesGenerator.Flux
 
