@@ -38,8 +38,8 @@ public class GenerateAsyncTests
             Version = "v1",
             Namespace = "default",
             Group = "apps",
-            LabelSelector = new Dictionary<string, string> { { "app", "nginx" } },
-            AnnotationSelector = new Dictionary<string, string> { { "zone", "west" } }
+            LabelSelector = "app=nginx",
+            AnnotationSelector = "zone=west"
           },
           Patch = """
           apiVersion: apps/v1

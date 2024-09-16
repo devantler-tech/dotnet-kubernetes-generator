@@ -89,8 +89,8 @@ public class GenerateAsyncTests
               Name = "my-deployment",
               Namespace = "my-deployment-namespace",
               Group = "my-group",
-              LabelSelector = new Dictionary<string, string> { { "key", "value" } },
-              AnnotationSelector = new Dictionary<string, string> { { "key", "value" } },
+              LabelSelector = "key=value",
+              AnnotationSelector = "key=value"
             },
             Patch = """
             apiVersion: apps/v1
