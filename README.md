@@ -16,9 +16,10 @@ A simple code generator that can generate Kubernetes resources.
 │   └── workflows
 ├── Devantler.KubernetesGenerator.CertManager
 │   └── Models
+│       └── IssuerRef
 ├── Devantler.KubernetesGenerator.CertManager.Tests
-│   ├── CertManagerCertificateGeneratorTests
-│   └── CertManagerClusterIssuerGeneratorTests
+│   ├── CertManagerCertificateGeneratorTests
+│   └── CertManagerClusterIssuerGeneratorTests
 ├── Devantler.KubernetesGenerator.Core
 │   ├── Converters
 │   └── Inspectors
@@ -133,7 +134,7 @@ A simple code generator that can generate Kubernetes resources.
         ├── ReplicationControllerGeneratorTests
         └── StatefulSetGeneratorTests
 
-115 directories
+121 directories
 ```
 <!-- readme-tree end -->
 
