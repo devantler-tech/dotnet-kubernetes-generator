@@ -1,0 +1,81 @@
+﻿---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  annotations:
+    key: value
+  labels:
+    key: value
+  name: my-kustomization
+  namespace: my-namespace
+spec:
+  interval: 10m
+  retryInterval: 5m
+  timeout: 30m
+  suspend: false
+  targetNamespace: my-target-namespace
+  dependsOn:
+  - name: my-dependency
+    namespace: my-dependency-namespace
+  sourceRef:
+    kind: GitRepository
+    name: my-git-repo
+    namespace: my-git-repo-namespace
+  path: my-path
+  prune: true
+  wait: true
+  healthChecks:
+  - apiVersion: v1
+    kind: Pod
+    name: my-pod
+    namespace: my-pod-namespace
+  serviceAccountName: my-service-account
+  commonMetadata:
+  - labels:
+      key: value
+    annotations:
+      key: value
+  namePrefix: my-prefix
+  nameSuffix: my-suffix
+  patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: my-deployment
+      spec:
+        replicas: 3
+    target:
+      kind: Deployment
+      name: my-deployment
+      namespace: my-deployment-namespace
+      group: my-group
+      version: v1
+      labelSelector:
+        key: value
+      annotationSelector:
+        key: value
+  images:
+  - name: my-image
+    newName: my-new-image
+    newTag: latest
+    digest: sha256:1234567890abcdef
+  components:
+  - my-component
+  postBuild:
+    substitute:
+      key: value
+    substituteFrom:
+    - kind: ConfigMap
+      name: my-configmap
+      optional: false
+  force: true
+  kubeConfig:
+    secretRef:
+      name: my-secret
+      key: value.yaml
+  decryption:
+    provider: sops
+    secretRef:
+      name: my-secret
+      key: sops-age

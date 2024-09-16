@@ -16,6 +16,11 @@ public enum FluxSource
   OCIRepository,
 
   /// <summary>
+  /// The source reference is a HelmRepository.
+  /// </summary>
+  HelmRepository,
+
+  /// <summary>
   /// The source reference is a Bucket.
   /// </summary>
   Bucket
