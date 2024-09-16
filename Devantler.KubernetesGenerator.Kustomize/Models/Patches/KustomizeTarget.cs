@@ -33,10 +33,10 @@ public class KustomizeTarget
   /// <summary>
   /// A label selector to match the resource by labels. (e.g. `app=nginx`)
   /// </summary>
-  public IDictionary<string, string>? LabelSelector { get; set; }
+  public string? LabelSelector { get; set; }
 
   /// <summary>
   /// An annotation selector to match the resource by annotations. (e.g. `app=nginx`)
   /// </summary>
-  public IDictionary<string, string>? AnnotationSelector { get; set; }
+  public string? AnnotationSelector { get; set; }
 }

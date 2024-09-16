@@ -51,10 +51,8 @@ spec:
       namespace: my-deployment-namespace
       group: my-group
       version: v1
-      labelSelector:
-        key: value
-      annotationSelector:
-        key: value
+      labelSelector: key=value
+      annotationSelector: key=value
   images:
   - name: my-image
     newName: my-new-image

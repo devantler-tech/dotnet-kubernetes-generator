@@ -53,10 +53,8 @@ patches:
     namespace: default
     group: apps
     version: v1
-    labelSelector:
-      app: nginx
-    annotationSelector:
-      zone: west
+    labelSelector: app=nginx
+    annotationSelector: zone=west
   options:
     allowNameChange: true
     allowKindChange: true
