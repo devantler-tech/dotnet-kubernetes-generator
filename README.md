@@ -14,6 +14,11 @@ A simple code generator that can generate Kubernetes resources.
 .
 ├── .github
 │   └── workflows
+├── Devantler.KubernetesGenerator.CertManager
+│   └── Models
+├── Devantler.KubernetesGenerator.CertManager.Tests
+│   ├── CertManagerCertificateGeneratorTests
+│   └── CertManagerClusterIssuerGeneratorTests
 ├── Devantler.KubernetesGenerator.Core
 │   ├── Converters
 │   └── Inspectors
@@ -201,6 +206,11 @@ data:
 ```
 
 ## Supported Generators
+
+### Cert Manager
+
+- `CertManagerCertificateGenerator`
+- `CertManagerClusterIssuerGenerator`
 
 ### Flux
 
