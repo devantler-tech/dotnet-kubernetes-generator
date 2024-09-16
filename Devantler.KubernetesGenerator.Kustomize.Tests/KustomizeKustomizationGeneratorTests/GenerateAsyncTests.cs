@@ -104,6 +104,10 @@ public class GenerateAsyncTests
             Annotations = ["zone=west"]
           }
         }
+      ],
+      Components = [
+        "component1.yaml",
+        "component2.yaml"
       ]
     };
 

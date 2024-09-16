@@ -37,4 +37,10 @@ public class KustomizeKustomization
   /// A kustomize feature to apply customizations to existing resources.
   /// </summary>
   public IEnumerable<KustomizePatch>? Patches { get; set; }
+
+  /// <summary>
+  /// A kustomize feature to apply components to the kustomization.
+  /// </summary>
+  public IEnumerable<string>? Components { get; set; }
+
 }
