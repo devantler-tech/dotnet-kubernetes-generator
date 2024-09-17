@@ -14,6 +14,7 @@ namespace Devantler.KubernetesGenerator.Core;
 public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : class
 {
   readonly ISerializer _serializer = new SerializerBuilder()
+    .DisableAliases()
     .WithTypeInspector(inner => new KubernetesTypeInspector(new SystemTextJsonTypeInspector(inner)))
     .WithTypeConverter(new IntstrIntOrStringTypeConverter())
     .WithTypeConverter(new ResourceQuantityTypeConverter())
