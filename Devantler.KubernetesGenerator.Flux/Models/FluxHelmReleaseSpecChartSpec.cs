@@ -15,7 +15,7 @@ public class FluxHelmReleaseSpecChartSpec
   /// <summary>
   /// The version of the chart to install.
   /// </summary>
-  public required string Version { get; set; }
+  public string? Version { get; set; }
 
   /// <summary>
   /// The source reference of the chart to install.
