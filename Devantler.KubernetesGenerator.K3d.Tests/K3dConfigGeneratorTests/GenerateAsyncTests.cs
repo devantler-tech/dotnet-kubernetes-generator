@@ -30,7 +30,7 @@ public class GenerateAsyncTests
         HostIP = "127.0.0.1",
         HostPort = "6445"
       },
-      Image = "rancher/k3s:v1.31.0-k3s1",
+      Image = "rancher/k3s:v1.31.1-k3s1",
       Network = "my-custom-net",
       Subnet = "172.28.0.0/16",
       Token = "superSecretToken",
