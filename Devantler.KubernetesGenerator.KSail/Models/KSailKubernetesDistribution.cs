@@ -11,5 +11,11 @@ public enum KSailKubernetesDistribution
   /// The k3d Kubernetes distribution.
   /// </summary>
   [EnumMember(Value = "k3d")]
-  K3d
+  K3d,
+
+  /// <summary>
+  /// The kind Kubernetes distribution.
+  /// </summary>
+  [EnumMember(Value = "kind")]
+  Kind
 }
