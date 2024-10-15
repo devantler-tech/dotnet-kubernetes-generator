@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace Devantler.KubernetesGenerator.KSail.Models;
 
 /// <summary>
@@ -8,5 +10,6 @@ public enum KSailContainerEngine
   /// <summary>
   /// Docker container engine.
   /// </summary>
+  [EnumMember(Value = "docker")]
   Docker
 }

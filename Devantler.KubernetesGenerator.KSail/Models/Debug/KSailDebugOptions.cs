@@ -10,22 +10,3 @@ public class KSailDebugOptions
   /// </summary>
   public DebugEditor? Editor { get; set; }
 }
-
-/// <summary>
-/// The editor to use for viewing files while debugging.
-/// </summary>
-public enum DebugEditor
-{
-  /// <summary>
-  /// Visual Studio Code
-  /// </summary>
-  VisualStudioCode,
-  /// <summary>
-  /// Nano
-  /// </summary>
-  Nano,
-  /// <summary>
-  /// Vim
-  /// </summary>
-  Vim
-}

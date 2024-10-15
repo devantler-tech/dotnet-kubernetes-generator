@@ -4,8 +4,16 @@ kind: Cluster
 metadata:
   name: my-cluster
 spec:
+  kubeconfig: ./.kube/config
+  context: my-cluster
+  timeout: 300
+  manifestsDirectory: ./k8s
+  kustomizationDirectory: ./clusters/my-cluster/flux-system
+  configPath: ./k3d-config.yaml
   distribution: k3d
   gitOpsTool: flux
+  containerEngine: docker
+  sops: true
   registries:
   - name: ksail-registry
     hostPort: 5000
@@ -41,3 +49,25 @@ spec:
     proxy:
       url: https://quay.io/
     provider: docker
+  checkOptions: {}
+  debugOptions:
+    editor: nano
+  downOptions:
+    registries: true
+  genOptions: {}
+  initOptions:
+    components: true
+    helmReleases: true
+    postBuildVariables: true
+    template: flux-default
+  lintOptions: {}
+  listOptions: {}
+  sopsOptions: {}
+  startOptions: {}
+  stopOptions: {}
+  upOptions:
+    lint: true
+    reconcile: true
+  updateOptions:
+    lint: true
+    reconcile: true

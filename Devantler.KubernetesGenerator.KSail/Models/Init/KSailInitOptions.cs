@@ -6,11 +6,6 @@ namespace Devantler.KubernetesGenerator.KSail.Models.Init;
 public class KSailInitOptions
 {
   /// <summary>
-  /// The output directory for the generated files.
-  /// </summary>
-  public string? Output { get; set; }
-
-  /// <summary>
   /// Whether to include Kustomize components in the generated output.
   /// </summary>
   public bool? Components { get; set; }
@@ -23,7 +18,7 @@ public class KSailInitOptions
   /// <summary>
   /// Whether to include post build variables in the generated output (flux feature).
   /// </summary>
-  public bool? Variables { get; set; }
+  public bool? PostBuildVariables { get; set; }
 
   /// <summary>
   /// The template to use for the generated output.

@@ -3,10 +3,12 @@ using Devantler.KubernetesGenerator.KSail.Models.Debug;
 using Devantler.KubernetesGenerator.KSail.Models.Down;
 using Devantler.KubernetesGenerator.KSail.Models.Gen;
 using Devantler.KubernetesGenerator.KSail.Models.Init;
+using Devantler.KubernetesGenerator.KSail.Models.Lint;
 using Devantler.KubernetesGenerator.KSail.Models.List;
 using Devantler.KubernetesGenerator.KSail.Models.Registry;
 using Devantler.KubernetesGenerator.KSail.Models.Sops;
 using Devantler.KubernetesGenerator.KSail.Models.Start;
+using Devantler.KubernetesGenerator.KSail.Models.Stop;
 using Devantler.KubernetesGenerator.KSail.Models.Up;
 using Devantler.KubernetesGenerator.KSail.Models.Update;
 
@@ -65,7 +67,7 @@ public class KSailClusterSpec
   /// <summary>
   /// Whether to enable SOPS support.
   /// </summary>
-  public bool? SOPS { get; set; }
+  public bool? Sops { get; set; }
 
   /// <summary>
   /// The registries to create for the KSail cluster to reconcile flux artifacts, and to proxy and cache images.
@@ -100,7 +102,7 @@ public class KSailClusterSpec
   /// <summary>
   /// The options to use for the 'lint' command.
   /// </summary>
-  public KSailInitOptions? LintOptions { get; set; }
+  public KSailLintOptions? LintOptions { get; set; }
 
   /// <summary>
   /// The options to use for the 'list' command.
@@ -120,7 +122,7 @@ public class KSailClusterSpec
   /// <summary>
   /// The options to use for the 'stop' command.
   /// </summary>
-  public KSailSopsOptions? StopOptions { get; set; }
+  public KSailStopOptions? StopOptions { get; set; }
 
   /// <summary>
   /// The options to use for the 'up' command.
