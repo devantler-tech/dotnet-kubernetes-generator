@@ -1,5 +1,17 @@
 using Devantler.KubernetesGenerator.KSail.Models;
+using Devantler.KubernetesGenerator.KSail.Models.Check;
+using Devantler.KubernetesGenerator.KSail.Models.Debug;
+using Devantler.KubernetesGenerator.KSail.Models.Down;
+using Devantler.KubernetesGenerator.KSail.Models.Gen;
+using Devantler.KubernetesGenerator.KSail.Models.Init;
+using Devantler.KubernetesGenerator.KSail.Models.Lint;
+using Devantler.KubernetesGenerator.KSail.Models.List;
 using Devantler.KubernetesGenerator.KSail.Models.Registry;
+using Devantler.KubernetesGenerator.KSail.Models.Sops;
+using Devantler.KubernetesGenerator.KSail.Models.Start;
+using Devantler.KubernetesGenerator.KSail.Models.Stop;
+using Devantler.KubernetesGenerator.KSail.Models.Up;
+using Devantler.KubernetesGenerator.KSail.Models.Update;
 using k8s.Models;
 
 namespace Devantler.KubernetesGenerator.KSail.Tests.KSailClusterGeneratorTests;
@@ -25,8 +37,16 @@ public class GenerateAsyncTests
       },
       Spec = new KSailClusterSpec
       {
+        Kubeconfig = "./.kube/config",
+        Context = "my-cluster",
+        Timeout = 300,
+        ManifestsDirectory = "./k8s",
+        KustomizationDirectory = "./clusters/my-cluster/flux-system",
+        ConfigPath = "./k3d-config.yaml",
         Distribution = KSailKubernetesDistribution.K3d,
         GitOpsTool = KSailGitOpsTool.Flux,
+        ContainerEngine = KSailContainerEngine.Docker,
+        Sops = true,
         Registries =
         [
           new KSailRegistry
@@ -89,7 +109,53 @@ public class GenerateAsyncTests
             },
             HostPort = 5005
           }
-        ]
+        ],
+        CheckOptions = new KSailCheckOptions
+        {
+        },
+        DebugOptions = new KSailDebugOptions
+        {
+          Editor = DebugEditor.Nano
+        },
+        DownOptions = new KSailDownOptions
+        {
+          Registries = true
+        },
+        GenOptions = new KSailGenOptions
+        {
+        },
+        InitOptions = new KSailInitOptions
+        {
+          Template = KSailInitTemplate.FluxDefault,
+          Components = true,
+          HelmReleases = true,
+          PostBuildVariables = true
+        },
+        LintOptions = new KSailLintOptions
+        {
+        },
+        ListOptions = new KSailListOptions
+        {
+        },
+        SopsOptions = new KSailSopsOptions
+        {
+        },
+        StartOptions = new KSailStartOptions
+        {
+        },
+        StopOptions = new KSailStopOptions
+        {
+        },
+        UpOptions = new KSailUpOptions
+        {
+          Lint = true,
+          Reconcile = true,
+        },
+        UpdateOptions = new KSailUpdateOptions
+        {
+          Lint = true,
+          Reconcile = true,
+        }
       }
     };
 
