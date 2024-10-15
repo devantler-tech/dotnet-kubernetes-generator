@@ -18,6 +18,11 @@ public class KSailClusterSpec
   public KSailGitOpsTool? GitOpsTool { get; set; }
 
   /// <summary>
+  /// The container engine to use for the KSail cluster.
+  /// </summary>
+  public KSailContainerEngine? ContainerEngine { get; set; }
+
+  /// <summary>
   /// The registries to create for the KSail cluster to reconcile flux artifacts, and to proxy and cache images.
   /// </summary>
   public IEnumerable<KSailRegistry>? Registries { get; set; }
