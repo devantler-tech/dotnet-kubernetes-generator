@@ -13,7 +13,7 @@ public class KSailRegistry
   /// <summary>
   /// The host port of the registry (if applicable).
   /// </summary>
-  public int? HostPort { get; set; }
+  public int HostPort { get; set; }
 
   /// <summary>
   /// An optional proxy for the registry to use to proxy and cache images.
