@@ -1,3 +1,4 @@
+using Devantler.K9sCLI;
 using Devantler.KubernetesGenerator.KSail.Models;
 using Devantler.KubernetesGenerator.KSail.Models.Check;
 using Devantler.KubernetesGenerator.KSail.Models.Debug;
@@ -115,7 +116,7 @@ public class GenerateAsyncTests
         },
         DebugOptions = new KSailDebugOptions
         {
-          Editor = DebugEditor.Nano
+          Editor = Editor.Nano
         },
         DownOptions = new KSailDownOptions
         {

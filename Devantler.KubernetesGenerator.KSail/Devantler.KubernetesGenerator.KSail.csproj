@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Devantler.K9sCLI" Version="0.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="../Devantler.KubernetesGenerator.Core/Devantler.KubernetesGenerator.Core.csproj" />
     <ProjectReference Include="../Devantler.KubernetesGenerator.Native/Devantler.KubernetesGenerator.Native.csproj" />
   </ItemGroup>

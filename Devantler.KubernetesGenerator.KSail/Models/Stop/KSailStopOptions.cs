@@ -1,3 +1,4 @@
+# pragma warning disable CA1716
 namespace Devantler.KubernetesGenerator.KSail.Models.Stop;
 
 /// <summary>
