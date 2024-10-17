@@ -1,5 +1,5 @@
 using Devantler.KubernetesGenerator.Core;
-using Devantler.KubernetesGenerator.KSail.Models;
+using KSail.Models;
 
 namespace Devantler.KubernetesGenerator.KSail;
 

@@ -1,19 +1,19 @@
 using Devantler.K9sCLI;
-using Devantler.KubernetesGenerator.KSail.Models;
-using Devantler.KubernetesGenerator.KSail.Models.Check;
-using Devantler.KubernetesGenerator.KSail.Models.Debug;
-using Devantler.KubernetesGenerator.KSail.Models.Down;
-using Devantler.KubernetesGenerator.KSail.Models.Gen;
-using Devantler.KubernetesGenerator.KSail.Models.Init;
-using Devantler.KubernetesGenerator.KSail.Models.Lint;
-using Devantler.KubernetesGenerator.KSail.Models.List;
-using Devantler.KubernetesGenerator.KSail.Models.Registry;
-using Devantler.KubernetesGenerator.KSail.Models.Sops;
-using Devantler.KubernetesGenerator.KSail.Models.Start;
-using Devantler.KubernetesGenerator.KSail.Models.Stop;
-using Devantler.KubernetesGenerator.KSail.Models.Up;
-using Devantler.KubernetesGenerator.KSail.Models.Update;
 using k8s.Models;
+using KSail.Models;
+using KSail.Models.Commands.Check;
+using KSail.Models.Commands.Debug;
+using KSail.Models.Commands.Down;
+using KSail.Models.Commands.Gen;
+using KSail.Models.Commands.Init;
+using KSail.Models.Commands.Lint;
+using KSail.Models.Commands.List;
+using KSail.Models.Commands.Sops;
+using KSail.Models.Commands.Start;
+using KSail.Models.Commands.Stop;
+using KSail.Models.Commands.Up;
+using KSail.Models.Commands.Update;
+using KSail.Models.Registry;
 
 namespace Devantler.KubernetesGenerator.KSail.Tests.KSailClusterGeneratorTests;
 
@@ -30,13 +30,14 @@ public class GenerateAsyncTests
   public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidFullKSailClusterFile()
   {
     // Arrange
+    string name = "my-cluster";
     var cluster = new KSailCluster
     {
       Metadata = new V1ObjectMeta
       {
-        Name = "my-cluster"
+        Name = name
       },
-      Spec = new KSailClusterSpec
+      Spec = new KSailClusterSpec(name)
       {
         Kubeconfig = "./.kube/config",
         Context = "my-cluster",
@@ -127,7 +128,7 @@ public class GenerateAsyncTests
         },
         InitOptions = new KSailInitOptions
         {
-          Template = KSailInitTemplate.FluxDefault,
+          Template = KSailInitTemplate.Simple,
           Components = true,
           HelmReleases = true,
           PostBuildVariables = true
