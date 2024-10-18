@@ -38,11 +38,22 @@ A simple code generator that can generate Kubernetes resources.
 │   └── FluxKustomizationGeneratorTests
 ├── Devantler.KubernetesGenerator.K3d
 │   └── Models
+│       ├── Options
+│       │   ├── K3d
+│       │   ├── K3s
+│       │   └── Runtime
+│       └── Registries
 ├── Devantler.KubernetesGenerator.K3d.Tests
 │   └── K3dConfigGeneratorTests
 ├── Devantler.KubernetesGenerator.KSail
 ├── Devantler.KubernetesGenerator.KSail.Tests
 │   └── KSailClusterGeneratorTests
+├── Devantler.KubernetesGenerator.Kind
+│   └── Models
+│       ├── Networking
+│       └── Nodes
+├── Devantler.KubernetesGenerator.Kind.Tests
+│   └── KindConfigGeneratorTests
 ├── Devantler.KubernetesGenerator.Kustomize
 │   └── Models
 │       ├── Generators
@@ -132,7 +143,7 @@ A simple code generator that can generate Kubernetes resources.
         ├── ReplicationControllerGeneratorTests
         └── StatefulSetGeneratorTests
 
-119 directories
+130 directories
 ```
 <!-- readme-tree end -->
 
