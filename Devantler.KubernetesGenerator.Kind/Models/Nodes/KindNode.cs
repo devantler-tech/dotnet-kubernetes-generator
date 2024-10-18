@@ -13,7 +13,7 @@ public class KindNode
   /// <summary>
   /// The image to use for the node.
   /// </summary>
-  public string Image { get; set; } = "kindest/node:v1.31.0";
+  public string Image { get; set; } = "kindest/node:v1.31.1";
 
   /// <summary>
   /// Extra mounts to add to the node.
