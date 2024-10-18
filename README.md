@@ -153,6 +153,9 @@ dotnet add package Devantler.KubernetesGenerator.CertManager
 # For generating Flux resources
 dotnet add package Devantler.KubernetesGenerator.Flux
 
+# For generating Kind resources
+dotnet add package Devantler.KubernetesGenerator.Kind
+
 # For generating K3d resources
 dotnet add package Devantler.KubernetesGenerator.K3d
 
