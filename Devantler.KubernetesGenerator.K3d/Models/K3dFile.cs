@@ -3,7 +3,7 @@ namespace Devantler.KubernetesGenerator.K3d.Models;
 /// <summary>
 /// A file that is mounted onto nodes.
 /// </summary>
-public class K3dConfigFile
+public class K3dFile
 {
   /// <summary>
   /// Description of the file.

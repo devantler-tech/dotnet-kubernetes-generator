@@ -119,7 +119,7 @@ public class GenerateAsyncTests
     string fileContent = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName("kustomization.full.yaml");
+    _ = await Verify(fileContent, extension: "yaml").UseFileName("kustomization.full");
 
     // Cleanup
     File.Delete(outputPath);
@@ -145,7 +145,7 @@ public class GenerateAsyncTests
     string fileContent = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName("kustomization.minimal.yaml");
+    _ = await Verify(fileContent, extension: "yaml").UseFileName("kustomization.minimal");
 
     // Cleanup
     File.Delete(outputPath);

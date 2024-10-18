@@ -1,9 +1,9 @@
-namespace Devantler.KubernetesGenerator.K3d.Models;
+namespace Devantler.KubernetesGenerator.K3d.Models.Registries;
 
 /// <summary>
 /// Configuration for creating a registry in k3d
 /// </summary>
-public class K3dConfigRegistriesCreate
+public class K3dRegistriesCreate
 {
   /// <summary>
   /// Name of the registry
@@ -23,7 +23,7 @@ public class K3dConfigRegistriesCreate
   /// <summary>
   /// Proxy configuration for the registry
   /// </summary>
-  public K3dConfigRegistriesCreateProxy? Proxy { get; set; }
+  public K3dRegistriesCreateProxy? Proxy { get; set; }
 
   /// <summary>
   /// Volumes for the registry

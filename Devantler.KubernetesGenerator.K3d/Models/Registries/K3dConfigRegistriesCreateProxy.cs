@@ -1,9 +1,9 @@
-namespace Devantler.KubernetesGenerator.K3d.Models;
+namespace Devantler.KubernetesGenerator.K3d.Models.Registries;
 
 /// <summary>
 /// Proxy configuration for the registry
 /// </summary>
-public class K3dConfigRegistriesCreateProxy
+public class K3dRegistriesCreateProxy
 {
   /// <summary>
   /// Remote URL of the proxy

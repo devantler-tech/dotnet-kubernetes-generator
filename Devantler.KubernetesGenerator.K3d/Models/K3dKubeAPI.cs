@@ -3,7 +3,7 @@ namespace Devantler.KubernetesGenerator.K3d.Models;
 /// <summary>
 /// Configuration for the KubeAPI.
 /// </summary>
-public class K3dConfigKubeAPI
+public class K3dKubeAPI
 {
   /// <summary>
   /// The host of the KubeAPI.

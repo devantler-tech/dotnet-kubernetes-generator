@@ -1,3 +1,5 @@
+using Devantler.KubernetesGenerator.K3d.Models.Options;
+using Devantler.KubernetesGenerator.K3d.Models.Registries;
 using k8s.Models;
 
 namespace Devantler.KubernetesGenerator.K3d.Models;
@@ -7,6 +9,7 @@ namespace Devantler.KubernetesGenerator.K3d.Models;
 /// </summary>
 public class K3dConfig
 {
+
   /// <summary>
   /// API version for the K3d cluster.
   /// </summary>
@@ -35,7 +38,7 @@ public class K3dConfig
   /// <summary>
   /// Configuration for the KubeAPI.
   /// </summary>
-  public K3dConfigKubeAPI? KubeAPI { get; set; }
+  public K3dKubeAPI? KubeAPI { get; set; }
 
   /// <summary>
   /// Image to use for the K3d cluster.
@@ -60,34 +63,34 @@ public class K3dConfig
   /// <summary>
   /// Volumes to use for the K3d cluster.
   /// </summary>
-  public IEnumerable<K3dConfigVolume>? Volumes { get; set; }
+  public IEnumerable<K3dVolume>? Volumes { get; set; }
 
   /// <summary>
   /// Ports to use for the K3d cluster.
   /// </summary>
-  public IEnumerable<K3dConfigPort>? Ports { get; set; }
+  public IEnumerable<K3dPort>? Ports { get; set; }
 
   /// <summary>
   /// Environment variables to use for the K3d cluster.
   /// </summary>
-  public IEnumerable<K3dConfigEnv>? Env { get; set; }
+  public IEnumerable<K3dEnv>? Env { get; set; }
 
   /// <summary>
   /// Files to put into the K3d cluster.
   /// </summary>
-  public IEnumerable<K3dConfigFile>? Files { get; set; }
+  public IEnumerable<K3dFile>? Files { get; set; }
 
   /// <summary>
   /// Registries to use for the K3d cluster.
   /// </summary>
-  public K3dConfigRegistries? Registries { get; set; }
+  public K3dRegistries? Registries { get; set; }
 
   /// <summary>
   /// /etc/hosts style entries to be injected into /etc/hosts in the node containers and in the NodeHosts section in CoreDNS
   /// </summary>
-  public IEnumerable<K3dConfigHostAlias>? HostAliases { get; set; }
+  public IEnumerable<K3dHostAlias>? HostAliases { get; set; }
   /// <summary>
   /// Options to use for the K3d cluster.
   /// </summary>
-  public K3dConfigOptions? Options { get; set; }
+  public K3dOptions? Options { get; set; }
 }

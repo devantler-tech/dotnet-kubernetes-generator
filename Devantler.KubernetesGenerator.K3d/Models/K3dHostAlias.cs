@@ -3,7 +3,7 @@ namespace Devantler.KubernetesGenerator.K3d.Models;
 /// <summary>
 /// A host alias for a K3d cluster.
 /// </summary>
-public class K3dConfigHostAlias
+public class K3dHostAlias
 {
   /// <summary>
   /// IP for the host alias.

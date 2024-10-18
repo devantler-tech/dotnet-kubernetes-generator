@@ -1,9 +1,9 @@
-namespace Devantler.KubernetesGenerator.K3d.Models;
+namespace Devantler.KubernetesGenerator.K3d.Models.Options.K3d;
 
 /// <summary>
 /// Configuration options for k3d
 /// </summary>
-public class K3dConfigOptionsK3d
+public class K3dOptionsK3d
 {
   /// <summary>
   /// Wait for cluster to be usable before returning
@@ -33,5 +33,5 @@ public class K3dConfigOptionsK3d
   /// <summary>
   /// Configuration for the loadbalancer
   /// </summary>
-  public K3dConfigOptionsK3dLoadbalancer? Loadbalancer { get; set; }
+  public K3dOptionsK3dLoadbalancer? Loadbalancer { get; set; }
 }

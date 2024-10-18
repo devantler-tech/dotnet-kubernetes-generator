@@ -3,7 +3,7 @@ namespace Devantler.KubernetesGenerator.K3d.Models;
 /// <summary>
 /// Configuration for a port mapping.
 /// </summary>
-public class K3dConfigPort
+public class K3dPort
 {
   /// <summary>
   /// The port mapping. (e.g. 8080:80)

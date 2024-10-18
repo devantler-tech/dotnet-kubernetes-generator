@@ -3,7 +3,7 @@ namespace Devantler.KubernetesGenerator.K3d.Models;
 /// <summary>
 /// A configuration for a K3d volume.
 /// </summary>
-public class K3dConfigVolume
+public class K3dVolume
 {
   /// <summary>
   /// Volume path mapping. (e.g. /host/path:/node/path)
