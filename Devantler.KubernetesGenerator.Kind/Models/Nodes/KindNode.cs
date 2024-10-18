@@ -28,7 +28,7 @@ public class KindNode
   /// <summary>
   /// Labels to add to the node.
   /// </summary>
-  public Dictionary<string, string> KindNodeLabels { get; set; } = [];
+  public Dictionary<string, string> KindNodeLabels { get; } = [];
 
   /// <summary>
   /// Kubeadm configuration patches to apply to the node.

@@ -25,9 +25,8 @@ public class GenerateAsyncTests
       {
         CSIMigration = false
       },
-      RuntimeConfig = new Dictionary<string, string>
-      {
-        { "api/alpha", "false" }
+      RuntimeConfig = {
+         { "api/alpha", "false" }
       },
       Networking = new KindNetworking
       {

@@ -31,7 +31,7 @@ public class KindConfig
   /// <summary>
   /// A set of runtime configurations for the Kind cluster.
   /// </summary>
-  public Dictionary<string, string>? RuntimeConfig { get; set; }
+  public Dictionary<string, string> RuntimeConfig { get; } = [];
 
   /// <summary>
   /// Network related configurations for the Kind cluster.
