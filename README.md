@@ -223,6 +223,10 @@ data:
 - `FluxHelmRepositoryGenerator`
 - `FluxKustomizationGenerator`
 
+### Kind
+
+- `KindConfigGenerator`
+
 ### K3d
 
 - `K3dConfigGenerator`
