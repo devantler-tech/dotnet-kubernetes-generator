@@ -16,7 +16,7 @@ networking:
   kubeProxyMode: iptables
 nodes:
 - role: ControlPlane
-  image: kindest/node:v1.31.0
+  image: kindest/node:v1.31.1
   extraMounts:
   - hostPath: /var/lib/kubelet
     containerPath: /var/lib/kubelet
@@ -32,7 +32,7 @@ nodes:
     node-role.kubernetes.io/master: ''
   kubeadmConfigPatches: ''
 - role: Worker
-  image: kindest/node:v1.31.0
+  image: kindest/node:v1.31.1
   extraMounts:
   - hostPath: /var/lib/kubelet
     containerPath: /var/lib/kubelet
