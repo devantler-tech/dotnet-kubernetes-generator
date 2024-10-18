@@ -11,6 +11,15 @@
       "^.+\\.ya?ml$"
     ]
   },
+  "dockerfile": {
+    "fileMatch": [
+      "(^|/)*Dockerfile$",
+      "(^|/)*Dockerfile\\..+$",
+      "(^|/)*\\.json$",
+      "(^|/)*\\.ya?ml$",
+      "(^|/)*\\.cs$"
+    ]
+  },
   "github-actions": {
     "enabled": false
   },

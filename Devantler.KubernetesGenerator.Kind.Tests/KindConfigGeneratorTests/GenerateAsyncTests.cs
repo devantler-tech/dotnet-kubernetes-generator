@@ -42,7 +42,6 @@ public class GenerateAsyncTests
       Nodes = [
         new KindNode {
           Role = KindNodeRole.ControlPlane,
-          Image = "kindest/node:v1.31.0",
           ExtraMounts = [
             new KindNodeExtraMount
             {
@@ -69,7 +68,6 @@ public class GenerateAsyncTests
         },
         new KindNode {
           Role = KindNodeRole.Worker,
-          Image = "kindest/node:v1.31.0",
           ExtraMounts = [
             new KindNodeExtraMount
             {
