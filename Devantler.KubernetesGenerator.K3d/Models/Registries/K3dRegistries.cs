@@ -1,14 +1,14 @@
-namespace Devantler.KubernetesGenerator.K3d.Models;
+namespace Devantler.KubernetesGenerator.K3d.Models.Registries;
 
 /// <summary>
 /// Configuration for registries in k3d
 /// </summary>
-public class K3dConfigRegistries
+public class K3dRegistries
 {
   /// <summary>
   /// Configuration for creating a registry in k3d
   /// </summary>
-  public K3dConfigRegistriesCreate? Create { get; set; }
+  public K3dRegistriesCreate? Create { get; set; }
 
   /// <summary>
   /// Configuration for using a registry in k3d

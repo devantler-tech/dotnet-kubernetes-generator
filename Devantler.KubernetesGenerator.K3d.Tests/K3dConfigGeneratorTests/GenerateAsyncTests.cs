@@ -1,4 +1,9 @@
 using Devantler.KubernetesGenerator.K3d.Models;
+using Devantler.KubernetesGenerator.K3d.Models.Options;
+using Devantler.KubernetesGenerator.K3d.Models.Options.K3d;
+using Devantler.KubernetesGenerator.K3d.Models.Options.K3s;
+using Devantler.KubernetesGenerator.K3d.Models.Options.Runtime;
+using Devantler.KubernetesGenerator.K3d.Models.Registries;
 using k8s.Models;
 
 namespace Devantler.KubernetesGenerator.K3d.Tests.K3dConfigGeneratorTests;
@@ -9,6 +14,7 @@ namespace Devantler.KubernetesGenerator.K3d.Tests.K3dConfigGeneratorTests;
 public class GenerateAsyncTests
 {
   K3dConfigGenerator K3dConfigKubernetesGenerator { get; } = new();
+
   /// <summary>
   /// Tests that <see cref="K3dConfigKubernetesGenerator"/> generates a valid K3d cluster configuration with all properties set.
   /// </summary>
@@ -24,7 +30,7 @@ public class GenerateAsyncTests
       },
       Servers = 1,
       Agents = 2,
-      KubeAPI = new K3dConfigKubeAPI
+      KubeAPI = new K3dKubeAPI
       {
         Host = "myhost.my.domain",
         HostIP = "127.0.0.1",
@@ -35,7 +41,7 @@ public class GenerateAsyncTests
       Subnet = "172.28.0.0/16",
       Token = "superSecretToken",
       Volumes = [
-        new K3dConfigVolume
+        new K3dVolume
         {
           Volume = "/my/host/path:/path/in/node",
           NodeFilters = [
@@ -45,7 +51,7 @@ public class GenerateAsyncTests
         }
       ],
       Ports = [
-        new K3dConfigPort
+        new K3dPort
         {
           Port = "8080:80",
           NodeFilters = [
@@ -54,7 +60,7 @@ public class GenerateAsyncTests
         }
       ],
       Env = [
-        new K3dConfigEnv
+        new K3dEnv
         {
           EnvVar = "bar=baz",
           NodeFilters = [
@@ -63,7 +69,7 @@ public class GenerateAsyncTests
         }
       ],
       Files = [
-        new K3dConfigFile
+        new K3dFile
         {
           Description = "Source: Embedded, Destination: Magic shortcut path",
           Source = """
@@ -74,7 +80,7 @@ public class GenerateAsyncTests
           """,
           Destination = "k3s-manifests-custom/foo.yaml"
         },
-        new K3dConfigFile
+        new K3dFile
         {
           Description = "Source: Relative, Destination: Absolute path, Node: Servers only",
           Source = "ns-baz.yaml",
@@ -84,14 +90,14 @@ public class GenerateAsyncTests
           ]
         }
       ],
-      Registries = new K3dConfigRegistries
+      Registries = new K3dRegistries
       {
-        Create = new K3dConfigRegistriesCreate
+        Create = new K3dRegistriesCreate
         {
           Name = "registry.localhost",
           Host = "0.0.0.0",
           HostPort = "5000",
-          Proxy = new K3dConfigRegistriesCreateProxy
+          Proxy = new K3dRegistriesCreateProxy
           {
             RemoteURL = new Uri("https://registry-1.docker.io"),
             Username = "",
@@ -112,7 +118,7 @@ public class GenerateAsyncTests
         """,
       },
       HostAliases = [
-        new K3dConfigHostAlias
+        new K3dHostAlias
         {
           Ip = "1.2.3.4",
           Hostnames = [
@@ -120,7 +126,7 @@ public class GenerateAsyncTests
             "that.other.local"
           ]
         },
-        new K3dConfigHostAlias
+        new K3dHostAlias
         {
           Ip = "1.1.1.1",
           Hostnames = [
@@ -128,26 +134,26 @@ public class GenerateAsyncTests
           ]
         }
       ],
-      Options = new K3dConfigOptions
+      Options = new K3dOptions
       {
-        K3d = new K3dConfigOptionsK3d
+        K3d = new K3dOptionsK3d
         {
           Wait = true,
           Timeout = "60s",
           DisableLoadbalancer = false,
           DisableImageVolume = false,
           DisableRollback = false,
-          Loadbalancer = new K3dConfigOptionsK3dLoadbalancer
+          Loadbalancer = new K3dOptionsK3dLoadbalancer
           {
             ConfigOverrides = [
               "settings.workerConnections=2048"
             ]
           }
         },
-        K3s = new K3dConfigOptionsK3s
+        K3s = new K3dOptionsK3s
         {
           ExtraArgs = [
-            new K3dConfigOptionsK3sExtraArg
+            new K3dOptionsK3sExtraArg
             {
               Arg = "--tls-san=my.host.domain",
               NodeFilters = [
@@ -156,7 +162,7 @@ public class GenerateAsyncTests
             }
           ],
           NodeLabels = [
-            new K3dConfigLabel
+            new K3dOptionsLabel
             {
               Label = "foo=bar",
               NodeFilters = [
@@ -165,16 +171,16 @@ public class GenerateAsyncTests
             }
           ]
         },
-        Kubeconfig = new K3dConfigOptionsKubeconfig
+        Kubeconfig = new K3dOptionsKubeconfig
         {
           UpdateDefaultKubeconfig = true,
           SwitchCurrentContext = true
         },
-        Runtime = new K3dConfigOptionsRuntime
+        Runtime = new K3dOptionsRuntime
         {
           GPURequest = "all",
           Labels = [
-            new K3dConfigLabel
+            new K3dOptionsLabel
             {
               Label = "bar=baz",
               NodeFilters = [
@@ -183,7 +189,7 @@ public class GenerateAsyncTests
             }
           ],
           Ulimits = [
-            new K3dConfigOptionsRuntimeUlimit
+            new K3dOptionsRuntimeUlimit
             {
               Name = "nofile",
               Soft = 26677,
@@ -204,7 +210,7 @@ public class GenerateAsyncTests
     string k3dConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d-config.full.yaml");
+    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d-config.full");
 
     // Cleanup
     File.Delete(outputPath);
@@ -236,7 +242,7 @@ public class GenerateAsyncTests
     string k3dConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d-config.minimal.yaml");
+    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d-config.minimal");
 
     // Cleanup
     File.Delete(outputPath);

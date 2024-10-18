@@ -3,7 +3,7 @@ namespace Devantler.KubernetesGenerator.K3d.Models;
 /// <summary>
 /// An environment variable for a K3d cluster.
 /// </summary>
-public class K3dConfigEnv
+public class K3dEnv
 {
   /// <summary>
   /// Key Value pair for the environment variable. (e.g. "key=value")

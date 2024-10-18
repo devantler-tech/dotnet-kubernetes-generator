@@ -1,9 +1,9 @@
-namespace Devantler.KubernetesGenerator.K3d.Models;
+namespace Devantler.KubernetesGenerator.K3d.Models.Options.Runtime;
 
 /// <summary>
 /// Configuration options for Docker runtime
 /// </summary>
-public class K3dConfigOptionsRuntime
+public class K3dOptionsRuntime
 {
   /// <summary>
   /// GPU request for Docker runtime
@@ -13,10 +13,10 @@ public class K3dConfigOptionsRuntime
   /// <summary>
   /// Labels to apply to Docker runtime container
   /// </summary>
-  public IEnumerable<K3dConfigLabel>? Labels { get; set; }
+  public IEnumerable<K3dOptionsLabel>? Labels { get; set; }
 
   /// <summary>
   /// Ulimits to apply to Docker runtime
   /// </summary>
-  public IEnumerable<K3dConfigOptionsRuntimeUlimit>? Ulimits { get; set; }
+  public IEnumerable<K3dOptionsRuntimeUlimit>? Ulimits { get; set; }
 }

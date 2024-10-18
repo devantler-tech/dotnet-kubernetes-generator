@@ -1,0 +1,33 @@
+﻿---
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kind-default
+featureGates:
+  CSIMigration: false
+runtimeConfig:
+  api/alpha: false
+networking:
+  ipFamily: ipv4
+  apiServerAddress: 127.0.0.1
+  apiServerPort: 6443
+  podSubnet: 10.244.0.0/16
+  serviceSubnet: 10.96.0.0/16
+  disableDefaultCNI: false
+  kubeProxyMode: iptables
+nodes:
+- role: ControlPlane
+  image: kindest/node:v1.31.0
+  extraMounts: []
+  extraPortMappings: []
+  kindNodeLabels: {}
+  kubeadmConfigPatches: ''
+- role: Worker
+  image: kindest/node:v1.31.0
+  extraMounts: []
+  extraPortMappings: []
+  kindNodeLabels: {}
+  kubeadmConfigPatches: ''
+containerdConfigPatches:
+- >-
+  [plugins."io.containerd.grpc.v1.cri".registry]
+    config_path = "/etc/containerd/certs.d"

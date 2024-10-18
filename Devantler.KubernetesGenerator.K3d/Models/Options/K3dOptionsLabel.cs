@@ -1,9 +1,9 @@
-namespace Devantler.KubernetesGenerator.K3d.Models;
+namespace Devantler.KubernetesGenerator.K3d.Models.Options;
 
 /// <summary>
-/// Node label to apply to k3s nodes
+/// A label to apply to nodes or the runtime
 /// </summary>
-public class K3dConfigLabel
+public class K3dOptionsLabel
 {
   /// <summary>
   /// Key Value pair for the label

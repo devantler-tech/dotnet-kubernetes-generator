@@ -1,9 +1,9 @@
-namespace Devantler.KubernetesGenerator.K3d.Models;
+namespace Devantler.KubernetesGenerator.K3d.Models.Options.Runtime;
 
 /// <summary>
 /// Ulimit to apply to Docker runtime
 /// </summary>
-public class K3dConfigOptionsRuntimeUlimit
+public class K3dOptionsRuntimeUlimit
 {
   /// <summary>
   /// Name of the ulimit
