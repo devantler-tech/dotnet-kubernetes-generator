@@ -43,17 +43,55 @@ public class GenerateAsyncTests
         new KindNode {
           Role = KindNodeRole.ControlPlane,
           Image = "kindest/node:v1.31.0",
-          ExtraMounts = [],
-          ExtraPortMappings = [],
-          KindNodeLabels = {},
+          ExtraMounts = [
+            new KindNodeExtraMount
+            {
+              ContainerPath = "/var/lib/kubelet",
+              HostPath = "/var/lib/kubelet",
+              ReadOnly = false,
+              Propagation = KindNodeExtraMountPropagation.None,
+              SELinuxRelabel = false
+            }
+          ],
+          ExtraPortMappings = [
+            new KindNodeExtraPortMapping
+            {
+              ContainerPort = 6443,
+              HostPort = 6443,
+              ListenAddress = "0.0.0.0",
+              Protocol = KindNodeExtraPortMappingProtocol.TCP
+            }
+          ],
+          KindNodeLabels = {
+            { "node-role.kubernetes.io/master", "" }
+          },
           KubeadmConfigPatches = ""
         },
         new KindNode {
           Role = KindNodeRole.Worker,
           Image = "kindest/node:v1.31.0",
-          ExtraMounts = [],
-          ExtraPortMappings = [],
-          KindNodeLabels = {},
+          ExtraMounts = [
+            new KindNodeExtraMount
+            {
+              ContainerPath = "/var/lib/kubelet",
+              HostPath = "/var/lib/kubelet",
+              ReadOnly = false,
+              Propagation = KindNodeExtraMountPropagation.None,
+              SELinuxRelabel = false
+            }
+          ],
+          ExtraPortMappings = [
+            new KindNodeExtraPortMapping
+            {
+              ContainerPort = 6443,
+              HostPort = 6443,
+              ListenAddress = "0.0.0.0",
+              Protocol = KindNodeExtraPortMappingProtocol.TCP
+            }
+          ],
+          KindNodeLabels = {
+            { "node-role.kubernetes.io/worker", "" }
+          },
           KubeadmConfigPatches = ""
         }
       ],

@@ -146,14 +146,14 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "flux-kustomization.yaml");
     if (File.Exists(outputPath))
       File.Delete(outputPath);
     await _generator.GenerateAsync(fluxKustomization, outputPath);
     string kustomizationFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(kustomizationFromFile, extension: "yaml").UseFileName("kustomization.full.yaml");
+    _ = await Verify(kustomizationFromFile, extension: "yaml").UseFileName("flux-kustomization.full");
 
     // Cleanup
     File.Delete(outputPath);
@@ -186,14 +186,14 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "kustomization.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "some-path", "flux-kustomization.yaml");
     if (File.Exists(outputPath))
       File.Delete(outputPath);
     await _generator.GenerateAsync(fluxKustomization, outputPath, true);
     string kustomizationFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(kustomizationFromFile, extension: "yaml").UseFileName("kustomization.minimal.yaml");
+    _ = await Verify(kustomizationFromFile, extension: "yaml").UseFileName("flux-kustomization.minimal");
 
     // Cleanup
     File.Delete(outputPath);
