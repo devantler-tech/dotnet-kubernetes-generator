@@ -71,7 +71,14 @@ spec:
     components: true
     helmReleases: true
     postBuildVariables: true
+    outputDirectory: ./
     template: simple
+    kustomizeFlows:
+    - apps
+    - infrastructure
+    - infrastructure/controllers
+    kustomizeHooks:
+    - clusters
   lintOptions: {}
   listOptions:
     all: false

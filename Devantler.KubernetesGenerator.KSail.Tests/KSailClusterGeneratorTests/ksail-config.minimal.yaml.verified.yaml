@@ -2,13 +2,13 @@
 apiVersion: ksail.io/v1alpha1
 kind: Cluster
 metadata:
-  name: default
+  name: ksail-default
 spec:
-  kubeconfig: ~/.kube/config
+  kubeconfig: {UserProfile}/.kube/config
   context: default
   timeout: 300
   manifestsDirectory: ./k8s
-  kustomizationDirectory: ./k8s/clusters/default/flux-system
+  kustomizationDirectory: ./k8s/clusters/ksail-default/flux-system
   configPath: ./ksail-cluster.yaml
   distribution: kind
   gitOpsTool: flux
@@ -71,7 +71,14 @@ spec:
     components: false
     helmReleases: false
     postBuildVariables: false
+    outputDirectory: ./
     template: simple
+    kustomizeFlows:
+    - apps
+    - infrastructure
+    - infrastructure/controllers
+    kustomizeHooks:
+    - clusters
   lintOptions: {}
   listOptions:
     all: false
