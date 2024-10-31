@@ -77,8 +77,7 @@ spec:
     - apps
     - infrastructure
     - infrastructure/controllers
-    kustomizeHooks:
-    - clusters
+    kustomizeHooks: []
   lintOptions: {}
   listOptions:
     all: false
