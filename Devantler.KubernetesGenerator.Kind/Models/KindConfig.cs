@@ -1,5 +1,6 @@
 using Devantler.KubernetesGenerator.Kind.Models.Networking;
 using Devantler.KubernetesGenerator.Kind.Models.Nodes;
+using YamlDotNet.Serialization;
 
 namespace Devantler.KubernetesGenerator.Kind.Models;
 
@@ -31,6 +32,7 @@ public class KindConfig
   /// <summary>
   /// A set of runtime configurations for the Kind cluster.
   /// </summary>
+  [YamlMember(DefaultValuesHandling = DefaultValuesHandling.OmitEmptyCollections)]
   public Dictionary<string, string> RuntimeConfig { get; } = [];
 
   /// <summary>

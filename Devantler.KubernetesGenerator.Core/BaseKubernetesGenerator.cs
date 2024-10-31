@@ -36,7 +36,7 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
       _ = Directory.CreateDirectory(outputDirectory);
     }
     string yaml = _serializer.Serialize(model);
-    // Append all text starting with ---
+
     if (!yaml.StartsWith("---", StringComparison.Ordinal))
     {
       yaml = $"---{Environment.NewLine}" + yaml;
