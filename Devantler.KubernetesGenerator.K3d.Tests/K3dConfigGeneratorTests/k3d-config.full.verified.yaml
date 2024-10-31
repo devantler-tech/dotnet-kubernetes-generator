@@ -9,7 +9,7 @@ kubeAPI:
   host: myhost.my.domain
   hostIP: 127.0.0.1
   hostPort: 6445
-image: rancher/k3s:v1.31.1-k3s1
+image: rancher/k3s:v1.31.2-k3s1
 network: my-custom-net
 subnet: 172.28.0.0/16
 token: superSecretToken
