@@ -68,6 +68,7 @@ spec:
     registries: false
   genOptions: {}
   initOptions:
+    declarativeConfig: false
     components: false
     helmReleases: false
     postBuildVariables: false
