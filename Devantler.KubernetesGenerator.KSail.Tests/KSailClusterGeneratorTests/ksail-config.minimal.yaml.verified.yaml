@@ -90,5 +90,5 @@ spec:
     lint: true
     reconcile: true
   updateOptions:
-    lint: false
-    reconcile: false
+    lint: true
+    reconcile: true
