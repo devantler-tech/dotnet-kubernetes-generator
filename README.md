@@ -180,7 +180,7 @@ dotnet add package Devantler.KubernetesGenerator.Kustomize
 dotnet add package Devantler.KubernetesGenerator.Native
 ```
 
-## Usage
+## 📝 Usage
 
 To use the generators, all you need to do is to create and use a new instance of the generator for the specific resource you want to generate. For example, to generate a new ConfigMap resource, you can use the `ConfigMapKubernetesGenerator`.
 
