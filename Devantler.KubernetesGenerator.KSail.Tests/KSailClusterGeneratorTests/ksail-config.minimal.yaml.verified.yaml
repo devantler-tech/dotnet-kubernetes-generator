@@ -5,7 +5,7 @@ metadata:
   name: ksail-default
 spec:
   kubeconfig: ~/.kube/config
-  context: default
+  context: kind-ksail-default
   timeout: 300
   manifestsDirectory: ./k8s
   kustomizationDirectory: ./k8s/clusters/ksail-default/flux-system
