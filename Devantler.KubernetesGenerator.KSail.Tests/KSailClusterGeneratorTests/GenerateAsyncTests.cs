@@ -41,7 +41,7 @@ public class GenerateAsyncTests
       {
         Kubeconfig = "./.kube/config",
         Context = "my-cluster",
-        Timeout = 300,
+        Timeout = "5m",
         ManifestsDirectory = "./k8s",
         KustomizationDirectory = "./clusters/my-cluster/flux-system",
         ConfigPath = "./k3d-config.yaml",

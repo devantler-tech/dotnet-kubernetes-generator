@@ -6,7 +6,7 @@ metadata:
 spec:
   kubeconfig: ~/.kube/config
   context: kind-ksail-default
-  timeout: 300
+  timeout: 5m
   manifestsDirectory: ./k8s
   kustomizationDirectory: ./k8s/clusters/ksail-default/flux-system
   configPath: kind-config.yaml
@@ -68,7 +68,7 @@ spec:
     registries: false
   genOptions: {}
   initOptions:
-    declarativeConfig: false
+    declarativeConfig: true
     components: false
     helmReleases: false
     postBuildVariables: false
