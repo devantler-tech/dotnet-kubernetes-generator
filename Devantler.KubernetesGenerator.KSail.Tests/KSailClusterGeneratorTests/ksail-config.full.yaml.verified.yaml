@@ -6,7 +6,7 @@ metadata:
 spec:
   kubeconfig: ./.kube/config
   context: my-cluster
-  timeout: 300
+  timeout: 5m
   manifestsDirectory: ./k8s
   kustomizationDirectory: ./clusters/my-cluster/flux-system
   configPath: ./k3d-config.yaml
@@ -68,7 +68,7 @@ spec:
     registries: true
   genOptions: {}
   initOptions:
-    declarativeConfig: false
+    declarativeConfig: true
     components: true
     helmReleases: true
     postBuildVariables: true
