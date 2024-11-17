@@ -82,7 +82,10 @@ spec:
   lintOptions: {}
   listOptions:
     all: false
-  sopsOptions: {}
+  sopsOptions:
+    listOptions:
+      showPublicKey: true
+      showPrivateKey: true
   startOptions: {}
   stopOptions: {}
   upOptions:
