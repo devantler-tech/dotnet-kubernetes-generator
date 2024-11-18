@@ -4,16 +4,18 @@ kind: Cluster
 metadata:
   name: my-cluster
 spec:
-  kubeconfig: ./.kube/config
-  context: my-cluster
-  timeout: 5m
-  manifestsDirectory: ./k8s
-  kustomizationDirectory: ./clusters/my-cluster/flux-system
-  configPath: ./k3d-config.yaml
-  distribution: k3d
-  gitOpsTool: flux
-  containerEngine: docker
-  sops: true
+  connection:
+    kubeconfig: ./.kube/config
+    context: my-cluster
+    timeout: 5m
+  project:
+    manifestsDirectory: ./k8s
+    kustomizationDirectory: ./clusters/my-cluster/flux-system
+    configPath: ./k3d-config.yaml
+    distribution: k3d
+    gitOpsTool: flux
+    containerEngine: docker
+    sops: true
   registries:
   - name: ksail-registry
     hostPort: 5000
@@ -61,37 +63,41 @@ spec:
       url: https://quay.io/
       insecure: false
     provider: docker
-  checkOptions: {}
-  debugOptions:
-    editor: nano
-  downOptions:
-    registries: true
-  genOptions: {}
-  initOptions:
-    declarativeConfig: true
-    components: true
-    helmReleases: true
-    postBuildVariables: true
-    outputDirectory: ./
-    template: simple
-    kustomizeFlows:
-    - apps
-    - infrastructure
-    - infrastructure/controllers
-    kustomizeHooks: []
-  lintOptions: {}
-  listOptions:
-    all: false
-  sopsOptions:
+  cli:
+    checkOptions: {}
+    debugOptions:
+      editor: nano
+    downOptions:
+      registries: true
+    genOptions: {}
+    initOptions:
+      declarativeConfig: true
+      components: true
+      helmReleases: true
+      postBuildVariables: true
+      outputDirectory: ./
+      template: simple
+      kustomizeFlows:
+      - apps
+      - infrastructure
+      - infrastructure/controllers
+      kustomizeHooks: []
+    lintOptions: {}
     listOptions:
-      showPublicKey: true
-      showPrivateKey: true
-  startOptions: {}
-  stopOptions: {}
-  upOptions:
-    destroy: false
-    lint: true
-    reconcile: true
-  updateOptions:
-    lint: true
-    reconcile: true
+      all: false
+    sopsOptions:
+      listOptions:
+        showPublicKey: true
+        showPrivateKey: true
+      editOptions: {}
+      encryptOptions: {}
+      decryptOptions: {}
+    startOptions: {}
+    stopOptions: {}
+    upOptions:
+      destroy: false
+      lint: true
+      reconcile: true
+    updateOptions:
+      lint: true
+      reconcile: true

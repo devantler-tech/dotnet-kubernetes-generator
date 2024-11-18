@@ -1,18 +1,11 @@
 using Devantler.K9sCLI;
 using k8s.Models;
 using KSail.Models;
-using KSail.Models.Commands.Check;
-using KSail.Models.Commands.Debug;
-using KSail.Models.Commands.Down;
-using KSail.Models.Commands.Gen;
-using KSail.Models.Commands.Init;
-using KSail.Models.Commands.Lint;
-using KSail.Models.Commands.List;
-using KSail.Models.Commands.Sops;
-using KSail.Models.Commands.Start;
-using KSail.Models.Commands.Stop;
-using KSail.Models.Commands.Up;
-using KSail.Models.Commands.Update;
+using KSail.Models.CLI;
+using KSail.Models.CLI.Commands;
+using KSail.Models.CLI.Commands.Init;
+using KSail.Models.CLI.Commands.Sops;
+using KSail.Models.Project;
 using KSail.Models.Registry;
 
 namespace Devantler.KubernetesGenerator.KSail.Tests.KSailClusterGeneratorTests;
@@ -39,16 +32,22 @@ public class GenerateAsyncTests
       },
       Spec = new KSailClusterSpec(name)
       {
-        Kubeconfig = "./.kube/config",
-        Context = "my-cluster",
-        Timeout = "5m",
-        ManifestsDirectory = "./k8s",
-        KustomizationDirectory = "./clusters/my-cluster/flux-system",
-        ConfigPath = "./k3d-config.yaml",
-        Distribution = KSailKubernetesDistribution.K3d,
-        GitOpsTool = KSailGitOpsTool.Flux,
-        ContainerEngine = KSailContainerEngine.Docker,
-        Sops = true,
+        Connection = new KSailConnectionOptions
+        {
+          Kubeconfig = "./.kube/config",
+          Context = "my-cluster",
+          Timeout = "5m"
+        },
+        Project = new KSailProjectOptions
+        {
+          ManifestsDirectory = "./k8s",
+          KustomizationDirectory = "./clusters/my-cluster/flux-system",
+          ConfigPath = "./k3d-config.yaml",
+          Distribution = KSailKubernetesDistribution.K3d,
+          GitOpsTool = KSailGitOpsTool.Flux,
+          ContainerEngine = KSailContainerEngine.Docker,
+          Sops = true,
+        },
         Registries =
         [
           new KSailRegistry
@@ -112,51 +111,54 @@ public class GenerateAsyncTests
             HostPort = 5005
           }
         ],
-        CheckOptions = new KSailCheckOptions
+        CLI = new KSailCLIOptions
         {
-        },
-        DebugOptions = new KSailDebugOptions
-        {
-          Editor = Editor.Nano
-        },
-        DownOptions = new KSailDownOptions
-        {
-          Registries = true
-        },
-        GenOptions = new KSailGenOptions
-        {
-        },
-        InitOptions = new KSailInitOptions
-        {
-          Template = KSailInitTemplate.Simple,
-          Components = true,
-          HelmReleases = true,
-          PostBuildVariables = true
-        },
-        LintOptions = new KSailLintOptions
-        {
-        },
-        ListOptions = new KSailListOptions
-        {
-        },
-        SopsOptions = new KSailSopsOptions
-        {
-        },
-        StartOptions = new KSailStartOptions
-        {
-        },
-        StopOptions = new KSailStopOptions
-        {
-        },
-        UpOptions = new KSailUpOptions
-        {
-          Lint = true,
-          Reconcile = true,
-        },
-        UpdateOptions = new KSailUpdateOptions
-        {
-          Lint = true,
-          Reconcile = true,
+          CheckOptions = new KSailCLICheckOptions
+          {
+          },
+          DebugOptions = new KSailCLIDebugOptions
+          {
+            Editor = Editor.Nano
+          },
+          DownOptions = new KSailCLIDownOptions
+          {
+            Registries = true
+          },
+          GenOptions = new KSailCLIGenOptions
+          {
+          },
+          InitOptions = new KSailCLIInitOptions
+          {
+            Template = KSailCLIInitTemplate.Simple,
+            Components = true,
+            HelmReleases = true,
+            PostBuildVariables = true
+          },
+          LintOptions = new KSailCLILintOptions
+          {
+          },
+          ListOptions = new KSailCLIListOptions
+          {
+          },
+          SopsOptions = new KSailCLISopsOptions
+          {
+          },
+          StartOptions = new KSailCLIStartOptions
+          {
+          },
+          StopOptions = new KSailCLIStopOptions
+          {
+          },
+          UpOptions = new KSailCLIUpOptions
+          {
+            Lint = true,
+            Reconcile = true,
+          },
+          UpdateOptions = new KSailCLIUpdateOptions
+          {
+            Lint = true,
+            Reconcile = true,
+          }
         }
       }
     };
