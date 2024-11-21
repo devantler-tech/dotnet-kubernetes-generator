@@ -21,10 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.Kustomize.Tests", "Devantler.KubernetesGenerator.Kustomize.Tests\Devantler.KubernetesGenerator.Kustomize.Tests.csproj", "{AF9F9CD3-873B-4403-AC7C-C32154105FAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.KSail", "Devantler.KubernetesGenerator.KSail\Devantler.KubernetesGenerator.KSail.csproj", "{AA005FFF-8EB2-4A46-B5A4-177FE2C47D7F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.KSail.Tests", "Devantler.KubernetesGenerator.KSail.Tests\Devantler.KubernetesGenerator.KSail.Tests.csproj", "{43DA7163-4120-4B1B-A38B-584051E31B61}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.CertManager", "Devantler.KubernetesGenerator.CertManager\Devantler.KubernetesGenerator.CertManager.csproj", "{7FBDA601-0525-4761-8811-86BFBCEA82D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.CertManager.Tests", "Devantler.KubernetesGenerator.CertManager.Tests\Devantler.KubernetesGenerator.CertManager.Tests.csproj", "{DF59B371-12C9-4F32-9B39-D331FFA46A08}"
@@ -75,14 +71,6 @@ Global
 		{AF9F9CD3-873B-4403-AC7C-C32154105FAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF9F9CD3-873B-4403-AC7C-C32154105FAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF9F9CD3-873B-4403-AC7C-C32154105FAB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA005FFF-8EB2-4A46-B5A4-177FE2C47D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA005FFF-8EB2-4A46-B5A4-177FE2C47D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA005FFF-8EB2-4A46-B5A4-177FE2C47D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA005FFF-8EB2-4A46-B5A4-177FE2C47D7F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43DA7163-4120-4B1B-A38B-584051E31B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43DA7163-4120-4B1B-A38B-584051E31B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43DA7163-4120-4B1B-A38B-584051E31B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43DA7163-4120-4B1B-A38B-584051E31B61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7FBDA601-0525-4761-8811-86BFBCEA82D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7FBDA601-0525-4761-8811-86BFBCEA82D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FBDA601-0525-4761-8811-86BFBCEA82D6}.Release|Any CPU.ActiveCfg = Release|Any CPU

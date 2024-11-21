@@ -170,9 +170,6 @@ dotnet add package Devantler.KubernetesGenerator.Kind
 # For generating K3d resources
 dotnet add package Devantler.KubernetesGenerator.K3d
 
-# For generating KSail resources
-dotnet add package Devantler.KubernetesGenerator.KSail
-
 # For generating Kustomize resources
 dotnet add package Devantler.KubernetesGenerator.Kustomize
 
