@@ -45,9 +45,6 @@ A simple code generator that can generate Kubernetes resources.
 │       └── Registries
 ├── Devantler.KubernetesGenerator.K3d.Tests
 │   └── K3dConfigGeneratorTests
-├── Devantler.KubernetesGenerator.KSail
-├── Devantler.KubernetesGenerator.KSail.Tests
-│   └── KSailClusterGeneratorTests
 ├── Devantler.KubernetesGenerator.Kind
 │   └── Models
 │       ├── Networking
@@ -143,7 +140,7 @@ A simple code generator that can generate Kubernetes resources.
         ├── ReplicationControllerGeneratorTests
         └── StatefulSetGeneratorTests
 
-130 directories
+127 directories
 ```
 <!-- readme-tree end -->
 
