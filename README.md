@@ -239,10 +239,6 @@ data:
 
 - `K3dConfigGenerator`
 
-### KSail
-
-- `KSailClusterGenerator`
-
 ### Kustomize
 
 - `KustomizeComponentGenerator`
