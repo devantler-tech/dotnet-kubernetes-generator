@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.Kind.Tests", "Devantler.KubernetesGenerator.Kind.Tests\Devantler.KubernetesGenerator.Kind.Tests.csproj", "{9C065CC3-D6D6-45A8-BC6E-09336DCA813F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.KubernetesGenerator.Core.Tests", "Devantler.KubernetesGenerator.Core.Tests\Devantler.KubernetesGenerator.Core.Tests.csproj", "{28D62FFC-A1CF-4AE3-A77F-7961AAD47548}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{9C065CC3-D6D6-45A8-BC6E-09336DCA813F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C065CC3-D6D6-45A8-BC6E-09336DCA813F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C065CC3-D6D6-45A8-BC6E-09336DCA813F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D62FFC-A1CF-4AE3-A77F-7961AAD47548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D62FFC-A1CF-4AE3-A77F-7961AAD47548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D62FFC-A1CF-4AE3-A77F-7961AAD47548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D62FFC-A1CF-4AE3-A77F-7961AAD47548}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
