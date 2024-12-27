@@ -1,11 +1,8 @@
-using System.ComponentModel;
 using Devantler.KubernetesGenerator.Core.Converters;
 using Devantler.KubernetesGenerator.Core.Inspectors;
-using YamlDotNet.Core;
+using Devantler.KubernetesGenerator.Core.Visitors;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-using YamlDotNet.Serialization.ObjectFactories;
-using YamlDotNet.Serialization.ObjectGraphVisitors;
 using YamlDotNet.System.Text.Json;
 
 
@@ -68,16 +65,5 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
     {
       await File.AppendAllTextAsync(outputPath, yaml, cancellationToken).ConfigureAwait(false);
     }
-  }
-}
-
-class OmitNullAndDefaultsObjectGraphVisitor(IObjectGraphVisitor<IEmitter> nextVisitor) : ChainedObjectGraphVisitor(nextVisitor)
-{
-  static object? GetDefault(Type type) => new DefaultObjectFactory().CreatePrimitive(type);
-
-  public override bool EnterMapping(IPropertyDescriptor key, IObjectDescriptor value, IEmitter context, ObjectSerializer serializer)
-  {
-    object? defaultValue = key.GetCustomAttribute<DefaultValueAttribute>()?.Value ?? GetDefault(key.Type);
-    return value.Value is not null && !Equals(value.Value, defaultValue) && base.EnterMapping(key, value, context, serializer);
   }
 }
