@@ -20,5 +20,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: my-helm-repo
+        namespace: my-namespace
   values:
     key: value

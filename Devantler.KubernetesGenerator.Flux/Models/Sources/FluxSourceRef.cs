@@ -14,4 +14,9 @@ public class FluxSourceRef
   /// The name of the source reference.
   /// </summary>
   public required string Name { get; set; }
+
+  /// <summary>
+  /// The namespace of the source reference.
+  /// </summary>
+  public string? Namespace { get; set; }
 }
