@@ -47,7 +47,8 @@ public class GenerateAsyncTests
             SourceRef = new FluxSourceRef
             {
               Kind = FluxSource.HelmRepository,
-              Name = "my-helm-repo"
+              Name = "my-helm-repo",
+              Namespace = "my-namespace"
             }
           }
         },
