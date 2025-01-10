@@ -210,4 +210,3 @@ data:
 - `ServiceAccountGenerator`
 - `ServiceGenerator`
 - `StatefulSetGenerator`
-- `TokenGenerator`
