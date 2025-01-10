@@ -1,6 +1,4 @@
-using Devantler.KubernetesGenerator.Flux.Models.SecretRef;
-
-namespace Devantler.KubernetesGenerator.Flux.Models.KubeConfig;
+namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
 /// The kubeconfig to use for the reconciliation of the object.

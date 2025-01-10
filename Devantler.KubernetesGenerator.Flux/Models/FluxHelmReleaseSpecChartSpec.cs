@@ -1,5 +1,3 @@
-using Devantler.KubernetesGenerator.Flux.Models.Sources;
-
 namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
@@ -13,6 +11,11 @@ public class FluxHelmReleaseSpecChartSpec
   public required string Chart { get; set; }
 
   /// <summary>
+  /// The interval of which to check for new chart versions.
+  /// </summary>
+  public string? Interval { get; set; }
+
+  /// <summary>
   /// The version of the chart to install.
   /// </summary>
   public string? Version { get; set; }
@@ -20,5 +23,5 @@ public class FluxHelmReleaseSpecChartSpec
   /// <summary>
   /// The source reference of the chart to install.
   /// </summary>
-  public required FluxSourceRef SourceRef { get; set; }
+  public FluxSourceRef? SourceRef { get; set; }
 }

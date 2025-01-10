@@ -1,4 +1,4 @@
-namespace Devantler.KubernetesGenerator.Flux.Models.Sources;
+namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
 /// The type of the source reference.
@@ -9,11 +9,6 @@ public enum FluxSource
   /// The source reference is a GitRepository.
   /// </summary>
   GitRepository,
-
-  /// <summary>
-  /// The source reference is a OCIRepository.
-  /// </summary>
-  OCIRepository,
 
   /// <summary>
   /// The source reference is a HelmRepository.

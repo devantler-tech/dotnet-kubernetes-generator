@@ -1,5 +1,3 @@
-using Devantler.KubernetesGenerator.Flux.Models.Sources;
-
 namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>

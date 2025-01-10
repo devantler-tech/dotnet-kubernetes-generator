@@ -1,5 +1,5 @@
 #pragma warning disable CA2227
-namespace Devantler.KubernetesGenerator.Flux.Models.Metadata;
+namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
 /// Metadata that should be applied to all the objects resources.

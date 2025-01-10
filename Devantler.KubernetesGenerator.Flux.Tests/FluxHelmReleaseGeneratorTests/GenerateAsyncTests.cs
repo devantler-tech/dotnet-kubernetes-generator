@@ -1,7 +1,5 @@
 using Devantler.KubernetesGenerator.Flux.Models;
-using Devantler.KubernetesGenerator.Flux.Models.Dependencies;
 using Devantler.KubernetesGenerator.Flux.Models.Sources;
-using k8s.Models;
 
 namespace Devantler.KubernetesGenerator.Flux.Tests.FluxHelmReleaseGeneratorTests;
 
@@ -20,24 +18,13 @@ public class GenerateAsyncTests
     // Arrange
     var fluxHelmRelease = new FluxHelmRelease
     {
-      Metadata = new V1ObjectMeta
+      Metadata = new FluxHelmReleaseMetadata
       {
-        Name = "helm-release",
-        NamespaceProperty = "default",
-        Labels = new Dictionary<string, string> { { "key", "value" } },
-        Annotations = new Dictionary<string, string> { { "key", "value" } }
+        Name = "helm-release"
       },
       Spec = new FluxHelmReleaseSpec
       {
         Interval = "10m",
-        DependsOn =
-        [
-          new FluxDependsOn
-          {
-            Name = "dependency1",
-            Namespace = "default"
-          }
-        ],
         Chart = new FluxHelmReleaseSpecChart
         {
           Spec = new FluxHelmReleaseSpecChartSpec
@@ -51,8 +38,7 @@ public class GenerateAsyncTests
               Namespace = "my-namespace"
             }
           }
-        },
-        Values = new Dictionary<string, object> { { "key", "value" } }
+        }
       }
     };
 
@@ -80,9 +66,10 @@ public class GenerateAsyncTests
     // Arrange
     var fluxHelmRelease = new FluxHelmRelease
     {
-      Metadata = new V1ObjectMeta
+      Metadata = new FluxHelmReleaseMetadata
       {
-        Name = "helm-release"
+        Name = "helm-release",
+        Namespace = "my-namespace"
       },
       Spec = new FluxHelmReleaseSpec
       {

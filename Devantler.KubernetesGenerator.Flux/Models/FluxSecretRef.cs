@@ -1,4 +1,4 @@
-namespace Devantler.KubernetesGenerator.Flux.Models.SecretRef;
+namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
 /// A reference to a Secret.

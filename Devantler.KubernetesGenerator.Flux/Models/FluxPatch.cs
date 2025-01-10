@@ -2,7 +2,7 @@ using Devantler.KubernetesGenerator.Kustomize.Models.Patches;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
-namespace Devantler.KubernetesGenerator.Flux.Models.Patches;
+namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
 /// A patch to apply to some of the objects resources.

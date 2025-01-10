@@ -1,4 +1,4 @@
-namespace Devantler.KubernetesGenerator.Flux.Models.Dependencies;
+namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
 /// A reference to an object that this object depends on.

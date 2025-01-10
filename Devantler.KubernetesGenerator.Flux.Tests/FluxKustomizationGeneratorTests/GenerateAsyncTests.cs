@@ -5,7 +5,6 @@ using Devantler.KubernetesGenerator.Flux.Models.KubeConfig;
 using Devantler.KubernetesGenerator.Flux.Models.Metadata;
 using Devantler.KubernetesGenerator.Flux.Models.Patches;
 using Devantler.KubernetesGenerator.Flux.Models.SecretRef;
-using Devantler.KubernetesGenerator.Flux.Models.Sources;
 using Devantler.KubernetesGenerator.Kustomize.Models.Patches;
 using k8s.Models;
 
