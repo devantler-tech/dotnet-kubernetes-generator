@@ -59,88 +59,32 @@ A simple code generator that can generate Kubernetes resources.
 │   ├── KustomizeComponentGeneratorTests
 │   └── KustomizeKustomizationGeneratorTests
 ├── Devantler.KubernetesGenerator.Native
-│   ├── Cluster
-│   ├── ConfigAndStorage
-│   ├── Metadata
-│   ├── Service
-│   └── Workloads
 └── Devantler.KubernetesGenerator.Native.Tests
-    ├── ClusterTests
-    │   ├── APIServiceGeneratorTests
-    │   ├── BindingGeneratorTests
-    │   ├── CertificateSigningRequestGeneratorTests
-    │   ├── ClusterRoleBindingGeneratorTests
-    │   ├── ClusterRoleGeneratorTests
-    │   ├── ComponentStatusGeneratorTests
-    │   ├── FlowSchemaGeneratorTests
-    │   ├── IPAddressGeneratorTests
-    │   ├── LeaseCandidateGeneratorTests
-    │   ├── LeaseGeneratorTests
-    │   ├── LocalSubjectAccessReviewGeneratorTests
-    │   ├── NamespaceGeneratorTests
-    │   ├── NetworkPolicyGeneratorTests
-    │   ├── NodeGeneratorTests
-    │   ├── PersistentVolumeGeneratorTests
-    │   ├── PriorityLevelConfigurationGeneratorTests
-    │   ├── ResourceQuotaGeneratorTests
-    │   ├── RoleBindingGeneratorTests
-    │   ├── RoleGeneratorTests
-    │   ├── RuntimeClassGeneratorTests
-    │   ├── SelfSubjectAccessReviewGeneratorTests
-    │   ├── SelfSubjectReviewGeneratorTests
-    │   ├── SelfSubjectRulesReviewGeneratorTests
-    │   ├── ServiceAccountGeneratorTests
-    │   ├── ServiceCIDRGeneratorTests
-    │   ├── StorageVersionGeneratorTests
-    │   ├── StorageVersionMigrationGeneratorTests
-    │   ├── SubjectAccessReviewGeneratorTests
-    │   └── TokenReviewGeneratorTests
-    ├── ConfigAndStorageTests
-    │   ├── CSIDriverGeneratorTests
-    │   ├── CSINodeGeneratorTests
-    │   ├── CSIStorageCapacityGeneratorTests
-    │   ├── ConfigMapGeneratorTests
-    │   ├── PersistentVolumeClaimGeneratorTests
-    │   ├── SecretGeneratorTests
-    │   ├── StorageClassGeneratorTests
-    │   ├── VolumeAttachmentGeneratorTests
-    │   └── VolumeAttributesClassGeneratorTests
-    ├── MetadataTests
-    │   ├── ClusterTrustBundleGeneratorTests
-    │   ├── ControllerRevisionGeneratorTests
-    │   ├── CustomResourceDefinitionGeneratorTests
-    │   ├── DeviceClassGeneratorTests
-    │   ├── EventGeneratorTests
-    │   ├── HorizontalPodAutoscalerGeneratorTests
-    │   ├── LimitRangeGeneratorTests
-    │   ├── MutatingWebhookConfigurationGeneratorTests
-    │   ├── PodDisruptionBudgetGeneratorTests
-    │   ├── PodSchedulingContextGeneratorTests
-    │   ├── PodTemplateGeneratorTests
-    │   ├── PriorityClassGeneratorTests
-    │   ├── ResourceClaimGeneratorTests
-    │   ├── ResourceClaimTemplateGeneratorTests
-    │   ├── ResourceSliceGeneratorTests
-    │   ├── ValidatingAdmissionPolicyBindingGeneratorTests
-    │   ├── ValidatingAdmissionPolicyGeneratorTests
-    │   └── ValidatingWebhookConfigurationGeneratorTests
-    ├── ServiceTests
-    │   ├── EndpointSliceGeneratorTests
-    │   ├── EndpointsGeneratorTests
-    │   ├── IngressClassGeneratorTests
-    │   ├── IngressGeneratorTests
-    │   └── ServiceGeneratorTests
-    └── WorkloadTests
-        ├── CronJobGeneratorTests
-        ├── DaemonSetGeneratorTests
-        ├── DeploymentGeneratorTests
-        ├── JobGeneratorTests
-        ├── PodGeneratorTests
-        ├── ReplicaSetGeneratorTests
-        ├── ReplicationControllerGeneratorTests
-        └── StatefulSetGeneratorTests
+    ├── ClusterRoleBindingGeneratorTests
+    ├── ClusterRoleGeneratorTests
+    ├── ConfigMapGeneratorTests
+    ├── CronJobGeneratorTests
+    ├── DaemonSetGeneratorTests
+    ├── DeploymentGeneratorTests
+    ├── HorizontalPodAutoscalerGeneratorTests
+    ├── IngressGeneratorTests
+    ├── JobGeneratorTests
+    ├── NamespaceGeneratorTests
+    ├── NetworkPolicyGeneratorTests
+    ├── PersistentVolumeClaimGeneratorTests
+    ├── PersistentVolumeGeneratorTests
+    ├── PodDisruptionBudgetGeneratorTests
+    ├── PodGeneratorTests
+    ├── PriorityClassGeneratorTests
+    ├── ResourceQuotaGeneratorTests
+    ├── RoleBindingGeneratorTests
+    ├── RoleGeneratorTests
+    ├── SecretGeneratorTests
+    ├── ServiceAccountGeneratorTests
+    ├── ServiceGeneratorTests
+    └── StatefulSetGeneratorTests
 
-127 directories
+71 directories
 ```
 <!-- readme-tree end -->
 
