@@ -1,0 +1,28 @@
+﻿---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  labels:
+    key: value
+  name: helm-release-chart-ref-complex
+  namespace: helm-release-chart-ref-complex
+spec:
+  chartRef:
+    kind: HelmChart
+    name: nginx
+    namespace: helm-release-chart-ref-complex
+  dependsOn:
+  - name: cert-manager
+    namespace: helm-release-chart-complex
+  install:
+    crds: Create
+  interval: 1m0s
+  kubeConfig:
+    secretRef:
+      name: kubeconfig-secret
+  serviceAccountName: helm-release-chart-ref-complex-sa
+  upgrade:
+    crds: CreateReplace
+  valuesFrom:
+  - kind: ConfigMap
+    name: values-configmap

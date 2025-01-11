@@ -1,12 +1,12 @@
 namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
-/// The kubeconfig to use for the reconciliation of the object.
+/// Options for setting remote kubeconfig.
 /// </summary>
-public class FluxKubeConfig
+public class FluxKubeconfig
 {
   /// <summary>
-  /// A reference to a Secret containing a kubeconfig to use for the reconciliation of the object.
+  /// Reference to the Kubernetes Secret that contains a key with the kubeconfig file for connecting to a remote cluster.
   /// </summary>
   public required FluxSecretRef? SecretRef { get; set; }
 }

@@ -1,18 +1,17 @@
 namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
-/// A reference to an object that this object depends on.
+/// HelmRelease that must be ready before this release can be installed.
 /// </summary>
 public class FluxDependsOn
 {
   /// <summary>
-  /// The name of the object that this object depends on.
+  /// Name of the HelmRelease.
   /// </summary>
   public required string Name { get; set; }
 
   /// <summary>
-  /// The namespace of the object that the this object depends on.
+  /// Namespace of the HelmRelease.
   /// </summary>
   public string? Namespace { get; set; }
 }
-

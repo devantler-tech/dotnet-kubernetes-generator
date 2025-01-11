@@ -1,0 +1,12 @@
+﻿---
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  name: alert-simple
+  namespace: flux-system
+spec:
+  eventSources:
+  - kind: Kustomization
+    name: event-source
+  providerRef:
+    name: provider

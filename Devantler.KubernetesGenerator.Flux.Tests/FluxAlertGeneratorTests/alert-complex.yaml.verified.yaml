@@ -1,0 +1,15 @@
+﻿---
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  labels:
+    key: value
+  name: alert-complex
+  namespace: alert-complex
+spec:
+  eventSeverity: Info
+  eventSources:
+  - kind: Kustomization
+    name: event-source
+  providerRef:
+    name: provider

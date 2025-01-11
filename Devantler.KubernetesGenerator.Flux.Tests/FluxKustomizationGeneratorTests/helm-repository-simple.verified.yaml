@@ -1,0 +1,7 @@
+﻿---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: helm-repository-simple
+spec:
+  url: https://charts.example.com/

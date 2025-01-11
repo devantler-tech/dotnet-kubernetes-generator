@@ -1,14 +1,14 @@
 namespace Devantler.KubernetesGenerator.Flux.Models;
 
 /// <summary>
-/// Source reference of a Flux HelmRelease.
+/// Flux source reference.
 /// </summary>
 public class FluxSourceRef
 {
   /// <summary>
   /// The type of the source reference.
   /// </summary>
-  public required FluxSource Kind { get; set; }
+  public required FluxSourceRefKind Kind { get; set; }
 
   /// <summary>
   /// The name of the source reference.
@@ -18,5 +18,5 @@ public class FluxSourceRef
   /// <summary>
   /// The namespace of the source reference.
   /// </summary>
-  public string Namespace { get; set; }
+  public string? Namespace { get; set; }
 }

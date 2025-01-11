@@ -1,5 +1,6 @@
 using Devantler.KubernetesGenerator.Core;
-using Devantler.KubernetesGenerator.Flux.Models;
+using Devantler.KubernetesGenerator.Core.Extensions;
+using Devantler.KubernetesGenerator.Flux.Models.Alert;
 
 namespace Devantler.KubernetesGenerator.Flux;
 
@@ -24,12 +25,14 @@ public class FluxAlertGenerator : IKubernetesGenerator<FluxAlert>
       "create",
       "alert",
       model.Metadata.Name,
-      { "--namespace", model.Metadata.Namespace },
-      { "--event-severity", model.Spec.EventSeverity },
-      { "--event-source", model.Spec.EventSources.Select(x => $"{x.Kind}/{x.Name}").ToArray() },
-      { "--provider-ref", model.Spec.ProviderRef.Name },
+      "--provider-ref", model.Spec.ProviderRef.Name,
+      "--event-source", string.Join(",", model.Spec.EventSources.Select(x => $"{x.Kind}/{x.Name}")),
       "--export"
     };
+    arguments.AddIfNotNull("--namespace={0}", model.Metadata.Namespace);
+    arguments.AddIfNotNull("--label={0}", model.Metadata.Labels != null ? string.Join(",", model.Metadata.Labels.Select(x => $"{x.Key}={x.Value}")) : null);
+    arguments.AddIfNotNull("--event-severity={0}", model.Spec.EventSeverity);
+
     var (exitCode, output) = await FluxCLI.Flux.RunAsync([.. arguments],
       cancellationToken: cancellationToken).ConfigureAwait(false);
     if (exitCode != 0)
