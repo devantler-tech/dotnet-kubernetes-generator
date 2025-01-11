@@ -183,11 +183,9 @@ using Devantler.KubernetesGenerator.Native;
 
 var generator = new ConfigMapKubernetesGenerator();
 
-var configMap = new V1ConfigMap
+var configMap = new ConfigMap
 {
-    ApiVersion = "v1",
-    Kind = "ConfigMap",
-    Metadata = new V1ObjectMeta
+    Metadata = new NamespacedMetadata
     {
         Name = "my-config-map",
         Namespace = "default"
@@ -224,6 +222,8 @@ data:
 
 ### Flux
 
+- `FluxAlertGenerator`
+- `FluxAlertProviderGenerator`
 - `FluxHelmReleaseGenerator`
 - `FluxHelmRepositoryGenerator`
 - `FluxKustomizationGenerator`
