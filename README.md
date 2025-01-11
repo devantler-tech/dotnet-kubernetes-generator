@@ -59,88 +59,32 @@ A simple code generator that can generate Kubernetes resources.
 │   ├── KustomizeComponentGeneratorTests
 │   └── KustomizeKustomizationGeneratorTests
 ├── Devantler.KubernetesGenerator.Native
-│   ├── Cluster
-│   ├── ConfigAndStorage
-│   ├── Metadata
-│   ├── Service
-│   └── Workloads
 └── Devantler.KubernetesGenerator.Native.Tests
-    ├── ClusterTests
-    │   ├── APIServiceGeneratorTests
-    │   ├── BindingGeneratorTests
-    │   ├── CertificateSigningRequestGeneratorTests
-    │   ├── ClusterRoleBindingGeneratorTests
-    │   ├── ClusterRoleGeneratorTests
-    │   ├── ComponentStatusGeneratorTests
-    │   ├── FlowSchemaGeneratorTests
-    │   ├── IPAddressGeneratorTests
-    │   ├── LeaseCandidateGeneratorTests
-    │   ├── LeaseGeneratorTests
-    │   ├── LocalSubjectAccessReviewGeneratorTests
-    │   ├── NamespaceGeneratorTests
-    │   ├── NetworkPolicyGeneratorTests
-    │   ├── NodeGeneratorTests
-    │   ├── PersistentVolumeGeneratorTests
-    │   ├── PriorityLevelConfigurationGeneratorTests
-    │   ├── ResourceQuotaGeneratorTests
-    │   ├── RoleBindingGeneratorTests
-    │   ├── RoleGeneratorTests
-    │   ├── RuntimeClassGeneratorTests
-    │   ├── SelfSubjectAccessReviewGeneratorTests
-    │   ├── SelfSubjectReviewGeneratorTests
-    │   ├── SelfSubjectRulesReviewGeneratorTests
-    │   ├── ServiceAccountGeneratorTests
-    │   ├── ServiceCIDRGeneratorTests
-    │   ├── StorageVersionGeneratorTests
-    │   ├── StorageVersionMigrationGeneratorTests
-    │   ├── SubjectAccessReviewGeneratorTests
-    │   └── TokenReviewGeneratorTests
-    ├── ConfigAndStorageTests
-    │   ├── CSIDriverGeneratorTests
-    │   ├── CSINodeGeneratorTests
-    │   ├── CSIStorageCapacityGeneratorTests
-    │   ├── ConfigMapGeneratorTests
-    │   ├── PersistentVolumeClaimGeneratorTests
-    │   ├── SecretGeneratorTests
-    │   ├── StorageClassGeneratorTests
-    │   ├── VolumeAttachmentGeneratorTests
-    │   └── VolumeAttributesClassGeneratorTests
-    ├── MetadataTests
-    │   ├── ClusterTrustBundleGeneratorTests
-    │   ├── ControllerRevisionGeneratorTests
-    │   ├── CustomResourceDefinitionGeneratorTests
-    │   ├── DeviceClassGeneratorTests
-    │   ├── EventGeneratorTests
-    │   ├── HorizontalPodAutoscalerGeneratorTests
-    │   ├── LimitRangeGeneratorTests
-    │   ├── MutatingWebhookConfigurationGeneratorTests
-    │   ├── PodDisruptionBudgetGeneratorTests
-    │   ├── PodSchedulingContextGeneratorTests
-    │   ├── PodTemplateGeneratorTests
-    │   ├── PriorityClassGeneratorTests
-    │   ├── ResourceClaimGeneratorTests
-    │   ├── ResourceClaimTemplateGeneratorTests
-    │   ├── ResourceSliceGeneratorTests
-    │   ├── ValidatingAdmissionPolicyBindingGeneratorTests
-    │   ├── ValidatingAdmissionPolicyGeneratorTests
-    │   └── ValidatingWebhookConfigurationGeneratorTests
-    ├── ServiceTests
-    │   ├── EndpointSliceGeneratorTests
-    │   ├── EndpointsGeneratorTests
-    │   ├── IngressClassGeneratorTests
-    │   ├── IngressGeneratorTests
-    │   └── ServiceGeneratorTests
-    └── WorkloadTests
-        ├── CronJobGeneratorTests
-        ├── DaemonSetGeneratorTests
-        ├── DeploymentGeneratorTests
-        ├── JobGeneratorTests
-        ├── PodGeneratorTests
-        ├── ReplicaSetGeneratorTests
-        ├── ReplicationControllerGeneratorTests
-        └── StatefulSetGeneratorTests
+    ├── ClusterRoleBindingGeneratorTests
+    ├── ClusterRoleGeneratorTests
+    ├── ConfigMapGeneratorTests
+    ├── CronJobGeneratorTests
+    ├── DaemonSetGeneratorTests
+    ├── DeploymentGeneratorTests
+    ├── HorizontalPodAutoscalerGeneratorTests
+    ├── IngressGeneratorTests
+    ├── JobGeneratorTests
+    ├── NamespaceGeneratorTests
+    ├── NetworkPolicyGeneratorTests
+    ├── PersistentVolumeClaimGeneratorTests
+    ├── PersistentVolumeGeneratorTests
+    ├── PodDisruptionBudgetGeneratorTests
+    ├── PodGeneratorTests
+    ├── PriorityClassGeneratorTests
+    ├── ResourceQuotaGeneratorTests
+    ├── RoleBindingGeneratorTests
+    ├── RoleGeneratorTests
+    ├── SecretGeneratorTests
+    ├── ServiceAccountGeneratorTests
+    ├── ServiceGeneratorTests
+    └── StatefulSetGeneratorTests
 
-127 directories
+71 directories
 ```
 <!-- readme-tree end -->
 
@@ -243,89 +187,26 @@ data:
 
 ### Native
 
-The native generators are categorized according to the groupings on [Kubernetes API Overview](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31)
-
-#### Cluster
-
-- `APIServiceGenerator`
-- `BindingGenerator`
-- `CertificateSigningRequestGenerator`
 - `ClusterRoleBindingGenerator`
 - `ClusterRoleGenerator`
-- `ComponentStatusGenerator`
-- `FlowSchemaGenerator`
-- `IPAddressGenerator`
-- `LeaseCandidateGenerator`
-- `LeaseGenerator`
-- `LocalSubjectAccessReviewGenerator`
-- `NamespaceGenerator`
-- `NetworkPolicyGenerator`
-- `NodeGenerator`
-- `PersistentVolumeGenerator`
-- `PriorityLevelConfigurationGenerator`
-- `ResourceQuotaGenerator`
-- `RoleBindingGenerator`
-- `RoleGenerator`
-- `RuntimeClassGenerator`
-- `SelfSubjectAccessReviewGenerator`
-- `SelfSubjectReviewGenerator`
-- `SelfSubjectRulesReviewGenerator`
-- `ServiceAccountGenerator`
-- `ServiceCIDRGenerator`
-- `StorageVersionGenerator`
-- `StorageVersionMigrationGenerator`
-- `SubjectAccessReviewGenerator`
-- `TokenReviewGenerator`
-- `TokenRequestGenerator` ❌
-
-#### Config and Storage
-
 - `ConfigMapGenerator`
-- `CSIDriverGenerator`
-- `CSINodeGenerator`
-- `CSIStorageCapacityGenerator`
-- `PersistentVolumeClaimGenerator`
-- `SecretGenerator`
-- `StorageClassGenerator`
-- `VolumeAttachmentGenerator`
-- `VolumeAttributesClassGenerator`
-
-#### Metadata
-
-- `ClusterTrustBundleGenerator`
-- `ControllerRevisionGenerator`
-- `CustomResourceDefinitionGenerator`
-- `DeviceClassGenerator`
-- `EventGenerator`
-- `HorizontalPodAutoscalerGenerator`
-- `LimitRangeGenerator`
-- `MutatingWebhookConfigurationGenerator`
-- `PodDisruptionBudgetGenerator`
-- `PodSchedulingContextGenerator`
-- `PodTemplateGenerator`
-- `PriorityClassGenerator`
-- `ResourceClaimGenerator`
-- `ResourceClaimTemplateGenerator`
-- `ResourceSliceGenerator`
-- `ValidatingAdmissionPolicyBindingGenerator`
-- `ValidatingAdmissionPolicyGenerator`
-- `ValidatingWebhookConfigurationGenerator`
-
-#### Service
-
-- `EndpointsGenerator`
-- `EndpointSliceGenerator`
-- `IngressClassGenerator`
-- `IngressGenerator`
-- `ServiceGenerator`
-
-#### Workloads
-
 - `CronJobGenerator`
 - `DaemonSetGenerator`
 - `DeploymentGenerator`
+- `HorizontalPodAutoscalerGenerator`
+- `IngressGenerator`
 - `JobGenerator`
+- `NamespaceGenerator`
+- `NetworkPolicyGenerator`
+- `PersistentVolumeClaimGenerator`
+- `PersistentVolumeGenerator`
+- `PodDisruptionBudgetGenerator`
 - `PodGenerator`
-- `ReplicaSetGenerator`
-- `ReplicationControllerGenerator`
+- `PriorityClassGenerator`
+- `ResourceQuotaGenerator`
+- `RoleBindingGenerator`
+- `RoleGenerator`
+- `SecretGenerator`
+- `ServiceAccountGenerator`
+- `ServiceGenerator`
 - `StatefulSetGenerator`
