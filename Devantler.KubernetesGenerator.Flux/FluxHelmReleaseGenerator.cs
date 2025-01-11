@@ -20,10 +20,6 @@ public class FluxHelmReleaseGenerator : IKubernetesGenerator<FluxHelmRelease>
   /// <exception cref="KubernetesGeneratorException"></exception>
   public async Task GenerateAsync(FluxHelmRelease model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
-    if (model.Spec.Chart == null && model.Spec.ChartRef == null)
-    {
-      throw new KubernetesGeneratorException("One of Chart or ChartRef must be set.");
-    }
     var arguments = new List<string>
     {
       "create",

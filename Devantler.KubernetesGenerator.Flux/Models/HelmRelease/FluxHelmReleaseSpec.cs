@@ -44,4 +44,16 @@ public class FluxHelmReleaseSpec
   /// A reference to a ConfigMap or Secret.
   /// </summary>
   public FluxConfigRef? ValuesFrom { get; set; }
+
+  /// <summary>
+  /// Constructor for a HelmRelease spec with a chart.
+  /// </summary>
+  /// <param name="chart"></param>
+  public FluxHelmReleaseSpec(FluxHelmReleaseSpecChart chart) => Chart = chart;
+
+  /// <summary>
+  /// Constructor for a HelmRelease spec with a chart reference.
+  /// </summary>
+  /// <param name="chartRef"></param>
+  public FluxHelmReleaseSpec(FluxHelmReleaseSpecChartRef chartRef) => ChartRef = chartRef;
 }

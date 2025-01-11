@@ -17,16 +17,15 @@ public class ClassData : IEnumerable<object[]>
       {
         Name = "helm-release-chart-simple",
       },
-      Spec = new FluxHelmReleaseSpec
-      {
-        Chart = new FluxHelmReleaseSpecChart
+      Spec = new FluxHelmReleaseSpec(
+        new FluxHelmReleaseSpecChart
         {
           Spec = new FluxHelmReleaseSpecChartSpec
           {
             Chart = "nginx"
           }
-        },
-      }
+        }
+      )
     }, "helm-release-chart-simple.yaml"],
 
     // Complex HelmRelease - Chart
@@ -40,7 +39,24 @@ public class ClassData : IEnumerable<object[]>
           { "key", "value" },
         }
       },
-      Spec = new FluxHelmReleaseSpec
+      Spec = new FluxHelmReleaseSpec(
+        new FluxHelmReleaseSpecChart
+        {
+          Spec = new FluxHelmReleaseSpecChartSpec
+          {
+            Chart = "nginx",
+            Interval = "1m",
+            Version = "1.0.0",
+            ReconcileStrategy = FluxHelmReleaseSpecChartSpecReconcileStrategy.Revision,
+            SourceRef = new FluxSourceRef
+            {
+              Kind = FluxSourceRefKind.HelmRepository,
+              Name = "nginx",
+              Namespace = "helm-release-chart-complex",
+            }
+          }
+        }
+      )
       {
         Interval = "1m",
         InstallUpgrade = new FluxHelmReleaseSpecInstallUpgrade
@@ -63,22 +79,6 @@ public class ClassData : IEnumerable<object[]>
           }
         },
         ServiceAccountName = "helm-release-chart-complex-sa",
-        Chart = new FluxHelmReleaseSpecChart
-        {
-          Spec = new FluxHelmReleaseSpecChartSpec
-          {
-            Chart = "nginx",
-            Interval = "1m",
-            Version = "1.0.0",
-            ReconcileStrategy = FluxHelmReleaseSpecChartSpecReconcileStrategy.Revision,
-            SourceRef = new FluxSourceRef
-            {
-              Kind = FluxSourceRefKind.HelmRepository,
-              Name = "nginx",
-              Namespace = "helm-release-chart-complex",
-            }
-          }
-        },
         ValuesFrom = new FluxConfigRef
         {
           Kind = FluxConfigRefKind.ConfigMap,
@@ -93,14 +93,13 @@ public class ClassData : IEnumerable<object[]>
       {
         Name = "helm-release-chart-ref-simple",
       },
-      Spec = new FluxHelmReleaseSpec
-      {
-        ChartRef = new FluxHelmReleaseSpecChartRef
+      Spec = new FluxHelmReleaseSpec(
+        new FluxHelmReleaseSpecChartRef
         {
           Kind = FluxHelmReleaseSpecChartRefKind.HelmChart,
           Name = "nginx"
-        },
-      }
+        }
+      )
     }, "helm-release-chart-ref-simple.yaml"],
 
     // Complex HelmRelease - ChartRef
@@ -114,7 +113,14 @@ public class ClassData : IEnumerable<object[]>
           { "key", "value" },
         }
       },
-      Spec = new FluxHelmReleaseSpec
+      Spec = new FluxHelmReleaseSpec(
+        new FluxHelmReleaseSpecChartRef
+        {
+          Kind = FluxHelmReleaseSpecChartRefKind.HelmChart,
+          Name = "nginx",
+          Namespace = "helm-release-chart-ref-complex",
+        }
+      )
       {
         Interval = "1m",
         InstallUpgrade = new FluxHelmReleaseSpecInstallUpgrade
@@ -137,12 +143,6 @@ public class ClassData : IEnumerable<object[]>
           }
         },
         ServiceAccountName = "helm-release-chart-ref-complex-sa",
-        ChartRef = new FluxHelmReleaseSpecChartRef
-        {
-          Kind = FluxHelmReleaseSpecChartRefKind.HelmChart,
-          Name = "nginx",
-          Namespace = "helm-release-chart-ref-complex",
-        },
         ValuesFrom = new FluxConfigRef
         {
           Kind = FluxConfigRefKind.ConfigMap,
