@@ -1,0 +1,12 @@
+﻿---
+apiVersion: storagemigration.k8s.io/v1alpha1
+kind: StorageVersionMigration
+metadata:
+  name: storage-version-migration
+  namespace: default
+spec:
+  continueToken: continue-token
+  resource:
+    group: group
+    resource: resource
+    version: version

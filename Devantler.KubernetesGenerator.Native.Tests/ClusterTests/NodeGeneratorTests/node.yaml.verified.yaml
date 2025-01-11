@@ -1,0 +1,22 @@
+﻿---
+apiVersion: v1
+kind: Node
+metadata:
+  name: node
+  namespace: default
+spec:
+  configSource:
+    configMap:
+      kubeletConfigKey: kubelet-config-key
+      name: config-map-name
+      namespace: default
+  externalID: external-id
+  podCIDR: pod-cidr
+  podCIDRs:
+  - pod-cidr
+  providerID: provider-id
+  taints:
+  - effect: NoSchedule
+    key: key
+    value: value
+  unschedulable: true

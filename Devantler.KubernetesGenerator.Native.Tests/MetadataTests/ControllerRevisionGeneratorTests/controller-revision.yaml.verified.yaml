@@ -1,0 +1,9 @@
+﻿---
+apiVersion: apps/v1
+kind: ControllerRevision
+metadata:
+  name: controller-revision
+  namespace: default
+data:
+  test: test
+revision: 1

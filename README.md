@@ -187,26 +187,89 @@ data:
 
 ### Native
 
+The native generators are categorized according to the groupings on [Kubernetes API Overview](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31)
+
+#### Cluster
+
+- `APIServiceGenerator`
+- `BindingGenerator`
+- `CertificateSigningRequestGenerator`
 - `ClusterRoleBindingGenerator`
 - `ClusterRoleGenerator`
-- `ConfigMapGenerator`
-- `CronJobGenerator`
-- `DaemonSetGenerator`
-- `DeploymentGenerator`
-- `HorizontalPodAutoscalerGenerator`
-- `IngressGenerator`
-- `JobGenerator`
+- `ComponentStatusGenerator`
+- `FlowSchemaGenerator`
+- `IPAddressGenerator`
+- `LeaseCandidateGenerator`
+- `LeaseGenerator`
+- `LocalSubjectAccessReviewGenerator`
 - `NamespaceGenerator`
 - `NetworkPolicyGenerator`
-- `PersistentVolumeClaimGenerator`
+- `NodeGenerator`
 - `PersistentVolumeGenerator`
-- `PodDisruptionBudgetGenerator`
-- `PodGenerator`
-- `PriorityClassGenerator`
+- `PriorityLevelConfigurationGenerator`
 - `ResourceQuotaGenerator`
 - `RoleBindingGenerator`
 - `RoleGenerator`
-- `SecretGenerator`
+- `RuntimeClassGenerator`
+- `SelfSubjectAccessReviewGenerator`
+- `SelfSubjectReviewGenerator`
+- `SelfSubjectRulesReviewGenerator`
 - `ServiceAccountGenerator`
+- `ServiceCIDRGenerator`
+- `StorageVersionGenerator`
+- `StorageVersionMigrationGenerator`
+- `SubjectAccessReviewGenerator`
+- `TokenReviewGenerator`
+- `TokenRequestGenerator` ❌
+
+#### Config and Storage
+
+- `ConfigMapGenerator`
+- `CSIDriverGenerator`
+- `CSINodeGenerator`
+- `CSIStorageCapacityGenerator`
+- `PersistentVolumeClaimGenerator`
+- `SecretGenerator`
+- `StorageClassGenerator`
+- `VolumeAttachmentGenerator`
+- `VolumeAttributesClassGenerator`
+
+#### Metadata
+
+- `ClusterTrustBundleGenerator`
+- `ControllerRevisionGenerator`
+- `CustomResourceDefinitionGenerator`
+- `DeviceClassGenerator`
+- `EventGenerator`
+- `HorizontalPodAutoscalerGenerator`
+- `LimitRangeGenerator`
+- `MutatingWebhookConfigurationGenerator`
+- `PodDisruptionBudgetGenerator`
+- `PodSchedulingContextGenerator`
+- `PodTemplateGenerator`
+- `PriorityClassGenerator`
+- `ResourceClaimGenerator`
+- `ResourceClaimTemplateGenerator`
+- `ResourceSliceGenerator`
+- `ValidatingAdmissionPolicyBindingGenerator`
+- `ValidatingAdmissionPolicyGenerator`
+- `ValidatingWebhookConfigurationGenerator`
+
+#### Service
+
+- `EndpointsGenerator`
+- `EndpointSliceGenerator`
+- `IngressClassGenerator`
+- `IngressGenerator`
 - `ServiceGenerator`
+
+#### Workloads
+
+- `CronJobGenerator`
+- `DaemonSetGenerator`
+- `DeploymentGenerator`
+- `JobGenerator`
+- `PodGenerator`
+- `ReplicaSetGenerator`
+- `ReplicationControllerGenerator`
 - `StatefulSetGenerator`

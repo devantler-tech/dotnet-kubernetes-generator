@@ -1,0 +1,12 @@
+﻿---
+apiVersion: networking.k8s.io/v1beta1
+kind: IPAddress
+metadata:
+  name: ip-address
+  namespace: default
+spec:
+  parentRef:
+    group: group
+    name: pod
+    namespace: default
+    resource: resource
