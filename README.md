@@ -59,6 +59,7 @@ A simple code generator that can generate Kubernetes resources.
 │   ├── KustomizeComponentGeneratorTests
 │   └── KustomizeKustomizationGeneratorTests
 ├── Devantler.KubernetesGenerator.Native
+│   └── Models
 └── Devantler.KubernetesGenerator.Native.Tests
     ├── ClusterRoleBindingGeneratorTests
     ├── ClusterRoleGeneratorTests
@@ -84,7 +85,7 @@ A simple code generator that can generate Kubernetes resources.
     ├── ServiceGeneratorTests
     └── StatefulSetGeneratorTests
 
-71 directories
+72 directories
 ```
 <!-- readme-tree end -->
 
