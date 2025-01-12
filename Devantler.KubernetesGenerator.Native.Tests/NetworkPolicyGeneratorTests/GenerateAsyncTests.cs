@@ -66,7 +66,7 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string fileName = "network-policy";
+    string fileName = "network-policy.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);

@@ -1,0 +1,15 @@
+﻿---
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Provider
+metadata:
+  labels:
+    key: value
+  name: provider-complex
+  namespace: provider-complex
+spec:
+  address: https://slack.com
+  channel: channel
+  secretRef:
+    name: secret-name
+  type: slack
+  username: username

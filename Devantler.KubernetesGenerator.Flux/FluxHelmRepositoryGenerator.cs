@@ -1,5 +1,5 @@
 using Devantler.KubernetesGenerator.Core;
-using Devantler.KubernetesGenerator.Flux.Models;
+using Devantler.KubernetesGenerator.Flux.Models.HelmRepository;
 
 namespace Devantler.KubernetesGenerator.Flux;
 

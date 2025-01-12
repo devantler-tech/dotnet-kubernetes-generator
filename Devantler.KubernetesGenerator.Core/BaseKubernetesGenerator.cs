@@ -37,17 +37,6 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
     }
     string yaml = _serializer.Serialize(model);
 
-    if (!yaml.StartsWith("---", StringComparison.Ordinal))
-    {
-      yaml = $"---{Environment.NewLine}" + yaml;
-    }
-    if (overwrite)
-    {
-      await File.WriteAllTextAsync(outputPath, yaml, cancellationToken).ConfigureAwait(false);
-    }
-    else
-    {
-      await File.AppendAllTextAsync(outputPath, yaml, cancellationToken).ConfigureAwait(false);
-    }
+    await YamlFileWriter.WriteToFileAsync(outputPath, yaml, overwrite, cancellationToken);
   }
 }
