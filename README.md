@@ -22,17 +22,19 @@ A simple code generator that can generate Kubernetes resources.
 │   └── CertManagerClusterIssuerGeneratorTests
 ├── Devantler.KubernetesGenerator.Core
 │   ├── Converters
+│   ├── Extensions
 │   └── Inspectors
+├── Devantler.KubernetesGenerator.Core.Tests
 ├── Devantler.KubernetesGenerator.Flux
 │   └── Models
-│       ├── Dependencies
-│       ├── Images
-│       ├── KubeConfig
-│       ├── Metadata
-│       ├── Patches
-│       ├── SecretRef
-│       └── Sources
+│       ├── Alert
+│       ├── AlertProvider
+│       ├── HelmRelease
+│       ├── HelmRepository
+│       └── Kustomization
 ├── Devantler.KubernetesGenerator.Flux.Tests
+│   ├── FluxAlertGeneratorTests
+│   ├── FluxAlertProviderGeneratorTests
 │   ├── FluxHelmReleaseGeneratorTests
 │   ├── FluxHelmRepositoryGeneratorTests
 │   └── FluxKustomizationGeneratorTests
@@ -60,32 +62,42 @@ A simple code generator that can generate Kubernetes resources.
 │   └── KustomizeKustomizationGeneratorTests
 ├── Devantler.KubernetesGenerator.Native
 │   └── Models
-└── Devantler.KubernetesGenerator.Native.Tests
-    ├── ClusterRoleBindingGeneratorTests
-    ├── ClusterRoleGeneratorTests
-    ├── ConfigMapGeneratorTests
-    ├── CronJobGeneratorTests
-    ├── DaemonSetGeneratorTests
-    ├── DeploymentGeneratorTests
-    ├── HorizontalPodAutoscalerGeneratorTests
-    ├── IngressGeneratorTests
-    ├── JobGeneratorTests
-    ├── NamespaceGeneratorTests
-    ├── NetworkPolicyGeneratorTests
-    ├── PersistentVolumeClaimGeneratorTests
-    ├── PersistentVolumeGeneratorTests
-    ├── PodDisruptionBudgetGeneratorTests
-    ├── PodGeneratorTests
-    ├── PriorityClassGeneratorTests
-    ├── ResourceQuotaGeneratorTests
-    ├── RoleBindingGeneratorTests
-    ├── RoleGeneratorTests
-    ├── SecretGeneratorTests
-    ├── ServiceAccountGeneratorTests
-    ├── ServiceGeneratorTests
-    └── StatefulSetGeneratorTests
+├── Devantler.KubernetesGenerator.Native.Tests
+│   ├── ClusterRoleBindingGeneratorTests
+│   ├── ClusterRoleGeneratorTests
+│   ├── ConfigMapGeneratorTests
+│   ├── CronJobGeneratorTests
+│   ├── DaemonSetGeneratorTests
+│   ├── DeploymentGeneratorTests
+│   ├── HorizontalPodAutoscalerGeneratorTests
+│   ├── IngressGeneratorTests
+│   ├── JobGeneratorTests
+│   ├── NamespaceGeneratorTests
+│   ├── NetworkPolicyGeneratorTests
+│   ├── PersistentVolumeClaimGeneratorTests
+│   ├── PersistentVolumeGeneratorTests
+│   ├── PodDisruptionBudgetGeneratorTests
+│   ├── PodGeneratorTests
+│   ├── PriorityClassGeneratorTests
+│   ├── ResourceQuotaGeneratorTests
+│   ├── RoleBindingGeneratorTests
+│   ├── RoleGeneratorTests
+│   ├── SecretGeneratorTests
+│   ├── ServiceAccountGeneratorTests
+│   ├── ServiceGeneratorTests
+│   └── StatefulSetGeneratorTests
+└── TEMP
+    ├── src
+    │   └── Models
+    │       ├── ImagePolicy
+    │       ├── ImageRepository
+    │       ├── ImageUpdateAutomation
+    │       └── Receiver
+    └── tests
+        ├── FluxHelmRepositoryGeneratorTests
+        └── FluxKustomizationGeneratorTests
 
-72 directories
+85 directories
 ```
 <!-- readme-tree end -->
 
