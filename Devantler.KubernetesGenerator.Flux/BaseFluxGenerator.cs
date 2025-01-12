@@ -1,0 +1,41 @@
+using Devantler.KubernetesGenerator.Core;
+
+namespace Devantler.KubernetesGenerator.Flux;
+
+
+/// <summary>
+/// Base class for Flux generators.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public abstract class BaseFluxGenerator<T> : IKubernetesGenerator<T>
+{
+  /// <summary>
+  /// Generates a Flux object.
+  /// </summary>
+  /// <param name="model"></param>
+  /// <param name="outputPath"></param>
+  /// <param name="overwrite"></param>
+  /// <param name="cancellationToken"></param>
+  /// <returns></returns>
+  /// <exception cref="NotImplementedException"></exception>
+  public abstract Task GenerateAsync(T model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default);
+
+  /// <summary>
+  /// Runs the Flux CLI with the provided arguments and writes the output to the specified file.
+  /// </summary>
+  /// <param name="outputPath"></param>
+  /// <param name="overwrite"></param>
+  /// <param name="arguments"></param>
+  /// <param name="errorMessage"></param>
+  /// <param name="cancellationToken"></param>
+  /// <returns></returns>
+  /// <exception cref="KubernetesGeneratorException"></exception>
+  public async Task RunFluxAsync(string outputPath, bool overwrite, List<string> arguments, string errorMessage, CancellationToken cancellationToken)
+  {
+    var (exitCode, output) = await FluxCLI.Flux.RunAsync([.. arguments],
+      cancellationToken: cancellationToken).ConfigureAwait(false);
+    if (exitCode != 0)
+      throw new KubernetesGeneratorException($"{errorMessage}: {output}");
+    await FileWriter.WriteToFileAsync(outputPath, output, overwrite, cancellationToken);
+  }
+}

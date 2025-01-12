@@ -7,7 +7,7 @@ namespace Devantler.KubernetesGenerator.Flux;
 /// <summary>
 /// Generator for generating Flux HelmRelease objects.
 /// </summary>
-public class FluxHelmReleaseGenerator : IKubernetesGenerator<FluxHelmRelease>
+public class FluxHelmReleaseGenerator : BaseFluxGenerator<FluxHelmRelease>
 {
   /// <summary>
   /// Generates a Flux HelmRelease object.
@@ -18,7 +18,7 @@ public class FluxHelmReleaseGenerator : IKubernetesGenerator<FluxHelmRelease>
   /// <param name="cancellationToken"></param>
   /// <returns></returns>
   /// <exception cref="KubernetesGeneratorException"></exception>
-  public async Task GenerateAsync(FluxHelmRelease model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(FluxHelmRelease model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     var arguments = new List<string>
     {
@@ -56,12 +56,6 @@ public class FluxHelmReleaseGenerator : IKubernetesGenerator<FluxHelmRelease>
       arguments.AddIfNotNull("--chart-ref={0}/{1}.{2}", model.Spec.ChartRef?.Kind, model.Spec.ChartRef?.Name, model.Spec.ChartRef?.Namespace);
     }
 
-    var (exitCode, output) = await FluxCLI.Flux.RunAsync([.. arguments],
-    cancellationToken: cancellationToken).ConfigureAwait(false);
-    if (exitCode != 0)
-    {
-      throw new KubernetesGeneratorException($"Failed to generate Flux HelmRelease object. {output}");
-    }
-    await FileWriter.WriteToFileAsync(outputPath, output, overwrite, cancellationToken);
+    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux HelmRelease object", cancellationToken);
   }
 }

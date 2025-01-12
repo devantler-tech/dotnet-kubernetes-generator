@@ -1,4 +1,3 @@
-using Devantler.KubernetesGenerator.Core;
 using Devantler.KubernetesGenerator.Core.Extensions;
 using Devantler.KubernetesGenerator.Flux.Models.AlertProvider;
 
@@ -7,7 +6,7 @@ namespace Devantler.KubernetesGenerator.Flux;
 /// <summary>
 /// Generator for generating Flux Alert Provider objects.
 /// </summary>
-public class FluxAlertProviderGenerator : IKubernetesGenerator<FluxAlertProvider>
+public class FluxAlertProviderGenerator : BaseFluxGenerator<FluxAlertProvider>
 {
   /// <summary>
   /// Generates a Flux Alert Provider object.
@@ -18,7 +17,7 @@ public class FluxAlertProviderGenerator : IKubernetesGenerator<FluxAlertProvider
   /// <param name="cancellationToken"></param>
   /// <returns></returns>
   /// <exception cref="NotImplementedException"></exception>
-  public async Task GenerateAsync(FluxAlertProvider model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(FluxAlertProvider model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     var arguments = new List<string>
     {
@@ -35,12 +34,6 @@ public class FluxAlertProviderGenerator : IKubernetesGenerator<FluxAlertProvider
     arguments.AddIfNotNull("--secret-ref={0}", model.Spec.SecretRef?.Name);
     arguments.AddIfNotNull("--username={0}", model.Spec.Username);
 
-    var (exitCode, output) = await FluxCLI.Flux.RunAsync([.. arguments],
-      cancellationToken: cancellationToken).ConfigureAwait(false);
-    if (exitCode != 0)
-    {
-      throw new KubernetesGeneratorException($"Failed to generate Flux Alert Provider object. {output}");
-    }
-    await FileWriter.WriteToFileAsync(outputPath, output, overwrite, cancellationToken);
+    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux Alert Provider object", cancellationToken);
   }
 }

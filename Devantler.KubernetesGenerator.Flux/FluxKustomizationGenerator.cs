@@ -7,7 +7,7 @@ namespace Devantler.KubernetesGenerator.Flux;
 /// <summary>
 /// Generator for generating Flux Kustomization objects.
 /// </summary>
-public class FluxKustomizationGenerator : IKubernetesGenerator<FluxKustomization>
+public class FluxKustomizationGenerator : BaseFluxGenerator<FluxKustomization>
 {
   /// <summary>
   /// Generates a Flux Kustomization object.
@@ -18,7 +18,7 @@ public class FluxKustomizationGenerator : IKubernetesGenerator<FluxKustomization
   /// <param name="cancellationToken"></param>
   /// <returns></returns>
   /// <exception cref="KubernetesGeneratorException"></exception>
-  public async Task GenerateAsync(FluxKustomization model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(FluxKustomization model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     var arguments = new List<string>
     {
@@ -43,14 +43,7 @@ public class FluxKustomizationGenerator : IKubernetesGenerator<FluxKustomization
     arguments.AddIfNotNull("--source={0}/{1}.{2}", model.Spec?.SourceRef?.Kind, model.Spec?.SourceRef?.Name, model.Spec?.SourceRef?.Namespace);
     arguments.AddIfNotNull("--wait", model.Spec?.Wait);
 
-
-    var (exitCode, output) = await FluxCLI.Flux.RunAsync([.. arguments],
-      cancellationToken: cancellationToken).ConfigureAwait(false);
-    if (exitCode != 0)
-    {
-      throw new KubernetesGeneratorException($"Failed to generate Flux HelmRelease object. {output}");
-    }
-    await FileWriter.WriteToFileAsync(outputPath, output, overwrite, cancellationToken);
+    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux HelmRelease object", cancellationToken);
   }
 }
 
