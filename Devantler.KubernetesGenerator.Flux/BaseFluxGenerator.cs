@@ -36,6 +36,6 @@ public abstract class BaseFluxGenerator<T> : IKubernetesGenerator<T>
       cancellationToken: cancellationToken).ConfigureAwait(false);
     if (exitCode != 0)
       throw new KubernetesGeneratorException($"{errorMessage}: {output}");
-    await FileWriter.WriteToFileAsync(outputPath, output, overwrite, cancellationToken);
+    await YamlFileWriter.WriteToFileAsync(outputPath, output, overwrite, cancellationToken);
   }
 }

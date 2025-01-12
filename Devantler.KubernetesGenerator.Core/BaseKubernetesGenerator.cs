@@ -37,6 +37,6 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
     }
     string yaml = _serializer.Serialize(model);
 
-    await FileWriter.WriteToFileAsync(outputPath, yaml, overwrite, cancellationToken);
+    await YamlFileWriter.WriteToFileAsync(outputPath, yaml, overwrite, cancellationToken);
   }
 }

@@ -1,12 +1,12 @@
 namespace Devantler.KubernetesGenerator.Core;
 
 /// <summary>
-/// Writes content to a file.
+/// Writes content to a YAML file.
 /// </summary>
-public static class FileWriter
+public static class YamlFileWriter
 {
   /// <summary>
-  /// Writes the output to the file at the given path.
+  /// Writes the output to the specified YAML file.
   /// </summary>
   /// <param name="outputPath"></param>
   /// <param name="output"></param>
@@ -16,6 +16,10 @@ public static class FileWriter
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task WriteToFileAsync(string outputPath, string output, bool overwrite, CancellationToken cancellationToken = default)
   {
+    if (!outputPath.EndsWith(".yaml", StringComparison.OrdinalIgnoreCase) && !outputPath.EndsWith(".yml", StringComparison.OrdinalIgnoreCase))
+    {
+      throw new InvalidOperationException("Output path must be a YAML file.");
+    }
     string outputDirectory = Path.GetDirectoryName(outputPath) ?? throw new InvalidOperationException("Output path is invalid.");
     if (!Directory.Exists(outputDirectory))
     {
