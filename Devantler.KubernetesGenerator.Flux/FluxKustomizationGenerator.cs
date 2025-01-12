@@ -30,7 +30,7 @@ public class FluxKustomizationGenerator : BaseFluxGenerator<FluxKustomization>
     arguments.AddIfNotNull("--namespace={0}", model.Metadata.Namespace);
     arguments.AddIfNotNull("--interval={0}", model.Spec?.Interval);
     arguments.AddIfNotNull("--label={0}", model.Metadata.Labels != null ? string.Join(",", model.Metadata.Labels.Select(x => $"{x.Key}={x.Value}")) : null);
-    arguments.AddIfNotNull("--decryption-provider={0}", model.Spec?.Decryption?.Provider.GetDescription());
+    arguments.AddIfNotNull("--decryption-provider={0}", model.Spec?.Decryption?.Provider.GetDescriptionOrDefault());
     arguments.AddIfNotNull("--decryption-secret={0}", model.Spec?.Decryption?.SecretRef?.Name);
     arguments.AddIfNotNull("--depends-on={0}", model.Spec?.DependsOn != null ? string.Join(",", model.Spec.DependsOn.Select(x => $"{x.Name}/{x.Namespace}")) : null);
     arguments.AddIfNotNull("--health-check={0}", model.Spec?.HealthChecks?.Select(x => $"{x.Kind}/{x.Name}.{x.Namespace}"));

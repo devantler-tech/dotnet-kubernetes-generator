@@ -24,7 +24,7 @@ public class FluxAlertProviderGenerator : BaseFluxGenerator<FluxAlertProvider>
       "create",
       "alert-provider",
       model.Metadata.Name,
-      "--type", model.Spec.Type.GetDescription(),
+      "--type", model.Spec.Type.GetDescriptionOrDefault(),
       "--export"
     };
     arguments.AddIfNotNull("--namespace={0}", model.Metadata.Namespace);
