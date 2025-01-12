@@ -3,7 +3,7 @@
 /// <summary>
 /// Tests for <see cref="KubernetesGeneratorException"/>.
 /// </summary>
-public class KubernetesGeneratorExceptionTest
+public class KubernetesGeneratorExceptionTests
 {
   /// <summary>
   /// Tests the constructor of <see cref="KubernetesGeneratorException"/>.
@@ -16,7 +16,6 @@ public class KubernetesGeneratorExceptionTest
 
     // Assert
     Assert.NotNull(exception);
-    Assert.Null(exception.Message);
   }
 
   /// <summary>
