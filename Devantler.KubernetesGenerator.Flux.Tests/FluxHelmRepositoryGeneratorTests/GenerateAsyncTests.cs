@@ -18,10 +18,10 @@ public class GenerateAsyncTests
     // Act
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     await _generator.GenerateAsync(model, outputPath, true);
-    string file = await File.ReadAllTextAsync(outputPath);
+    string fileContents = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(file, extension: "yaml").UseFileName(fileName);
+    _ = await Verify(fileContents, extension: "yaml").UseFileName(fileName);
 
     // Cleanup
     File.Delete(outputPath);

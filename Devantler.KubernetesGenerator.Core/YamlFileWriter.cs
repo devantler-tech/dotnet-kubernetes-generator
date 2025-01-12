@@ -18,7 +18,7 @@ public static class YamlFileWriter
   {
     if (!outputPath.EndsWith(".yaml", StringComparison.OrdinalIgnoreCase) && !outputPath.EndsWith(".yml", StringComparison.OrdinalIgnoreCase))
     {
-      throw new InvalidOperationException("Output path must be a YAML file.");
+      throw new KubernetesGeneratorException("Output path must be a YAML file.");
     }
     string outputDirectory = Path.GetDirectoryName(outputPath) ?? throw new InvalidOperationException("Output path is invalid.");
     if (!Directory.Exists(outputDirectory))

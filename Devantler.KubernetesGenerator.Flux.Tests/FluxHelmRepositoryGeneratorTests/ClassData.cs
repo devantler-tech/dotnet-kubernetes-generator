@@ -22,7 +22,7 @@ public class ClassData : IEnumerable<object[]>
       {
         Url = new Uri("https://charts.example.com"),
       },
-    }, "helm-repository-simple"],
+    }, "helm-repository-simple.yaml"],
 
     // Complex HelmRepository
     [new FluxHelmRepository()
@@ -42,7 +42,7 @@ public class ClassData : IEnumerable<object[]>
         Url = new Uri("https://charts.example.com"),
         Type = FluxHelmRepositorySpecType.OCI
       },
-    }, "helm-repository-complex"],
+    }, "helm-repository-complex.yaml"],
   ];
 
   /// <inheritdoc/>

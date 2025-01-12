@@ -18,7 +18,7 @@ public class ClassData : IEnumerable<object[]>
       {
         Name = "kustomization-simple",
       }
-    }, "kustomization-simple"],
+    }, "kustomization-simple.yaml"],
 
     // Complex Kustomization
     [new FluxKustomization()
@@ -78,7 +78,7 @@ public class ClassData : IEnumerable<object[]>
         Timeout = "5m",
         Wait = true
       },
-    }, "kustomization-complex"],
+    }, "kustomization-complex.yaml"],
   ];
 
   /// <inheritdoc/>
