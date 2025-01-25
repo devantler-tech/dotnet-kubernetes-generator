@@ -22,7 +22,6 @@ A simple code generator that can generate Kubernetes resources.
 │   └── CertManagerClusterIssuerGeneratorTests
 ├── Devantler.KubernetesGenerator.Core
 │   ├── Converters
-│   ├── Extensions
 │   └── Inspectors
 ├── Devantler.KubernetesGenerator.Core.Tests
 ├── Devantler.KubernetesGenerator.Flux
@@ -97,7 +96,7 @@ A simple code generator that can generate Kubernetes resources.
         ├── FluxHelmRepositoryGeneratorTests
         └── FluxKustomizationGeneratorTests
 
-85 directories
+84 directories
 ```
 <!-- readme-tree end -->
 
