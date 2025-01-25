@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Devantler.FluxCLI" Version="1.1.6" />
+    <PackageReference Include="Devantler.Commons.Extensions" Version="0.3.*" />
   </ItemGroup>
 
   <ItemGroup>
