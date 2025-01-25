@@ -1,4 +1,4 @@
-using Devantler.KubernetesGenerator.Core.Extensions;
+using Devantler.Commons.Extensions;
 using Devantler.KubernetesGenerator.Flux.Models.Alert;
 
 namespace Devantler.KubernetesGenerator.Flux;

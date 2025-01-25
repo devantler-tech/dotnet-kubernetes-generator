@@ -1,5 +1,5 @@
+using Devantler.Commons.Extensions;
 using Devantler.KubernetesGenerator.Core;
-using Devantler.KubernetesGenerator.Core.Extensions;
 using Devantler.KubernetesGenerator.Flux.Models.Kustomization;
 
 namespace Devantler.KubernetesGenerator.Flux;
