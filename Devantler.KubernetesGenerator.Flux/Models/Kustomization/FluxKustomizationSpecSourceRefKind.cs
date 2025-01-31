@@ -1,9 +1,9 @@
-namespace Devantler.KubernetesGenerator.Flux.Models;
+namespace Devantler.KubernetesGenerator.Flux.Models.Kustomization;
 
 /// <summary>
 /// The kind of flux sources.
 /// </summary>
-public enum FluxSourceRefKind
+public enum FluxKustomizationSpecSourceRefKind
 {
   /// <summary>
   /// The source is a GitRepository.
@@ -14,11 +14,6 @@ public enum FluxSourceRefKind
   /// The source is a OCIRepository.
   /// </summary>
   OCIRepository,
-
-  /// <summary>
-  /// The source is a HelmRepository.
-  /// </summary>
-  HelmRepository,
 
   /// <summary>
   /// The source is a Bucket.

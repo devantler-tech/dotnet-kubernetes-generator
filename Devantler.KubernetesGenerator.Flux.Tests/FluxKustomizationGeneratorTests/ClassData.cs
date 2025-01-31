@@ -69,9 +69,9 @@ public class ClassData : IEnumerable<object[]>
         Prune = true,
         RetryInterval = "10m",
         ServiceAccountName = "service-account",
-        SourceRef = new FluxSourceRef()
+        SourceRef = new FluxKustomizationSpecSourceRef()
         {
-          Kind = FluxSourceRefKind.OCIRepository,
+          Kind = FluxKustomizationSpecSourceRefKind.OCIRepository,
           Name = "source",
           Namespace = "flux-system"
         },

@@ -48,7 +48,11 @@ public class FluxKustomizationSpec
   /// <summary>
   /// The source reference that the Kustomization object should be reconciled with.
   /// </summary>
-  public FluxSourceRef? SourceRef { get; set; }
+  public FluxKustomizationSpecSourceRef? SourceRef { get; set; } = new FluxKustomizationSpecSourceRef()
+  {
+    Kind = FluxKustomizationSpecSourceRefKind.OCIRepository,
+    Name = "flux-system"
+  };
 
   /// <summary>
   /// The path to the directory containing a kustomization.yaml file (default ./)

@@ -28,5 +28,5 @@ public class FluxHelmReleaseSpecChartSpec
   /// <summary>
   /// The source reference of the chart to install.
   /// </summary>
-  public FluxSourceRef? SourceRef { get; set; }
+  public FluxHelmReleaseSpecChartSpecSourceRef? SourceRef { get; set; }
 }
