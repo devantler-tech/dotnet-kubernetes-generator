@@ -23,7 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Devantler.KubernetesGenerator.CertManager\Devantler.KubernetesGenerator.CertManager.csproj" />
+    <ProjectReference Include="../../src/Devantler.KubernetesGenerator.K3d/Devantler.KubernetesGenerator.K3d.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
 
 </Project>
