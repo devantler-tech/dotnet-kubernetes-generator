@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Devantler.KubernetesGenerator.Kind/Devantler.KubernetesGenerator.Kind.csproj" />
+    <ProjectReference Include="..\..\src\Devantler.KubernetesGenerator.Flux\Devantler.KubernetesGenerator.Flux.csproj" />
   </ItemGroup>
 
   <ItemGroup>

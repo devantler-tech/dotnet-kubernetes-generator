@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Devantler.KubernetesGenerator.Core\Devantler.KubernetesGenerator.Core.csproj" />
+    <ProjectReference Include="..\..\src\Devantler.KubernetesGenerator.Kustomize\Devantler.KubernetesGenerator.Kustomize.csproj" />
   </ItemGroup>
 
   <ItemGroup>
