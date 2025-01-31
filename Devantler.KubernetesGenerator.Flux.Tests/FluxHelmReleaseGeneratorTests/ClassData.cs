@@ -48,9 +48,9 @@ public class ClassData : IEnumerable<object[]>
             Interval = "1m",
             Version = "1.0.0",
             ReconcileStrategy = FluxHelmReleaseSpecChartSpecReconcileStrategy.Revision,
-            SourceRef = new FluxSourceRef
+            SourceRef = new FluxHelmReleaseSpecChartSpecSourceRef
             {
-              Kind = FluxSourceRefKind.HelmRepository,
+              Kind = FluxHelmReleaseSpecChartSpecSourceRefKind.HelmRepository,
               Name = "nginx",
               Namespace = "helm-release-chart-complex",
             }

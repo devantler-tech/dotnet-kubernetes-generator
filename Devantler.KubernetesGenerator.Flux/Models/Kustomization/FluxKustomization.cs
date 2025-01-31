@@ -13,5 +13,5 @@ public class FluxKustomization
   /// <summary>
   /// The spec of the Flux Kustomization object.
   /// </summary>
-  public FluxKustomizationSpec? Spec { get; set; }
+  public FluxKustomizationSpec? Spec { get; set; } = new FluxKustomizationSpec();
 }

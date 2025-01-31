@@ -3,20 +3,21 @@ namespace Devantler.KubernetesGenerator.Flux.Models;
 /// <summary>
 /// Flux source reference.
 /// </summary>
-public class FluxSourceRef
+/// <typeparam name="T"></typeparam>
+public interface IFluxSourceRef<T> where T : Enum
 {
   /// <summary>
   /// The type of the source reference.
   /// </summary>
-  public required FluxSourceRefKind Kind { get; set; }
+  T Kind { get; set; }
 
   /// <summary>
   /// The name of the source reference.
   /// </summary>
-  public required string Name { get; set; }
+  string Name { get; set; }
 
   /// <summary>
   /// The namespace of the source reference.
   /// </summary>
-  public string? Namespace { get; set; }
+  string? Namespace { get; set; }
 }
