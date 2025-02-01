@@ -6,6 +6,16 @@ namespace Devantler.KubernetesGenerator.Flux.Models.Kustomization;
 public class FluxKustomization
 {
   /// <summary>
+  /// The API version of the Flux Kustomization object.
+  /// </summary>
+  public string ApiVersion { get; set; } = "kustomize.toolkit.fluxcd.io/v1";
+
+  /// <summary>
+  /// The kind of the Flux Kustomization object.
+  /// </summary>
+  public string Kind { get; set; } = "Kustomization";
+
+  /// <summary>
   /// The metadata of the Flux Kustomization object.
   /// </summary>
   public required FluxNamespacedMetadata Metadata { get; set; }

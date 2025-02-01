@@ -18,5 +18,5 @@ public class FluxKustomizationSpecSourceRef : IFluxSourceRef<FluxKustomizationSp
   /// <summary>
   /// The namespace of the source reference.
   /// </summary>
-  public string? Namespace { get; set; } = "";
+  public string? Namespace { get; set; }
 }

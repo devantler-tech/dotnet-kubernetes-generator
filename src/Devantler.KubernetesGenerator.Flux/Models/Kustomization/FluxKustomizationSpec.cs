@@ -64,25 +64,10 @@ public class FluxKustomizationSpec
   /// </summary>
   public bool? Prune { get; set; }
 
-  // /// <summary>
-  // /// Enable or disable garbage collection for a Kustomization.
-  // /// </summary>
-  // public bool? Prune { get; set; }
-
-  // /// <summary>
-  // /// Perform health checks for all reconciled resources as part of the Kustomization.
-  // /// </summary>
-  // public bool? Wait { get; set; }
-
   /// <summary>
   /// Resources for which the controller will perform health checks.
   /// </summary>
   public IEnumerable<FluxKustomizationSpecHealthCheck>? HealthChecks { get; set; }
-
-  // /// <summary>
-  // /// The ServiceAccount to be impersonated while reconciling the Kustomization.
-  // /// </summary>
-  // public string? ServiceAccountName { get; set; }
 
   // /// <summary>
   // /// Any metadata that should be applied to all the Kustomization's resources.
@@ -114,10 +99,10 @@ public class FluxKustomizationSpec
   // /// </summary>
   // public IEnumerable<string>? Components { get; set; }
 
-  // /// <summary>
-  // /// Post build operations to perform after the Kustomization has been applied.
-  // /// </summary>
-  // public FluxKustomizationSpecPostBuild? PostBuild { get; set; }
+  /// <summary>
+  /// Post build operations to perform after the Kustomization has been applied.
+  /// </summary>
+  public FluxKustomizationSpecPostBuild? PostBuild { get; set; }
 
   // /// <summary>
   // /// Whether to force replacing the Kustomization's resources.

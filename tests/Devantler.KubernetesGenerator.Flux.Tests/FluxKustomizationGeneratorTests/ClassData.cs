@@ -80,8 +80,23 @@ public class ClassData : IEnumerable<object[]>
           Namespace = "flux-system"
         },
         Timeout = "5m",
-        Wait = true
-      },
+        Wait = true,
+        PostBuild = new FluxKustomizationSpecPostBuild()
+        {
+          Substitute = new Dictionary<string, string>()
+          {
+            ["key"] = "value"
+          },
+          SubstituteFrom = [
+            new FluxKustomizationSpecPostBuildSubstituteFrom()
+            {
+              Kind = FluxConfigRefKind.ConfigMap,
+              Name = "config-map",
+              Optional = true
+            }
+          ]
+        }
+      }
     }, "kustomization-complex.yaml"],
   ];
 
