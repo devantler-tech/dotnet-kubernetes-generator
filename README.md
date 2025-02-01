@@ -14,89 +14,91 @@ A simple code generator that can generate Kubernetes resources.
 .
 ├── .github
 │   └── workflows
-├── Devantler.KubernetesGenerator.CertManager
-│   └── Models
-│       └── IssuerRef
-├── Devantler.KubernetesGenerator.CertManager.Tests
-│   ├── CertManagerCertificateGeneratorTests
-│   └── CertManagerClusterIssuerGeneratorTests
-├── Devantler.KubernetesGenerator.Core
-│   ├── Converters
-│   └── Inspectors
-├── Devantler.KubernetesGenerator.Core.Tests
-├── Devantler.KubernetesGenerator.Flux
-│   └── Models
-│       ├── Alert
-│       ├── AlertProvider
-│       ├── HelmRelease
-│       ├── HelmRepository
-│       └── Kustomization
-├── Devantler.KubernetesGenerator.Flux.Tests
-│   ├── FluxAlertGeneratorTests
-│   ├── FluxAlertProviderGeneratorTests
-│   ├── FluxHelmReleaseGeneratorTests
-│   ├── FluxHelmRepositoryGeneratorTests
-│   └── FluxKustomizationGeneratorTests
-├── Devantler.KubernetesGenerator.K3d
-│   └── Models
-│       ├── Options
-│       │   ├── K3d
-│       │   ├── K3s
-│       │   └── Runtime
-│       └── Registries
-├── Devantler.KubernetesGenerator.K3d.Tests
-│   └── K3dConfigGeneratorTests
-├── Devantler.KubernetesGenerator.Kind
-│   └── Models
-│       ├── Networking
-│       └── Nodes
-├── Devantler.KubernetesGenerator.Kind.Tests
-│   └── KindConfigGeneratorTests
-├── Devantler.KubernetesGenerator.Kustomize
-│   └── Models
-│       ├── Generators
-│       └── Patches
-├── Devantler.KubernetesGenerator.Kustomize.Tests
-│   ├── KustomizeComponentGeneratorTests
-│   └── KustomizeKustomizationGeneratorTests
-├── Devantler.KubernetesGenerator.Native
-│   └── Models
-├── Devantler.KubernetesGenerator.Native.Tests
-│   ├── ClusterRoleBindingGeneratorTests
-│   ├── ClusterRoleGeneratorTests
-│   ├── ConfigMapGeneratorTests
-│   ├── CronJobGeneratorTests
-│   ├── DaemonSetGeneratorTests
-│   ├── DeploymentGeneratorTests
-│   ├── HorizontalPodAutoscalerGeneratorTests
-│   ├── IngressGeneratorTests
-│   ├── JobGeneratorTests
-│   ├── NamespaceGeneratorTests
-│   ├── NetworkPolicyGeneratorTests
-│   ├── PersistentVolumeClaimGeneratorTests
-│   ├── PersistentVolumeGeneratorTests
-│   ├── PodDisruptionBudgetGeneratorTests
-│   ├── PodGeneratorTests
-│   ├── PriorityClassGeneratorTests
-│   ├── ResourceQuotaGeneratorTests
-│   ├── RoleBindingGeneratorTests
-│   ├── RoleGeneratorTests
-│   ├── SecretGeneratorTests
-│   ├── ServiceAccountGeneratorTests
-│   ├── ServiceGeneratorTests
-│   └── StatefulSetGeneratorTests
-└── TEMP
-    ├── src
-    │   └── Models
-    │       ├── ImagePolicy
-    │       ├── ImageRepository
-    │       ├── ImageUpdateAutomation
-    │       └── Receiver
-    └── tests
-        ├── FluxHelmRepositoryGeneratorTests
-        └── FluxKustomizationGeneratorTests
+├── TEMP
+│   ├── src
+│   │   └── Models
+│   │       ├── ImagePolicy
+│   │       ├── ImageRepository
+│   │       ├── ImageUpdateAutomation
+│   │       └── Receiver
+│   └── tests
+│       ├── FluxHelmRepositoryGeneratorTests
+│       └── FluxKustomizationGeneratorTests
+├── src
+│   ├── Devantler.KubernetesGenerator.CertManager
+│   │   └── Models
+│   │       └── IssuerRef
+│   ├── Devantler.KubernetesGenerator.Core
+│   │   ├── Converters
+│   │   └── Inspectors
+│   ├── Devantler.KubernetesGenerator.Flux
+│   │   └── Models
+│   │       ├── Alert
+│   │       ├── AlertProvider
+│   │       ├── HelmRelease
+│   │       ├── HelmRepository
+│   │       └── Kustomization
+│   ├── Devantler.KubernetesGenerator.K3d
+│   │   └── Models
+│   │       ├── Options
+│   │       │   ├── K3d
+│   │       │   ├── K3s
+│   │       │   └── Runtime
+│   │       └── Registries
+│   ├── Devantler.KubernetesGenerator.Kind
+│   │   └── Models
+│   │       ├── Networking
+│   │       └── Nodes
+│   ├── Devantler.KubernetesGenerator.Kustomize
+│   │   └── Models
+│   │       ├── Generators
+│   │       └── Patches
+│   └── Devantler.KubernetesGenerator.Native
+│       └── Models
+└── tests
+    ├── Devantler.KubernetesGenerator.CertManager.Tests
+    │   ├── CertManagerCertificateGeneratorTests
+    │   └── CertManagerClusterIssuerGeneratorTests
+    ├── Devantler.KubernetesGenerator.Core.Tests
+    ├── Devantler.KubernetesGenerator.Flux.Tests
+    │   ├── FluxAlertGeneratorTests
+    │   ├── FluxAlertProviderGeneratorTests
+    │   ├── FluxHelmReleaseGeneratorTests
+    │   ├── FluxHelmRepositoryGeneratorTests
+    │   └── FluxKustomizationGeneratorTests
+    ├── Devantler.KubernetesGenerator.K3d.Tests
+    │   └── K3dConfigGeneratorTests
+    ├── Devantler.KubernetesGenerator.Kind.Tests
+    │   └── KindConfigGeneratorTests
+    ├── Devantler.KubernetesGenerator.Kustomize.Tests
+    │   ├── KustomizeComponentGeneratorTests
+    │   └── KustomizeKustomizationGeneratorTests
+    └── Devantler.KubernetesGenerator.Native.Tests
+        ├── ClusterRoleBindingGeneratorTests
+        ├── ClusterRoleGeneratorTests
+        ├── ConfigMapGeneratorTests
+        ├── CronJobGeneratorTests
+        ├── DaemonSetGeneratorTests
+        ├── DeploymentGeneratorTests
+        ├── HorizontalPodAutoscalerGeneratorTests
+        ├── IngressGeneratorTests
+        ├── JobGeneratorTests
+        ├── NamespaceGeneratorTests
+        ├── NetworkPolicyGeneratorTests
+        ├── PersistentVolumeClaimGeneratorTests
+        ├── PersistentVolumeGeneratorTests
+        ├── PodDisruptionBudgetGeneratorTests
+        ├── PodGeneratorTests
+        ├── PriorityClassGeneratorTests
+        ├── ResourceQuotaGeneratorTests
+        ├── RoleBindingGeneratorTests
+        ├── RoleGeneratorTests
+        ├── SecretGeneratorTests
+        ├── ServiceAccountGeneratorTests
+        ├── ServiceGeneratorTests
+        └── StatefulSetGeneratorTests
 
-84 directories
+86 directories
 ```
 <!-- readme-tree end -->
 
