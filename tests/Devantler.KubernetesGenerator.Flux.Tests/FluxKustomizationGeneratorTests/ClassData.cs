@@ -48,6 +48,10 @@ public class ClassData : IEnumerable<object[]>
           {
             Name = "dependency-1",
             Namespace = "dependency-1"
+          },
+          new FluxDependsOn()
+          {
+            Name = "dependency-1"
           }
         ],
         HealthChecks = [
