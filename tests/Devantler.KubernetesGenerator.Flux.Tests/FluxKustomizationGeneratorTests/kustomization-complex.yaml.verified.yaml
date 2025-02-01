@@ -14,6 +14,7 @@ spec:
   dependsOn:
   - name: dependency-1
     namespace: dependency-1
+  - name: dependency-1
   interval: 1m0s
   kubeConfig:
     secretRef:
