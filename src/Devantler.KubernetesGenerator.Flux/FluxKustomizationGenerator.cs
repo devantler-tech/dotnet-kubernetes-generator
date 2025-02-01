@@ -32,7 +32,7 @@ public class FluxKustomizationGenerator : BaseFluxGenerator<FluxKustomization>
     arguments.AddIfNotNull("--label={0}", model.Metadata.Labels != null ? string.Join(",", model.Metadata.Labels.Select(x => $"{x.Key}={x.Value}")) : null);
     arguments.AddIfNotNull("--decryption-provider={0}", model.Spec?.Decryption?.Provider.GetDescriptionOrDefault());
     arguments.AddIfNotNull("--decryption-secret={0}", model.Spec?.Decryption?.SecretRef?.Name);
-    arguments.AddIfNotNull("--depends-on={0}", model.Spec?.DependsOn != null ? string.Join(",", model.Spec.DependsOn.Select(x => $"{x.Name}/{x.Namespace}")) : null);
+    arguments.AddIfNotNull("--depends-on={0}", model.Spec?.DependsOn != null ? string.Join(",", model.Spec.DependsOn.Select(x => x.Namespace != null ? $"{x.Name}/{x.Namespace}" : x.Name)) : null);
     arguments.AddIfNotNull("--health-check={0}", model.Spec?.HealthChecks?.Select(x => $"{x.Kind}/{x.Name}.{x.Namespace}"));
     arguments.AddIfNotNull("--health-check-timeout={0}", model.Spec?.Timeout);
     arguments.AddIfNotNull("--kubeconfig-secret-ref={0}", model.Spec?.KubeConfig?.SecretRef?.Name);

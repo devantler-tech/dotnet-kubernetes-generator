@@ -13,5 +13,5 @@ public class FluxDependsOn
   /// <summary>
   /// Namespace of the HelmRelease.
   /// </summary>
-  public string? Namespace { get; set; } = "";
+  public string? Namespace { get; set; }
 }
