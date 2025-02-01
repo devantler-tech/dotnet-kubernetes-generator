@@ -32,7 +32,7 @@ public abstract class BaseFluxGenerator<T> : IKubernetesGenerator<T>
   /// <exception cref="KubernetesGeneratorException"></exception>
   public async Task RunFluxAsync(string outputPath, bool overwrite, List<string> arguments, string errorMessage, CancellationToken cancellationToken)
   {
-    var (exitCode, output) = await FluxCLI.Flux.RunAsync([.. arguments],
+    var (exitCode, output) = await FluxCLI.Flux.RunAsync([.. arguments], silent: true,
       cancellationToken: cancellationToken).ConfigureAwait(false);
     if (exitCode != 0)
       throw new KubernetesGeneratorException($"{errorMessage}: {output}");
