@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace Devantler.KubernetesGenerator.Flux.Models.Kustomization;
 
@@ -11,5 +12,6 @@ public enum FluxKustomizationSpecDecryptionProvider
   /// The provider to use for decryption is sops.
   /// </summary>
   [Description("sops")]
+  [EnumMember(Value = "sops")]
   SOPS
 }
