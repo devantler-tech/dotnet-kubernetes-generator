@@ -48,10 +48,5 @@ public class KindConfig
   /// <summary>
   /// A set of patches to apply to the containerd configuration.
   /// </summary>
-  public IEnumerable<string> ContainerdConfigPatches { get; set; } = [
-    """
-    [plugins."io.containerd.grpc.v1.cri".registry]
-      config_path = "/etc/containerd/certs.d"
-    """
-  ];
+  public IEnumerable<string>? ContainerdConfigPatches { get; set; }
 }
