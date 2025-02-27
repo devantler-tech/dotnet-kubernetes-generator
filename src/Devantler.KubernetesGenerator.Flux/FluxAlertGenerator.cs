@@ -32,6 +32,6 @@ public class FluxAlertGenerator : BaseFluxGenerator<FluxAlert>
     arguments.AddIfNotNull("--label={0}", model.Metadata.Labels != null ? string.Join(",", model.Metadata.Labels.Select(x => $"{x.Key}={x.Value}")) : null);
     arguments.AddIfNotNull("--event-severity={0}", model.Spec.EventSeverity);
 
-    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux Alert object", cancellationToken);
+    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux Alert object", cancellationToken).ConfigureAwait(false);
   }
 }

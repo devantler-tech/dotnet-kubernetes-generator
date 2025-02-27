@@ -34,6 +34,6 @@ public class FluxAlertProviderGenerator : BaseFluxGenerator<FluxAlertProvider>
     arguments.AddIfNotNull("--secret-ref={0}", model.Spec.SecretRef?.Name);
     arguments.AddIfNotNull("--username={0}", model.Spec.Username);
 
-    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux Alert Provider object", cancellationToken);
+    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux Alert Provider object", cancellationToken).ConfigureAwait(false);
   }
 }

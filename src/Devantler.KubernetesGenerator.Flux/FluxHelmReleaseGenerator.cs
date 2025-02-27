@@ -56,6 +56,6 @@ public class FluxHelmReleaseGenerator : BaseFluxGenerator<FluxHelmRelease>
       arguments.AddIfNotNull("--chart-ref={0}/{1}.{2}", model.Spec.ChartRef?.Kind, model.Spec.ChartRef?.Name, model.Spec.ChartRef?.Namespace);
     }
 
-    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux HelmRelease object", cancellationToken);
+    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux HelmRelease object", cancellationToken).ConfigureAwait(false);
   }
 }
