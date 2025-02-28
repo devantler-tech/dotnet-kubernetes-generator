@@ -30,10 +30,10 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
   /// <param name="cancellationToken"></param>
   public async Task GenerateAsync(T model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
-    string outputDirectory = Path.GetDirectoryName(outputPath) ?? throw new InvalidOperationException("Output path is invalid.");
-    if (!Directory.Exists(outputDirectory))
+    var directory = Path.GetDirectoryName(outputPath);
+    if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
     {
-      _ = Directory.CreateDirectory(outputDirectory);
+      _ = Directory.CreateDirectory(directory);
     }
     string yaml = _serializer.Serialize(model);
 
