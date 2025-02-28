@@ -23,7 +23,7 @@ public static class YamlFileWriter
       throw new KubernetesGeneratorException("Output path must be a YAML file.");
     }
     string outputDirectory = Path.GetDirectoryName(outputPath) ?? throw new InvalidOperationException("Output path is invalid.");
-    if (!Directory.Exists(outputDirectory))
+    if (!Directory.Exists(outputDirectory) && !string.IsNullOrEmpty(outputDirectory))
     {
       _ = Directory.CreateDirectory(outputDirectory);
     }
