@@ -125,7 +125,7 @@ public enum FluxAlertProviderType
   /// WebEx alert provider.
   /// </summary>
   [Description("webex")]
-  WebEx,
+  Webex,
 
   /// <summary>
   /// NATS alert provider.

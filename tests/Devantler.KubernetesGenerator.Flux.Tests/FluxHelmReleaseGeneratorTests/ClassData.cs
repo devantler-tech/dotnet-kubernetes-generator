@@ -7,7 +7,7 @@ namespace Devantler.KubernetesGenerator.Flux.Tests.FluxHelmReleaseGeneratorTests
 /// <summary>
 /// Class data for the tests.
 /// </summary>
-public class ClassData : IEnumerable<object[]>
+sealed class ClassData : IEnumerable<object[]>
 {
   readonly List<object[]> _data =
   [
@@ -30,14 +30,14 @@ public class ClassData : IEnumerable<object[]>
 
     // Complex HelmRelease - Chart
     [new FluxHelmRelease(){
-      Metadata = new FluxNamespacedMetadata
-      {
-        Name = "helm-release-chart-complex",
-        Namespace = "helm-release-chart-complex",
-        Labels = new Dictionary<string, string>
+      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>
         {
           { "key", "value" },
         }
+      )
+      {
+        Name = "helm-release-chart-complex",
+        Namespace = "helm-release-chart-complex"
       },
       Spec = new FluxHelmReleaseSpec(
         new FluxHelmReleaseSpecChart
@@ -104,14 +104,14 @@ public class ClassData : IEnumerable<object[]>
 
     // Complex HelmRelease - ChartRef
     [new FluxHelmRelease(){
-      Metadata = new FluxNamespacedMetadata
+      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>
+        {
+          ["key"] = "value"
+        }
+      )
       {
         Name = "helm-release-chart-ref-complex",
         Namespace = "helm-release-chart-ref-complex",
-        Labels = new Dictionary<string, string>
-        {
-          { "key", "value" },
-        }
       },
       Spec = new FluxHelmReleaseSpec(
         new FluxHelmReleaseSpecChartRef

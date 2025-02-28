@@ -7,7 +7,7 @@ namespace Devantler.KubernetesGenerator.Flux.Tests.FluxAlertProviderGeneratorTes
 /// <summary>
 /// Class data for the tests.
 /// </summary>
-public class ClassData : IEnumerable<object[]>
+sealed class ClassData : IEnumerable<object[]>
 {
   readonly List<object[]> _data =
   [
@@ -25,14 +25,14 @@ public class ClassData : IEnumerable<object[]>
 
     // Complex provider
     [new FluxAlertProvider(){
-      Metadata = new FluxNamespacedMetadata()
-      {
-        Name = "provider-complex",
-        Namespace = "provider-complex",
-        Labels = new Dictionary<string, string>()
+      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>()
         {
           ["key"] = "value"
         }
+      )
+      {
+        Name = "provider-complex",
+        Namespace = "provider-complex",
       },
       Spec = new FluxAlertProviderSpec()
       {

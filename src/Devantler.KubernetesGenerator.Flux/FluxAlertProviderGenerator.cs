@@ -19,6 +19,7 @@ public class FluxAlertProviderGenerator : BaseFluxGenerator<FluxAlertProvider>
   /// <exception cref="NotImplementedException"></exception>
   public override async Task GenerateAsync(FluxAlertProvider model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
+    ArgumentNullException.ThrowIfNull(model, nameof(model));
     var arguments = new List<string>
     {
       "create",
@@ -34,6 +35,6 @@ public class FluxAlertProviderGenerator : BaseFluxGenerator<FluxAlertProvider>
     arguments.AddIfNotNull("--secret-ref={0}", model.Spec.SecretRef?.Name);
     arguments.AddIfNotNull("--username={0}", model.Spec.Username);
 
-    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux Alert Provider object", cancellationToken).ConfigureAwait(false);
+    await RunFluxAsync(outputPath, overwrite, arguments.AsReadOnly(), "Failed to generate Flux Alert Provider object", cancellationToken).ConfigureAwait(false);
   }
 }

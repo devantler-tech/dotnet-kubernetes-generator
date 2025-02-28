@@ -20,6 +20,7 @@ public class FluxHelmReleaseGenerator : BaseFluxGenerator<FluxHelmRelease>
   /// <exception cref="KubernetesGeneratorException"></exception>
   public override async Task GenerateAsync(FluxHelmRelease model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
+    ArgumentNullException.ThrowIfNull(model, nameof(model));
     var arguments = new List<string>
     {
       "create",
@@ -56,6 +57,6 @@ public class FluxHelmReleaseGenerator : BaseFluxGenerator<FluxHelmRelease>
       arguments.AddIfNotNull("--chart-ref={0}/{1}.{2}", model.Spec.ChartRef?.Kind, model.Spec.ChartRef?.Name, model.Spec.ChartRef?.Namespace);
     }
 
-    await RunFluxAsync(outputPath, overwrite, arguments, "Failed to generate Flux HelmRelease object", cancellationToken).ConfigureAwait(false);
+    await RunFluxAsync(outputPath, overwrite, arguments.AsReadOnly(), "Failed to generate Flux HelmRelease object", cancellationToken).ConfigureAwait(false);
   }
 }

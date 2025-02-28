@@ -7,7 +7,7 @@ namespace Devantler.KubernetesGenerator.Flux.Tests.FluxKustomizationGeneratorTes
 /// <summary>
 /// Class data for the tests.
 /// </summary>
-public class ClassData : IEnumerable<object[]>
+sealed class ClassData : IEnumerable<object[]>
 {
   readonly List<object[]> _data =
   [
@@ -23,14 +23,14 @@ public class ClassData : IEnumerable<object[]>
     // Complex Kustomization
     [new FluxKustomization()
     {
-      Metadata = new FluxNamespacedMetadata()
-      {
-        Name = "kustomization-complex",
-        Namespace = "kustomization-complex",
-        Labels = new Dictionary<string, string>()
+      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>()
         {
           ["key"] = "value"
         }
+      )
+      {
+        Name = "kustomization-complex",
+        Namespace = "kustomization-complex"
       },
       Spec = new FluxKustomizationSpec()
       {
@@ -81,12 +81,12 @@ public class ClassData : IEnumerable<object[]>
         },
         Timeout = "5m",
         Wait = true,
-        PostBuild = new FluxKustomizationSpecPostBuild()
-        {
-          Substitute = new Dictionary<string, string>()
+        PostBuild = new FluxKustomizationSpecPostBuild(new Dictionary<string, string>()
           {
             ["key"] = "value"
-          },
+          }
+        )
+        {
           SubstituteFrom = [
             new FluxKustomizationSpecPostBuildSubstituteFrom()
             {

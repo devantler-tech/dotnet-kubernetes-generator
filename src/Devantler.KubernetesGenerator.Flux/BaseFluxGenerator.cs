@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Devantler.KubernetesGenerator.Core;
 
 namespace Devantler.KubernetesGenerator.Flux;
@@ -30,7 +31,7 @@ public abstract class BaseFluxGenerator<T> : IKubernetesGenerator<T>
   /// <param name="cancellationToken"></param>
   /// <returns></returns>
   /// <exception cref="KubernetesGeneratorException"></exception>
-  public async Task RunFluxAsync(string outputPath, bool overwrite, List<string> arguments, string errorMessage, CancellationToken cancellationToken)
+  public async Task RunFluxAsync(string outputPath, bool overwrite, ReadOnlyCollection<string> arguments, string errorMessage, CancellationToken cancellationToken)
   {
     var (exitCode, output) = await FluxCLI.Flux.RunAsync([.. arguments], silent: true,
       cancellationToken: cancellationToken).ConfigureAwait(false);

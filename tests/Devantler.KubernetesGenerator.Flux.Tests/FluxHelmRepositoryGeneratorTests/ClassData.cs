@@ -7,7 +7,7 @@ namespace Devantler.KubernetesGenerator.Flux.Tests.FluxHelmRepositoryGeneratorTe
 /// <summary>
 /// Class data for the tests.
 /// </summary>
-public class ClassData : IEnumerable<object[]>
+sealed class ClassData : IEnumerable<object[]>
 {
   readonly List<object[]> _data =
   [
@@ -27,14 +27,14 @@ public class ClassData : IEnumerable<object[]>
     // Complex HelmRepository
     [new FluxHelmRepository()
     {
-      Metadata = new FluxNamespacedMetadata()
+      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>()
+        {
+          ["key"] = "value"
+        }
+      )
       {
         Name = "helm-repository-complex",
         Namespace = "helm-repository-complex",
-        Labels = new Dictionary<string, string>()
-        {
-          ["key"] = "value"
-        },
       },
       Spec = new FluxHelmRepositorySpec()
       {

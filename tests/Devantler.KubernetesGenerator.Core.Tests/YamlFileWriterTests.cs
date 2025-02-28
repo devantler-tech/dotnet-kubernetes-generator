@@ -17,7 +17,7 @@ public class YamlFileWriterTests
     bool overwrite = true;
 
     // Act
-    async Task Act() => await YamlFileWriter.WriteToFileAsync(outputPath, output, overwrite);
+    async Task Act() => await YamlFileWriter.WriteToFileAsync(outputPath, output, overwrite).ConfigureAwait(false);
 
     // Assert
     _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(Act);

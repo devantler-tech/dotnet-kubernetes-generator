@@ -43,7 +43,7 @@ public class KubernetesGeneratorExceptionTests
   {
     // Arrange
     string message = "Test message";
-    var innerException = new Exception("Inner exception");
+    var innerException = new KubernetesGeneratorException("Inner exception");
 
     // Act
     var exception = new KubernetesGeneratorException(message, innerException);

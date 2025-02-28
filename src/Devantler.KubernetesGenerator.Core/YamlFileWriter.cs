@@ -16,6 +16,8 @@ public static class YamlFileWriter
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task WriteToFileAsync(string outputPath, string output, bool overwrite, CancellationToken cancellationToken = default)
   {
+    ArgumentNullException.ThrowIfNull(outputPath, nameof(outputPath));
+    ArgumentNullException.ThrowIfNull(output, nameof(output));
     if (!outputPath.EndsWith(".yaml", StringComparison.OrdinalIgnoreCase) && !outputPath.EndsWith(".yml", StringComparison.OrdinalIgnoreCase))
     {
       throw new KubernetesGeneratorException("Output path must be a YAML file.");
