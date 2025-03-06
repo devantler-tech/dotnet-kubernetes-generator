@@ -11,35 +11,35 @@ public class KindNetworking
   /// The IP family to use for the Kind cluster.
   /// </summary>
   [JsonPropertyName("ipFamily")]
-  public KindNetworkingIPFamily IPFamily { get; set; } = KindNetworkingIPFamily.IPv4;
+  public KindNetworkingIPFamily? IPFamily { get; set; }
 
   /// <summary>
   /// The IP address to use for the Kind cluster's Kubernetes API server.
   /// </summary>
-  public string ApiServerAddress { get; set; } = "127.0.0.1";
+  public string? ApiServerAddress { get; set; }
 
   /// <summary>
   /// The port to use for the Kind cluster's Kubernetes API server.
   /// </summary>
-  public int ApiServerPort { get; set; } = 6443;
+  public int? ApiServerPort { get; set; }
 
   /// <summary>
   /// The subnet to use for the Kind cluster's pods.
   /// </summary>
-  public string PodSubnet { get; set; } = "10.244.0.0/16";
+  public string? PodSubnet { get; set; }
 
   /// <summary>
   /// The subnet to use for the Kind cluster's services.
   /// </summary>
-  public string ServiceSubnet { get; set; } = "10.96.0.0/16";
+  public string? ServiceSubnet { get; set; }
 
   /// <summary>
   /// Whether to disable or enable the default CNI.
   /// </summary>
-  public bool DisableDefaultCNI { get; set; }
+  public bool? DisableDefaultCNI { get; set; }
 
   /// <summary>
   /// The mode to use for the kube-proxy.
   /// </summary>
-  public KindNetworkingKubeProxyMode KubeProxyMode { get; set; } = KindNetworkingKubeProxyMode.IPTables;
+  public KindNetworkingKubeProxyMode? KubeProxyMode { get; set; }
 }
