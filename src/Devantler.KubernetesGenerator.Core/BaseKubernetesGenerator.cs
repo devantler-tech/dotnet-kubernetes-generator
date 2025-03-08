@@ -30,10 +30,27 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
   /// <param name="cancellationToken"></param>
   public async Task GenerateAsync(T model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
+    ArgumentNullException.ThrowIfNull(model);
+
     var directory = Path.GetDirectoryName(outputPath);
     if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
     {
       _ = Directory.CreateDirectory(directory);
+    }
+    var defaultObject = Activator.CreateInstance<T>();
+    foreach (var property in model.GetType().GetProperties())
+    {
+      if (property.Name == "ApiVersion" || property.Name == "Kind")
+      {
+        continue;
+      }
+
+      var defaultValue = property.GetValue(defaultObject);
+      var value = property.GetValue(model);
+      if (value != null && value.Equals(defaultValue) && property.CanWrite)
+      {
+        property.SetValue(model, null);
+      }
     }
     string yaml = _serializer.Serialize(model);
 
