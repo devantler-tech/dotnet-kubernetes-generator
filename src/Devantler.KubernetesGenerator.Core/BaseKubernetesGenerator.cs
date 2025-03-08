@@ -37,20 +37,19 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
     {
       _ = Directory.CreateDirectory(directory);
     }
-    // Set all the properties initialized to their default init values to null
     var defaultObject = Activator.CreateInstance<T>();
     foreach (var property in model.GetType().GetProperties())
     {
       if (property.Name == "ApiVersion" || property.Name == "Kind")
       {
-      continue;
+        continue;
       }
 
       var defaultValue = property.GetValue(defaultObject);
       var value = property.GetValue(model);
-      if (value != null && value.Equals(defaultValue))
+      if (value != null && value.Equals(defaultValue) && property.CanWrite)
       {
-      property.SetValue(model, null);
+        property.SetValue(model, null);
       }
     }
     string yaml = _serializer.Serialize(model);
