@@ -45,8 +45,6 @@ registries:
     hostPort: 5000
     proxy:
       remoteURL: https://registry-1.docker.io/
-      username: ''
-      password: ''
     volumes:
     - /some/path:/var/lib/registry
   use:
@@ -66,7 +64,6 @@ hostAliases:
   - cloud.flare.dns
 options:
   k3d:
-    wait: true
     timeout: 60s
     disableLoadbalancer: false
     disableImageVolume: false
@@ -83,9 +80,7 @@ options:
     - label: foo=bar
       nodeFilters:
       - agent:1
-  kubeconfig:
-    updateDefaultKubeconfig: true
-    switchCurrentContext: true
+  kubeconfig: {}
   runtime:
     gPURequest: all
     labels:

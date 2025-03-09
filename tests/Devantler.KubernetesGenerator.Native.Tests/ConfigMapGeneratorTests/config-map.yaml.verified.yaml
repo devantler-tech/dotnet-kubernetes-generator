@@ -5,10 +5,7 @@ metadata:
   name: config-map
   namespace: default
 binaryData:
-  key:
-  - 1
-  - 2
-  - 3
+  key: AQID
 data:
   key: value
 immutable: true

@@ -1,0 +1,95 @@
+using System.Collections;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using k8s.Models;
+using YamlDotNet.Core;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.ObjectGraphVisitors;
+
+namespace Devantler.KubernetesGenerator.Core;
+
+/// <summary>
+/// A visitor that handles default values for Kubernetes objects.
+/// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="KubernetesObjectGraphVisitor{T}"/> class.
+/// </remarks>
+/// <param name="nextVisitor"></param>
+/// <param name="model"></param>
+public sealed class KubernetesObjectGraphVisitor<T>(IObjectGraphVisitor<IEmitter> nextVisitor, T model) : ChainedObjectGraphVisitor(nextVisitor)
+{
+  /// <summary>
+  /// Enters a mapping.
+  /// </summary>
+  /// <param name="key"></param>
+  /// <param name="value"></param>
+  /// <param name="context"></param>
+  /// <param name="serializer"></param>
+  /// <returns></returns>
+  public override bool EnterMapping(IPropertyDescriptor key, IObjectDescriptor value, IEmitter context, ObjectSerializer serializer)
+  {
+    ArgumentNullException.ThrowIfNull(value);
+    ArgumentNullException.ThrowIfNull(key);
+
+    var yamlMember = key.GetCustomAttribute<YamlMemberAttribute>();
+    var property = value.Type.GetProperty(key.Name);
+
+    // Skip null values
+    if (value.Value is null)
+      return false;
+
+    // Skip empty collections
+    if (value.Value is IEnumerable enumerable)
+    {
+      var enumerator = enumerable.GetEnumerator();
+      var canMoveNext = enumerator.MoveNext();
+      if (enumerator is IDisposable disposable)
+        disposable.Dispose();
+
+      if (!canMoveNext)
+        return false;
+    }
+
+    // Skip protected Kubernetes properties
+    if (key.Name.Equals("apiVersion", StringComparison.OrdinalIgnoreCase)
+      || key.Name.Equals("kind", StringComparison.OrdinalIgnoreCase)
+      || key.Name.Equals("metadata", StringComparison.OrdinalIgnoreCase))
+      return true;
+
+    // Skip required properties on C# types
+    if (value.Type.GetCustomAttribute<RequiredAttribute>() is not null)
+      return true;
+
+    // Skip default initialization values
+    if (model is not null && SkipDefaultInitializationValues(key, value, model))
+      return false;
+
+    return base.EnterMapping(key, value, context, serializer);
+  }
+
+  static bool SkipDefaultInitializationValues(IPropertyDescriptor key, IObjectDescriptor value, object obj)
+  {
+    foreach (var property in obj.GetType().GetProperties())
+    {
+      if (!property.Name.Equals(key.Name, StringComparison.OrdinalIgnoreCase))
+      {
+        if (property.PropertyType.GetConstructor(Type.EmptyTypes) is null)
+          continue;
+        var nextObject = Activator.CreateInstance(property.PropertyType);
+        if (nextObject is null)
+          continue;
+        if (SkipDefaultInitializationValues(key, value, nextObject))
+          return true;
+        continue;
+      }
+      if (property.GetCustomAttribute<RequiredAttribute>() is not null)
+        return false;
+
+      var currentValue = value.Value;
+      var defaultValue = property.GetValue(obj);
+      return currentValue != null && currentValue.Equals(defaultValue);
+    }
+    return false;
+  }
+}

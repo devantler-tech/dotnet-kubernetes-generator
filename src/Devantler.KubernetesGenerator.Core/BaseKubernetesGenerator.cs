@@ -18,7 +18,8 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
     .WithTypeInspector(inner => new KubernetesTypeInspector(new SystemTextJsonTypeInspector(inner)))
     .WithTypeConverter(new IntstrIntOrStringTypeConverter())
     .WithTypeConverter(new ResourceQuantityTypeConverter())
-    .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
+    .WithTypeConverter(new ByteArrayTypeConverter())
+    .WithEmissionPhaseObjectGraphVisitor(inner => new KubernetesObjectGraphVisitor<T>(inner.InnerVisitor, Activator.CreateInstance<T>()))
     .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
 
   /// <summary>
@@ -38,37 +39,8 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
       _ = Directory.CreateDirectory(directory);
     }
 
-    var defaultObject = Activator.CreateInstance<T>();
-    SetDefaultValuesToNull(model, defaultObject);
-
     string yaml = _serializer.Serialize(model);
 
     await YamlFileWriter.WriteToFileAsync(outputPath, yaml, overwrite, cancellationToken).ConfigureAwait(false);
-  }
-
-  static void SetDefaultValuesToNull(object obj, object defaultObj)
-  {
-    foreach (var property in obj.GetType().GetProperties())
-    {
-      if (property.Name == "ApiVersion" || property.Name == "Kind")
-      {
-        continue;
-      }
-
-      if (property.GetIndexParameters().Length > 0)
-      {
-        continue;
-      }
-      var defaultValue = property.GetValue(defaultObj);
-      var value = property.GetValue(obj);
-      if (value != null && value.Equals(defaultValue) && property.CanWrite)
-      {
-        property.SetValue(obj, null);
-      }
-      else if (value != null && defaultValue != null && !property.PropertyType.IsPrimitive && property.PropertyType != typeof(string) && !property.PropertyType.IsInterface)
-      {
-        SetDefaultValuesToNull(value, defaultValue);
-      }
-    }
   }
 }

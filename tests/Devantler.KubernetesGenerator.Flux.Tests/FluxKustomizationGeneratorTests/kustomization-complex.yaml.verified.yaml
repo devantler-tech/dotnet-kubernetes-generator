@@ -37,6 +37,5 @@ spec:
     secretRef:
       name: kubeconfig-secret
   decryption:
-    provider: sops
     secretRef:
       name: sops-secret
