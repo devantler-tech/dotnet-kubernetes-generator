@@ -20,7 +20,7 @@ public class GenerateAsyncTests
     // Arrange
     var config = new KindConfig
     {
-      Name = "kind-default",
+      Name = "kind-advanced",
       FeatureGates = new KindFeatureGates
       {
         CSIMigration = false

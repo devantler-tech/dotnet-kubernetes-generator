@@ -37,23 +37,38 @@ public class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : clas
     {
       _ = Directory.CreateDirectory(directory);
     }
+
     var defaultObject = Activator.CreateInstance<T>();
-    foreach (var property in model.GetType().GetProperties())
+    SetDefaultValuesToNull(model, defaultObject);
+
+    string yaml = _serializer.Serialize(model);
+
+    await YamlFileWriter.WriteToFileAsync(outputPath, yaml, overwrite, cancellationToken).ConfigureAwait(false);
+  }
+
+  static void SetDefaultValuesToNull(object obj, object defaultObj)
+  {
+    foreach (var property in obj.GetType().GetProperties())
     {
       if (property.Name == "ApiVersion" || property.Name == "Kind")
       {
         continue;
       }
 
-      var defaultValue = property.GetValue(defaultObject);
-      var value = property.GetValue(model);
+      if (property.GetIndexParameters().Length > 0)
+      {
+        continue;
+      }
+      var defaultValue = property.GetValue(defaultObj);
+      var value = property.GetValue(obj);
       if (value != null && value.Equals(defaultValue) && property.CanWrite)
       {
-        property.SetValue(model, null);
+        property.SetValue(obj, null);
+      }
+      else if (value != null && defaultValue != null && !property.PropertyType.IsPrimitive && property.PropertyType != typeof(string) && !property.PropertyType.IsInterface)
+      {
+        SetDefaultValuesToNull(value, defaultValue);
       }
     }
-    string yaml = _serializer.Serialize(model);
-
-    await YamlFileWriter.WriteToFileAsync(outputPath, yaml, overwrite, cancellationToken).ConfigureAwait(false);
   }
 }

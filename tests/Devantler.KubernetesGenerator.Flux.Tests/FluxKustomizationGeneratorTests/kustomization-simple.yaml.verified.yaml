@@ -6,4 +6,3 @@ metadata:
 spec:
   sourceRef:
     kind: OCIRepository
-    name: flux-system
