@@ -23,5 +23,12 @@ public class FluxKustomization
   /// <summary>
   /// The spec of the Flux Kustomization object.
   /// </summary>
-  public FluxKustomizationSpec? Spec { get; set; } = new FluxKustomizationSpec();
+  public FluxKustomizationSpec? Spec { get; set; } = new FluxKustomizationSpec
+  {
+    SourceRef = new FluxKustomizationSpecSourceRef
+    {
+      Kind = FluxKustomizationSpecSourceRefKind.OCIRepository,
+      Name = "flux-system"
+    }
+  };
 }

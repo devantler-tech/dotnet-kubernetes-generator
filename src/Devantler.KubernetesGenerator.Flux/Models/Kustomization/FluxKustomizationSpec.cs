@@ -48,7 +48,7 @@ public class FluxKustomizationSpec
   /// <summary>
   /// The source reference that the Kustomization object should be reconciled with.
   /// </summary>
-  public FluxKustomizationSpecSourceRef? SourceRef { get; set; } = new FluxKustomizationSpecSourceRef()
+  public required FluxKustomizationSpecSourceRef SourceRef { get; set; } = new FluxKustomizationSpecSourceRef()
   {
     Kind = FluxKustomizationSpecSourceRefKind.OCIRepository,
     Name = "flux-system"
