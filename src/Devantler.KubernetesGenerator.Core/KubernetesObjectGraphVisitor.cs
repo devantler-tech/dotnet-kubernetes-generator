@@ -39,18 +39,6 @@ public sealed class KubernetesObjectGraphVisitor<T>(IObjectGraphVisitor<IEmitter
     if (value.Value is null)
       return false;
 
-    // Skip empty collections
-    if (value.Value is IEnumerable enumerable)
-    {
-      var enumerator = enumerable.GetEnumerator();
-      var canMoveNext = enumerator.MoveNext();
-      if (enumerator is IDisposable disposable)
-        disposable.Dispose();
-
-      if (!canMoveNext)
-        return false;
-    }
-
     // Skip protected Kubernetes properties
     if (key.Name.Equals("apiVersion", StringComparison.OrdinalIgnoreCase)
       || key.Name.Equals("kind", StringComparison.OrdinalIgnoreCase)
