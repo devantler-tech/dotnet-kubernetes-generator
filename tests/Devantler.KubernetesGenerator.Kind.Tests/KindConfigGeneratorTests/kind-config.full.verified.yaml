@@ -29,6 +29,7 @@ nodes:
     protocol: TCP
   kindNodeLabels:
     node-role.kubernetes.io/master: ''
+  kubeadmConfigPatches: ''
 - role: Worker
   image: kindest/node:v1.32.1
   extraMounts:
@@ -44,6 +45,7 @@ nodes:
     protocol: TCP
   kindNodeLabels:
     node-role.kubernetes.io/worker: ''
+  kubeadmConfigPatches: ''
 containerdConfigPatches:
 - >-
   [plugins."io.containerd.grpc.v1.cri".registry]
