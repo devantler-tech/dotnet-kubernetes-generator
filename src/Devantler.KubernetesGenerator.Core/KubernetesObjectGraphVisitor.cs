@@ -2,6 +2,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using k8s.Models;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
@@ -32,9 +33,6 @@ public sealed class KubernetesObjectGraphVisitor<T>(IObjectGraphVisitor<IEmitter
     ArgumentNullException.ThrowIfNull(value);
     ArgumentNullException.ThrowIfNull(key);
 
-    var yamlMember = key.GetCustomAttribute<YamlMemberAttribute>();
-    var property = value.Type.GetProperty(key.Name);
-
     // Skip null values
     if (value.Value is null)
       return false;
@@ -43,10 +41,6 @@ public sealed class KubernetesObjectGraphVisitor<T>(IObjectGraphVisitor<IEmitter
     if (key.Name.Equals("apiVersion", StringComparison.OrdinalIgnoreCase)
       || key.Name.Equals("kind", StringComparison.OrdinalIgnoreCase)
       || key.Name.Equals("metadata", StringComparison.OrdinalIgnoreCase))
-      return true;
-
-    // Skip required properties on C# types
-    if (value.Type.GetCustomAttribute<RequiredAttribute>() is not null)
       return true;
 
     // Skip default initialization values
@@ -71,7 +65,8 @@ public sealed class KubernetesObjectGraphVisitor<T>(IObjectGraphVisitor<IEmitter
           return true;
         continue;
       }
-      if (property.GetCustomAttribute<RequiredAttribute>() is not null)
+
+      if (property.GetCustomAttribute<RequiredMemberAttribute>() is not null || property.GetCustomAttribute<RequiredAttribute>() is not null)
         return false;
 
       var currentValue = value.Value;

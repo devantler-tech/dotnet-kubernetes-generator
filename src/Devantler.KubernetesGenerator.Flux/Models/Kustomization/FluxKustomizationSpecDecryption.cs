@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Devantler.KubernetesGenerator.Flux.Models.Kustomization;
 
 /// <summary>
@@ -8,7 +10,8 @@ public class FluxKustomizationSpecDecryption
   /// <summary>
   /// The provider to use for decryption.
   /// </summary>
-  public required FluxKustomizationSpecDecryptionProvider Provider { get; set; }
+
+  public required FluxKustomizationSpecDecryptionProvider Provider { get; set; } = FluxKustomizationSpecDecryptionProvider.SOPS;
 
   /// <summary>
   /// A reference to a Secret containing the private key to use for decryption.
