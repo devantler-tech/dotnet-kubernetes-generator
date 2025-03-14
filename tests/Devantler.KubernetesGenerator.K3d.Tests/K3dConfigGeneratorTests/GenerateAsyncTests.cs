@@ -200,7 +200,7 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "k3d.yaml");
     if (File.Exists(outputPath))
     {
       File.Delete(outputPath);
@@ -232,7 +232,7 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "k3d.yaml");
     if (File.Exists(outputPath))
     {
       File.Delete(outputPath);

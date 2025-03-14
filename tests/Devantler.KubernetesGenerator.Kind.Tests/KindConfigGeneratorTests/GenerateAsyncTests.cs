@@ -101,7 +101,7 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "kind-config.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "kind.yaml");
     if (File.Exists(outputPath))
     {
       File.Delete(outputPath);
@@ -128,7 +128,7 @@ public class GenerateAsyncTests
     var config = new KindConfig();
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "kind-config.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "kind.yaml");
     if (File.Exists(outputPath))
       File.Delete(outputPath);
     await KindConfigKubernetesGenerator.GenerateAsync(config, outputPath, true);
