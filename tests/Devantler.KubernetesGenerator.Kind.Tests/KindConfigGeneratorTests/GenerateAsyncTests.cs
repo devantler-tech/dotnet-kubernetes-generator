@@ -110,7 +110,7 @@ public class GenerateAsyncTests
     string kindConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(kindConfigFromFile, extension: "yaml").UseFileName("kind-config.full");
+    _ = await Verify(kindConfigFromFile, extension: "yaml").UseFileName("kind.full");
 
     // Cleanup
     File.Delete(outputPath);
@@ -135,7 +135,7 @@ public class GenerateAsyncTests
     string kindConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(kindConfigFromFile, extension: "yaml").UseFileName("kind-config.minimal");
+    _ = await Verify(kindConfigFromFile, extension: "yaml").UseFileName("kind.minimal");
 
     // Cleanup
     File.Delete(outputPath);

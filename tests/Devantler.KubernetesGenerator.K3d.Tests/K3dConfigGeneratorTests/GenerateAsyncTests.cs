@@ -209,7 +209,7 @@ public class GenerateAsyncTests
     string k3dConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d-config.full");
+    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d.full");
 
     // Cleanup
     File.Delete(outputPath);
@@ -241,7 +241,7 @@ public class GenerateAsyncTests
     string k3dConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d-config.minimal");
+    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d.minimal");
 
     // Cleanup
     File.Delete(outputPath);
