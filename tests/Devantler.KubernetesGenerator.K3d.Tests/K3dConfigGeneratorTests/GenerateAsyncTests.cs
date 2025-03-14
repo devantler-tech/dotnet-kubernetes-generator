@@ -200,7 +200,7 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "k3d.yaml");
     if (File.Exists(outputPath))
     {
       File.Delete(outputPath);
@@ -209,7 +209,7 @@ public class GenerateAsyncTests
     string k3dConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d-config.full");
+    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d.full");
 
     // Cleanup
     File.Delete(outputPath);
@@ -232,7 +232,7 @@ public class GenerateAsyncTests
     };
 
     // Act
-    string outputPath = Path.Combine(Path.GetTempPath(), "k3d-config.yaml");
+    string outputPath = Path.Combine(Path.GetTempPath(), "k3d.yaml");
     if (File.Exists(outputPath))
     {
       File.Delete(outputPath);
@@ -241,7 +241,7 @@ public class GenerateAsyncTests
     string k3dConfigFromFile = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d-config.minimal");
+    _ = await Verify(k3dConfigFromFile, extension: "yaml").UseFileName("k3d.minimal");
 
     // Cleanup
     File.Delete(outputPath);
