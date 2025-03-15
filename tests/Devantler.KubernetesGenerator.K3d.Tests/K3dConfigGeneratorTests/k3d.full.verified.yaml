@@ -82,7 +82,6 @@ options:
     - label: foo=bar
       nodeFilters:
       - agent:1
-  kubeconfig: {}
   runtime:
     gPURequest: all
     labels:
