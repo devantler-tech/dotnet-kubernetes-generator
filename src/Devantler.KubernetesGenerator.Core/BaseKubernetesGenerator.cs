@@ -41,10 +41,10 @@ public partial class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where 
     }
 
     string yaml = _serializer.Serialize(model);
-    yaml = EmptyObjectRegex().Replace(yaml, string.Empty);
-    yaml = yaml.TrimEnd();
-    yaml = EmptyObjectKeyRegex().Replace(yaml, "$1 {}");
-    yaml = NewLineRegex().Replace(yaml, "\r\n");
+    // yaml = EmptyObjectRegex().Replace(yaml, string.Empty);
+    // yaml = yaml.TrimEnd();
+    // yaml = EmptyObjectKeyRegex().Replace(yaml, "$1 {}");
+    // yaml = NewLineRegex().Replace(yaml, "\r\n");
     await YamlFileWriter.WriteToFileAsync(outputPath, yaml, overwrite, cancellationToken).ConfigureAwait(false);
   }
 
