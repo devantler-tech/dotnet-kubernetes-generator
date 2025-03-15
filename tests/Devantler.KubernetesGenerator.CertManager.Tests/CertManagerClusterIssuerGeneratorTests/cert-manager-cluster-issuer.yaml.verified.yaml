@@ -4,4 +4,5 @@ kind: ClusterIssuer
 metadata:
   name: cluster-issuer
   namespace: default
-spec: {}
+spec:
+  selfSigned: {}
