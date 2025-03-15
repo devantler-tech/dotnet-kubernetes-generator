@@ -42,9 +42,9 @@ public partial class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where 
 
     string yaml = _serializer.Serialize(model);
     yaml = EmptyObjectRegex().Replace(yaml, string.Empty);
-    yaml = yaml.TrimEnd(Environment.NewLine.ToCharArray());
+    yaml = yaml.TrimEnd();
     yaml = EmptyObjectKeyRegex().Replace(yaml, "$1 {}");
-    yaml = yaml.Replace(Environment.NewLine + Environment.NewLine, Environment.NewLine, StringComparison.Ordinal);
+    yaml = NewLineRegex().Replace(yaml, "\r\n");
     await YamlFileWriter.WriteToFileAsync(outputPath, yaml, overwrite, cancellationToken).ConfigureAwait(false);
   }
 
@@ -53,4 +53,7 @@ public partial class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where 
 
   [GeneratedRegex(@"^(\s*\w+\s*:\s*)(?![\r\n]+[-]*\s+)$", RegexOptions.Multiline)]
   private static partial Regex EmptyObjectKeyRegex();
+
+  [GeneratedRegex(@"(\r\n|\r|\n)+", RegexOptions.Multiline)]
+  private static partial Regex NewLineRegex();
 }
