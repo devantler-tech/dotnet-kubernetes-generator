@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace Devantler.KubernetesGenerator.Kind.Models.Nodes;
 
 /// <summary>
@@ -8,6 +10,7 @@ public enum KindNodeRole
   /// <summary>
   /// The node is a control plane node.
   /// </summary>
+  [EnumMember(Value = "control-plane")]
   ControlPlane,
   /// <summary>
   /// The node is a worker node.
