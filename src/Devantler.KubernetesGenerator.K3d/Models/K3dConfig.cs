@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Devantler.KubernetesGenerator.K3d.Models.Options;
 using Devantler.KubernetesGenerator.K3d.Models.Registries;
 using k8s.Models;
