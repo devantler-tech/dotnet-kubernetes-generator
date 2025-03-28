@@ -16,11 +16,11 @@ public partial class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where 
 {
   readonly ISerializer _serializer = new SerializerBuilder()
     .DisableAliases()
-    .WithTypeInspector(inner => new CommentGatheringTypeInspector(new KubernetesTypeInspector(new SystemTextJsonTypeInspector(inner))))
+    .WithTypeInspector(inner => new KubernetesTypeInspector(new CommentGatheringTypeInspector(new SystemTextJsonTypeInspector(inner))))
     .WithTypeConverter(new IntstrIntOrStringTypeConverter())
     .WithTypeConverter(new ResourceQuantityTypeConverter())
     .WithTypeConverter(new ByteArrayTypeConverter())
-    .WithEmissionPhaseObjectGraphVisitor(inner => new CommentsObjectGraphVisitor(new KubernetesObjectGraphVisitor<T>(inner.InnerVisitor, Activator.CreateInstance<T>())))
+    .WithEmissionPhaseObjectGraphVisitor(inner => new KubernetesObjectGraphVisitor<T>(new CommentsObjectGraphVisitor(inner.InnerVisitor), Activator.CreateInstance<T>()))
     .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
 
   /// <summary>
