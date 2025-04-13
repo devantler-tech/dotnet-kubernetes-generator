@@ -14,7 +14,7 @@ namespace Devantler.KubernetesGenerator.Core;
 /// <param name="comment"></param>
 public sealed class CommentsObjectDescriptor(IObjectDescriptor innerDescriptor, string comment) : IObjectDescriptor
 {
-  private readonly IObjectDescriptor _innerDescriptor = innerDescriptor;
+  readonly IObjectDescriptor _innerDescriptor = innerDescriptor;
 
   /// <summary>
   /// Gets the comment associated with the object descriptor.
@@ -29,15 +29,15 @@ public sealed class CommentsObjectDescriptor(IObjectDescriptor innerDescriptor, 
   /// <summary>
   /// Gets the type of the object descriptor.
   /// </summary>
-  public Type Type { get { return _innerDescriptor.Type; } }
+  public Type Type => _innerDescriptor.Type;
 
   /// <summary>
   /// Gets the static type of the object descriptor.
   /// </summary>
-  public Type StaticType { get { return _innerDescriptor.StaticType; } }
+  public Type StaticType => _innerDescriptor.StaticType;
 
   /// <summary>
   /// Gets the scalar style of the object descriptor.
   /// </summary>
-  public ScalarStyle ScalarStyle { get { return _innerDescriptor.ScalarStyle; } }
+  public ScalarStyle ScalarStyle => _innerDescriptor.ScalarStyle;
 }

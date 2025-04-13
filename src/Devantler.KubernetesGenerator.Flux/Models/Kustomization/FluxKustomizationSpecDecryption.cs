@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Devantler.KubernetesGenerator.Flux.Models.Kustomization;
 
 /// <summary>

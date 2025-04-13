@@ -16,8 +16,8 @@ sealed class ByteArrayTypeConverter : IYamlTypeConverter
 
   public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
   {
-    var byteArray = (byte[]?)value;
-    var base64String = Convert.ToBase64String(byteArray ?? Array.Empty<byte>());
+    byte[]? byteArray = (byte[]?)value;
+    string base64String = Convert.ToBase64String(byteArray ?? []);
     emitter.Emit(new YamlDotNet.Core.Events.Scalar(base64String));
   }
 }

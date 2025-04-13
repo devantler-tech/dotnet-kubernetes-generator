@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using Devantler.KubernetesGenerator.Core.Converters;
 using Devantler.KubernetesGenerator.Core.Inspectors;
 using YamlDotNet.Serialization;
@@ -34,7 +33,7 @@ public partial class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where 
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    var directory = Path.GetDirectoryName(outputPath);
+    string? directory = Path.GetDirectoryName(outputPath);
     if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
     {
       _ = Directory.CreateDirectory(directory);

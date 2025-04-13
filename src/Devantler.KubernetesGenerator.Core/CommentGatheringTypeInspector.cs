@@ -11,7 +11,7 @@ namespace Devantler.KubernetesGenerator.Core;
 /// </summary>
 public class CommentGatheringTypeInspector : TypeInspectorSkeleton
 {
-  private readonly ITypeInspector _innerTypeDescriptor;
+  readonly ITypeInspector _innerTypeDescriptor;
 
   /// <summary>
   /// Initializes a new instance of the <see cref="CommentGatheringTypeInspector"/> class.
@@ -54,13 +54,13 @@ public class CommentGatheringTypeInspector : TypeInspectorSkeleton
       .Select(d => new CommentsPropertyDescriptor(d));
   }
 
-  private sealed class CommentsPropertyDescriptor(IPropertyDescriptor baseDescriptor) : IPropertyDescriptor
+  sealed class CommentsPropertyDescriptor(IPropertyDescriptor baseDescriptor) : IPropertyDescriptor
   {
-    private readonly IPropertyDescriptor _baseDescriptor = baseDescriptor;
+    readonly IPropertyDescriptor _baseDescriptor = baseDescriptor;
 
     public string Name { get; set; } = baseDescriptor.Name;
 
-    public Type Type { get { return _baseDescriptor.Type; } }
+    public Type Type => _baseDescriptor.Type;
 
     public Type? TypeOverride
     {
@@ -71,11 +71,10 @@ public class CommentGatheringTypeInspector : TypeInspectorSkeleton
 
     public ScalarStyle ScalarStyle
     {
-      get { return _baseDescriptor.ScalarStyle; }
-      set { _baseDescriptor.ScalarStyle = value; }
+      get => _baseDescriptor.ScalarStyle; set => _baseDescriptor.ScalarStyle = value;
     }
 
-    public bool CanWrite { get { return _baseDescriptor.CanWrite; } }
+    public bool CanWrite => _baseDescriptor.CanWrite;
 
     public bool AllowNulls => _baseDescriptor.AllowNulls;
 

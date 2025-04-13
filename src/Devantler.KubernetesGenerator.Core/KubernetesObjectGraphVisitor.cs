@@ -1,9 +1,6 @@
-using System.Collections;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using k8s.Models;
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.ObjectGraphVisitors;
@@ -41,13 +38,12 @@ public sealed class KubernetesObjectGraphVisitor<T>(IObjectGraphVisitor<IEmitter
     if (key.Name.Equals("apiVersion", StringComparison.OrdinalIgnoreCase)
       || key.Name.Equals("kind", StringComparison.OrdinalIgnoreCase)
       || key.Name.Equals("metadata", StringComparison.OrdinalIgnoreCase))
+    {
       return true;
+    }
 
     // Skip default initialization values
-    if (model is not null && SkipDefaultInitializationValues(key, value, model))
-      return false;
-
-    return base.EnterMapping(key, value, context, serializer);
+    return (model is null || !SkipDefaultInitializationValues(key, value, model)) && base.EnterMapping(key, value, context, serializer);
   }
 
   static bool SkipDefaultInitializationValues(IPropertyDescriptor key, IObjectDescriptor value, object obj)
@@ -58,7 +54,7 @@ public sealed class KubernetesObjectGraphVisitor<T>(IObjectGraphVisitor<IEmitter
       {
         if (property.PropertyType.GetConstructor(Type.EmptyTypes) is null)
           continue;
-        var nextObject = Activator.CreateInstance(property.PropertyType);
+        object? nextObject = Activator.CreateInstance(property.PropertyType);
         if (nextObject is null)
           continue;
         if (SkipDefaultInitializationValues(key, value, nextObject))
@@ -69,8 +65,8 @@ public sealed class KubernetesObjectGraphVisitor<T>(IObjectGraphVisitor<IEmitter
       if (property.GetCustomAttribute<RequiredMemberAttribute>() is not null || property.GetCustomAttribute<RequiredAttribute>() is not null)
         return false;
 
-      var currentValue = value.Value;
-      var defaultValue = property.GetValue(obj);
+      object? currentValue = value.Value;
+      object? defaultValue = property.GetValue(obj);
       return currentValue != null && currentValue.Equals(defaultValue);
     }
     return false;
