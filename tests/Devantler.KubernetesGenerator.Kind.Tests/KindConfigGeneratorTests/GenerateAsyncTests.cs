@@ -63,7 +63,7 @@ public class GenerateAsyncTests
           KindNodeLabels = {
             { "node-role.kubernetes.io/master", "" }
           },
-          KubeadmConfigPatches = ""
+          KubeadmConfigPatches = [""]
         },
         new KindNode {
           Role = KindNodeRole.Worker,
@@ -89,7 +89,7 @@ public class GenerateAsyncTests
           KindNodeLabels = {
             { "node-role.kubernetes.io/worker", "" }
           },
-          KubeadmConfigPatches = ""
+          KubeadmConfigPatches = [""]
         }
       ],
       ContainerdConfigPatches = [

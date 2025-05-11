@@ -33,5 +33,5 @@ public class KindNode
   /// <summary>
   /// Kubeadm configuration patches to apply to the node.
   /// </summary>
-  public string KubeadmConfigPatches { get; set; } = "";
+  public IEnumerable<string> KubeadmConfigPatches { get; set; } = [];
 }
