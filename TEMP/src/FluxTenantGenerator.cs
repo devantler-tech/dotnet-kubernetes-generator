@@ -1,8 +1,8 @@
 // TODO: Implement `FluxTenantGenerator` with `flux create` command.
-using Devantler.KubernetesGenerator.Core;
-using Devantler.KubernetesGenerator.Flux.Models;
+using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Flux.Models;
 
-namespace Devantler.KubernetesGenerator.Flux;
+namespace DevantlerTech.KubernetesGenerator.Flux;
 
 /// <summary>
 /// Generator for generating Flux Kustomization objects.

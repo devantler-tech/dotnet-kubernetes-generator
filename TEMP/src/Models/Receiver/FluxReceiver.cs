@@ -1,4 +1,4 @@
-namespace Devantler.KubernetesGenerator.Flux;
+namespace DevantlerTech.KubernetesGenerator.Flux;
 
 public class FluxReceiver
 {

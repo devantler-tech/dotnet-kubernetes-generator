@@ -1,7 +1,7 @@
 // TODO: Implement `FluxReceiverGenerator` with `flux create` command.
-using Devantler.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Core;
 
-namespace Devantler.KubernetesGenerator.Flux;
+namespace DevantlerTech.KubernetesGenerator.Flux;
 
 /// <summary>
 /// Generator for generating Flux Receiver objects.

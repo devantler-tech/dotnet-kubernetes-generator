@@ -1,14 +1,14 @@
-using Devantler.KubernetesGenerator.Flux.Models;
-using Devantler.KubernetesGenerator.Flux.Models.Dependencies;
-using Devantler.KubernetesGenerator.Flux.Models.Images;
-using Devantler.KubernetesGenerator.Flux.Models.KubeConfig;
-using Devantler.KubernetesGenerator.Flux.Models.Metadata;
-using Devantler.KubernetesGenerator.Flux.Models.Patches;
-using Devantler.KubernetesGenerator.Flux.Models.SecretRef;
-using Devantler.KubernetesGenerator.Kustomize.Models.Patches;
+using DevantlerTech.KubernetesGenerator.Flux.Models;
+using DevantlerTech.KubernetesGenerator.Flux.Models.Dependencies;
+using DevantlerTech.KubernetesGenerator.Flux.Models.Images;
+using DevantlerTech.KubernetesGenerator.Flux.Models.KubeConfig;
+using DevantlerTech.KubernetesGenerator.Flux.Models.Metadata;
+using DevantlerTech.KubernetesGenerator.Flux.Models.Patches;
+using DevantlerTech.KubernetesGenerator.Flux.Models.SecretRef;
+using DevantlerTech.KubernetesGenerator.Kustomize.Models.Patches;
 using k8s.Models;
 
-namespace Devantler.KubernetesGenerator.Flux.Tests.FluxKustomizationGeneratorTests;
+namespace DevantlerTech.KubernetesGenerator.Flux.Tests.FluxKustomizationGeneratorTests;
 
 /// <summary>
 /// Tests for <see cref="FluxKustomizationGenerator"/>.

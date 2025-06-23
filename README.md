@@ -16,22 +16,22 @@ To get started, you can install the packages from NuGet.
 
 ```bash
 # For generating Cert Manager resources
-dotnet add package Devantler.KubernetesGenerator.CertManager
+dotnet add package DevantlerTech.KubernetesGenerator.CertManager
 
 # For generating Flux resources
-dotnet add package Devantler.KubernetesGenerator.Flux
+dotnet add package DevantlerTech.KubernetesGenerator.Flux
 
 # For generating Kind resources
-dotnet add package Devantler.KubernetesGenerator.Kind
+dotnet add package DevantlerTech.KubernetesGenerator.Kind
 
 # For generating K3d resources
-dotnet add package Devantler.KubernetesGenerator.K3d
+dotnet add package DevantlerTech.KubernetesGenerator.K3d
 
 # For generating Kustomize resources
-dotnet add package Devantler.KubernetesGenerator.Kustomize
+dotnet add package DevantlerTech.KubernetesGenerator.Kustomize
 
 # For generating native resources
-dotnet add package Devantler.KubernetesGenerator.Native
+dotnet add package DevantlerTech.KubernetesGenerator.Native
 ```
 
 ## 📝 Usage
@@ -39,7 +39,7 @@ dotnet add package Devantler.KubernetesGenerator.Native
 To use the generators, all you need to do is to create and use a new instance of the generator for the specific resource you want to generate. For example, to generate a new ConfigMap resource, you can use the `ConfigMapKubernetesGenerator`.
 
 ```csharp
-using Devantler.KubernetesGenerator.Native;
+using DevantlerTech.KubernetesGenerator.Native;
 
 var generator = new ConfigMapKubernetesGenerator();
 

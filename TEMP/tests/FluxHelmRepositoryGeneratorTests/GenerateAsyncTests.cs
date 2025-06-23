@@ -1,7 +1,7 @@
-using Devantler.KubernetesGenerator.Flux.Models;
+using DevantlerTech.KubernetesGenerator.Flux.Models;
 using k8s.Models;
 
-namespace Devantler.KubernetesGenerator.Flux.Tests.FluxHelmRepositoryGeneratorTests;
+namespace DevantlerTech.KubernetesGenerator.Flux.Tests.FluxHelmRepositoryGeneratorTests;
 
 /// <summary>
 /// Tests for <see cref="FluxHelmRepositoryGenerator"/>.
