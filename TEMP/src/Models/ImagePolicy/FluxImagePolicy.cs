@@ -1,4 +1,4 @@
-namespace Devantler.KubernetesGenerator.Flux.Models;
+namespace DevantlerTech.KubernetesGenerator.Flux.Models;
 
 /// <summary>
 /// A Flux image policy.

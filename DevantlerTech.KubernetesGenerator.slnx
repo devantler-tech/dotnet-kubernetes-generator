@@ -1,0 +1,16 @@
+<Solution>
+  <Project Path="src/DevantlerTech.KubernetesGenerator.CertManager/DevantlerTech.KubernetesGenerator.CertManager.csproj" />
+  <Project Path="src/DevantlerTech.KubernetesGenerator.Core/DevantlerTech.KubernetesGenerator.Core.csproj" />
+  <Project Path="src/DevantlerTech.KubernetesGenerator.Flux/DevantlerTech.KubernetesGenerator.Flux.csproj" />
+  <Project Path="src/DevantlerTech.KubernetesGenerator.K3d/DevantlerTech.KubernetesGenerator.K3d.csproj" />
+  <Project Path="src/DevantlerTech.KubernetesGenerator.Kind/DevantlerTech.KubernetesGenerator.Kind.csproj" />
+  <Project Path="src/DevantlerTech.KubernetesGenerator.Kustomize/DevantlerTech.KubernetesGenerator.Kustomize.csproj" />
+  <Project Path="src/DevantlerTech.KubernetesGenerator.Native/DevantlerTech.KubernetesGenerator.Native.csproj" />
+  <Project Path="tests/DevantlerTech.KubernetesGenerator.CertManager.Tests/DevantlerTech.KubernetesGenerator.CertManager.Tests.csproj" />
+  <Project Path="tests/DevantlerTech.KubernetesGenerator.Core.Tests/DevantlerTech.KubernetesGenerator.Core.Tests.csproj" />
+  <Project Path="tests/DevantlerTech.KubernetesGenerator.Flux.Tests/DevantlerTech.KubernetesGenerator.Flux.Tests.csproj" />
+  <Project Path="tests/DevantlerTech.KubernetesGenerator.K3d.Tests/DevantlerTech.KubernetesGenerator.K3d.Tests.csproj" />
+  <Project Path="tests/DevantlerTech.KubernetesGenerator.Kind.Tests/DevantlerTech.KubernetesGenerator.Kind.Tests.csproj" />
+  <Project Path="tests/DevantlerTech.KubernetesGenerator.Kustomize.Tests/DevantlerTech.KubernetesGenerator.Kustomize.Tests.csproj" />
+  <Project Path="tests/DevantlerTech.KubernetesGenerator.Native.Tests/DevantlerTech.KubernetesGenerator.Native.Tests.csproj" />
+</Solution>

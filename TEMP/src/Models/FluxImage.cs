@@ -1,4 +1,4 @@
-namespace Devantler.KubernetesGenerator.Flux.Models;
+namespace DevantlerTech.KubernetesGenerator.Flux.Models;
 
 /// <summary>
 /// An image to replace if encountered in the objects resources.
