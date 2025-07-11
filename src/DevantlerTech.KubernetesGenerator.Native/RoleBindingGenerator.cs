@@ -21,6 +21,8 @@ public class RoleBindingGenerator : BaseKubectlGenerator<V1RoleBinding>
   public override async Task GenerateAsync(V1RoleBinding model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model, nameof(model));
+    ArgumentNullException.ThrowIfNull(model.Metadata, nameof(model.Metadata));
+    ArgumentException.ThrowIfNullOrEmpty(model.Metadata.Name, nameof(model.Metadata.Name));
     
     var arguments = new List<string>
     {
@@ -32,18 +34,19 @@ public class RoleBindingGenerator : BaseKubectlGenerator<V1RoleBinding>
     };
 
     // Add namespace if specified
-    arguments.AddIfNotNull("--namespace={0}", model.Metadata.NamespaceProperty);
+    if (!string.IsNullOrEmpty(model.Metadata.NamespaceProperty))
+      arguments.Add($"--namespace={model.Metadata.NamespaceProperty}");
 
     // Add role reference
-    if (model.RoleRef != null)
+    if (model.RoleRef != null && !string.IsNullOrEmpty(model.RoleRef.Name))
     {
       if (model.RoleRef.Kind == "ClusterRole")
       {
-        arguments.AddIfNotNull("--clusterrole={0}", model.RoleRef.Name);
+        arguments.Add($"--clusterrole={model.RoleRef.Name}");
       }
       else if (model.RoleRef.Kind == "Role")
       {
-        arguments.AddIfNotNull("--role={0}", model.RoleRef.Name);
+        arguments.Add($"--role={model.RoleRef.Name}");
       }
     }
 
@@ -55,16 +58,21 @@ public class RoleBindingGenerator : BaseKubectlGenerator<V1RoleBinding>
         switch (subject.Kind)
         {
           case "User":
-            arguments.AddIfNotNull("--user={0}", subject.Name);
+            if (!string.IsNullOrEmpty(subject.Name))
+              arguments.Add($"--user={subject.Name}");
             break;
           case "Group":
-            arguments.AddIfNotNull("--group={0}", subject.Name);
+            if (!string.IsNullOrEmpty(subject.Name))
+              arguments.Add($"--group={subject.Name}");
             break;
           case "ServiceAccount":
-            var serviceAccountRef = subject.NamespaceProperty != null 
-              ? $"{subject.NamespaceProperty}:{subject.Name}"
-              : subject.Name;
-            arguments.AddIfNotNull("--serviceaccount={0}", serviceAccountRef);
+            if (!string.IsNullOrEmpty(subject.Name))
+            {
+              var serviceAccountRef = subject.NamespaceProperty != null 
+                ? $"{subject.NamespaceProperty}:{subject.Name}"
+                : subject.Name;
+              arguments.Add($"--serviceaccount={serviceAccountRef}");
+            }
             break;
         }
       }
