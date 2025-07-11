@@ -47,11 +47,15 @@ public class SecretGenerator : IKubernetesGenerator<V1Secret>
       }
     }
 
-    // Add binary data as literals (base64 decode first)
+    // Add binary data as literals (base64 decode first), but only for keys not in StringData
     if (model.Data != null)
     {
       foreach (var kvp in model.Data)
       {
+        // Skip if key already exists in StringData
+        if (model.StringData != null && model.StringData.ContainsKey(kvp.Key))
+          continue;
+          
         var value = Encoding.UTF8.GetString(kvp.Value);
         arguments.Add($"--from-literal={kvp.Key}={value}");
       }
