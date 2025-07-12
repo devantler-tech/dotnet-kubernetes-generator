@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes ExternalName Service objects using 'kubectl create service externalname' commands.
 /// </summary>
-public class ExternalNameServiceGenerator : BaseNativeGenerator<V1Service>
+public class ExternalNameServiceGenerator : ServiceGeneratorBase
 {
   static readonly string[] _defaultArgs = ["create", "service", "externalname"];
 
@@ -67,30 +67,5 @@ public class ExternalNameServiceGenerator : BaseNativeGenerator<V1Service>
     AddTcpPorts(args, model);
 
     return args.AsReadOnly();
-  }
-
-  /// <summary>
-  /// Adds TCP port mappings to the arguments.
-  /// </summary>
-  /// <param name="args">The arguments list.</param>
-  /// <param name="model">The V1Service object.</param>
-  static void AddTcpPorts(List<string> args, V1Service model)
-  {
-    if (model.Spec?.Ports?.Count > 0)
-    {
-      foreach (var port in model.Spec.Ports)
-      {
-        if (port.Protocol?.ToUpperInvariant() == "TCP" || string.IsNullOrEmpty(port.Protocol))
-        {
-          // Format: --tcp=port:targetPort
-          string tcpArg = $"--tcp={port.Port}";
-          if (port.TargetPort != null)
-          {
-            tcpArg += $":{port.TargetPort.Value}";
-          }
-          args.Add(tcpArg);
-        }
-      }
-    }
   }
 }
