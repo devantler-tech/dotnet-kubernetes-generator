@@ -10,6 +10,10 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
 {
   /// <summary>
+  /// List of temporary files created during generation that need to be cleaned up.
+  /// </summary>
+  private readonly List<string> _temporaryFiles = new();
+  /// <summary>
   /// Generates a TLS secret using kubectl create secret tls command.
   /// </summary>
   /// <param name="model">The TLS secret object.</param>
@@ -24,28 +28,21 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
 
     string errorMessage = $"Failed to create TLS secret '{model.Metadata?.Name}' using kubectl";
 
-    var temporaryFiles = new List<string>();
     try
     {
-      await RunKubectlAsync(outputPath, overwrite, await AddArgumentsAsync(model, temporaryFiles, cancellationToken).ConfigureAwait(false), errorMessage, cancellationToken).ConfigureAwait(false);
+      await RunKubectlAsync(outputPath, overwrite, await AddArgumentsAsync(model, cancellationToken).ConfigureAwait(false), errorMessage, cancellationToken).ConfigureAwait(false);
     }
     finally
     {
       // Clean up temporary files
-      foreach (string tempFile in temporaryFiles)
+      foreach (string tempFile in _temporaryFiles)
       {
-        try
+        if (File.Exists(tempFile))
         {
-          if (File.Exists(tempFile))
-          {
-            File.Delete(tempFile);
-          }
-        }
-        catch
-        {
-          // Ignore cleanup errors
+          File.Delete(tempFile);
         }
       }
+      _temporaryFiles.Clear();
     }
   }
 
@@ -53,10 +50,9 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   /// Builds the kubectl arguments for creating a TLS secret from a TLSSecret object.
   /// </summary>
   /// <param name="model">The TLSSecret object.</param>
-  /// <param name="temporaryFiles">List to track temporary files created.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The kubectl arguments.</returns>
-  static async Task<ReadOnlyCollection<string>> AddArgumentsAsync(TLSSecret model, List<string> temporaryFiles, CancellationToken cancellationToken = default)
+  async Task<ReadOnlyCollection<string>> AddArgumentsAsync(TLSSecret model, CancellationToken cancellationToken = default)
   {
     var args = new List<string> { "create", "secret", "tls" };
     
@@ -68,8 +64,8 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     args.Add(model.Metadata.Name);
 
     // Handle certificate and key data
-    string certPath = await GetFilePathAsync(model.Certificate, "tls-cert.crt", temporaryFiles, cancellationToken).ConfigureAwait(false);
-    string keyPath = await GetFilePathAsync(model.PrivateKey, "tls-key.key", temporaryFiles, cancellationToken).ConfigureAwait(false);
+    string certPath = await GetFilePathAsync(model.Certificate, "tls-cert.crt", cancellationToken).ConfigureAwait(false);
+    string keyPath = await GetFilePathAsync(model.PrivateKey, "tls-key.key", cancellationToken).ConfigureAwait(false);
 
     if (!string.IsNullOrEmpty(certPath))
     {
@@ -99,10 +95,9 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   /// </summary>
   /// <param name="data">The certificate or key data (path or content).</param>
   /// <param name="fileName">The file name to use for temporary files.</param>
-  /// <param name="temporaryFiles">List to track temporary files created.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The file path.</returns>
-  static async Task<string> GetFilePathAsync(string? data, string fileName, List<string> temporaryFiles, CancellationToken cancellationToken = default)
+  async Task<string> GetFilePathAsync(string? data, string fileName, CancellationToken cancellationToken = default)
   {
     if (string.IsNullOrEmpty(data))
     {
@@ -118,7 +113,7 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     // Treat the data as content and create a temporary file
     string tempPath = Path.Combine(Path.GetTempPath(), $"{fileName}-{Guid.NewGuid()}");
     await File.WriteAllTextAsync(tempPath, data, cancellationToken).ConfigureAwait(false);
-    temporaryFiles.Add(tempPath);
+    _temporaryFiles.Add(tempPath);
     return tempPath;
   }
 }
