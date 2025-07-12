@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
@@ -30,7 +31,9 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
 
     try
     {
-      await RunKubectlAsync(outputPath, overwrite, await AddArgumentsAsync(model, cancellationToken).ConfigureAwait(false), errorMessage, cancellationToken).ConfigureAwait(false);
+      var args = await AddArgumentsAsync(model, cancellationToken).ConfigureAwait(false);
+      var allArgs = args.Concat(new[] { "--output=yaml", "--dry-run=client" }).ToArray().AsReadOnly();
+      await RunKubectlAsync(outputPath, overwrite, allArgs, errorMessage, cancellationToken).ConfigureAwait(false);
     }
     finally
     {
@@ -82,10 +85,6 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     {
       args.Add($"--namespace={model.Metadata.NamespaceProperty}");
     }
-
-    // Always add --output=yaml to get YAML output and --dry-run=client to avoid actually creating the resource
-    args.Add("--output=yaml");
-    args.Add("--dry-run=client");
 
     return args.AsReadOnly();
   }
