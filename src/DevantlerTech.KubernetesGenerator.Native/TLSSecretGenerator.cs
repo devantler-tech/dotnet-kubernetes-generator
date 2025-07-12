@@ -84,7 +84,6 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
       throw new KubernetesGeneratorException("Data must be provided.");
     }
 
-    // Check if the data is a file path that exists
     if (File.Exists(data))
     {
       return data;
