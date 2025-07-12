@@ -58,12 +58,11 @@ public sealed class GenerateAsyncTests
     {
       Metadata = new V1ObjectMeta
       {
-        Name = "docker-registry-secret-minimal",
-        NamespaceProperty = "default"
+        Name = "docker-registry-secret-minimal"
       },
-      DockerServer = "https://registry.example.com",
       DockerUsername = "user",
-      DockerPassword = "pass"
+      DockerPassword = "pass",
+      DockerEmail = "user@example.com"
     };
 
     // Act

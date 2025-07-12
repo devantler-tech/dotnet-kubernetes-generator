@@ -1,3 +1,5 @@
+using k8s.Models;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
