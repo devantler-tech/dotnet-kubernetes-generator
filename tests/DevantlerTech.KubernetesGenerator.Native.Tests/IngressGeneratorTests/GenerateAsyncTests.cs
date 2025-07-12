@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.IngressGeneratorTests;
 /// <summary>
 /// Tests for the <see cref="IngressGenerator"/> class.
 /// </summary>
-internal class GenerateAsyncTests
+public class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated Endpoint object.
@@ -75,8 +75,8 @@ internal class GenerateAsyncTests
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath).ConfigureAwait(false);
-    string fileContent = await File.ReadAllTextAsync(outputPath).ConfigureAwait(false);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
 
     // Assert
     _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
