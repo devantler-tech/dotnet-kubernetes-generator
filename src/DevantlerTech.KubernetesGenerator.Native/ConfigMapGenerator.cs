@@ -46,17 +46,6 @@ public class ConfigMapGenerator : BaseNativeGenerator<V1ConfigMap>
     }
     args.Add(model.Metadata.Name);
 
-    // Validate that kubectl create configmap doesn't support certain properties
-    if (model.BinaryData?.Count > 0)
-    {
-      throw new KubernetesGeneratorException("The kubectl create configmap command does not support binaryData. Use BaseKubernetesGenerator instead for full ConfigMap support.");
-    }
-
-    if (model.Immutable.HasValue)
-    {
-      throw new KubernetesGeneratorException("The kubectl create configmap command does not support the immutable property. Use BaseKubernetesGenerator instead for full ConfigMap support.");
-    }
-
     // Add data from Data property as literals
     if (model.Data?.Count > 0)
     {
