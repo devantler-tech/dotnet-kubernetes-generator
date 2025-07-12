@@ -50,18 +50,18 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     }
     args.Add(model.Metadata.Name);
 
+    // Add namespace if specified
+    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    {
+      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+    }
+
     // Handle certificate and key data
     string certPath = await GetFilePathAsync(model.Certificate, "tls-cert.crt", cancellationToken).ConfigureAwait(false);
     string keyPath = await GetFilePathAsync(model.PrivateKey, "tls-key.key", cancellationToken).ConfigureAwait(false);
 
     args.Add($"--cert={certPath}");
     args.Add($"--key={keyPath}");
-
-    // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
-    {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
-    }
 
     return args.AsReadOnly();
   }
