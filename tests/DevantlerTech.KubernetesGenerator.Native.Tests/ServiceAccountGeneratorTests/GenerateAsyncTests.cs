@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ServiceAccountGenerator
 /// <summary>
 /// Tests for the <see cref="ServiceAccountGenerator"/> class.
 /// </summary>
-public class GenerateAsyncTests
+public sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated ServiceAccount object.

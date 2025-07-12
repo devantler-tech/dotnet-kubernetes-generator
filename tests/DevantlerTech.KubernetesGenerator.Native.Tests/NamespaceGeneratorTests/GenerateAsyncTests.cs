@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests
 /// <summary>
 /// Tests for the <see cref="NamespaceGenerator"/> class.
 /// </summary>
-public class GenerateAsyncTests
+public sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated Namespace object.
