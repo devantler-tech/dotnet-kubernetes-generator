@@ -82,7 +82,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the TLSSecret model does not have a name set.
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the DockerRegistrySecret model does not have a name set.
   /// </summary>
   [Fact]
   public async Task GenerateAsync_WithDockerRegistrySecretWithoutName_ShouldThrowKubernetesGeneratorException()
