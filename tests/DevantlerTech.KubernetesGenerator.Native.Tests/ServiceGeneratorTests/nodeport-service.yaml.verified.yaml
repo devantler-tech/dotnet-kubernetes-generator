@@ -4,18 +4,18 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: service
-  name: service
+    app: nodeport-service
+  name: nodeport-service
   namespace: default
 spec:
-  clusterIP: 192.168.34.21
   ports:
   - name: 80-8080
+    nodePort: 30080
     port: 80
     protocol: TCP
     targetPort: 8080
   selector:
-    app: service
-  type: ClusterIP
+    app: nodeport-service
+  type: NodePort
 status:
   loadBalancer: {}

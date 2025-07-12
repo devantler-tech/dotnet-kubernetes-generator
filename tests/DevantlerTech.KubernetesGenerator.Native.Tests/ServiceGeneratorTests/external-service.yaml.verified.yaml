@@ -1,0 +1,16 @@
+﻿---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: external-service
+  name: external-service
+  namespace: default
+spec:
+  externalName: external.example.com
+  selector:
+    app: external-service
+  type: ExternalName
+status:
+  loadBalancer: {}

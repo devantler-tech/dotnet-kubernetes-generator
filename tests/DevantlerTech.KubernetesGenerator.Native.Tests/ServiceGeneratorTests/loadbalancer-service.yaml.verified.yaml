@@ -4,18 +4,17 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: service
-  name: service
+    app: loadbalancer-service
+  name: loadbalancer-service
   namespace: default
 spec:
-  clusterIP: 192.168.34.21
   ports:
   - name: 80-8080
     port: 80
     protocol: TCP
     targetPort: 8080
   selector:
-    app: service
-  type: ClusterIP
+    app: loadbalancer-service
+  type: LoadBalancer
 status:
   loadBalancer: {}
