@@ -1,3 +1,4 @@
+using DevantlerTech.KubernetesGenerator.Core;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.GenericSecretGeneratorTests;
@@ -131,5 +132,24 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model does not have a name set.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithDockerRegistrySecretWithoutName_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new GenericSecretGenerator();
+
+    var model = new V1Secret
+    {
+      ApiVersion = "v1",
+      Kind = "Secret"
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }
