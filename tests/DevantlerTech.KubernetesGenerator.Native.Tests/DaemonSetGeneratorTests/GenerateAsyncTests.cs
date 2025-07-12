@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.DaemonSetGeneratorTests
 /// <summary>
 /// Tests for the <see cref="DaemonSetGenerator"/> class.
 /// </summary>
-public class GenerateAsyncTests
+public sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated DaemonSet object.

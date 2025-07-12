@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeClaimGe
 /// <summary>
 /// Tests for the <see cref="PersistentVolumeClaimGenerator"/> class.
 /// </summary>
-public class GenerateAsyncTests
+public sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated PersistentVolumeClaim object.

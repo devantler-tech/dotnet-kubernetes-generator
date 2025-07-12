@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Linq;
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
@@ -13,7 +12,8 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   /// <summary>
   /// List of temporary files created during generation that need to be cleaned up.
   /// </summary>
-  private readonly List<string> _temporaryFiles = new();
+  readonly List<string> _temporaryFiles = [];
+
   /// <summary>
   /// Generates a TLS secret using kubectl create secret tls command.
   /// </summary>
@@ -30,9 +30,8 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     string errorMessage = $"Failed to create TLS secret '{model.Metadata?.Name}' using kubectl";
 
     var args = await AddArgumentsAsync(model, cancellationToken).ConfigureAwait(false);
-    var allArgs = args.Concat(new[] { "--output=yaml", "--dry-run=client" }).ToArray().AsReadOnly();
-    await RunKubectlAsync(outputPath, overwrite, allArgs, errorMessage, cancellationToken).ConfigureAwait(false);
-    
+    await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
+
     // Clean up temporary files
     foreach (string tempFile in _temporaryFiles)
     {
@@ -53,7 +52,7 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   async Task<ReadOnlyCollection<string>> AddArgumentsAsync(TLSSecret model, CancellationToken cancellationToken = default)
   {
     var args = new List<string> { "create", "secret", "tls" };
-    
+
     // Require that a secret name is provided
     if (string.IsNullOrEmpty(model.Metadata?.Name))
     {
@@ -95,7 +94,7 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   {
     if (string.IsNullOrEmpty(data))
     {
-      throw new KubernetesGeneratorException($"Data must be provided.");
+      throw new KubernetesGeneratorException("Data must be provided.");
     }
 
     // Check if the data is a file path that exists

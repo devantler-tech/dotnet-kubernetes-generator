@@ -36,7 +36,7 @@ public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
   static ReadOnlyCollection<string> AddArguments(V1Secret model)
   {
     var args = new List<string> { "create", "secret", "generic" };
-    
+
     // Require that a secret name is provided
     if (string.IsNullOrEmpty(model.Metadata?.Name))
     {
@@ -52,7 +52,7 @@ public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
 
     // Combine data from both Data and StringData, with StringData taking precedence
     var combinedData = new Dictionary<string, string>();
-    
+
     // First add data from Data (base64 decoded)
     if (model.Data?.Count > 0)
     {
@@ -62,7 +62,7 @@ public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
         combinedData[kvp.Key] = value;
       }
     }
-    
+
     // Then add/override with StringData (takes precedence)
     if (model.StringData?.Count > 0)
     {
@@ -71,7 +71,7 @@ public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
         combinedData[kvp.Key] = kvp.Value;
       }
     }
-    
+
     // Add all combined data as literals
     foreach (var kvp in combinedData)
     {
@@ -83,10 +83,6 @@ public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
     {
       args.Add($"--namespace={model.Metadata.NamespaceProperty}");
     }
-
-    // Always add --output=yaml to get YAML output and --dry-run=client to avoid actually creating the resource
-    args.Add("--output=yaml");
-    args.Add("--dry-run=client");
 
     return args.AsReadOnly();
   }

@@ -12,6 +12,11 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 public abstract class BaseNativeGenerator<T> : IKubernetesGenerator<T>
 {
   /// <summary>
+  /// Default arguments for kubectl commands.
+  /// </summary>
+  static readonly string[] _defaultArguments = ["--output=yaml", "--dry-run=client"];
+
+  /// <summary>
   /// Generates a native kubernetes object.
   /// </summary>
   /// <param name="model"></param>
@@ -34,7 +39,10 @@ public abstract class BaseNativeGenerator<T> : IKubernetesGenerator<T>
   /// <exception cref="KubernetesGeneratorException"></exception>
   public async Task RunKubectlAsync(string outputPath, bool overwrite, ReadOnlyCollection<string> arguments, string errorMessage, CancellationToken cancellationToken)
   {
-    var (exitCode, output) = await Kubectl.RunAsync([.. arguments], silent: true,
+    // Add default arguments for YAML output and dry-run
+    string[] allArguments = [.. arguments, .. _defaultArguments];
+
+    var (exitCode, output) = await Kubectl.RunAsync(allArguments, silent: true,
       cancellationToken: cancellationToken).ConfigureAwait(false);
     if (exitCode != 0)
       throw new KubernetesGeneratorException($"{errorMessage}: {output}");

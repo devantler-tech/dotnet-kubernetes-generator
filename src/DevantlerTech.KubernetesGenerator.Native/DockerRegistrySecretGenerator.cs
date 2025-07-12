@@ -35,7 +35,7 @@ public class DockerRegistrySecretGenerator : BaseNativeGenerator<DockerRegistryS
   static ReadOnlyCollection<string> AddArguments(DockerRegistrySecret model)
   {
     var args = new List<string> { "create", "secret", "docker-registry" };
-    
+
     // Require that a secret name is provided
     if (string.IsNullOrEmpty(model.Metadata?.Name))
     {
@@ -69,10 +69,6 @@ public class DockerRegistrySecretGenerator : BaseNativeGenerator<DockerRegistryS
     {
       args.Add($"--namespace={model.Metadata.NamespaceProperty}");
     }
-
-    // Always add --output=yaml to get YAML output and --dry-run=client to avoid actually creating the resource
-    args.Add("--output=yaml");
-    args.Add("--dry-run=client");
 
     return args.AsReadOnly();
   }

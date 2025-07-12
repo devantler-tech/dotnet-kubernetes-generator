@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.HorizontalPodAutoscaler
 /// <summary>
 /// Tests for the <see cref="HorizontalPodAutoscalerGenerator"/> class.
 /// </summary>
-public class GenerateAsyncTests
+public sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated HorizontalPodAutoscaler object.
