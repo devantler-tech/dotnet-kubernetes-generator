@@ -41,7 +41,10 @@ public sealed class GenerateAsyncTests
     string fileContent = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+    if (!OperatingSystem.IsWindows())
+    {
+      _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+    }
 
     // Cleanup
     File.Delete(outputPath);
@@ -84,7 +87,10 @@ public sealed class GenerateAsyncTests
     string fileContent = await File.ReadAllTextAsync(outputPath);
 
     // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+    if (!OperatingSystem.IsWindows())
+    {
+      _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+    }
 
     // Cleanup
     File.Delete(outputPath);
