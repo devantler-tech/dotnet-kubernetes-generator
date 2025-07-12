@@ -1,0 +1,14 @@
+﻿---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  creationTimestamp: null
+  name: resource-quota-with-scopes
+  namespace: test-namespace
+spec:
+  hard:
+    pods: "10"
+  scopes:
+  - BestEffort
+  - NotBestEffort
+status: {}
