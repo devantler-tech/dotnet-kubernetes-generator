@@ -25,7 +25,7 @@ jobs:
         with:
           repo: fluxcd/flux2
       - name: 📦 Install Kubectl CLI
-        uses: azure/setup-kubectl@v4
+        uses: azure/setup-kubectl@776406bce94f63e41d621b960d78ee25c8b76ede # v4.0.1
       - name: 🧪 Test .NET solution or project
         uses: devantler-tech/github-actions/composite-actions/dotnet-test-action@b8298f5d8bb6d8b1d807c22ec9847889b1471858 # v1.5.2
         with:
