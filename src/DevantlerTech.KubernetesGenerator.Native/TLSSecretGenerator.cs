@@ -29,24 +29,19 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
 
     string errorMessage = $"Failed to create TLS secret '{model.Metadata?.Name}' using kubectl";
 
-    try
+    var args = await AddArgumentsAsync(model, cancellationToken).ConfigureAwait(false);
+    var allArgs = args.Concat(new[] { "--output=yaml", "--dry-run=client" }).ToArray().AsReadOnly();
+    await RunKubectlAsync(outputPath, overwrite, allArgs, errorMessage, cancellationToken).ConfigureAwait(false);
+    
+    // Clean up temporary files
+    foreach (string tempFile in _temporaryFiles)
     {
-      var args = await AddArgumentsAsync(model, cancellationToken).ConfigureAwait(false);
-      var allArgs = args.Concat(new[] { "--output=yaml", "--dry-run=client" }).ToArray().AsReadOnly();
-      await RunKubectlAsync(outputPath, overwrite, allArgs, errorMessage, cancellationToken).ConfigureAwait(false);
-    }
-    finally
-    {
-      // Clean up temporary files
-      foreach (string tempFile in _temporaryFiles)
+      if (File.Exists(tempFile))
       {
-        if (File.Exists(tempFile))
-        {
-          File.Delete(tempFile);
-        }
+        File.Delete(tempFile);
       }
-      _temporaryFiles.Clear();
     }
+    _temporaryFiles.Clear();
   }
 
   /// <summary>
