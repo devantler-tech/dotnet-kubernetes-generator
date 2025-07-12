@@ -36,10 +36,15 @@ public class SecretGenerator : BaseNativeGenerator<V1Secret>
   {
     var args = new List<string> { "create", "secret" };
 
-    // Determine secret type and add appropriate arguments
     string secretType = DetermineSecretType(model);
     args.Add(secretType);
-    args.Add(model.Metadata?.Name ?? "unnamed-secret");
+    
+    // Require that a secret name is provided
+    if (string.IsNullOrEmpty(model.Metadata?.Name))
+    {
+      throw new InvalidOperationException("Secret name is required");
+    }
+    args.Add(model.Metadata.Name);
 
     // Add type-specific arguments based on secret type
     switch (secretType)
@@ -58,7 +63,6 @@ public class SecretGenerator : BaseNativeGenerator<V1Secret>
         break;
     }
 
-    // Add common arguments
     AddCommonArguments(args, model);
 
     return args.AsReadOnly();
@@ -90,22 +94,32 @@ public class SecretGenerator : BaseNativeGenerator<V1Secret>
     string secretType = string.IsNullOrEmpty(model.Type) ? "Opaque" : model.Type;
     args.Add($"--type={secretType}");
 
-    // Add data from StringData (takes precedence over Data)
+    // Combine data from both Data and StringData, with StringData taking precedence
+    var combinedData = new Dictionary<string, string>();
+    
+    // First add data from Data (base64 decoded)
+    if (model.Data?.Count > 0)
+    {
+      foreach (var kvp in model.Data)
+      {
+        string value = Encoding.UTF8.GetString(kvp.Value);
+        combinedData[kvp.Key] = value;
+      }
+    }
+    
+    // Then add/override with StringData (takes precedence)
     if (model.StringData?.Count > 0)
     {
       foreach (var kvp in model.StringData)
       {
-        args.Add($"--from-literal={kvp.Key}={kvp.Value}");
+        combinedData[kvp.Key] = kvp.Value;
       }
     }
-    else if (model.Data?.Count > 0)
+    
+    // Add all combined data as literals
+    foreach (var kvp in combinedData)
     {
-      // Convert base64 data back to literals
-      foreach (var kvp in model.Data)
-      {
-        string value = Encoding.UTF8.GetString(kvp.Value);
-        args.Add($"--from-literal={kvp.Key}={value}");
-      }
+      args.Add($"--from-literal={kvp.Key}={kvp.Value}");
     }
   }
 
@@ -127,11 +141,6 @@ public class SecretGenerator : BaseNativeGenerator<V1Secret>
       // from the dockerconfigjson without parsing the JSON
       args.Add($"--from-literal=.dockerconfigjson={dockerConfigJson}");
     }
-    else
-    {
-      // Fallback to generic approach
-      AddGenericSecretArguments(args, model);
-    }
   }
 
   /// <summary>
@@ -146,12 +155,10 @@ public class SecretGenerator : BaseNativeGenerator<V1Secret>
     if (model.Data?.ContainsKey("tls.crt") == true && model.Data?.ContainsKey("tls.key") == true)
     {
       // For now, we'll use a generic approach since kubectl create secret tls requires file paths
-      AddGenericSecretArguments(args, model);
-    }
-    else
-    {
-      // Fallback to generic approach
-      AddGenericSecretArguments(args, model);
+      string cert = Encoding.UTF8.GetString(model.Data["tls.crt"]);
+      string key = Encoding.UTF8.GetString(model.Data["tls.key"]);
+      args.Add($"--from-literal=tls.crt={cert}");
+      args.Add($"--from-literal=tls.key={key}");
     }
   }
 
