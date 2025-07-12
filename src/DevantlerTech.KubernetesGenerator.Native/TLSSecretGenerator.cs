@@ -9,6 +9,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// </summary>
 public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
 {
+  static readonly string[] _defaultArgs = ["create", "secret", "tls"];
   /// <summary>
   /// List of temporary files created during generation that need to be cleaned up.
   /// </summary>
@@ -27,20 +28,13 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   {
     ArgumentNullException.ThrowIfNull(model);
 
+    var args = new ReadOnlyCollection<string>(
+      [.. _defaultArgs, .. await AddOptionsAsync(model, cancellationToken).ConfigureAwait(false)]
+    );
     string errorMessage = $"Failed to create TLS secret '{model.Metadata?.Name}' using kubectl";
-
-    var args = await AddArgumentsAsync(model, cancellationToken).ConfigureAwait(false);
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
 
-    // Clean up temporary files
-    foreach (string tempFile in _temporaryFiles)
-    {
-      if (File.Exists(tempFile))
-      {
-        File.Delete(tempFile);
-      }
-    }
-    _temporaryFiles.Clear();
+    CleanUpTemporaryFiles();
   }
 
   /// <summary>
@@ -49,7 +43,7 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   /// <param name="model">The TLSSecret object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The kubectl arguments.</returns>
-  async Task<ReadOnlyCollection<string>> AddArgumentsAsync(TLSSecret model, CancellationToken cancellationToken = default)
+  async Task<ReadOnlyCollection<string>> AddOptionsAsync(TLSSecret model, CancellationToken cancellationToken = default)
   {
     var args = new List<string> { "create", "secret", "tls" };
 
@@ -108,5 +102,20 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     await File.WriteAllTextAsync(tempPath, data, cancellationToken).ConfigureAwait(false);
     _temporaryFiles.Add(tempPath);
     return tempPath;
+  }
+
+  /// <summary>
+  /// Cleans up temporary files created during the generation process.
+  /// </summary>
+  void CleanUpTemporaryFiles()
+  {
+    foreach (string tempFile in _temporaryFiles)
+    {
+      if (File.Exists(tempFile))
+      {
+        File.Delete(tempFile);
+      }
+    }
+    _temporaryFiles.Clear();
   }
 }

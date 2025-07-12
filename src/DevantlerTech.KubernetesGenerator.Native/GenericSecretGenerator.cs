@@ -10,6 +10,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// </summary>
 public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
 {
+  static readonly string[] _defaultArgs = ["create", "secret", "generic"];
   /// <summary>
   /// Generates a generic secret using kubectl create secret generic command.
   /// </summary>
@@ -23,19 +24,20 @@ public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
   {
     ArgumentNullException.ThrowIfNull(model);
 
+    var args = new ReadOnlyCollection<string>(
+      [.. _defaultArgs, .. AddOptions(model)]
+    );
     string errorMessage = $"Failed to create generic secret '{model.Metadata?.Name}' using kubectl";
-
-    await RunKubectlAsync(outputPath, overwrite, AddArguments(model), errorMessage, cancellationToken).ConfigureAwait(false);
+    await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
   /// <summary>
   /// Builds the kubectl arguments for creating a generic secret from a V1Secret object.
   /// </summary>
   /// <param name="model">The V1Secret object.</param>
-  /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddArguments(V1Secret model)
+  static ReadOnlyCollection<string> AddOptions(V1Secret model)
   {
-    var args = new List<string> { "create", "secret", "generic" };
+    var args = new List<string> { };
 
     // Require that a secret name is provided
     if (string.IsNullOrEmpty(model.Metadata?.Name))
