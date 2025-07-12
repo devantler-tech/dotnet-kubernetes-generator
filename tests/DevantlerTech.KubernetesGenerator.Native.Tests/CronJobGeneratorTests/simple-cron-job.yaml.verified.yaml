@@ -3,25 +3,22 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   creationTimestamp: null
-  name: cron-job
+  name: simple-cron-job
   namespace: default
 spec:
   jobTemplate:
     metadata:
       creationTimestamp: null
-      name: cron-job
+      name: simple-cron-job
     spec:
       template:
         metadata:
           creationTimestamp: null
         spec:
           containers:
-          - command:
-            - echo
-            - hello
-            image: nginx
-            name: cron-job
+          - image: busybox
+            name: simple-cron-job
             resources: {}
           restartPolicy: OnFailure
-  schedule: '*/1 * * * *'
+  schedule: 0 2 * * *
 status: {}
