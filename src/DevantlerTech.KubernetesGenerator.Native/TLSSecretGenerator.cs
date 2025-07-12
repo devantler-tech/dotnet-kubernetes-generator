@@ -77,16 +77,16 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   /// <param name="fileName">The file name to use for temporary files.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The file path.</returns>
-  async Task<string> GetFilePathAsync(string? data, string fileName, CancellationToken cancellationToken = default)
+  async Task<string> GetFilePathAsync(string data, string fileName, CancellationToken cancellationToken = default)
   {
-    if (string.IsNullOrEmpty(data))
-    {
-      throw new KubernetesGeneratorException("Data must be provided.");
-    }
-
     if (File.Exists(data))
     {
       return data;
+    }
+
+    if (!data.Contains("-----BEGIN", StringComparison.Ordinal) || !data.Contains("-----END", StringComparison.Ordinal))
+    {
+      throw new KubernetesGeneratorException($"The provided data for {fileName} is not a valid certificate or key content.");
     }
 
     // Treat the data as content and create a temporary file
