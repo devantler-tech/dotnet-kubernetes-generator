@@ -22,10 +22,9 @@ public class SecretGenerator : BaseNativeGenerator<V1Secret>
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    var arguments = BuildKubectlArguments(model);
     string errorMessage = $"Failed to create secret '{model.Metadata?.Name}' using kubectl";
 
-    await RunKubectlAsync(outputPath, overwrite, arguments, errorMessage, cancellationToken).ConfigureAwait(false);
+    await RunKubectlAsync(outputPath, overwrite, AddArguments(model), errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -33,7 +32,7 @@ public class SecretGenerator : BaseNativeGenerator<V1Secret>
   /// </summary>
   /// <param name="model">The V1Secret object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> BuildKubectlArguments(V1Secret model)
+  static ReadOnlyCollection<string> AddArguments(V1Secret model)
   {
     var args = new List<string> { "create", "secret" };
 
@@ -123,7 +122,7 @@ public class SecretGenerator : BaseNativeGenerator<V1Secret>
       // If we have .dockerconfigjson, use --from-file approach
       // Note: This is a simplified approach - in real scenarios we'd need to create a temp file
       string dockerConfigJson = Encoding.UTF8.GetString(model.Data[".dockerconfigjson"]);
-      
+
       // For now, we'll use a generic approach since we can't easily extract individual fields
       // from the dockerconfigjson without parsing the JSON
       args.Add($"--from-literal=.dockerconfigjson={dockerConfigJson}");
