@@ -1,5 +1,5 @@
-using DevantlerTech.KubernetesGenerator.Native.Models;
-using Xunit;
+using System.Text;
+using k8s.Models;
 using VerifyXunit;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.SecretGeneratorTests;
@@ -10,7 +10,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.SecretGeneratorTests;
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Secret object using generic secret.
+  /// Verifies the generated Secret object using V1Secret input.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -18,18 +18,21 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new SecretGenerator();
-    var model = new SecretCreateOptions
+    var model = new V1Secret
     {
-      Generic = new GenericSecretOptions
+      ApiVersion = "v1",
+      Kind = "Secret",
+      Metadata = new V1ObjectMeta
       {
         Name = "secret",
-        Namespace = "default",
-        Type = "Opaque"
+        NamespaceProperty = "default"
+      },
+      Type = "Opaque",
+      StringData = new Dictionary<string, string>
+      {
+        ["key"] = "value"
       }
     };
-
-    // Add a literal value to match the expected output
-    model.Generic.FromLiterals["key"] = "value";
 
     // Act
     string fileName = "secret.yaml";
