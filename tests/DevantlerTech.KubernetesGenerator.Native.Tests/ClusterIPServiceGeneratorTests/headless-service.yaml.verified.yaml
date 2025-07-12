@@ -1,0 +1,21 @@
+﻿---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: headless-service
+  name: headless-service
+  namespace: default
+spec:
+  clusterIP: None
+  ports:
+  - name: 80-8080
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: headless-service
+  type: ClusterIP
+status:
+  loadBalancer: {}
