@@ -5,7 +5,7 @@ using k8s.Models;
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
-/// A generator for Kubernetes Secret objects using kubectl create secret commands.
+/// A generator for Kubernetes Secret objects using 'kubectl create secret' commands.
 /// </summary>
 public class SecretGenerator : BaseNativeGenerator<V1Secret>
 {
