@@ -13,22 +13,12 @@ public class TLSSecret
   public V1ObjectMeta? Metadata { get; set; }
 
   /// <summary>
-  /// Gets or sets the path to the certificate file.
+  /// Gets or sets the certificate data, either as a file path or the certificate content.
   /// </summary>
-  public string? CertificatePath { get; set; }
+  public string? Certificate { get; set; }
 
   /// <summary>
-  /// Gets or sets the path to the private key file.
+  /// Gets or sets the private key data, either as a file path or the private key content.
   /// </summary>
-  public string? PrivateKeyPath { get; set; }
-
-  /// <summary>
-  /// Gets or sets the certificate content as a string.
-  /// </summary>
-  public string? CertificateContent { get; set; }
-
-  /// <summary>
-  /// Gets or sets the private key content as a string.
-  /// </summary>
-  public string? PrivateKeyContent { get; set; }
+  public string? PrivateKey { get; set; }
 }

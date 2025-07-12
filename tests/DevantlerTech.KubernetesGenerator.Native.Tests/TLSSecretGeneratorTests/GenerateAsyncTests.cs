@@ -24,8 +24,8 @@ public sealed class GenerateAsyncTests
         Name = "tls-secret-content",
         NamespaceProperty = "default"
       },
-      CertificateContent = "-----BEGIN CERTIFICATE-----\nMIIBkTCB+wIJAK7z7zxzWh5HMA0GCSqGSIb3DQEBCwUAMBQxEjAQBgNVBAoMCWxv\nY2FsaG9zdDAeFw0yMzEwMDEwMDAwMDBaFw0yNDEwMDEwMDAwMDBaMBQxEjAQBgNV\nBAoMCWxvY2FsaG9zdDBcMA0GCSqGSIb3DQEBAQUAA0sAMEgCQQDYYWZhkYb2dM9x\nKVNLQj6qJhfnW6fTvQXYJOhL+s0WTEYqEBF9v8nXjJzDvEtPNqW4e8mJbMCVMtCY\nZCkWkqNyAgMBAAEwDQYJKoZIhvcNAQELBQADQQBwXyRqGvyQmYjF5sJGPGjkgGlT\nYUg6qjNWDnBYXOdZhYj2F2YLAJkzSCzSNbGQUxbGV0cA==\n-----END CERTIFICATE-----",
-      PrivateKeyContent = "-----BEGIN PRIVATE KEY-----\nMIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEA2GFmYZGG9nTPcSlT\nS0I+qiYX51un070F2CToS/rNFkxGKhARfb/J14ycw7xLTzaluHvJiWzAlTLQmGQp\nFpKjcgIDAQABAkEAyFvP3PBgxJCrN6PqfNpvU+J8rAhXJnqLKRd7zg3VZhqEhzO\nWqjNRZjpJYTMYXZjYFfMHcPQ1TqMXrCnKQcQCwJAIhANBgkqhkiG9w0BAQEFAASB\nJUAIhANBgkqhkiG9w0BAQEFAASBJUA==\n-----END PRIVATE KEY-----"
+      Certificate = "-----BEGIN CERTIFICATE-----\nMIIBkTCB+wIJAK7z7zxzWh5HMA0GCSqGSIb3DQEBCwUAMBQxEjAQBgNVBAoMCWxv\nY2FsaG9zdDAeFw0yMzEwMDEwMDAwMDBaFw0yNDEwMDEwMDAwMDBaMBQxEjAQBgNV\nBAoMCWxvY2FsaG9zdDBcMA0GCSqGSIb3DQEBAQUAA0sAMEgCQQDYYWZhkYb2dM9x\nKVNLQj6qJhfnW6fTvQXYJOhL+s0WTEYqEBF9v8nXjJzDvEtPNqW4e8mJbMCVMtCY\nZCkWkqNyAgMBAAEwDQYJKoZIhvcNAQELBQADQQBwXyRqGvyQmYjF5sJGPGjkgGlT\nYUg6qjNWDnBYXOdZhYj2F2YLAJkzSCzSNbGQUxbGV0cA==\n-----END CERTIFICATE-----",
+      PrivateKey = "-----BEGIN PRIVATE KEY-----\nMIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEA2GFmYZGG9nTPcSlT\nS0I+qiYX51un070F2CToS/rNFkxGKhARfb/J14ycw7xLTzaluHvJiWzAlTLQmGQp\nFpKjcgIDAQABAkEAyFvP3PBgxJCrN6PqfNpvU+J8rAhXJnqLKRd7zg3VZhqEhzO\nWqjNRZjpJYTMYXZjYFfMHcPQ1TqMXrCnKQcQCwJAIhANBgkqhkiG9w0BAQEFAASB\nJUAIhANBgkqhkiG9w0BAQEFAASBJUA==\n-----END PRIVATE KEY-----"
     };
 
     // Act
@@ -81,8 +81,8 @@ public sealed class GenerateAsyncTests
         Name = "tls-secret-files",
         NamespaceProperty = "default"
       },
-      CertificatePath = certPath,
-      PrivateKeyPath = keyPath
+      Certificate = certPath,
+      PrivateKey = keyPath
     };
 
     // Act

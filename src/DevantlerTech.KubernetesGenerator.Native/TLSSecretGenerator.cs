@@ -45,8 +45,8 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     args.Add(model.Metadata.Name);
 
     // Handle certificate and key data
-    string certPath = await GetCertificatePathAsync(model, cancellationToken).ConfigureAwait(false);
-    string keyPath = await GetPrivateKeyPathAsync(model, cancellationToken).ConfigureAwait(false);
+    string certPath = await GetFilePathAsync(model.Certificate, "tls-cert", ".crt", "Certificate", cancellationToken).ConfigureAwait(false);
+    string keyPath = await GetFilePathAsync(model.PrivateKey, "tls-key", ".key", "PrivateKey", cancellationToken).ConfigureAwait(false);
 
     if (!string.IsNullOrEmpty(certPath))
     {
@@ -72,48 +72,30 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   }
 
   /// <summary>
-  /// Gets the certificate path, either from the provided path or by creating a temporary file from content.
+  /// Gets the file path for certificate or key data, either from the provided path or by creating a temporary file from content.
   /// </summary>
-  /// <param name="model">The TLS secret model.</param>
+  /// <param name="data">The certificate or key data (path or content).</param>
+  /// <param name="tempFilePrefix">The prefix for temporary files.</param>
+  /// <param name="tempFileExtension">The extension for temporary files.</param>
+  /// <param name="dataType">The type of data (for error messages).</param>
   /// <param name="cancellationToken">The cancellation token.</param>
-  /// <returns>The certificate file path.</returns>
-  static async Task<string> GetCertificatePathAsync(TLSSecret model, CancellationToken cancellationToken = default)
+  /// <returns>The file path.</returns>
+  static async Task<string> GetFilePathAsync(string? data, string tempFilePrefix, string tempFileExtension, string dataType, CancellationToken cancellationToken = default)
   {
-    if (!string.IsNullOrEmpty(model.CertificatePath) && File.Exists(model.CertificatePath))
+    if (string.IsNullOrEmpty(data))
     {
-      return model.CertificatePath;
+      throw new KubernetesGeneratorException($"{dataType} must be provided.");
     }
 
-    if (!string.IsNullOrEmpty(model.CertificateContent))
+    // Check if the data is a file path that exists
+    if (File.Exists(data))
     {
-      string tempPath = Path.Combine(Path.GetTempPath(), $"tls-cert-{Guid.NewGuid()}.crt");
-      await File.WriteAllTextAsync(tempPath, model.CertificateContent, cancellationToken).ConfigureAwait(false);
-      return tempPath;
+      return data;
     }
 
-    throw new KubernetesGeneratorException("Either CertificatePath or CertificateContent must be provided.");
-  }
-
-  /// <summary>
-  /// Gets the private key path, either from the provided path or by creating a temporary file from content.
-  /// </summary>
-  /// <param name="model">The TLS secret model.</param>
-  /// <param name="cancellationToken">The cancellation token.</param>
-  /// <returns>The private key file path.</returns>
-  static async Task<string> GetPrivateKeyPathAsync(TLSSecret model, CancellationToken cancellationToken = default)
-  {
-    if (!string.IsNullOrEmpty(model.PrivateKeyPath) && File.Exists(model.PrivateKeyPath))
-    {
-      return model.PrivateKeyPath;
-    }
-
-    if (!string.IsNullOrEmpty(model.PrivateKeyContent))
-    {
-      string tempPath = Path.Combine(Path.GetTempPath(), $"tls-key-{Guid.NewGuid()}.key");
-      await File.WriteAllTextAsync(tempPath, model.PrivateKeyContent, cancellationToken).ConfigureAwait(false);
-      return tempPath;
-    }
-
-    throw new KubernetesGeneratorException("Either PrivateKeyPath or PrivateKeyContent must be provided.");
+    // Treat the data as content and create a temporary file
+    string tempPath = Path.Combine(Path.GetTempPath(), $"{tempFilePrefix}-{Guid.NewGuid()}{tempFileExtension}");
+    await File.WriteAllTextAsync(tempPath, data, cancellationToken).ConfigureAwait(false);
+    return tempPath;
   }
 }
