@@ -88,6 +88,11 @@ public class ClusterRoleGenerator : BaseNativeGenerator<V1ClusterRole>
       {
         args.Add($"--verb={string.Join(",", rule.Verbs)}");
       }
+      else
+      {
+        // kubectl create clusterrole requires at least one verb
+        throw new KubernetesGeneratorException($"kubectl create clusterrole requires at least one verb to be specified in the rule. The cluster role '{model.Metadata.Name}' has a rule with no verbs.");
+      }
 
       // Add resources with API groups
       if (rule.Resources?.Count > 0)
@@ -139,6 +144,11 @@ public class ClusterRoleGenerator : BaseNativeGenerator<V1ClusterRole>
       {
         throw new KubernetesGeneratorException($"kubectl create clusterrole only supports single rule creation. The cluster role '{model.Metadata.Name}' has {model.Rules.Count} rules. Only the first rule will be used.");
       }
+    }
+    else
+    {
+      // kubectl create clusterrole requires at least one verb, but we have no rules
+      throw new KubernetesGeneratorException($"kubectl create clusterrole requires at least one rule with verbs. The cluster role '{model.Metadata.Name}' has no rules or empty rules.");
     }
 
     return args.AsReadOnly();

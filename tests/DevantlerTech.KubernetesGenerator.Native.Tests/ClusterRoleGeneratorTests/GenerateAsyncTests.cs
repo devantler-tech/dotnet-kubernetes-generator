@@ -152,4 +152,71 @@ public sealed class GenerateAsyncTests
     // Act & Assert
     _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
+
+  /// <summary>
+  /// Verifies that ArgumentNullException is thrown when the model is null.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithNullModel_ShouldThrowArgumentNullException()
+  {
+    // Arrange
+    var generator = new ClusterRoleGenerator();
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<ArgumentNullException>(() => generator.GenerateAsync(null!, Path.GetTempFileName()));
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model has empty rules.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithEmptyRules_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new ClusterRoleGenerator();
+    var model = new V1ClusterRole
+    {
+      ApiVersion = "rbac.authorization.k8s.io/v1",
+      Kind = "ClusterRole",
+      Metadata = new V1ObjectMeta
+      {
+        Name = "cluster-role-empty-rules"
+      },
+      Rules = []
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model has a rule with no verbs.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithRuleWithoutVerbs_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new ClusterRoleGenerator();
+    var model = new V1ClusterRole
+    {
+      ApiVersion = "rbac.authorization.k8s.io/v1",
+      Kind = "ClusterRole",
+      Metadata = new V1ObjectMeta
+      {
+        Name = "cluster-role-no-verbs"
+      },
+      Rules =
+      [
+        new V1PolicyRule
+        {
+          ApiGroups = [""],
+          Resources = ["pods"],
+          Verbs = [] // Empty verbs
+        }
+      ]
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+  }
 }
