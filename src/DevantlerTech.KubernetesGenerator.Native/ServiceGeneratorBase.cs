@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
@@ -12,8 +13,11 @@ public abstract class ServiceGeneratorBase : BaseNativeGenerator<V1Service>
   /// </summary>
   /// <param name="args">The arguments list.</param>
   /// <param name="model">The V1Service object.</param>
-  protected static void AddTcpPorts(List<string> args, V1Service model)
+  protected static void AddTcpPorts(Collection<string> args, V1Service model)
   {
+    ArgumentNullException.ThrowIfNull(args);
+    ArgumentNullException.ThrowIfNull(model);
+
     if (model.Spec?.Ports?.Count > 0)
     {
       foreach (var port in model.Spec.Ports)

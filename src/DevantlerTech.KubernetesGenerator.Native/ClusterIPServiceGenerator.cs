@@ -38,7 +38,7 @@ public class ClusterIPServiceGenerator : ServiceGeneratorBase
   /// <returns>The kubectl arguments.</returns>
   static ReadOnlyCollection<string> AddOptions(V1Service model)
   {
-    var args = new List<string>();
+    var args = new Collection<string>();
 
     // Require that a service name is provided
     if (string.IsNullOrEmpty(model.Metadata?.Name))
