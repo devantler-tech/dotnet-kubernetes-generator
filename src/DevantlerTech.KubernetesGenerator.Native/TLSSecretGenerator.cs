@@ -45,7 +45,7 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   /// <returns>The kubectl arguments.</returns>
   async Task<ReadOnlyCollection<string>> AddOptionsAsync(TLSSecret model, CancellationToken cancellationToken = default)
   {
-    var args = new List<string> { "create", "secret", "tls" };
+    var args = new List<string> { };
 
     // Require that a secret name is provided
     if (string.IsNullOrEmpty(model.Metadata?.Name))
