@@ -1,39 +1,40 @@
 using k8s.Models;
 
-namespace DevantlerTech.KubernetesGenerator.Native.Tests.SecretGeneratorTests;
+namespace DevantlerTech.KubernetesGenerator.Native.Tests.GenericSecretGeneratorTests;
 
 /// <summary>
-/// Tests for the <see cref="SecretGenerator"/> class.
+/// Tests for the <see cref="GenericSecretGenerator"/> class.
 /// </summary>
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Secret object using V1Secret input.
+  /// Verifies the generated generic Secret object using V1Secret input.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithGenericSecret_ShouldGenerateAValidSecret()
+  public async Task GenerateAsync_WithGenericSecret_ShouldGenerateAValidGenericSecret()
   {
     // Arrange
-    var generator = new SecretGenerator();
+    var generator = new GenericSecretGenerator();
     var model = new V1Secret
     {
       ApiVersion = "v1",
       Kind = "Secret",
       Metadata = new V1ObjectMeta
       {
-        Name = "secret",
+        Name = "generic-secret",
         NamespaceProperty = "default"
       },
       Type = "Opaque",
       StringData = new Dictionary<string, string>
       {
-        ["key"] = "value"
+        ["key1"] = "value1",
+        ["key2"] = "value2"
       }
     };
 
     // Act
-    string fileName = "secret.yaml";
+    string fileName = "generic-secret.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
@@ -48,32 +49,31 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Docker registry Secret object using V1Secret input.
+  /// Verifies the generated generic Secret object without specifying a type.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithDockerRegistrySecret_ShouldGenerateAValidDockerRegistrySecret()
+  public async Task GenerateAsync_WithGenericSecretWithoutType_ShouldGenerateAValidGenericSecret()
   {
     // Arrange
-    var generator = new SecretGenerator();
+    var generator = new GenericSecretGenerator();
     var model = new V1Secret
     {
       ApiVersion = "v1",
       Kind = "Secret",
       Metadata = new V1ObjectMeta
       {
-        Name = "docker-registry-secret",
+        Name = "generic-secret-no-type",
         NamespaceProperty = "default"
       },
-      Type = "kubernetes.io/dockerconfigjson",
-      Data = new Dictionary<string, byte[]>
+      StringData = new Dictionary<string, string>
       {
-        [".dockerconfigjson"] = Convert.FromBase64String("eyJhdXRocyI6eyJodHRwczovL2xvY2FsaG9zdDo4MDgwL2NvbnRhaW5lciI6eyJ1c2VybmFtZSI6InVzZXIiLCJwYXNzd29yZCI6InBhc3N3b3JkIn19fQ==")
+        ["key1"] = "value1"
       }
     };
 
     // Act
-    string fileName = "docker-registry-secret.yaml";
+    string fileName = "generic-secret-no-type.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
@@ -88,31 +88,38 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated TLS Secret object using V1Secret input.
+  /// Verifies the generated generic Secret object with both Data and StringData.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithTLSSecret_ShouldGenerateAValidTLSSecret()
+  public async Task GenerateAsync_WithGenericSecretWithDataAndStringData_ShouldGenerateAValidGenericSecret()
   {
     // Arrange
-    var generator = new SecretGenerator();
+    var generator = new GenericSecretGenerator();
     var model = new V1Secret
     {
       ApiVersion = "v1",
       Kind = "Secret",
       Metadata = new V1ObjectMeta
       {
-        Name = "tls-secret",
+        Name = "generic-secret-mixed",
         NamespaceProperty = "default"
       },
-      Type = "kubernetes.io/tls",
+      Type = "Opaque",
       Data = new Dictionary<string, byte[]>
       {
+        ["data-key"] = "data-value"u8.ToArray(),
+        ["override-key"] = "data-override"u8.ToArray()
+      },
+      StringData = new Dictionary<string, string>
+      {
+        ["string-key"] = "string-value",
+        ["override-key"] = "string-override"
       }
     };
 
     // Act
-    string fileName = "tls-secret.yaml";
+    string fileName = "generic-secret-mixed.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
