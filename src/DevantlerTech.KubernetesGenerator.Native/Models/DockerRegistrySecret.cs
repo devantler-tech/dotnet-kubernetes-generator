@@ -1,5 +1,3 @@
-using k8s.Models;
-
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
@@ -20,15 +18,15 @@ public class DockerRegistrySecret
   /// <summary>
   /// Gets or sets the Docker registry username.
   /// </summary>
-  public string? DockerUsername { get; set; }
+  public required string DockerUsername { get; set; }
 
   /// <summary>
   /// Gets or sets the Docker registry password.
   /// </summary>
-  public string? DockerPassword { get; set; }
+  public required string DockerPassword { get; set; }
 
   /// <summary>
   /// Gets or sets the Docker registry email.
   /// </summary>
-  public string? DockerEmail { get; set; }
+  public required string DockerEmail { get; set; }
 }

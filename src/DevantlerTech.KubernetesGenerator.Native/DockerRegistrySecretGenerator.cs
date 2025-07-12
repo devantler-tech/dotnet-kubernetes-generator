@@ -1,7 +1,3 @@
-using System.Collections.ObjectModel;
-using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
-
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
@@ -46,32 +42,21 @@ public class DockerRegistrySecretGenerator : BaseNativeGenerator<DockerRegistryS
     }
     args.Add(model.Metadata.Name);
 
+    // Add namespace if specified
+    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    {
+      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+    }
+
     // Add Docker registry specific arguments
     if (!string.IsNullOrEmpty(model.DockerServer))
     {
       args.Add($"--docker-server={model.DockerServer}");
     }
 
-    if (!string.IsNullOrEmpty(model.DockerUsername))
-    {
-      args.Add($"--docker-username={model.DockerUsername}");
-    }
-
-    if (!string.IsNullOrEmpty(model.DockerPassword))
-    {
-      args.Add($"--docker-password={model.DockerPassword}");
-    }
-
-    if (!string.IsNullOrEmpty(model.DockerEmail))
-    {
-      args.Add($"--docker-email={model.DockerEmail}");
-    }
-
-    // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
-    {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
-    }
+    args.Add($"--docker-username={model.DockerUsername}");
+    args.Add($"--docker-password={model.DockerPassword}");
+    args.Add($"--docker-email={model.DockerEmail}");
 
     return args.AsReadOnly();
   }
