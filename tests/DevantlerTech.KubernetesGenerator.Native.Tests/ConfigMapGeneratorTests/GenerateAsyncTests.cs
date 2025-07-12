@@ -1,7 +1,7 @@
+using DevantlerTech.KubernetesGenerator.Core;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests;
-
 
 /// <summary>
 /// Tests for the <see cref="ConfigMapGenerator"/> class.
@@ -9,11 +9,11 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated ConfigMap object.
+  /// Verifies the generated ConfigMap object with basic properties.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidConfigMap()
+  public async Task GenerateAsync_WithBasicProperties_ShouldGenerateAValidConfigMap()
   {
     // Arrange
     var generator = new ConfigMapGenerator();
@@ -29,12 +29,7 @@ public sealed class GenerateAsyncTests
       Data = new Dictionary<string, string>
       {
         ["key"] = "value"
-      },
-      BinaryData = new Dictionary<string, byte[]>
-      {
-        ["key"] = [1, 2, 3]
-      },
-      Immutable = true
+      }
     };
 
     // Act
@@ -50,5 +45,163 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated ConfigMap object with multiple data entries.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithMultipleDataEntries_ShouldGenerateAValidConfigMap()
+  {
+    // Arrange
+    var generator = new ConfigMapGenerator();
+    var model = new V1ConfigMap
+    {
+      ApiVersion = "v1",
+      Kind = "ConfigMap",
+      Metadata = new V1ObjectMeta
+      {
+        Name = "config-map-multiple",
+        NamespaceProperty = "default"
+      },
+      Data = new Dictionary<string, string>
+      {
+        ["key1"] = "value1",
+        ["key2"] = "value2",
+        ["key3"] = "value3"
+      }
+    };
+
+    // Act
+    string fileName = "config-map-multiple.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated ConfigMap object without namespace.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithoutNamespace_ShouldGenerateAValidConfigMap()
+  {
+    // Arrange
+    var generator = new ConfigMapGenerator();
+    var model = new V1ConfigMap
+    {
+      ApiVersion = "v1",
+      Kind = "ConfigMap",
+      Metadata = new V1ObjectMeta
+      {
+        Name = "config-map-no-namespace"
+      },
+      Data = new Dictionary<string, string>
+      {
+        ["key"] = "value"
+      }
+    };
+
+    // Act
+    string fileName = "config-map-no-namespace.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model does not have a name set.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithoutName_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new ConfigMapGenerator();
+    var model = new V1ConfigMap
+    {
+      ApiVersion = "v1",
+      Kind = "ConfigMap",
+      Data = new Dictionary<string, string>
+      {
+        ["key"] = "value"
+      }
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model has binaryData.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithBinaryData_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new ConfigMapGenerator();
+    var model = new V1ConfigMap
+    {
+      ApiVersion = "v1",
+      Kind = "ConfigMap",
+      Metadata = new V1ObjectMeta
+      {
+        Name = "config-map-binary"
+      },
+      Data = new Dictionary<string, string>
+      {
+        ["key"] = "value"
+      },
+      BinaryData = new Dictionary<string, byte[]>
+      {
+        ["binaryKey"] = [1, 2, 3]
+      }
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model has immutable set.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithImmutable_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new ConfigMapGenerator();
+    var model = new V1ConfigMap
+    {
+      ApiVersion = "v1",
+      Kind = "ConfigMap",
+      Metadata = new V1ObjectMeta
+      {
+        Name = "config-map-immutable"
+      },
+      Data = new Dictionary<string, string>
+      {
+        ["key"] = "value"
+      },
+      Immutable = true
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }

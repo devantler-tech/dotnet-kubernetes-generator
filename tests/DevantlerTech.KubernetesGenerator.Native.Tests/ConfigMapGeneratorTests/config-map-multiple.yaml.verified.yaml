@@ -1,9 +1,11 @@
----
+﻿---
 apiVersion: v1
 data:
-  key: value
+  key1: value1
+  key2: value2
+  key3: value3
 kind: ConfigMap
 metadata:
   creationTimestamp: null
-  name: config-map
+  name: config-map-multiple
   namespace: default
