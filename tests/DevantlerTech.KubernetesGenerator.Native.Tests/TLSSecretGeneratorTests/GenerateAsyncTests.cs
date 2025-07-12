@@ -46,14 +46,7 @@ public sealed class GenerateAsyncTests
     var tempFiles = Directory.GetFiles(Path.GetTempPath(), "tls-*");
     foreach (var tempFile in tempFiles)
     {
-      try
-      {
-        File.Delete(tempFile);
-      }
-      catch
-      {
-        // Ignore cleanup errors
-      }
+      File.Delete(tempFile);
     }
   }
 
