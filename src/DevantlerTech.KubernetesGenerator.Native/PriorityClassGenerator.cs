@@ -54,10 +54,9 @@ public class PriorityClassGenerator : BaseNativeGenerator<V1PriorityClass>
     args.Add($"--value={model.Value}");
 
     // Add global default if specified
-    if (model.GlobalDefault.HasValue)
+    if (model.GlobalDefault.HasValue && model.GlobalDefault.Value)
     {
-      string globalDefaultValue = model.GlobalDefault.Value ? "true" : "false";
-      args.Add($"--global-default={globalDefaultValue}");
+      args.Add("--global-default=true");
     }
 
     // Add description if specified
