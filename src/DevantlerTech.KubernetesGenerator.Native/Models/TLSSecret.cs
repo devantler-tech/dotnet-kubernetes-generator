@@ -15,10 +15,10 @@ public class TLSSecret
   /// <summary>
   /// Gets or sets the certificate data, either as a file path or the certificate content.
   /// </summary>
-  public string? Certificate { get; set; }
+  public required string Certificate { get; set; }
 
   /// <summary>
   /// Gets or sets the private key data, either as a file path or the private key content.
   /// </summary>
-  public string? PrivateKey { get; set; }
+  public required string PrivateKey { get; set; }
 }

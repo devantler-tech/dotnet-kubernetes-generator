@@ -54,15 +54,8 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     string certPath = await GetFilePathAsync(model.Certificate, "tls-cert.crt", cancellationToken).ConfigureAwait(false);
     string keyPath = await GetFilePathAsync(model.PrivateKey, "tls-key.key", cancellationToken).ConfigureAwait(false);
 
-    if (!string.IsNullOrEmpty(certPath))
-    {
-      args.Add($"--cert={certPath}");
-    }
-
-    if (!string.IsNullOrEmpty(keyPath))
-    {
-      args.Add($"--key={keyPath}");
-    }
+    args.Add($"--cert={certPath}");
+    args.Add($"--key={keyPath}");
 
     // Add namespace if specified
     if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
