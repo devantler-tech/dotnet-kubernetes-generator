@@ -89,6 +89,9 @@ public class RoleGenerator : BaseNativeGenerator<Role>
               // Handle ApiGroups - kubectl expects format like "resource.group"
               if (rule.ApiGroups != null && rule.ApiGroups.Count > 0)
               {
+                // Note: This creates a cross-product of resources and API groups.
+                // This may create semantically incorrect combinations (e.g., pods.apps)
+                // but matches the original implementation behavior.
                 foreach (string apiGroup in rule.ApiGroups)
                 {
                   if (!string.IsNullOrEmpty(apiGroup) && apiGroup.Length > 0)
