@@ -31,7 +31,7 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     var args = new ReadOnlyCollection<string>(
       [.. _defaultArgs, .. await AddOptionsAsync(model, cancellationToken).ConfigureAwait(false)]
     );
-    string errorMessage = $"Failed to create TLS secret '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create TLS secret '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
 
     CleanUpTemporaryFiles();
@@ -48,16 +48,16 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     var args = new List<string> { };
 
     // Require that a secret name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
+    if (string.IsNullOrEmpty(model.Metadata.Name))
     {
       throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the secret name.");
     }
     args.Add(model.Metadata.Name);
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
     {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+      args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
     // Handle certificate and key data

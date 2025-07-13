@@ -1,5 +1,3 @@
-using k8s.Models;
-
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
@@ -10,7 +8,7 @@ public class DockerRegistrySecret
   /// <summary>
   /// Gets or sets the metadata for the secret.
   /// </summary>
-  public V1ObjectMeta? Metadata { get; set; }
+  public required ObjectMeta Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the Docker registry server URL.
