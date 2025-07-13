@@ -49,9 +49,9 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
     args.Add(model.Metadata.Name);
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    if (!string.IsNullOrEmpty(model.Metadata?.Namespace))
     {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+      args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
     // Add role or cluster role reference

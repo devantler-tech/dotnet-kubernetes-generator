@@ -1,6 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
-using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.RoleBindingGeneratorTests;
 
@@ -20,10 +19,10 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new V1ObjectMeta
+      Metadata = new RoleBindingMetadata
       {
         Name = "role-binding",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
       RoleRef = new RoleRef
       {
@@ -66,10 +65,10 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new V1ObjectMeta
+      Metadata = new RoleBindingMetadata
       {
         Name = "cluster-role-binding",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
       RoleRef = new RoleRef
       {
@@ -112,10 +111,10 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new V1ObjectMeta
+      Metadata = new RoleBindingMetadata
       {
         Name = "multi-subject-binding",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
       RoleRef = new RoleRef
       {
@@ -169,7 +168,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new V1ObjectMeta
+      Metadata = new RoleBindingMetadata
       {
         Name = "simple-binding"
       },
@@ -213,7 +212,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new V1ObjectMeta(),
+      Metadata = null,
       RoleRef = new RoleRef { Kind = "Role", Name = "test-role" },
       Subjects = []
     };
@@ -232,7 +231,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new V1ObjectMeta
+      Metadata = new RoleBindingMetadata
       {
         Name = "invalid-binding"
       },
@@ -265,7 +264,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new V1ObjectMeta
+      Metadata = new RoleBindingMetadata
       {
         Name = "invalid-binding"
       },

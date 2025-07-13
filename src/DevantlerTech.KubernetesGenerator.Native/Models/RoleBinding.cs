@@ -1,5 +1,3 @@
-using k8s.Models;
-
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
@@ -10,7 +8,7 @@ public class RoleBinding
   /// <summary>
   /// Gets or sets the metadata for the role binding.
   /// </summary>
-  public V1ObjectMeta? Metadata { get; set; }
+  public RoleBindingMetadata? Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the reference to the role or cluster role.
@@ -56,6 +54,22 @@ public class Subject
 
   /// <summary>
   /// Gets or sets the namespace of the subject (optional, only applicable for ServiceAccount).
+  /// </summary>
+  public string? Namespace { get; set; }
+}
+
+/// <summary>
+/// Represents metadata for a role binding.
+/// </summary>
+public class RoleBindingMetadata
+{
+  /// <summary>
+  /// Gets or sets the name of the role binding.
+  /// </summary>
+  public required string Name { get; set; }
+
+  /// <summary>
+  /// Gets or sets the namespace of the role binding.
   /// </summary>
   public string? Namespace { get; set; }
 }
