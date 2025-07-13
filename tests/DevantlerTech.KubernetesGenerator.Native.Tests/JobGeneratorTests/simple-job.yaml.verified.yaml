@@ -3,20 +3,15 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   creationTimestamp: null
-  name: my-job
-  namespace: default
+  name: simple-job
 spec:
   template:
     metadata:
       creationTimestamp: null
     spec:
       containers:
-      - command:
-        - echo
-        - hello
-        - world
-        image: nginx:latest
-        name: my-job
+      - image: busybox:latest
+        name: simple-job
         resources: {}
       restartPolicy: Never
 status: {}
