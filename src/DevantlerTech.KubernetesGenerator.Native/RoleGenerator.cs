@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes Role objects using 'kubectl create role' commands.
 /// </summary>
-public class RoleGenerator : BaseNativeGenerator<V1Role>
+public class RoleGenerator : BaseNativeGenerator<Role>
 {
   static readonly string[] _defaultArgs = ["create", "role"];
 
@@ -20,7 +20,7 @@ public class RoleGenerator : BaseNativeGenerator<V1Role>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when role name is not provided or when role rules are invalid.</exception>
-  public override async Task GenerateAsync(V1Role model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(Role model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -32,16 +32,16 @@ public class RoleGenerator : BaseNativeGenerator<V1Role>
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a role from a V1Role object.
+  /// Builds the kubectl arguments for creating a role from a Role object.
   /// </summary>
-  /// <param name="model">The V1Role object.</param>
+  /// <param name="model">The Role object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <remarks>
   /// Note: kubectl create role only supports creating roles with a single rule that combines all verbs and resources.
-  /// Multiple rules in the V1Role object will be merged into a single rule.
+  /// Multiple rules in the Role object will be merged into a single rule.
   /// Advanced properties like ApiGroups and NonResourceURLs are supported where possible.
   /// </remarks>
-  static ReadOnlyCollection<string> AddOptions(V1Role model)
+  static ReadOnlyCollection<string> AddOptions(Role model)
   {
     var args = new List<string> { };
 

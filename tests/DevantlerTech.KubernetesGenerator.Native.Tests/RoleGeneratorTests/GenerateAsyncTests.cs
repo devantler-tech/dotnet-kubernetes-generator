@@ -1,4 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.RoleGeneratorTests;
@@ -16,10 +17,15 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new V1Role
+    var model = new Role
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "Role"
+      Rules = [
+        new PolicyRule
+        {
+          Verbs = ["get"],
+          Resources = ["pods"]
+        }
+      ]
     };
 
     // Act & Assert
@@ -34,14 +40,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new V1Role
+    var model = new Role
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "Role",
       Metadata = new V1ObjectMeta
       {
         Name = "test-role"
-      }
+      },
+      Rules = []
     };
 
     // Act & Assert
@@ -56,18 +61,16 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new V1Role
+    var model = new Role
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "Role",
       Metadata = new V1ObjectMeta
       {
         Name = "test-role"
       },
-      Rules =
-      [
-        new V1PolicyRule
+      Rules = [
+        new PolicyRule
         {
+          Verbs = [],
           Resources = ["pods"]
         }
       ]
@@ -85,19 +88,17 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new V1Role
+    var model = new Role
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "Role",
       Metadata = new V1ObjectMeta
       {
         Name = "test-role"
       },
-      Rules =
-      [
-        new V1PolicyRule
+      Rules = [
+        new PolicyRule
         {
-          Verbs = ["get", "list"]
+          Verbs = ["get", "list"],
+          Resources = []
         }
       ]
     };
