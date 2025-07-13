@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes ClusterRoleBinding objects using 'kubectl create clusterrolebinding' commands.
 /// </summary>
-public class ClusterRoleBindingGenerator : BaseNativeGenerator<V1ClusterRoleBinding>
+public class ClusterRoleBindingGenerator : BaseNativeGenerator<ClusterRoleBinding>
 {
   static readonly string[] _defaultArgs = ["create", "clusterrolebinding"];
 
@@ -20,7 +20,7 @@ public class ClusterRoleBindingGenerator : BaseNativeGenerator<V1ClusterRoleBind
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when required fields are missing.</exception>
-  public override async Task GenerateAsync(V1ClusterRoleBinding model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(ClusterRoleBinding model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -32,12 +32,12 @@ public class ClusterRoleBindingGenerator : BaseNativeGenerator<V1ClusterRoleBind
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a cluster role binding from a V1ClusterRoleBinding object.
+  /// Builds the kubectl arguments for creating a cluster role binding from a ClusterRoleBinding object.
   /// </summary>
-  /// <param name="model">The V1ClusterRoleBinding object.</param>
+  /// <param name="model">The ClusterRoleBinding object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required fields are missing.</exception>
-  static ReadOnlyCollection<string> AddOptions(V1ClusterRoleBinding model)
+  static ReadOnlyCollection<string> AddOptions(ClusterRoleBinding model)
   {
     var args = new List<string>();
 
@@ -48,12 +48,12 @@ public class ClusterRoleBindingGenerator : BaseNativeGenerator<V1ClusterRoleBind
     }
     args.Add(model.Metadata.Name);
 
-    // Require that a cluster role is specified
-    if (string.IsNullOrEmpty(model.RoleRef?.Name))
+    // Add cluster role (required field)
+    if (string.IsNullOrEmpty(model.ClusterRole))
     {
-      throw new KubernetesGeneratorException("The model.RoleRef.Name must be set to specify the cluster role.");
+      throw new KubernetesGeneratorException("The model.ClusterRole must be set to specify the cluster role.");
     }
-    args.Add($"--clusterrole={model.RoleRef.Name}");
+    args.Add($"--clusterrole={model.ClusterRole}");
 
     // Add subjects (users, groups, service accounts)
     if (model.Subjects?.Count > 0)
@@ -77,8 +77,8 @@ public class ClusterRoleBindingGenerator : BaseNativeGenerator<V1ClusterRoleBind
           case "SERVICEACCOUNT":
             if (!string.IsNullOrEmpty(subject.Name))
             {
-              string serviceAccountRef = !string.IsNullOrEmpty(subject.NamespaceProperty)
-                ? $"{subject.NamespaceProperty}:{subject.Name}"
+              string serviceAccountRef = !string.IsNullOrEmpty(subject.Namespace)
+                ? $"{subject.Namespace}:{subject.Name}"
                 : $"default:{subject.Name}";
               args.Add($"--serviceaccount={serviceAccountRef}");
             }

@@ -1,3 +1,4 @@
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterRoleBindingGeneratorTests;
@@ -17,29 +18,22 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new V1ClusterRoleBinding
+    var model = new ClusterRoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = "cluster-role-binding",
         NamespaceProperty = "default"
       },
-      RoleRef = new V1RoleRef
-      {
-        ApiGroup = "rbac.authorization.k8s.io",
-        Kind = "ClusterRole",
-        Name = "cluster-role"
-      },
+      ClusterRole = "cluster-role",
       Subjects =
       [
-        new Rbacv1Subject
+        new Subject
         {
           ApiGroup = "rbac.authorization.k8s.io",
           Kind = "User",
-          NamespaceProperty = "default",
           Name = "user",
+          Namespace = "default"
         }
       ]
     };
@@ -68,46 +62,39 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new V1ClusterRoleBinding
+    var model = new ClusterRoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = "multi-subject-binding"
       },
-      RoleRef = new V1RoleRef
-      {
-        ApiGroup = "rbac.authorization.k8s.io",
-        Kind = "ClusterRole",
-        Name = "cluster-admin"
-      },
+      ClusterRole = "cluster-admin",
       Subjects =
       [
-        new Rbacv1Subject
+        new Subject
         {
           ApiGroup = "rbac.authorization.k8s.io",
           Kind = "User",
           Name = "alice",
         },
-        new Rbacv1Subject
+        new Subject
         {
           ApiGroup = "rbac.authorization.k8s.io",
           Kind = "User",
           Name = "bob",
         },
-        new Rbacv1Subject
+        new Subject
         {
           ApiGroup = "rbac.authorization.k8s.io",
           Kind = "Group",
           Name = "admins",
         },
-        new Rbacv1Subject
+        new Subject
         {
           ApiGroup = "",
           Kind = "ServiceAccount",
           Name = "system-sa",
-          NamespaceProperty = "kube-system"
+          Namespace = "kube-system"
         }
       ]
     };
@@ -136,20 +123,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new V1ClusterRoleBinding
+    var model = new ClusterRoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = null // No name provided
       },
-      RoleRef = new V1RoleRef
-      {
-        ApiGroup = "rbac.authorization.k8s.io",
-        Kind = "ClusterRole",
-        Name = "cluster-role"
-      }
+      ClusterRole = "cluster-role"
     };
 
     // Act & Assert
@@ -169,20 +149,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new V1ClusterRoleBinding
+    var model = new ClusterRoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = "test-binding"
       },
-      RoleRef = new V1RoleRef
-      {
-        ApiGroup = "rbac.authorization.k8s.io",
-        Kind = "ClusterRole",
-        Name = null // No cluster role provided
-      }
+      ClusterRole = "" // No cluster role provided
     };
 
     // Act & Assert
@@ -190,6 +163,6 @@ public sealed class GenerateAsyncTests
     var exception = await Assert.ThrowsAsync<DevantlerTech.KubernetesGenerator.Core.KubernetesGeneratorException>(
       () => generator.GenerateAsync(model, outputPath));
 
-    Assert.Contains("model.RoleRef.Name must be set", exception.Message, StringComparison.OrdinalIgnoreCase);
+    Assert.Contains("model.ClusterRole must be set", exception.Message, StringComparison.OrdinalIgnoreCase);
   }
 }
