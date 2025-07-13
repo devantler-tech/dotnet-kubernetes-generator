@@ -17,4 +17,14 @@ public class Metadata
   /// Gets or sets the namespace of the role binding.
   /// </summary>
   public string? Namespace { get; set; }
+
+  /// <summary>
+  /// Gets or sets the labels for this object.
+  /// </summary>
+  public IDictionary<string, string>? Labels { get; init; }
+
+  /// <summary>
+  /// Gets or sets the annotations for this object.
+  /// </summary>
+  public IDictionary<string, string>? Annotations { get; init; }
 }

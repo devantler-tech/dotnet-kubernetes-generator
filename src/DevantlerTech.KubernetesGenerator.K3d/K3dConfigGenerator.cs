@@ -1,4 +1,4 @@
-﻿using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.K3d.Models;
 
 namespace DevantlerTech.KubernetesGenerator.K3d;

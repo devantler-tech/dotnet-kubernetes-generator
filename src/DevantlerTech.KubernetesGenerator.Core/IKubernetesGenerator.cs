@@ -1,4 +1,4 @@
-﻿namespace DevantlerTech.KubernetesGenerator.Core;
+namespace DevantlerTech.KubernetesGenerator.Core;
 
 /// <summary>
 /// Interface for a Kubernetes resource generator.

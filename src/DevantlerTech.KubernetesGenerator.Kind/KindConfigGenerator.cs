@@ -1,4 +1,4 @@
-﻿using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Kind.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Kind;

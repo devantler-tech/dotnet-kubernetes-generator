@@ -1,4 +1,4 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodGeneratorTests;
 
@@ -17,26 +17,48 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodGenerator();
-    var model = new V1Pod
+    var model = new Pod
     {
-      ApiVersion = "v1",
-      Kind = "Pod",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
-        Name = "pod",
-        NamespaceProperty = "default"
+        Name = "nginx-pod",
+        Namespace = "default",
+        Labels = new Dictionary<string, string> { ["app"] = "nginx" },
+        Annotations = new Dictionary<string, string> { ["example.com/annotation"] = "value" }
       },
-      Spec = new V1PodSpec
+      Spec = new PodSpec
       {
         Containers =
         [
-          new V1Container
+          new PodContainer
           {
-            Name = "container",
-            Image = "nginx",
-            Command = ["echo", "hello"]
+            Name = "nginx",
+            Image = "nginx:1.21",
+            ImagePullPolicy = PodImagePullPolicy.IfNotPresent,
+            Command = ["nginx"],
+            Args = ["-g", "daemon off;"],
+            Env =
+            [
+              new PodContainerEnvVar{
+                Name = "ENV_VAR",
+                Value = "value"
+              },
+            ],
+            Ports =
+            [
+              new PodContainerPort{ Name = "http", Protocol = PodContainerPortProtocol.TCP, ContainerPort = 80 }
+            ],
+            SecurityContext = new PodContainerSecurityContext
+            {
+              Privileged = false,
+              RunAsNonRoot = true,
+              ReadOnlyRootFilesystem = true
+            }
           }
-        ]
+        ],
+        RestartPolicy = PodRestartPolicy.Always,
+        Tty = false,
+        Stdin = false
       }
     };
 
