@@ -8,7 +8,7 @@ public class RoleBindingRoleRef
   /// <summary>
   /// Gets or sets the kind of role reference (Role or ClusterRole).
   /// </summary>
-  public required string Kind { get; set; }
+  public required RoleBindingRoleRefKind Kind { get; set; }
 
   /// <summary>
   /// Gets or sets the name of the role.

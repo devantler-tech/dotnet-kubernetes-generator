@@ -3,12 +3,12 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Represents a role binding for use with kubectl create rolebinding.
 /// </summary>
-public class RoleBinding
+public class RoleBinding(string name)
 {
   /// <summary>
   /// Gets or sets the metadata for the role binding.
   /// </summary>
-  public Metadata? Metadata { get; set; }
+  public Metadata Metadata { get; set; } = new() { Name = name };
 
   /// <summary>
   /// Gets or sets the reference to the role or cluster role.

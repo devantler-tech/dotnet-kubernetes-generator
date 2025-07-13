@@ -17,27 +17,23 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new RoleBinding("role-binding")
     {
-      Metadata = new Metadata
-      {
-        Name = "role-binding",
-        Namespace = "default"
-      },
       RoleRef = new RoleBindingRoleRef
       {
-        Kind = "Role",
+        Kind = RoleBindingRoleRefKind.Role,
         Name = "role"
       },
       Subjects =
       [
         new RoleBindingSubject
         {
-          Kind = "User",
+          Kind = RoleBindingSubjectKind.User,
           Name = "user",
         }
       ]
     };
+    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "role-binding.yaml";
@@ -63,27 +59,23 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new RoleBinding("cluster-role-binding")
     {
-      Metadata = new Metadata
-      {
-        Name = "cluster-role-binding",
-        Namespace = "default"
-      },
       RoleRef = new RoleBindingRoleRef
       {
-        Kind = "ClusterRole",
+        Kind = RoleBindingRoleRefKind.ClusterRole,
         Name = "admin"
       },
       Subjects =
       [
         new RoleBindingSubject
         {
-          Kind = "User",
+          Kind = RoleBindingSubjectKind.User,
           Name = "admin-user",
         }
       ]
     };
+    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "cluster-role-binding.yaml";
@@ -109,38 +101,34 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new RoleBinding("multi-subject-binding")
     {
-      Metadata = new Metadata
-      {
-        Name = "multi-subject-binding",
-        Namespace = "default"
-      },
       RoleRef = new RoleBindingRoleRef
       {
-        Kind = "Role",
+        Kind = RoleBindingRoleRefKind.Role,
         Name = "reader"
       },
       Subjects =
       [
         new RoleBindingSubject
         {
-          Kind = "User",
+          Kind = RoleBindingSubjectKind.User,
           Name = "user1",
         },
         new RoleBindingSubject
         {
-          Kind = "Group",
+          Kind = RoleBindingSubjectKind.Group,
           Name = "readers",
         },
         new RoleBindingSubject
         {
-          Kind = "ServiceAccount",
+          Kind = RoleBindingSubjectKind.ServiceAccount,
           Name = "reader-sa",
           Namespace = "default"
         }
       ]
     };
+    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "multi-subject-binding.yaml";
@@ -166,22 +154,18 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new RoleBinding("simple-binding")
     {
-      Metadata = new Metadata
-      {
-        Name = "simple-binding"
-      },
       RoleRef = new RoleBindingRoleRef
       {
-        Kind = "Role",
+        Kind = RoleBindingRoleRefKind.Role,
         Name = "simple-role"
       },
       Subjects =
       [
         new RoleBindingSubject
         {
-          Kind = "User",
+          Kind = RoleBindingSubjectKind.User,
           Name = "simple-user",
         }
       ]
@@ -203,25 +187,6 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model does not have a name set.
-  /// </summary>
-  [Fact]
-  public async Task GenerateAsync_WithoutName_ShouldThrowKubernetesGeneratorException()
-  {
-    // Arrange
-    var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
-    {
-      Metadata = null,
-      RoleRef = new RoleBindingRoleRef { Kind = "Role", Name = "test-role" },
-      Subjects = []
-    };
-
-    // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
-  }
-
-  /// <summary>
   /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model has an invalid RoleRef kind.
   /// </summary>
   [Fact]
@@ -229,22 +194,18 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new RoleBinding("invalid-binding")
     {
-      Metadata = new Metadata
-      {
-        Name = "invalid-binding"
-      },
       RoleRef = new RoleBindingRoleRef
       {
-        Kind = "InvalidRole",
+        Kind = (RoleBindingRoleRefKind)999, // Invalid enum value
         Name = "invalid"
       },
       Subjects =
       [
         new RoleBindingSubject
         {
-          Kind = "User",
+          Kind = RoleBindingSubjectKind.User,
           Name = "test-user"
         }
       ]
@@ -262,22 +223,18 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new RoleBinding("invalid-binding")
     {
-      Metadata = new Metadata
-      {
-        Name = "invalid-binding"
-      },
       RoleRef = new RoleBindingRoleRef
       {
-        Kind = "Role",
+        Kind = RoleBindingRoleRefKind.Role,
         Name = "role"
       },
       Subjects =
       [
         new RoleBindingSubject
         {
-          Kind = "InvalidSubject",
+          Kind = (RoleBindingSubjectKind)999, // Invalid enum value
           Name = "invalid",
         }
       ]

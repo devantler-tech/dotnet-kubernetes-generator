@@ -8,7 +8,7 @@ public class RoleBindingSubject
   /// <summary>
   /// Gets or sets the kind of subject (User, Group, or ServiceAccount).
   /// </summary>
-  public required string Kind { get; set; }
+  public required RoleBindingSubjectKind Kind { get; set; }
 
   /// <summary>
   /// Gets or sets the name of the subject.

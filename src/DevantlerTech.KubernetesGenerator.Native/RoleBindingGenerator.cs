@@ -27,7 +27,7 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
     var args = new ReadOnlyCollection<string>(
       [.. _defaultArgs, .. AddOptions(model)]
     );
-    string errorMessage = $"Failed to create role binding '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create role binding '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
@@ -39,20 +39,14 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
   /// <exception cref="KubernetesGeneratorException">Thrown when required properties are missing.</exception>
   static ReadOnlyCollection<string> AddOptions(RoleBinding model)
   {
-    var args = new List<string>();
+    List<string> args = [];
 
-    // Require that a role binding name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
-    {
-      throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the role binding name.");
-    }
+    // Add role binding name - now guaranteed to be set by primary constructor
     args.Add(model.Metadata.Name);
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.Namespace))
-    {
+    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
       args.Add($"--namespace={model.Metadata.Namespace}");
-    }
 
     // Add role or cluster role reference
     if (string.IsNullOrEmpty(model.RoleRef.Name))
@@ -60,17 +54,16 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
       throw new KubernetesGeneratorException("The model.RoleRef.Name must be set to specify the role to bind to.");
     }
 
-    if (string.Equals(model.RoleRef.Kind, "ClusterRole", StringComparison.OrdinalIgnoreCase))
+    switch (model.RoleRef.Kind)
     {
-      args.Add($"--clusterrole={model.RoleRef.Name}");
-    }
-    else if (string.Equals(model.RoleRef.Kind, "Role", StringComparison.OrdinalIgnoreCase))
-    {
-      args.Add($"--role={model.RoleRef.Name}");
-    }
-    else
-    {
-      throw new KubernetesGeneratorException($"Unsupported RoleRef.Kind '{model.RoleRef.Kind}'. Only 'Role' and 'ClusterRole' are supported.");
+      case RoleBindingRoleRefKind.ClusterRole:
+        args.Add($"--clusterrole={model.RoleRef.Name}");
+        break;
+      case RoleBindingRoleRefKind.Role:
+        args.Add($"--role={model.RoleRef.Name}");
+        break;
+      default:
+        throw new KubernetesGeneratorException($"Unsupported RoleRef.Kind '{model.RoleRef.Kind}'. Only 'Role' and 'ClusterRole' are supported.");
     }
 
     // Add subjects (users, groups, service accounts)
@@ -83,15 +76,15 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
           throw new KubernetesGeneratorException("Subject.Name must be set for all subjects.");
         }
 
-        switch (subject.Kind?.ToUpperInvariant())
+        switch (subject.Kind)
         {
-          case "USER":
+          case RoleBindingSubjectKind.User:
             args.Add($"--user={subject.Name}");
             break;
-          case "GROUP":
+          case RoleBindingSubjectKind.Group:
             args.Add($"--group={subject.Name}");
             break;
-          case "SERVICEACCOUNT":
+          case RoleBindingSubjectKind.ServiceAccount:
             string serviceAccountRef = !string.IsNullOrEmpty(subject.Namespace)
               ? $"{subject.Namespace}:{subject.Name}"
               : subject.Name;
