@@ -1,6 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
-using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.TLSSecretGeneratorTests;
 
@@ -22,16 +21,12 @@ public sealed class GenerateAsyncTests
     string privateKeyContent = await File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.key"));
 
     var generator = new TLSSecretGenerator();
-    var model = new TLSSecret
+    var model = new TLSSecret("tls-secret-content")
     {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "tls-secret-content",
-        NamespaceProperty = "default"
-      },
       Certificate = certificateContent,
       PrivateKey = privateKeyContent
     };
+    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "tls-secret-content.yaml";
@@ -68,16 +63,12 @@ public sealed class GenerateAsyncTests
     // Arrange
     var generator = new TLSSecretGenerator();
 
-    var model = new TLSSecret
+    var model = new TLSSecret("tls-secret-files")
     {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "tls-secret-files",
-        NamespaceProperty = "default"
-      },
       Certificate = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.crt"),
       PrivateKey = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.key")
     };
+    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "tls-secret-files.yaml";
@@ -97,30 +88,6 @@ public sealed class GenerateAsyncTests
     File.Delete(outputPath);
   }
 
-  // Add a test that tests that the throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the secret name."); is thrown when the name is not set
-  /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the TLSSecret model does not have a name set.
-  /// </summary>
-  [Fact]
-  public async Task GenerateAsync_WithTLSSecretWithoutName_ShouldThrowKubernetesGeneratorException()
-  {
-    // Arrange
-    var generator = new TLSSecretGenerator();
-
-    var model = new TLSSecret
-    {
-      Metadata = new V1ObjectMeta
-      {
-        NamespaceProperty = "default"
-      },
-      Certificate = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.crt"),
-      PrivateKey = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.key")
-    };
-
-    // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
-  }
-
 
   /// <summary>
   /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when invalid certificate or private key data is provided.
@@ -131,16 +98,12 @@ public sealed class GenerateAsyncTests
     // Arrange
     var generator = new TLSSecretGenerator();
 
-    var model = new TLSSecret
+    var model = new TLSSecret("tls-secret-invalid-cert")
     {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "tls-secret-invalid-cert",
-        NamespaceProperty = "default"
-      },
       Certificate = "invalid-certificate-data",
       PrivateKey = "invalid-private-key-data"
     };
+    model.Metadata.Namespace = "default";
 
     // Act & Assert
     _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
