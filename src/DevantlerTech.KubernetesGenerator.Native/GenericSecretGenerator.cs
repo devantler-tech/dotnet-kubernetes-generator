@@ -42,6 +42,12 @@ public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
       model.Metadata.Name
     };
 
+    // Add namespace if specified
+    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
+    {
+      args.Add($"--namespace={model.Metadata.Namespace}");
+    }
+
     // Add type if specified (but don't require it)
     if (!string.IsNullOrEmpty(model.Type))
     {
@@ -52,12 +58,6 @@ public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
     foreach (var kvp in model.Data)
     {
       args.Add($"--from-literal={kvp.Key}={kvp.Value}");
-    }
-
-    // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.Namespace))
-    {
-      args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
     return args.AsReadOnly();
