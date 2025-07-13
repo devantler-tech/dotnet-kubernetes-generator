@@ -1,6 +1,4 @@
-using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
-using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.DockerRegistrySecretGeneratorTests;
 
@@ -18,18 +16,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DockerRegistrySecretGenerator();
-    var model = new DockerRegistrySecret
+    var model = new DockerRegistrySecret("docker-registry-secret")
     {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "docker-registry-secret",
-        NamespaceProperty = "default"
-      },
       DockerServer = "https://index.docker.io/v1/",
       DockerUsername = "myuser",
       DockerPassword = "mypassword",
       DockerEmail = "myuser@example.com"
     };
+    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "docker-registry-secret.yaml";
@@ -55,12 +49,8 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DockerRegistrySecretGenerator();
-    var model = new DockerRegistrySecret
+    var model = new DockerRegistrySecret("docker-registry-secret-minimal")
     {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "docker-registry-secret-minimal"
-      },
       DockerUsername = "user",
       DockerPassword = "pass",
       DockerEmail = "user@example.com"
@@ -79,29 +69,5 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
-  }
-
-  /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the DockerRegistrySecret model does not have a name set.
-  /// </summary>
-  [Fact]
-  public async Task GenerateAsync_WithDockerRegistrySecretWithoutName_ShouldThrowKubernetesGeneratorException()
-  {
-    // Arrange
-    var generator = new DockerRegistrySecretGenerator();
-
-    var model = new DockerRegistrySecret
-    {
-      Metadata = new V1ObjectMeta
-      {
-        NamespaceProperty = "default"
-      },
-      DockerEmail = "myuser@example.com",
-      DockerUsername = "myuser",
-      DockerPassword = "mypassword"
-    };
-
-    // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }

@@ -25,7 +25,7 @@ public class ServiceAccountGenerator : BaseNativeGenerator<V1ServiceAccount>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create service account '{model.Metadata?.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -41,7 +41,7 @@ public class ServiceAccountGenerator : BaseNativeGenerator<V1ServiceAccount>
   /// Advanced properties like ImagePullSecrets, AutomountServiceAccountToken, and Secrets are not supported
   /// by the kubectl create command and will be ignored.
   /// </remarks>
-  static ReadOnlyCollection<string> AddOptions(V1ServiceAccount model)
+  static ReadOnlyCollection<string> AddArguments(V1ServiceAccount model)
   {
     var args = new List<string> { };
 

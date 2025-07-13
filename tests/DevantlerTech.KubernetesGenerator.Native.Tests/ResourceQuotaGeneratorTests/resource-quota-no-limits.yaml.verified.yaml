@@ -1,0 +1,11 @@
+﻿---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  creationTimestamp: null
+  name: resource-quota-no-limits
+  namespace: default
+spec:
+  scopes:
+  - BestEffort
+status: {}

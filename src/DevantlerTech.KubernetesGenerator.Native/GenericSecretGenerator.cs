@@ -1,14 +1,13 @@
 using System.Collections.ObjectModel;
-using System.Text;
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for generic Kubernetes Secret objects using 'kubectl create secret generic' commands.
 /// </summary>
-public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
+public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
 {
   static readonly string[] _defaultArgs = ["create", "secret", "generic"];
   /// <summary>
@@ -20,31 +19,34 @@ public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when secret name is not provided.</exception>
-  public override async Task GenerateAsync(V1Secret model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(GenericSecret model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create generic secret '{model.Metadata?.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a generic secret from a V1Secret object.
+  /// Builds the kubectl arguments for creating a generic secret from a GenericSecret object.
   /// </summary>
-  /// <param name="model">The V1Secret object.</param>
-  static ReadOnlyCollection<string> AddOptions(V1Secret model)
+  /// <param name="model">The GenericSecret object.</param>
+  static ReadOnlyCollection<string> AddArguments(GenericSecret model)
   {
-    var args = new List<string> { };
-
-    // Require that a secret name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
+    var args = new List<string>
     {
-      throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the secret name.");
+      // The secret name is always available from the metadata (required in constructor)
+      model.Metadata.Name
+    };
+
+    // Add namespace if specified
+    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
+    {
+      args.Add($"--namespace={model.Metadata.Namespace}");
     }
-    args.Add(model.Metadata.Name);
 
     // Add type if specified (but don't require it)
     if (!string.IsNullOrEmpty(model.Type))
@@ -52,38 +54,10 @@ public class GenericSecretGenerator : BaseNativeGenerator<V1Secret>
       args.Add($"--type={model.Type}");
     }
 
-    // Combine data from both Data and StringData, with StringData taking precedence
-    var combinedData = new Dictionary<string, string>();
-
-    // First add data from Data (base64 decoded)
-    if (model.Data?.Count > 0)
-    {
-      foreach (var kvp in model.Data)
-      {
-        string value = Encoding.UTF8.GetString(kvp.Value);
-        combinedData[kvp.Key] = value;
-      }
-    }
-
-    // Then add/override with StringData (takes precedence)
-    if (model.StringData?.Count > 0)
-    {
-      foreach (var kvp in model.StringData)
-      {
-        combinedData[kvp.Key] = kvp.Value;
-      }
-    }
-
-    // Add all combined data as literals
-    foreach (var kvp in combinedData)
+    // Add all data as literals
+    foreach (var kvp in model.Data)
     {
       args.Add($"--from-literal={kvp.Key}={kvp.Value}");
-    }
-
-    // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
-    {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
     }
 
     return args.AsReadOnly();
