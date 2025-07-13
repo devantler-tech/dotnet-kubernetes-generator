@@ -1,4 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.RoleBindingGeneratorTests;
@@ -17,28 +18,23 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new V1RoleBinding
+    var model = new RoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "RoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = "role-binding",
         NamespaceProperty = "default"
       },
-      RoleRef = new V1RoleRef
+      RoleRef = new RoleRef
       {
-        ApiGroup = "rbac.authorization.k8s.io",
         Kind = "Role",
         Name = "role"
       },
       Subjects =
       [
-        new Rbacv1Subject
+        new Subject
         {
-          ApiGroup = "rbac.authorization.k8s.io",
           Kind = "User",
-          NamespaceProperty = "default",
           Name = "user",
         }
       ]
@@ -68,26 +64,22 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new V1RoleBinding
+    var model = new RoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "RoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = "cluster-role-binding",
         NamespaceProperty = "default"
       },
-      RoleRef = new V1RoleRef
+      RoleRef = new RoleRef
       {
-        ApiGroup = "rbac.authorization.k8s.io",
         Kind = "ClusterRole",
         Name = "admin"
       },
       Subjects =
       [
-        new Rbacv1Subject
+        new Subject
         {
-          ApiGroup = "rbac.authorization.k8s.io",
           Kind = "User",
           Name = "admin-user",
         }
@@ -118,40 +110,35 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new V1RoleBinding
+    var model = new RoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "RoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = "multi-subject-binding",
         NamespaceProperty = "default"
       },
-      RoleRef = new V1RoleRef
+      RoleRef = new RoleRef
       {
-        ApiGroup = "rbac.authorization.k8s.io",
         Kind = "Role",
         Name = "reader"
       },
       Subjects =
       [
-        new Rbacv1Subject
+        new Subject
         {
-          ApiGroup = "rbac.authorization.k8s.io",
           Kind = "User",
           Name = "user1",
         },
-        new Rbacv1Subject
+        new Subject
         {
-          ApiGroup = "rbac.authorization.k8s.io",
           Kind = "Group",
           Name = "readers",
         },
-        new Rbacv1Subject
+        new Subject
         {
           Kind = "ServiceAccount",
           Name = "reader-sa",
-          NamespaceProperty = "default"
+          Namespace = "default"
         }
       ]
     };
@@ -180,25 +167,21 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new V1RoleBinding
+    var model = new RoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "RoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = "simple-binding"
       },
-      RoleRef = new V1RoleRef
+      RoleRef = new RoleRef
       {
-        ApiGroup = "rbac.authorization.k8s.io",
         Kind = "Role",
         Name = "simple-role"
       },
       Subjects =
       [
-        new Rbacv1Subject
+        new Subject
         {
-          ApiGroup = "rbac.authorization.k8s.io",
           Kind = "User",
           Name = "simple-user",
         }
@@ -228,32 +211,11 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new V1RoleBinding
+    var model = new RoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "RoleBinding"
-    };
-
-    // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
-  }
-
-  /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model does not have a RoleRef set.
-  /// </summary>
-  [Fact]
-  public async Task GenerateAsync_WithoutRoleRef_ShouldThrowKubernetesGeneratorException()
-  {
-    // Arrange
-    var generator = new RoleBindingGenerator();
-    var model = new V1RoleBinding
-    {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "RoleBinding",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "invalid-binding"
-      }
+      Metadata = new V1ObjectMeta(),
+      RoleRef = new RoleRef { Kind = "Role", Name = "test-role" },
+      Subjects = []
     };
 
     // Act & Assert
@@ -268,20 +230,25 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new V1RoleBinding
+    var model = new RoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "RoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = "invalid-binding"
       },
-      RoleRef = new V1RoleRef
+      RoleRef = new RoleRef
       {
-        ApiGroup = "rbac.authorization.k8s.io",
         Kind = "InvalidRole",
         Name = "invalid"
-      }
+      },
+      Subjects =
+      [
+        new Subject
+        {
+          Kind = "User",
+          Name = "test-user"
+        }
+      ]
     };
 
     // Act & Assert
@@ -296,23 +263,20 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new V1RoleBinding
+    var model = new RoleBinding
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "RoleBinding",
       Metadata = new V1ObjectMeta
       {
         Name = "invalid-binding"
       },
-      RoleRef = new V1RoleRef
+      RoleRef = new RoleRef
       {
-        ApiGroup = "rbac.authorization.k8s.io",
         Kind = "Role",
         Name = "role"
       },
       Subjects =
       [
-        new Rbacv1Subject
+        new Subject
         {
           Kind = "InvalidSubject",
           Name = "invalid",

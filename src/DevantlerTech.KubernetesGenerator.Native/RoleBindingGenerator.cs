@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes RoleBinding objects using 'kubectl create rolebinding' commands.
 /// </summary>
-public class RoleBindingGenerator : BaseNativeGenerator<V1RoleBinding>
+public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
 {
   static readonly string[] _defaultArgs = ["create", "rolebinding"];
 
@@ -20,7 +20,7 @@ public class RoleBindingGenerator : BaseNativeGenerator<V1RoleBinding>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when role binding name is not provided.</exception>
-  public override async Task GenerateAsync(V1RoleBinding model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(RoleBinding model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -32,12 +32,12 @@ public class RoleBindingGenerator : BaseNativeGenerator<V1RoleBinding>
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a role binding from a V1RoleBinding object.
+  /// Builds the kubectl arguments for creating a role binding from a RoleBinding object.
   /// </summary>
-  /// <param name="model">The V1RoleBinding object.</param>
+  /// <param name="model">The RoleBinding object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required properties are missing.</exception>
-  static ReadOnlyCollection<string> AddOptions(V1RoleBinding model)
+  static ReadOnlyCollection<string> AddOptions(RoleBinding model)
   {
     var args = new List<string>();
 
@@ -55,29 +55,22 @@ public class RoleBindingGenerator : BaseNativeGenerator<V1RoleBinding>
     }
 
     // Add role or cluster role reference
-    if (model.RoleRef != null)
+    if (string.IsNullOrEmpty(model.RoleRef.Name))
     {
-      if (string.IsNullOrEmpty(model.RoleRef.Name))
-      {
-        throw new KubernetesGeneratorException("The model.RoleRef.Name must be set to specify the role to bind to.");
-      }
+      throw new KubernetesGeneratorException("The model.RoleRef.Name must be set to specify the role to bind to.");
+    }
 
-      if (string.Equals(model.RoleRef.Kind, "ClusterRole", StringComparison.OrdinalIgnoreCase))
-      {
-        args.Add($"--clusterrole={model.RoleRef.Name}");
-      }
-      else if (string.Equals(model.RoleRef.Kind, "Role", StringComparison.OrdinalIgnoreCase))
-      {
-        args.Add($"--role={model.RoleRef.Name}");
-      }
-      else
-      {
-        throw new KubernetesGeneratorException($"Unsupported RoleRef.Kind '{model.RoleRef.Kind}'. Only 'Role' and 'ClusterRole' are supported.");
-      }
+    if (string.Equals(model.RoleRef.Kind, "ClusterRole", StringComparison.OrdinalIgnoreCase))
+    {
+      args.Add($"--clusterrole={model.RoleRef.Name}");
+    }
+    else if (string.Equals(model.RoleRef.Kind, "Role", StringComparison.OrdinalIgnoreCase))
+    {
+      args.Add($"--role={model.RoleRef.Name}");
     }
     else
     {
-      throw new KubernetesGeneratorException("The model.RoleRef must be set to specify the role to bind to.");
+      throw new KubernetesGeneratorException($"Unsupported RoleRef.Kind '{model.RoleRef.Kind}'. Only 'Role' and 'ClusterRole' are supported.");
     }
 
     // Add subjects (users, groups, service accounts)
@@ -99,8 +92,8 @@ public class RoleBindingGenerator : BaseNativeGenerator<V1RoleBinding>
             args.Add($"--group={subject.Name}");
             break;
           case "SERVICEACCOUNT":
-            string serviceAccountRef = !string.IsNullOrEmpty(subject.NamespaceProperty)
-              ? $"{subject.NamespaceProperty}:{subject.Name}"
+            string serviceAccountRef = !string.IsNullOrEmpty(subject.Namespace)
+              ? $"{subject.Namespace}:{subject.Name}"
               : subject.Name;
             args.Add($"--serviceaccount={serviceAccountRef}");
             break;
