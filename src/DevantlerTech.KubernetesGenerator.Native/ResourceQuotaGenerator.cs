@@ -22,7 +22,7 @@ public class ResourceQuotaGenerator : BaseNativeGenerator<ResourceQuota>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new System.Collections.ObjectModel.ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create resource quota '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -33,7 +33,7 @@ public class ResourceQuotaGenerator : BaseNativeGenerator<ResourceQuota>
   /// </summary>
   /// <param name="model">The ResourceQuota object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static System.Collections.ObjectModel.ReadOnlyCollection<string> AddOptions(ResourceQuota model)
+  static System.Collections.ObjectModel.ReadOnlyCollection<string> AddArguments(ResourceQuota model)
   {
     List<string> args = [];
 

@@ -25,7 +25,7 @@ public class RoleGenerator : BaseNativeGenerator<Role>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create role '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -41,7 +41,7 @@ public class RoleGenerator : BaseNativeGenerator<Role>
   /// Multiple rules in the Role object will be merged into a single rule.
   /// Advanced properties like ApiGroups and NonResourceURLs are supported where possible.
   /// </remarks>
-  static ReadOnlyCollection<string> AddOptions(Role model)
+  static ReadOnlyCollection<string> AddArguments(Role model)
   {
     var args = new List<string> { };
 

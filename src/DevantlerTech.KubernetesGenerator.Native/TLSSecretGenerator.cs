@@ -29,7 +29,7 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. await AddOptionsAsync(model, cancellationToken).ConfigureAwait(false)]
+      [.. _defaultArgs, .. await AddArgumentsAsync(model, cancellationToken).ConfigureAwait(false)]
     );
     string errorMessage = $"Failed to create TLS secret '{model.Metadata?.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -43,7 +43,7 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   /// <param name="model">The TLSSecret object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The kubectl arguments.</returns>
-  async Task<ReadOnlyCollection<string>> AddOptionsAsync(TLSSecret model, CancellationToken cancellationToken = default)
+  async Task<ReadOnlyCollection<string>> AddArgumentsAsync(TLSSecret model, CancellationToken cancellationToken = default)
   {
     var args = new List<string>
     {
