@@ -1,4 +1,4 @@
-using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ResourceQuotaGeneratorTests;
@@ -18,24 +18,16 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new V1ResourceQuota
+    var model = new ResourceQuota
     {
-      ApiVersion = "v1",
-      Kind = "ResourceQuota",
-      Metadata = new V1ObjectMeta
+      Name = "resource-quota",
+      Namespace = "default",
+      Hard = new Dictionary<string, ResourceQuantity>
       {
-        Name = "resource-quota",
-        NamespaceProperty = "default"
-      },
-      Spec = new V1ResourceQuotaSpec
-      {
-        Hard = new Dictionary<string, ResourceQuantity>
-        {
-          ["requests.cpu"] = new ResourceQuantity("1"),
-          ["requests.memory"] = new ResourceQuantity("1Gi"),
-          ["limits.cpu"] = new ResourceQuantity("1"),
-          ["limits.memory"] = new ResourceQuantity("1Gi")
-        }
+        ["requests.cpu"] = new ResourceQuantity("1"),
+        ["requests.memory"] = new ResourceQuantity("1Gi"),
+        ["limits.cpu"] = new ResourceQuantity("1"),
+        ["limits.memory"] = new ResourceQuantity("1Gi")
       }
     };
 
@@ -63,21 +55,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new V1ResourceQuota
+    var model = new ResourceQuota
     {
-      ApiVersion = "v1",
-      Kind = "ResourceQuota",
-      Metadata = new V1ObjectMeta
+      Name = "resource-quota-no-namespace",
+      Hard = new Dictionary<string, ResourceQuantity>
       {
-        Name = "resource-quota-no-namespace"
-      },
-      Spec = new V1ResourceQuotaSpec
-      {
-        Hard = new Dictionary<string, ResourceQuantity>
-        {
-          ["requests.cpu"] = new ResourceQuantity("2"),
-          ["requests.memory"] = new ResourceQuantity("2Gi")
-        }
+        ["requests.cpu"] = new ResourceQuantity("2"),
+        ["requests.memory"] = new ResourceQuantity("2Gi")
       }
     };
 
@@ -105,23 +89,15 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new V1ResourceQuota
+    var model = new ResourceQuota
     {
-      ApiVersion = "v1",
-      Kind = "ResourceQuota",
-      Metadata = new V1ObjectMeta
+      Name = "resource-quota-with-scopes",
+      Namespace = "test-namespace",
+      Hard = new Dictionary<string, ResourceQuantity>
       {
-        Name = "resource-quota-with-scopes",
-        NamespaceProperty = "test-namespace"
+        ["pods"] = new ResourceQuantity("10")
       },
-      Spec = new V1ResourceQuotaSpec
-      {
-        Hard = new Dictionary<string, ResourceQuantity>
-        {
-          ["pods"] = new ResourceQuantity("10")
-        },
-        Scopes = ["BestEffort", "NotBestEffort"]
-      }
+      Scopes = ["BestEffort", "NotBestEffort"]
     };
 
     // Act
@@ -148,19 +124,11 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new V1ResourceQuota
+    var model = new ResourceQuota
     {
-      ApiVersion = "v1",
-      Kind = "ResourceQuota",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "resource-quota-no-limits",
-        NamespaceProperty = "default"
-      },
-      Spec = new V1ResourceQuotaSpec
-      {
-        Scopes = ["BestEffort"]
-      }
+      Name = "resource-quota-no-limits",
+      Namespace = "default",
+      Scopes = ["BestEffort"]
     };
 
     // Act
@@ -178,21 +146,4 @@ public sealed class GenerateAsyncTests
     File.Delete(outputPath);
   }
 
-  /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model does not have a name set.
-  /// </summary>
-  [Fact]
-  public async Task GenerateAsync_WithoutName_ShouldThrowKubernetesGeneratorException()
-  {
-    // Arrange
-    var generator = new ResourceQuotaGenerator();
-    var model = new V1ResourceQuota
-    {
-      ApiVersion = "v1",
-      Kind = "ResourceQuota"
-    };
-
-    // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
-  }
 }

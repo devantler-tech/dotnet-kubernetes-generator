@@ -1,13 +1,11 @@
-using System.Collections.ObjectModel;
-using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes ResourceQuota objects using 'kubectl create quota' commands.
 /// </summary>
-public class ResourceQuotaGenerator : BaseNativeGenerator<V1ResourceQuota>
+public class ResourceQuotaGenerator : BaseNativeGenerator<ResourceQuota>
 {
   static readonly string[] _defaultArgs = ["create", "quota"];
 
@@ -19,51 +17,46 @@ public class ResourceQuotaGenerator : BaseNativeGenerator<V1ResourceQuota>
   /// <param name="overwrite">Whether to overwrite existing files.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
-  /// <exception cref="KubernetesGeneratorException">Thrown when resource quota name is not provided.</exception>
-  public override async Task GenerateAsync(V1ResourceQuota model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(ResourceQuota model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    var args = new ReadOnlyCollection<string>(
+    var args = new System.Collections.ObjectModel.ReadOnlyCollection<string>(
       [.. _defaultArgs, .. AddOptions(model)]
     );
-    string errorMessage = $"Failed to create resource quota '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create resource quota '{model.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a resource quota from a V1ResourceQuota object.
+  /// Builds the kubectl arguments for creating a resource quota from a ResourceQuota object.
   /// </summary>
-  /// <param name="model">The V1ResourceQuota object.</param>
+  /// <param name="model">The ResourceQuota object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddOptions(V1ResourceQuota model)
+  static System.Collections.ObjectModel.ReadOnlyCollection<string> AddOptions(ResourceQuota model)
   {
-    var args = new List<string> { };
+    List<string> args = [];
 
-    // Require that a resource quota name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
-    {
-      throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the resource quota name.");
-    }
-    args.Add(model.Metadata.Name);
+    // Add the resource quota name (required)
+    args.Add(model.Name);
 
     // Add hard limits if specified
-    if (model.Spec?.Hard?.Count > 0)
+    if (model.Hard?.Count > 0)
     {
-      var hardLimits = model.Spec.Hard.Select(kvp => $"{kvp.Key}={kvp.Value}");
+      var hardLimits = model.Hard.Select(kvp => $"{kvp.Key}={kvp.Value}");
       args.Add($"--hard={string.Join(",", hardLimits)}");
     }
 
     // Add scopes if specified
-    if (model.Spec?.Scopes?.Count > 0)
+    if (model.Scopes?.Count > 0)
     {
-      args.Add($"--scopes={string.Join(",", model.Spec.Scopes)}");
+      args.Add($"--scopes={string.Join(",", model.Scopes)}");
     }
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    if (!string.IsNullOrEmpty(model.Namespace))
     {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+      args.Add($"--namespace={model.Namespace}");
     }
 
     return args.AsReadOnly();
