@@ -6,6 +6,7 @@ bin
 obj
 *.received.*
 **/TestResults/
+dotnet-tools/
 
 # Temporary files
 *.tmp*
