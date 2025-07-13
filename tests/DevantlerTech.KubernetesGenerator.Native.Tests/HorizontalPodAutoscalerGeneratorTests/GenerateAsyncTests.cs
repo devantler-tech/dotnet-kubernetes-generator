@@ -1,6 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
-using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.HorizontalPodAutoscalerGeneratorTests;
 
@@ -21,12 +20,12 @@ public sealed class GenerateAsyncTests
     var generator = new HorizontalPodAutoscalerGenerator();
     var model = new HorizontalPodAutoscalerCreateOptions
     {
-      Metadata = new V1ObjectMeta
+      Metadata = new HorizontalPodAutoscalerMetadata
       {
         Name = "horizontal-pod-autoscaler",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
-      ScaleTargetRef = new V2CrossVersionObjectReference
+      ScaleTargetRef = new ScaleTargetRef
       {
         ApiVersion = "apps/v1",
         Kind = "Deployment",
@@ -63,7 +62,7 @@ public sealed class GenerateAsyncTests
     var generator = new HorizontalPodAutoscalerGenerator();
     var model = new HorizontalPodAutoscalerCreateOptions
     {
-      ScaleTargetRef = new V2CrossVersionObjectReference
+      ScaleTargetRef = new ScaleTargetRef
       {
         Kind = "Deployment",
         Name = "my-deployment"
@@ -114,7 +113,7 @@ public sealed class GenerateAsyncTests
     var generator = new HorizontalPodAutoscalerGenerator();
     var model = new HorizontalPodAutoscalerCreateOptions
     {
-      ScaleTargetRef = new V2CrossVersionObjectReference
+      ScaleTargetRef = new ScaleTargetRef
       {
         Kind = "",
         Name = "my-deployment"
@@ -136,7 +135,7 @@ public sealed class GenerateAsyncTests
     var generator = new HorizontalPodAutoscalerGenerator();
     var model = new HorizontalPodAutoscalerCreateOptions
     {
-      ScaleTargetRef = new V2CrossVersionObjectReference
+      ScaleTargetRef = new ScaleTargetRef
       {
         Kind = "Deployment",
         Name = ""

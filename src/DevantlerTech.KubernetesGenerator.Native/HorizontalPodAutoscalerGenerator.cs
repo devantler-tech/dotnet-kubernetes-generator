@@ -82,9 +82,9 @@ public class HorizontalPodAutoscalerGenerator : BaseNativeGenerator<HorizontalPo
     }
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    if (!string.IsNullOrEmpty(model.Metadata?.Namespace))
     {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+      args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
     return args.AsReadOnly();
