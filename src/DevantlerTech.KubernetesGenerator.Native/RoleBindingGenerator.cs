@@ -48,12 +48,6 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
     if (!string.IsNullOrEmpty(model.Metadata.Namespace))
       args.Add($"--namespace={model.Metadata.Namespace}");
 
-    // Add role or cluster role reference
-    if (string.IsNullOrEmpty(model.RoleRef.Name))
-    {
-      throw new KubernetesGeneratorException("The model.RoleRef.Name must be set to specify the role to bind to.");
-    }
-
     switch (model.RoleRef.Kind)
     {
       case RoleBindingRoleRefKind.ClusterRole:
