@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes ClusterRole objects using 'kubectl create clusterrole' commands.
 /// </summary>
-public class ClusterRoleGenerator : BaseNativeGenerator<V1ClusterRole>
+public class ClusterRoleGenerator : BaseNativeGenerator<ClusterRole>
 {
   static readonly string[] _defaultArgs = ["create", "clusterrole"];
 
@@ -20,21 +20,21 @@ public class ClusterRoleGenerator : BaseNativeGenerator<V1ClusterRole>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when cluster role name is not provided or when complex rules are not supported.</exception>
-  public override async Task GenerateAsync(V1ClusterRole model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(ClusterRole model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
       [.. _defaultArgs, .. AddOptions(model)]
     );
-    string errorMessage = $"Failed to create cluster role '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create cluster role '{model.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a cluster role from a V1ClusterRole object.
+  /// Builds the kubectl arguments for creating a cluster role from a ClusterRole object.
   /// </summary>
-  /// <param name="model">The V1ClusterRole object.</param>
+  /// <param name="model">The ClusterRole object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <remarks>
   /// Note: kubectl create clusterrole has limitations compared to full ClusterRole YAML:
@@ -43,24 +43,26 @@ public class ClusterRoleGenerator : BaseNativeGenerator<V1ClusterRole>
   /// - API groups are specified via resource.group format
   /// When both aggregation rules and regular rules are present, aggregation rules take precedence.
   /// </remarks>
-  static ReadOnlyCollection<string> AddOptions(V1ClusterRole model)
+  static ReadOnlyCollection<string> AddOptions(ClusterRole model)
   {
     var args = new List<string>();
 
-    // Require that a cluster role name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
+    // Validate that a cluster role name is provided
+    if (string.IsNullOrEmpty(model.Name))
     {
-      throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the cluster role name.");
+      throw new KubernetesGeneratorException("The model.Name must be set to set the cluster role name.");
     }
-    args.Add(model.Metadata.Name);
+
+    // Add the cluster role name (required)
+    args.Add(model.Name);
 
     // Handle aggregation rule if present (takes precedence over regular rules)
-    if (model.AggregationRule?.ClusterRoleSelectors?.Count > 0)
+    if (model.AggregationRule?.ClusterRoleSelectors?.Any() == true)
     {
       var aggregationRules = new List<string>();
       foreach (var selector in model.AggregationRule.ClusterRoleSelectors)
       {
-        if (selector.MatchLabels?.Count > 0)
+        if (selector.MatchLabels.Count > 0)
         {
           foreach (var label in selector.MatchLabels)
           {
@@ -79,28 +81,28 @@ public class ClusterRoleGenerator : BaseNativeGenerator<V1ClusterRole>
     }
 
     // Handle rules - kubectl create clusterrole typically works with single rule
-    if (model.Rules?.Count > 0)
+    if (model.Rules?.Any() == true)
     {
-      var rule = model.Rules[0]; // Take the first rule as kubectl create typically handles one rule
+      var rule = model.Rules.First(); // Take the first rule as kubectl create typically handles one rule
 
-      // Add verbs
-      if (rule.Verbs?.Count > 0)
+      // Add verbs (required)
+      if (rule.Verbs?.Any() == true)
       {
         args.Add($"--verb={string.Join(",", rule.Verbs)}");
       }
       else
       {
         // kubectl create clusterrole requires at least one verb
-        throw new KubernetesGeneratorException($"kubectl create clusterrole requires at least one verb to be specified in the rule. The cluster role '{model.Metadata.Name}' has a rule with no verbs.");
+        throw new KubernetesGeneratorException($"kubectl create clusterrole requires at least one verb to be specified in the rule. The cluster role '{model.Name}' has a rule with no verbs.");
       }
 
       // Add resources with API groups
-      if (rule.Resources?.Count > 0)
+      if (rule.Resources?.Any() == true)
       {
         var resources = new List<string>();
         foreach (string resource in rule.Resources)
         {
-          if (rule.ApiGroups?.Count > 0)
+          if (rule.ApiGroups?.Any() == true)
           {
             foreach (string apiGroup in rule.ApiGroups)
             {
@@ -128,27 +130,27 @@ public class ClusterRoleGenerator : BaseNativeGenerator<V1ClusterRole>
       }
 
       // Add resource names
-      if (rule.ResourceNames?.Count > 0)
+      if (rule.ResourceNames?.Any() == true)
       {
         args.Add($"--resource-name={string.Join(",", rule.ResourceNames)}");
       }
 
       // Add non-resource URLs
-      if (rule.NonResourceURLs?.Count > 0)
+      if (rule.NonResourceURLs?.Any() == true)
       {
         args.Add($"--non-resource-url={string.Join(",", rule.NonResourceURLs)}");
       }
 
       // Warn about multiple rules
-      if (model.Rules.Count > 1)
+      if (model.Rules.Count() > 1)
       {
-        throw new KubernetesGeneratorException($"kubectl create clusterrole only supports single rule creation. The cluster role '{model.Metadata.Name}' has {model.Rules.Count} rules. Only the first rule will be used.");
+        throw new KubernetesGeneratorException($"kubectl create clusterrole only supports single rule creation. The cluster role '{model.Name}' has {model.Rules.Count()} rules. Only the first rule will be used.");
       }
     }
     else
     {
       // kubectl create clusterrole requires at least one verb, but we have no rules
-      throw new KubernetesGeneratorException($"kubectl create clusterrole requires at least one rule with verbs. The cluster role '{model.Metadata.Name}' has no rules or empty rules.");
+      throw new KubernetesGeneratorException($"kubectl create clusterrole requires at least one rule with verbs. The cluster role '{model.Name}' has no rules or empty rules.");
     }
 
     return args.AsReadOnly();

@@ -1,5 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterRoleGeneratorTests;
 
@@ -18,24 +18,16 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new V1ClusterRole
+    var model = new ClusterRole
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRole",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "cluster-role-aggregation"
-      },
-      AggregationRule = new V1AggregationRule
+      Name = "cluster-role-aggregation",
+      AggregationRule = new AggregationRule
       {
         ClusterRoleSelectors =
         [
-          new V1LabelSelector
+          new LabelSelector
           {
-            MatchLabels = new Dictionary<string, string>
-            {
-              { "rbac.example.com/aggregate-to-monitoring", "true" }
-            }
+            MatchLabels = { { "rbac.example.com/aggregate-to-monitoring", "true" } }
           }
         ]
       }
@@ -65,17 +57,12 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new V1ClusterRole
+    var model = new ClusterRole
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRole",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "cluster-role-non-resource-urls"
-      },
+      Name = "cluster-role-non-resource-urls",
       Rules =
       [
-        new V1PolicyRule
+        new PolicyRule
         {
           NonResourceURLs = ["/metrics"],
           Verbs = ["get"]
@@ -106,10 +93,18 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new V1ClusterRole
+    var model = new ClusterRole
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRole"
+      Name = "", // Empty name should cause validation error
+      Rules =
+      [
+        new PolicyRule
+        {
+          ApiGroups = [""],
+          Resources = ["pods"],
+          Verbs = ["get"]
+        }
+      ]
     };
 
     // Act & Assert
@@ -124,23 +119,18 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new V1ClusterRole
+    var model = new ClusterRole
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRole",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "cluster-role-multiple-rules"
-      },
+      Name = "cluster-role-multiple-rules",
       Rules =
       [
-        new V1PolicyRule
+        new PolicyRule
         {
           ApiGroups = [""],
           Resources = ["pods"],
           Verbs = ["get"]
         },
-        new V1PolicyRule
+        new PolicyRule
         {
           ApiGroups = ["apps"],
           Resources = ["deployments"],
@@ -174,14 +164,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new V1ClusterRole
+    var model = new ClusterRole
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRole",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "cluster-role-empty-rules"
-      },
+      Name = "cluster-role-empty-rules",
       Rules = []
     };
 
@@ -197,17 +182,12 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new V1ClusterRole
+    var model = new ClusterRole
     {
-      ApiVersion = "rbac.authorization.k8s.io/v1",
-      Kind = "ClusterRole",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "cluster-role-no-verbs"
-      },
+      Name = "cluster-role-no-verbs",
       Rules =
       [
-        new V1PolicyRule
+        new PolicyRule
         {
           ApiGroups = [""],
           Resources = ["pods"],
