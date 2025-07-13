@@ -25,7 +25,7 @@ public class ExternalNameServiceGenerator : ServiceGeneratorBase
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create ExternalName service '{model.Metadata?.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -36,7 +36,7 @@ public class ExternalNameServiceGenerator : ServiceGeneratorBase
   /// </summary>
   /// <param name="model">The V1Service object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddOptions(V1Service model)
+  static ReadOnlyCollection<string> AddArguments(V1Service model)
   {
     var args = new Collection<string>();
 

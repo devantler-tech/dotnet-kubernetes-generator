@@ -24,7 +24,7 @@ public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create generic secret '{model.Metadata?.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -34,7 +34,7 @@ public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
   /// Builds the kubectl arguments for creating a generic secret from a GenericSecret object.
   /// </summary>
   /// <param name="model">The GenericSecret object.</param>
-  static ReadOnlyCollection<string> AddOptions(GenericSecret model)
+  static ReadOnlyCollection<string> AddArguments(GenericSecret model)
   {
     var args = new List<string>
     {
