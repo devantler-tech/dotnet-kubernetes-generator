@@ -1,4 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PriorityClassGeneratorTests;
@@ -18,10 +19,8 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new V1PriorityClass
+    var model = new PriorityClass
     {
-      ApiVersion = "scheduling.k8s.io/v1",
-      Kind = "PriorityClass",
       Metadata = new V1ObjectMeta
       {
         Name = "priority-class"
@@ -56,10 +55,8 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new V1PriorityClass
+    var model = new PriorityClass
     {
-      ApiVersion = "scheduling.k8s.io/v1",
-      Kind = "PriorityClass",
       Metadata = new V1ObjectMeta
       {
         Name = "default-priority-class"
@@ -94,10 +91,8 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new V1PriorityClass
+    var model = new PriorityClass
     {
-      ApiVersion = "scheduling.k8s.io/v1",
-      Kind = "PriorityClass",
       Metadata = new V1ObjectMeta
       {
         Name = "minimal-priority-class"
@@ -128,10 +123,8 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new V1PriorityClass
+    var model = new PriorityClass
     {
-      ApiVersion = "scheduling.k8s.io/v1",
-      Kind = "PriorityClass",
       Value = 1000
     };
 
