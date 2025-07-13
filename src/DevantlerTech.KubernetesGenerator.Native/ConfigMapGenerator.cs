@@ -1,13 +1,12 @@
 using System.Collections.ObjectModel;
-using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes ConfigMap objects using 'kubectl create configmap' commands.
 /// </summary>
-public class ConfigMapGenerator : BaseNativeGenerator<V1ConfigMap>
+public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
 {
   static readonly string[] _defaultArgs = ["create", "configmap"];
 
@@ -19,32 +18,27 @@ public class ConfigMapGenerator : BaseNativeGenerator<V1ConfigMap>
   /// <param name="overwrite">Whether to overwrite existing files.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
-  /// <exception cref="KubernetesGeneratorException">Thrown when ConfigMap name is not provided.</exception>
-  public override async Task GenerateAsync(V1ConfigMap model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(ConfigMap model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
       [.. _defaultArgs, .. AddOptions(model)]
     );
-    string errorMessage = $"Failed to create ConfigMap '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create ConfigMap '{model.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a ConfigMap from a V1ConfigMap object.
+  /// Builds the kubectl arguments for creating a ConfigMap from a ConfigMap object.
   /// </summary>
-  /// <param name="model">The V1ConfigMap object.</param>
-  static ReadOnlyCollection<string> AddOptions(V1ConfigMap model)
+  /// <param name="model">The ConfigMap object.</param>
+  static ReadOnlyCollection<string> AddOptions(ConfigMap model)
   {
-    var args = new List<string>();
+    List<string> args = [];
 
-    // Require that a ConfigMap name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
-    {
-      throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the ConfigMap name.");
-    }
-    args.Add(model.Metadata.Name);
+    // Add the ConfigMap name (required)
+    args.Add(model.Name);
 
     // Add data from Data property as literals
     if (model.Data?.Count > 0)
@@ -56,9 +50,9 @@ public class ConfigMapGenerator : BaseNativeGenerator<V1ConfigMap>
     }
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    if (!string.IsNullOrEmpty(model.Namespace))
     {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+      args.Add($"--namespace={model.Namespace}");
     }
 
     return args.AsReadOnly();

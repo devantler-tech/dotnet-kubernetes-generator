@@ -1,5 +1,4 @@
-using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests;
 
@@ -17,15 +16,10 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ConfigMapGenerator();
-    var model = new V1ConfigMap
+    var model = new ConfigMap
     {
-      ApiVersion = "v1",
-      Kind = "ConfigMap",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "config-map",
-        NamespaceProperty = "default"
-      },
+      Name = "config-map",
+      Namespace = "default",
       Data = new Dictionary<string, string>
       {
         ["key"] = "value"
@@ -56,15 +50,10 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ConfigMapGenerator();
-    var model = new V1ConfigMap
+    var model = new ConfigMap
     {
-      ApiVersion = "v1",
-      Kind = "ConfigMap",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "config-map-multiple",
-        NamespaceProperty = "default"
-      },
+      Name = "config-map-multiple",
+      Namespace = "default",
       Data = new Dictionary<string, string>
       {
         ["key1"] = "value1",
@@ -97,14 +86,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ConfigMapGenerator();
-    var model = new V1ConfigMap
+    var model = new ConfigMap
     {
-      ApiVersion = "v1",
-      Kind = "ConfigMap",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "config-map-no-namespace"
-      },
+      Name = "config-map-no-namespace",
       Data = new Dictionary<string, string>
       {
         ["key"] = "value"
@@ -124,27 +108,5 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
-  }
-
-  /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model does not have a name set.
-  /// </summary>
-  [Fact]
-  public async Task GenerateAsync_WithoutName_ShouldThrowKubernetesGeneratorException()
-  {
-    // Arrange
-    var generator = new ConfigMapGenerator();
-    var model = new V1ConfigMap
-    {
-      ApiVersion = "v1",
-      Kind = "ConfigMap",
-      Data = new Dictionary<string, string>
-      {
-        ["key"] = "value"
-      }
-    };
-
-    // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }
