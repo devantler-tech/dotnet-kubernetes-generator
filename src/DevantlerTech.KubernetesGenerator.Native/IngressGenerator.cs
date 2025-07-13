@@ -1,14 +1,13 @@
 using System.Collections.ObjectModel;
-using System.Globalization;
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes Ingress objects using 'kubectl create ingress' commands.
 /// </summary>
-public class IngressGenerator : BaseNativeGenerator<V1Ingress>
+public class IngressGenerator : BaseNativeGenerator<Ingress>
 {
   static readonly string[] _defaultArgs = ["create", "ingress"];
 
@@ -21,7 +20,7 @@ public class IngressGenerator : BaseNativeGenerator<V1Ingress>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when ingress name is not provided.</exception>
-  public override async Task GenerateAsync(V1Ingress model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(Ingress model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -33,17 +32,17 @@ public class IngressGenerator : BaseNativeGenerator<V1Ingress>
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating an ingress from a V1Ingress object.
+  /// Builds the kubectl arguments for creating an ingress from an Ingress object.
   /// </summary>
-  /// <param name="model">The V1Ingress object.</param>
+  /// <param name="model">The Ingress object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <remarks>
   /// Note: kubectl create ingress supports basic ingress creation with name, class, rules, default backend, and annotations.
   /// Advanced properties like TLS configuration beyond basic rule-based TLS are limited to what kubectl create supports.
   /// </remarks>
-  static ReadOnlyCollection<string> AddOptions(V1Ingress model)
+  static ReadOnlyCollection<string> AddOptions(Ingress model)
   {
-    var args = new List<string> { };
+    var args = new List<string>();
 
     // Require that an ingress name is provided
     if (string.IsNullOrEmpty(model.Metadata?.Name))
@@ -53,62 +52,37 @@ public class IngressGenerator : BaseNativeGenerator<V1Ingress>
     args.Add(model.Metadata.Name);
 
     // Add ingress class if specified
-    if (!string.IsNullOrEmpty(model.Spec?.IngressClassName))
+    if (!string.IsNullOrEmpty(model.IngressClassName))
     {
-      args.Add($"--class={model.Spec.IngressClassName}");
+      args.Add($"--class={model.IngressClassName}");
     }
 
     // Add default backend if specified
-    if (model.Spec?.DefaultBackend != null)
+    if (model.DefaultBackend != null)
     {
-      var defaultBackend = model.Spec.DefaultBackend;
-      if (defaultBackend.Service != null)
-      {
-        string serviceName = defaultBackend.Service.Name;
-        string servicePort = defaultBackend.Service.Port?.Number?.ToString(CultureInfo.InvariantCulture) ??
-                           defaultBackend.Service.Port?.Name ?? "80";
-        args.Add($"--default-backend={serviceName}:{servicePort}");
-      }
+      args.Add($"--default-backend={model.DefaultBackend.ServiceName}:{model.DefaultBackend.ServicePort}");
     }
 
     // Add rules if specified
-    if (model.Spec?.Rules != null)
+    if (model.Rules != null)
     {
-      foreach (var rule in model.Spec.Rules)
+      foreach (var rule in model.Rules)
       {
-        if (rule.Http?.Paths != null)
+        string host = rule.Host ?? "";
+        string path = rule.Path ?? "/";
+        string serviceName = rule.Backend.ServiceName;
+        string servicePort = rule.Backend.ServicePort;
+
+        // Build the rule string: host/path=service:port[,tls=secret]
+        string ruleString = $"{host}{path}={serviceName}:{servicePort}";
+
+        // Add TLS if specified
+        if (!string.IsNullOrEmpty(rule.TlsSecretName))
         {
-          foreach (var path in rule.Http.Paths)
-          {
-            if (path.Backend?.Service != null)
-            {
-              string host = rule.Host ?? "";
-              string pathValue = path.Path ?? "/";
-              string serviceName = path.Backend.Service.Name;
-              string servicePort = path.Backend.Service.Port?.Number?.ToString(CultureInfo.InvariantCulture) ??
-                                 path.Backend.Service.Port?.Name ?? "80";
-
-              // Build the rule string: host/path=service:port[,tls=secret]
-              string ruleString = $"{host}{pathValue}={serviceName}:{servicePort}";
-
-              // Check if TLS is configured for this rule
-              var tlsConfig = model.Spec.Tls?.FirstOrDefault(t => t.Hosts?.Contains(rule.Host) == true);
-              if (tlsConfig != null)
-              {
-                if (!string.IsNullOrEmpty(tlsConfig.SecretName))
-                {
-                  ruleString += $",tls={tlsConfig.SecretName}";
-                }
-                else
-                {
-                  ruleString += ",tls";
-                }
-              }
-
-              args.Add($"--rule={ruleString}");
-            }
-          }
+          ruleString += $",tls={rule.TlsSecretName}";
         }
+
+        args.Add($"--rule={ruleString}");
       }
     }
 

@@ -1,7 +1,8 @@
+using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.IngressGeneratorTests;
-
 
 /// <summary>
 /// Tests for the <see cref="IngressGenerator"/> class.
@@ -9,65 +10,39 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.IngressGeneratorTests;
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Endpoint object.
+  /// Verifies the generated Ingress object with all properties set.
   /// </summary>
-  /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidEndpoint()
+  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidIngress()
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new V1Ingress
+    var model = new Ingress
     {
-      ApiVersion = "networking.k8s.io/v1",
-      Kind = "Ingress",
       Metadata = new V1ObjectMeta
       {
         Name = "ingress",
         NamespaceProperty = "default"
       },
-      Spec = new V1IngressSpec
+      IngressClassName = "nginx",
+      DefaultBackend = new IngressBackend
       {
-        DefaultBackend = new V1IngressBackend
+        ServiceName = "service-name",
+        ServicePort = "80"
+      },
+      Rules =
+      [
+        new IngressRule
         {
-          Service = new V1IngressServiceBackend
+          Host = "host",
+          Path = "/path",
+          Backend = new IngressBackend
           {
-            Name = "service-name",
-            Port = new V1ServiceBackendPort
-            {
-              Number = 80
-            }
+            ServiceName = "service-name",
+            ServicePort = "80"
           }
-        },
-        Rules =
-        [
-          new V1IngressRule
-          {
-            Host = "host",
-            Http = new V1HTTPIngressRuleValue
-            {
-              Paths =
-              [
-                new V1HTTPIngressPath
-                {
-                  Path = "/path",
-                  Backend = new V1IngressBackend
-                  {
-                    Service = new V1IngressServiceBackend
-                    {
-                      Name = "service-name",
-                      Port = new V1ServiceBackendPort
-                      {
-                        Number = 80
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
+        }
+      ]
     };
 
     // Act
@@ -83,6 +58,109 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated Ingress object with minimal required fields.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithMinimalProperties_ShouldGenerateAValidIngress()
+  {
+    // Arrange
+    var generator = new IngressGenerator();
+    var model = new Ingress
+    {
+      Metadata = new V1ObjectMeta
+      {
+        Name = "ingress-minimal"
+      },
+      DefaultBackend = new IngressBackend
+      {
+        ServiceName = "default-service",
+        ServicePort = "80"
+      }
+    };
+
+    // Act
+    string fileName = "ingress-minimal.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated Ingress object with TLS configuration.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithTlsConfiguration_ShouldGenerateAValidIngress()
+  {
+    // Arrange
+    var generator = new IngressGenerator();
+    var model = new Ingress
+    {
+      Metadata = new V1ObjectMeta
+      {
+        Name = "ingress-tls",
+        NamespaceProperty = "default"
+      },
+      IngressClassName = "nginx",
+      Rules =
+      [
+        new IngressRule
+        {
+          Host = "example.com",
+          Path = "/",
+          Backend = new IngressBackend
+          {
+            ServiceName = "web-service",
+            ServicePort = "80"
+          },
+          TlsSecretName = "tls-secret"
+        }
+      ]
+    };
+
+    // Act
+    string fileName = "ingress-tls.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the Ingress model does not have a name set.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithIngressWithoutName_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new IngressGenerator();
+    var model = new Ingress
+    {
+      Metadata = new V1ObjectMeta
+      {
+        NamespaceProperty = "default"
+      }
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }
 

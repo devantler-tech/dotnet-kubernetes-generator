@@ -1,0 +1,14 @@
+﻿---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: ingress-minimal
+spec:
+  defaultBackend:
+    service:
+      name: default-service
+      port:
+        number: 80
+status:
+  loadBalancer: {}
