@@ -19,19 +19,19 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new RoleBindingMetadata
+      Metadata = new Metadata
       {
         Name = "role-binding",
         Namespace = "default"
       },
-      RoleRef = new RoleRef
+      RoleRef = new RoleBindingRoleRef
       {
         Kind = "Role",
         Name = "role"
       },
       Subjects =
       [
-        new Subject
+        new RoleBindingSubject
         {
           Kind = "User",
           Name = "user",
@@ -65,19 +65,19 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new RoleBindingMetadata
+      Metadata = new Metadata
       {
         Name = "cluster-role-binding",
         Namespace = "default"
       },
-      RoleRef = new RoleRef
+      RoleRef = new RoleBindingRoleRef
       {
         Kind = "ClusterRole",
         Name = "admin"
       },
       Subjects =
       [
-        new Subject
+        new RoleBindingSubject
         {
           Kind = "User",
           Name = "admin-user",
@@ -111,29 +111,29 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new RoleBindingMetadata
+      Metadata = new Metadata
       {
         Name = "multi-subject-binding",
         Namespace = "default"
       },
-      RoleRef = new RoleRef
+      RoleRef = new RoleBindingRoleRef
       {
         Kind = "Role",
         Name = "reader"
       },
       Subjects =
       [
-        new Subject
+        new RoleBindingSubject
         {
           Kind = "User",
           Name = "user1",
         },
-        new Subject
+        new RoleBindingSubject
         {
           Kind = "Group",
           Name = "readers",
         },
-        new Subject
+        new RoleBindingSubject
         {
           Kind = "ServiceAccount",
           Name = "reader-sa",
@@ -168,18 +168,18 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new RoleBindingMetadata
+      Metadata = new Metadata
       {
         Name = "simple-binding"
       },
-      RoleRef = new RoleRef
+      RoleRef = new RoleBindingRoleRef
       {
         Kind = "Role",
         Name = "simple-role"
       },
       Subjects =
       [
-        new Subject
+        new RoleBindingSubject
         {
           Kind = "User",
           Name = "simple-user",
@@ -213,7 +213,7 @@ public sealed class GenerateAsyncTests
     var model = new RoleBinding
     {
       Metadata = null,
-      RoleRef = new RoleRef { Kind = "Role", Name = "test-role" },
+      RoleRef = new RoleBindingRoleRef { Kind = "Role", Name = "test-role" },
       Subjects = []
     };
 
@@ -231,18 +231,18 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new RoleBindingMetadata
+      Metadata = new Metadata
       {
         Name = "invalid-binding"
       },
-      RoleRef = new RoleRef
+      RoleRef = new RoleBindingRoleRef
       {
         Kind = "InvalidRole",
         Name = "invalid"
       },
       Subjects =
       [
-        new Subject
+        new RoleBindingSubject
         {
           Kind = "User",
           Name = "test-user"
@@ -264,18 +264,18 @@ public sealed class GenerateAsyncTests
     var generator = new RoleBindingGenerator();
     var model = new RoleBinding
     {
-      Metadata = new RoleBindingMetadata
+      Metadata = new Metadata
       {
         Name = "invalid-binding"
       },
-      RoleRef = new RoleRef
+      RoleRef = new RoleBindingRoleRef
       {
         Kind = "Role",
         Name = "role"
       },
       Subjects =
       [
-        new Subject
+        new RoleBindingSubject
         {
           Kind = "InvalidSubject",
           Name = "invalid",
