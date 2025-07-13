@@ -18,10 +18,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new ResourceQuota
+    var model = new ResourceQuota("resource-quota")
     {
-      Name = "resource-quota",
-      Namespace = "default",
+      Metadata = { Namespace = "default" },
       Hard = new Dictionary<string, ResourceQuantity>
       {
         ["requests.cpu"] = new ResourceQuantity("1"),
@@ -55,9 +54,8 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new ResourceQuota
+    var model = new ResourceQuota("resource-quota-no-namespace")
     {
-      Name = "resource-quota-no-namespace",
       Hard = new Dictionary<string, ResourceQuantity>
       {
         ["requests.cpu"] = new ResourceQuantity("2"),
@@ -89,10 +87,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new ResourceQuota
+    var model = new ResourceQuota("resource-quota-with-scopes")
     {
-      Name = "resource-quota-with-scopes",
-      Namespace = "test-namespace",
+      Metadata = { Namespace = "test-namespace" },
       Hard = new Dictionary<string, ResourceQuantity>
       {
         ["pods"] = new ResourceQuantity("10")
@@ -124,10 +121,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new ResourceQuota
+    var model = new ResourceQuota("resource-quota-no-limits")
     {
-      Name = "resource-quota-no-limits",
-      Namespace = "default",
+      Metadata = { Namespace = "default" },
       Scopes = ["BestEffort"]
     };
 

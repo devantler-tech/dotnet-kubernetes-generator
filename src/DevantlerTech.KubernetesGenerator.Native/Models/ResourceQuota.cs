@@ -5,17 +5,12 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Represents a ResourceQuota for use with kubectl create quota commands.
 /// </summary>
-public class ResourceQuota
+public class ResourceQuota(string name)
 {
   /// <summary>
-  /// Gets or sets the name of the resource quota.
+  /// Gets or sets the metadata for the resource quota.
   /// </summary>
-  public required string Name { get; set; }
-
-  /// <summary>
-  /// Gets or sets the namespace for the resource quota.
-  /// </summary>
-  public string? Namespace { get; set; }
+  public Metadata Metadata { get; set; } = new() { Name = name };
 
   /// <summary>
   /// Gets or sets the hard resource limits for the resource quota.

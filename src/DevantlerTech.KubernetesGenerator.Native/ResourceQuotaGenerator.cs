@@ -24,7 +24,7 @@ public class ResourceQuotaGenerator : BaseNativeGenerator<ResourceQuota>
     var args = new System.Collections.ObjectModel.ReadOnlyCollection<string>(
       [.. _defaultArgs, .. AddOptions(model)]
     );
-    string errorMessage = $"Failed to create resource quota '{model.Name}' using kubectl";
+    string errorMessage = $"Failed to create resource quota '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
@@ -38,7 +38,7 @@ public class ResourceQuotaGenerator : BaseNativeGenerator<ResourceQuota>
     List<string> args = [];
 
     // Add the resource quota name (required)
-    args.Add(model.Name);
+    args.Add(model.Metadata.Name);
 
     // Add hard limits if specified
     if (model.Hard?.Count > 0)
@@ -54,9 +54,9 @@ public class ResourceQuotaGenerator : BaseNativeGenerator<ResourceQuota>
     }
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Namespace))
+    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
     {
-      args.Add($"--namespace={model.Namespace}");
+      args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
     return args.AsReadOnly();
