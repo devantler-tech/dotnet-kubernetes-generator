@@ -1,22 +1,21 @@
 using System.Collections.ObjectModel;
-using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
 /// Represents a Pod for use with kubectl run command.
 /// </summary>
-public class Pod
+public class Pod(string name, string image)
 {
   /// <summary>
   /// Gets or sets the metadata for the pod.
   /// </summary>
-  public V1ObjectMeta? Metadata { get; set; }
+  public Metadata Metadata { get; set; } = new() { Name = name };
 
   /// <summary>
   /// Gets or sets the container image.
   /// </summary>
-  public required string Image { get; set; }
+  public string Image { get; set; } = image;
 
   /// <summary>
   /// Gets or sets the command to run in the container.

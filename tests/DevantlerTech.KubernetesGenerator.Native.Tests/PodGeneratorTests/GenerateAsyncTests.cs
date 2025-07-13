@@ -1,6 +1,4 @@
-using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
-using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodGeneratorTests;
 
@@ -19,14 +17,8 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodGenerator();
-    var model = new Pod
+    var model = new Pod("pod", "nginx")
     {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "pod",
-        NamespaceProperty = "default"
-      },
-      Image = "nginx",
       Command = ["echo", "hello"],
       Environment = new Dictionary<string, string>
       {
@@ -39,6 +31,7 @@ public sealed class GenerateAsyncTests
         { "app", "test" }
       }
     };
+    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "pod.yaml";
@@ -64,14 +57,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodGenerator();
-    var model = new Pod
-    {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "minimal-pod"
-      },
-      Image = "nginx"
-    };
+    var model = new Pod("minimal-pod", "nginx");
 
     // Act
     string fileName = "minimal-pod.yaml";
@@ -86,27 +72,6 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
-  }
-
-  /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the Pod model does not have a name set.
-  /// </summary>
-  [Fact]
-  public async Task GenerateAsync_WithPodWithoutName_ShouldThrowKubernetesGeneratorException()
-  {
-    // Arrange
-    var generator = new PodGenerator();
-    var model = new Pod
-    {
-      Metadata = new V1ObjectMeta
-      {
-        NamespaceProperty = "default"
-      },
-      Image = "nginx"
-    };
-
-    // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }
 

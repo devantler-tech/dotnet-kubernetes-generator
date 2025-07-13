@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
@@ -19,15 +18,14 @@ public class PodGenerator : BaseNativeGenerator<Pod>
   /// <param name="overwrite">Whether to overwrite existing files.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
-  /// <exception cref="KubernetesGeneratorException">Thrown when Pod name is not provided.</exception>
   public override async Task GenerateAsync(Pod model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
-    string errorMessage = $"Failed to create Pod '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create Pod '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
@@ -41,24 +39,19 @@ public class PodGenerator : BaseNativeGenerator<Pod>
   /// It supports single container pods with basic configuration.
   /// Advanced features like multiple containers, volumes, etc. are not supported by kubectl run.
   /// </remarks>
-  static ReadOnlyCollection<string> AddOptions(Pod model)
+  static ReadOnlyCollection<string> AddArguments(Pod model)
   {
-    var args = new List<string>();
-
-    // Require that a Pod name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
-    {
-      throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the Pod name.");
-    }
-    args.Add(model.Metadata.Name);
-
-    // Add the required image
-    args.Add($"--image={model.Image}");
+    List<string> args = [
+      // The Pod name is always available from the metadata (required in constructor)
+      model.Metadata.Name,
+      // Add the required image
+      $"--image={model.Image}"
+    ];
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
     {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+      args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
     // Add command if specified
