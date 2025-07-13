@@ -1,5 +1,4 @@
-using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.GenericSecretGeneratorTests;
 
@@ -9,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.GenericSecretGeneratorT
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated generic Secret object using V1Secret input.
+  /// Verifies the generated generic Secret object using GenericSecret input.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,22 +16,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new GenericSecretGenerator();
-    var model = new V1Secret
+    var model = new GenericSecret("generic-secret")
     {
-      ApiVersion = "v1",
-      Kind = "Secret",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "generic-secret",
-        NamespaceProperty = "default"
-      },
-      Type = "Opaque",
-      StringData = new Dictionary<string, string>
-      {
-        ["key1"] = "value1",
-        ["key2"] = "value2"
-      }
+      Metadata = { Namespace = "default" },
+      Type = "Opaque"
     };
+    model.Data.Add("key1", "value1");
+    model.Data.Add("key2", "value2");
 
     // Act
     string fileName = "generic-secret.yaml";
@@ -58,20 +48,11 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new GenericSecretGenerator();
-    var model = new V1Secret
+    var model = new GenericSecret("generic-secret-no-type")
     {
-      ApiVersion = "v1",
-      Kind = "Secret",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "generic-secret-no-type",
-        NamespaceProperty = "default"
-      },
-      StringData = new Dictionary<string, string>
-      {
-        ["key1"] = "value1"
-      }
+      Metadata = { Namespace = "default" }
     };
+    model.Data.Add("key1", "value1");
 
     // Act
     string fileName = "generic-secret-no-type.yaml";
@@ -89,7 +70,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated generic Secret object with both Data and StringData.
+  /// Verifies the generated generic Secret object with mixed data.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -97,27 +78,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new GenericSecretGenerator();
-    var model = new V1Secret
+    var model = new GenericSecret("generic-secret-mixed")
     {
-      ApiVersion = "v1",
-      Kind = "Secret",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "generic-secret-mixed",
-        NamespaceProperty = "default"
-      },
-      Type = "Opaque",
-      Data = new Dictionary<string, byte[]>
-      {
-        ["data-key"] = "data-value"u8.ToArray(),
-        ["override-key"] = "data-override"u8.ToArray()
-      },
-      StringData = new Dictionary<string, string>
-      {
-        ["string-key"] = "string-value",
-        ["override-key"] = "string-override"
-      }
+      Metadata = { Namespace = "default" },
+      Type = "Opaque"
     };
+    model.Data.Add("data-key", "data-value");
+    model.Data.Add("string-key", "string-value");
+    model.Data.Add("override-key", "string-override");
 
     // Act
     string fileName = "generic-secret-mixed.yaml";
@@ -135,21 +103,15 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model does not have a name set.
+  /// Verifies that a <see cref="ArgumentNullException"/> is thrown when the model is null.
   /// </summary>
   [Fact]
-  public async Task GenerateAsync_WithDockerRegistrySecretWithoutName_ShouldThrowKubernetesGeneratorException()
+  public async Task GenerateAsync_WithNullModel_ShouldThrowArgumentNullException()
   {
     // Arrange
     var generator = new GenericSecretGenerator();
 
-    var model = new V1Secret
-    {
-      ApiVersion = "v1",
-      Kind = "Secret"
-    };
-
     // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+    _ = await Assert.ThrowsAsync<ArgumentNullException>(() => generator.GenerateAsync(null!, Path.GetTempFileName()));
   }
 }
