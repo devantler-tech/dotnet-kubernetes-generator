@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ExternalNameServiceGene
 /// <summary>
 /// Tests for the <see cref="ExternalNameServiceGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated ExternalName Service object.
@@ -38,8 +38,8 @@ public sealed class GenerateAsyncTests
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
+    await generator.GenerateAsync(model, outputPath).ConfigureAwait(false);
+    string fileContent = await File.ReadAllTextAsync(outputPath).ConfigureAwait(false);
 
     // Assert
     _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
@@ -64,7 +64,7 @@ public sealed class GenerateAsyncTests
     };
 
     // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName())).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -91,6 +91,6 @@ public sealed class GenerateAsyncTests
     };
 
     // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName())).ConfigureAwait(false);
   }
 }

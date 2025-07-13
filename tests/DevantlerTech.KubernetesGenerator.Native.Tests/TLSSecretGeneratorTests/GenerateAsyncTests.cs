@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.TLSSecretGeneratorTests
 /// <summary>
 /// Tests for the <see cref="TLSSecretGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated TLS Secret object with certificate and key content.
@@ -17,8 +17,8 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     // Read the contents of the certificate and key files
-    string certificateContent = await File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.crt"));
-    string privateKeyContent = await File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.key"));
+    string certificateContent = await File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.crt")).ConfigureAwait(false);
+    string privateKeyContent = await File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.key")).ConfigureAwait(false);
 
     var generator = new TLSSecretGenerator();
     var model = new TLSSecret("tls-secret-content")
@@ -33,8 +33,8 @@ public sealed class GenerateAsyncTests
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
+    await generator.GenerateAsync(model, outputPath).ConfigureAwait(false);
+    string fileContent = await File.ReadAllTextAsync(outputPath).ConfigureAwait(false);
 
     // Assert
     if (!OperatingSystem.IsWindows())
@@ -75,8 +75,8 @@ public sealed class GenerateAsyncTests
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
+    await generator.GenerateAsync(model, outputPath).ConfigureAwait(false);
+    string fileContent = await File.ReadAllTextAsync(outputPath).ConfigureAwait(false);
 
     // Assert
     if (!OperatingSystem.IsWindows())
@@ -106,6 +106,6 @@ public sealed class GenerateAsyncTests
     model.Metadata.Namespace = "default";
 
     // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName())).ConfigureAwait(false);
   }
 }

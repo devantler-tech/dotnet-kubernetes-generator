@@ -5,7 +5,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.DockerRegistrySecretGen
 /// <summary>
 /// Tests for the <see cref="DockerRegistrySecretGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated Docker registry Secret object.
@@ -30,8 +30,8 @@ public sealed class GenerateAsyncTests
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
+    await generator.GenerateAsync(model, outputPath).ConfigureAwait(false);
+    string fileContent = await File.ReadAllTextAsync(outputPath).ConfigureAwait(false);
 
     // Assert
     _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
@@ -61,8 +61,8 @@ public sealed class GenerateAsyncTests
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
+    await generator.GenerateAsync(model, outputPath).ConfigureAwait(false);
+    string fileContent = await File.ReadAllTextAsync(outputPath).ConfigureAwait(false);
 
     // Assert
     _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);

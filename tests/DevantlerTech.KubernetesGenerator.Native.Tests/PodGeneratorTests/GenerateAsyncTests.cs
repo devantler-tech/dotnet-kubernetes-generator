@@ -1,4 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Tests.Infrastructure;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodGeneratorTests;
 
@@ -6,8 +7,17 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodGeneratorTests;
 /// <summary>
 /// Tests for the <see cref="PodGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+public sealed class GenerateAsyncTests : IDisposable
 {
+  readonly MockKubernetesServer _mockServer;
+
+  public GenerateAsyncTests()
+  {
+    _mockServer = new MockKubernetesServer();
+    _mockServer.Start();
+  }
+
+  public void Dispose() => _mockServer.Dispose();
   /// <summary>
   /// Verifies the generated Pod object.
   /// </summary>
