@@ -1,0 +1,16 @@
+﻿---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: minimal-pod
+  name: minimal-pod
+spec:
+  containers:
+  - image: nginx
+    name: minimal-pod
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
