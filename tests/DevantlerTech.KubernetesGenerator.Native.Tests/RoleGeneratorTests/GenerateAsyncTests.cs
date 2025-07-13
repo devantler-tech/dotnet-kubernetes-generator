@@ -130,8 +130,14 @@ public sealed class GenerateAsyncTests
         new Rule
         {
           Verbs = ["get", "list"],
-          Resources = ["pods", "deployments"],
-          ApiGroups = ["", "apps"]
+          Resources = ["pods"],
+          ApiGroups = [""]
+        },
+        new Rule
+        {
+          Verbs = ["get", "list"],
+          Resources = ["deployments"],
+          ApiGroups = ["apps"]
         }
       ]
     };

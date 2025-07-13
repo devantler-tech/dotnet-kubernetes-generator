@@ -1,13 +1,15 @@
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
+  creationTimestamp: null
   name: specific-pod-reader
 rules:
 - apiGroups:
   - ""
   resourceNames:
-  - another-pod
   - my-pod
+  - another-pod
   resources:
   - pods
   verbs:

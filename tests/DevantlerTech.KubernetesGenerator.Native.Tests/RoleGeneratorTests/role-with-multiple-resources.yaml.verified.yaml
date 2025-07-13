@@ -1,14 +1,16 @@
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
+  creationTimestamp: null
   name: multi-resource-reader
 rules:
 - apiGroups:
   - ""
   resources:
-  - configmaps
   - pods
   - services
+  - configmaps
   verbs:
   - get
   - list
