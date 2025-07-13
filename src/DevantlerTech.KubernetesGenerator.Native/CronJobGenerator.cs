@@ -1,14 +1,16 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes CronJob objects using 'kubectl create cronjob' commands.
 /// </summary>
-public class CronJobGenerator : BaseNativeGenerator<V1CronJob>
+public class CronJobGenerator : BaseNativeGenerator<CronJob>
 {
+  static readonly string[] _defaultArgs = ["create", "cronjob"];
+
   /// <summary>
   /// Generates a CronJob using kubectl create cronjob command.
   /// </summary>
@@ -18,7 +20,7 @@ public class CronJobGenerator : BaseNativeGenerator<V1CronJob>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when required fields are missing.</exception>
-  public override async Task GenerateAsync(V1CronJob model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(CronJob model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -26,8 +28,7 @@ public class CronJobGenerator : BaseNativeGenerator<V1CronJob>
 
     // For commands with the -- separator, we need to handle the default arguments differently
     // to ensure they appear before the -- separator
-    var containers = model.Spec?.JobTemplate?.Spec?.Template?.Spec?.Containers;
-    bool hasCommand = containers?[0]?.Command?.Count > 0;
+    bool hasCommand = model.Command?.Count > 0;
 
     ReadOnlyCollection<string> allArgs;
     if (hasCommand)
@@ -40,14 +41,14 @@ public class CronJobGenerator : BaseNativeGenerator<V1CronJob>
         argsList.InsertRange(separatorIndex, ["--output=yaml", "--dry-run=client"]);
       }
       // Add the create cronjob commands at the beginning
-      var combinedArgs = new List<string> { "create", "cronjob" };
+      var combinedArgs = new List<string>(_defaultArgs);
       combinedArgs.AddRange(argsList);
       allArgs = combinedArgs.AsReadOnly();
     }
     else
     {
       // No command, let the base class handle default arguments
-      var combinedArgs = new List<string> { "create", "cronjob" };
+      var combinedArgs = new List<string>(_defaultArgs);
       combinedArgs.AddRange(args);
       combinedArgs.AddRange(["--output=yaml", "--dry-run=client"]);
       allArgs = combinedArgs.AsReadOnly();
@@ -64,16 +65,16 @@ public class CronJobGenerator : BaseNativeGenerator<V1CronJob>
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a CronJob from a V1CronJob object.
+  /// Builds the kubectl arguments for creating a CronJob from a CronJob object.
   /// </summary>
-  /// <param name="model">The V1CronJob object.</param>
+  /// <param name="model">The CronJob object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <remarks>
   /// Note: kubectl create cronjob supports basic CronJob creation with name, schedule, and image.
   /// Advanced properties like complex job specifications, multiple containers, and advanced scheduling
   /// options are not fully supported by the kubectl create command and may be ignored.
   /// </remarks>
-  static ReadOnlyCollection<string> AddOptions(V1CronJob model)
+  static ReadOnlyCollection<string> AddOptions(CronJob model)
   {
     var args = new List<string> { };
 
@@ -84,26 +85,11 @@ public class CronJobGenerator : BaseNativeGenerator<V1CronJob>
     }
     args.Add(model.Metadata.Name);
 
-    // Require that a schedule is provided
-    if (string.IsNullOrEmpty(model.Spec?.Schedule))
-    {
-      throw new KubernetesGeneratorException("The model.Spec.Schedule must be set to set the CronJob schedule.");
-    }
-    args.Add($"--schedule={model.Spec.Schedule}");
+    // Add the schedule
+    args.Add($"--schedule={model.Schedule}");
 
-    // Require that at least one container with an image is provided
-    var containers = model.Spec?.JobTemplate?.Spec?.Template?.Spec?.Containers;
-    if (containers?.Count == 0 || containers == null)
-    {
-      throw new KubernetesGeneratorException("The model.Spec.JobTemplate.Spec.Template.Spec.Containers must contain at least one container.");
-    }
-
-    var firstContainer = containers[0];
-    if (string.IsNullOrEmpty(firstContainer.Image))
-    {
-      throw new KubernetesGeneratorException("The first container in model.Spec.JobTemplate.Spec.Template.Spec.Containers must have an image.");
-    }
-    args.Add($"--image={firstContainer.Image}");
+    // Add the image
+    args.Add($"--image={model.Image}");
 
     // Add namespace if specified
     if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
@@ -112,10 +98,10 @@ public class CronJobGenerator : BaseNativeGenerator<V1CronJob>
     }
 
     // Add command and args if specified (passed after -- separator)
-    if (firstContainer.Command?.Count > 0)
+    if (model.Command?.Count > 0)
     {
       args.Add("--");
-      args.AddRange(firstContainer.Command);
+      args.AddRange(model.Command);
     }
 
     return args.AsReadOnly();
