@@ -27,7 +27,7 @@ public class RoleGenerator : BaseNativeGenerator<Role>
     var args = new ReadOnlyCollection<string>(
       [.. _defaultArgs, .. AddOptions(model)]
     );
-    string errorMessage = $"Failed to create role '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create role '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
@@ -46,16 +46,16 @@ public class RoleGenerator : BaseNativeGenerator<Role>
     var args = new List<string> { };
 
     // Require that a role name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
+    if (string.IsNullOrEmpty(model.Metadata.Name))
     {
       throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the role name.");
     }
     args.Add(model.Metadata.Name);
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
     {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+      args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
     // Process rules - kubectl create role only supports one rule, so we need to combine all rules

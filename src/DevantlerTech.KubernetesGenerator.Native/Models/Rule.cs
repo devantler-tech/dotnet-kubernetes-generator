@@ -1,9 +1,9 @@
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
-/// Represents a policy rule for a Kubernetes Role.
+/// Represents a rule for a Kubernetes Role.
 /// </summary>
-public class PolicyRule
+public class Rule
 {
   /// <summary>
   /// Gets or sets the verbs for the rule.

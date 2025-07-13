@@ -1,6 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
-using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.RoleGeneratorTests;
 
@@ -17,10 +16,10 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new Role("")
     {
       Rules = [
-        new PolicyRule
+        new Rule
         {
           Verbs = ["get"],
           Resources = ["pods"]
@@ -40,12 +39,8 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new Role("test-role")
     {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "test-role"
-      },
       Rules = []
     };
 
@@ -61,14 +56,10 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new Role("test-role")
     {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "test-role"
-      },
       Rules = [
-        new PolicyRule
+        new Rule
         {
           Verbs = [],
           Resources = ["pods"]
@@ -88,14 +79,10 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new Role("test-role")
     {
-      Metadata = new V1ObjectMeta
-      {
-        Name = "test-role"
-      },
       Rules = [
-        new PolicyRule
+        new Rule
         {
           Verbs = ["get", "list"],
           Resources = []
