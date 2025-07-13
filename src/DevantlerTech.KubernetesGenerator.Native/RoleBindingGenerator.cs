@@ -25,7 +25,7 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create role binding '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -37,7 +37,7 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
   /// <param name="model">The RoleBinding object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required properties are missing.</exception>
-  static ReadOnlyCollection<string> AddOptions(RoleBinding model)
+  static ReadOnlyCollection<string> AddArguments(RoleBinding model)
   {
     List<string> args = [];
 

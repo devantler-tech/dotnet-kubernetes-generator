@@ -24,7 +24,7 @@ public class DockerRegistrySecretGenerator : BaseNativeGenerator<DockerRegistryS
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create Docker registry secret '{model.Metadata?.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -35,7 +35,7 @@ public class DockerRegistrySecretGenerator : BaseNativeGenerator<DockerRegistryS
   /// </summary>
   /// <param name="model">The DockerRegistrySecret object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddOptions(DockerRegistrySecret model)
+  static ReadOnlyCollection<string> AddArguments(DockerRegistrySecret model)
   {
     var args = new List<string>
     {
