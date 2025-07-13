@@ -1,0 +1,11 @@
+﻿---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  creationTimestamp: null
+  name: resource-quota-no-namespace
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: 2Gi
+status: {}
