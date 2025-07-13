@@ -101,7 +101,7 @@ public sealed class GenerateAsyncTests
       AccessModes = ["ReadWriteOnce"],
       HostPath = new V1HostPathVolumeSource
       {
-        Path = "/tmp/data"
+        Path = "/var/data"
       }
     };
 
@@ -142,7 +142,7 @@ public sealed class GenerateAsyncTests
       AccessModes = ["ReadWriteOnce"],
       HostPath = new V1HostPathVolumeSource
       {
-        Path = "/tmp/data"
+        Path = "/var/data"
       }
     };
 
