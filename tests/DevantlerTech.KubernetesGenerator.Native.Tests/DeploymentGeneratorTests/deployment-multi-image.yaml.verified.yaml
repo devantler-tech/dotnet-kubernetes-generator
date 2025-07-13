@@ -1,28 +1,34 @@
----
+﻿---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: deployment
-  name: deployment
+    app: deployment-multi-image
+  name: deployment-multi-image
   namespace: default
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: deployment
+      app: deployment-multi-image
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: deployment
+        app: deployment-multi-image
     spec:
       containers:
       - image: nginx
         name: nginx
         ports:
-        - containerPort: 80
+        - containerPort: 8080
+        resources: {}
+      - image: redis
+        name: redis
+        resources: {}
+      - image: postgres
+        name: postgres
         resources: {}
 status: {}

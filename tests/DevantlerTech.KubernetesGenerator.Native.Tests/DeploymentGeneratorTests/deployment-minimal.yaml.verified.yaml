@@ -1,28 +1,25 @@
----
+﻿---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: deployment
-  name: deployment
-  namespace: default
+    app: deployment-minimal
+  name: deployment-minimal
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: deployment
+      app: deployment-minimal
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: deployment
+        app: deployment-minimal
     spec:
       containers:
       - image: nginx
         name: nginx
-        ports:
-        - containerPort: 80
         resources: {}
 status: {}

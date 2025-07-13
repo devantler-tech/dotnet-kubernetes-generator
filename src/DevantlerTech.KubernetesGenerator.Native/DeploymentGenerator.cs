@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes Deployment objects using 'kubectl create deployment' commands.
 /// </summary>
-public class DeploymentGenerator : BaseNativeGenerator<V1Deployment>
+public class DeploymentGenerator : BaseNativeGenerator<KubernetesDeployment>
 {
   static readonly string[] _defaultArgs = ["create", "deployment"];
 
@@ -20,7 +20,7 @@ public class DeploymentGenerator : BaseNativeGenerator<V1Deployment>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when deployment name is not provided or no container images are specified.</exception>
-  public override async Task GenerateAsync(V1Deployment model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(KubernetesDeployment model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -32,20 +32,20 @@ public class DeploymentGenerator : BaseNativeGenerator<V1Deployment>
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a deployment from a V1Deployment object.
+  /// Builds the kubectl arguments for creating a deployment from a KubernetesDeployment object.
   /// </summary>
-  /// <param name="model">The V1Deployment object.</param>
+  /// <param name="model">The KubernetesDeployment object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <remarks>
   /// Note: kubectl create deployment has limited functionality compared to full deployment specifications.
   /// Supported properties:
   /// - metadata.name (required)
   /// - metadata.namespace (optional)
-  /// - spec.replicas (optional, defaults to 1)
-  /// - spec.template.spec.containers[].image (required, at least one)
-  /// - spec.template.spec.containers[0].ports[0].containerPort (optional)
+  /// - replicas (optional, defaults to 1)
+  /// - images (required, at least one)
+  /// - port (optional, from first container)
   /// 
-  /// Unsupported properties are ignored, including:
+  /// Unsupported properties include:
   /// - Complex pod specifications (volumes, env vars, resource limits, etc.)
   /// - Multiple ports per container
   /// - Container commands and args
@@ -54,9 +54,9 @@ public class DeploymentGenerator : BaseNativeGenerator<V1Deployment>
   /// - Deployment strategy
   /// - And many other advanced features
   /// </remarks>
-  static ReadOnlyCollection<string> AddOptions(V1Deployment model)
+  static ReadOnlyCollection<string> AddOptions(KubernetesDeployment model)
   {
-    var args = new List<string>();
+    List<string> args = [];
 
     // Require that a deployment name is provided
     if (string.IsNullOrEmpty(model.Metadata?.Name))
@@ -65,44 +65,37 @@ public class DeploymentGenerator : BaseNativeGenerator<V1Deployment>
     }
     args.Add(model.Metadata.Name);
 
-    // Extract container images from the pod template
-    var containers = model.Spec?.Template?.Spec?.Containers;
-    if (containers == null || containers.Count == 0)
+    // Require at least one container image
+    if (model.Images.Count == 0)
     {
-      throw new KubernetesGeneratorException("The model.Spec.Template.Spec.Containers must contain at least one container with an image.");
+      throw new KubernetesGeneratorException("The model.Images must contain at least one image.");
     }
 
-    var images = new List<string>();
-    foreach (var container in containers)
+    // Validate that all images are not null or empty
+    foreach (string image in model.Images)
     {
-      if (string.IsNullOrEmpty(container.Image))
+      if (string.IsNullOrEmpty(image))
       {
-        throw new KubernetesGeneratorException($"Container '{container.Name}' must have an image specified.");
+        throw new KubernetesGeneratorException("All images in model.Images must be non-null and non-empty.");
       }
-      images.Add(container.Image);
     }
 
     // Add all images
-    foreach (var image in images)
+    foreach (string image in model.Images)
     {
       args.Add($"--image={image}");
     }
 
     // Add replicas if specified and not default
-    if (model.Spec?.Replicas != null && model.Spec.Replicas != 1)
+    if (model.Replicas.HasValue && model.Replicas.Value != 1)
     {
-      args.Add($"--replicas={model.Spec.Replicas}");
+      args.Add($"--replicas={model.Replicas.Value}");
     }
 
-    // Add port from the first container if specified
-    var firstContainer = containers[0];
-    if (firstContainer.Ports?.Count > 0)
+    // Add port if specified
+    if (model.Port.HasValue && model.Port.Value > 0)
     {
-      var firstPort = firstContainer.Ports[0];
-      if (firstPort.ContainerPort > 0)
-      {
-        args.Add($"--port={firstPort.ContainerPort}");
-      }
+      args.Add($"--port={model.Port.Value}");
     }
 
     // Add namespace if specified

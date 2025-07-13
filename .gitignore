@@ -9,3 +9,4 @@ obj
 
 # Temporary files
 *.tmp*
+.dotnet/
