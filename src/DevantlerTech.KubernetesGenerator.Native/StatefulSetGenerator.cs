@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
@@ -11,7 +11,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// Since kubectl does not have a direct 'create statefulset' command, this generator uses
 /// 'kubectl create deployment' to generate the base structure and then transforms it to a StatefulSet.
 /// </remarks>
-public class StatefulSetGenerator : BaseNativeGenerator<V1StatefulSet>
+public class StatefulSetGenerator : BaseNativeGenerator<StatefulSet>
 {
   static readonly string[] _defaultArgs = ["create", "deployment"];
 
@@ -24,7 +24,7 @@ public class StatefulSetGenerator : BaseNativeGenerator<V1StatefulSet>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when StatefulSet name is not provided.</exception>
-  public override async Task GenerateAsync(V1StatefulSet model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(StatefulSet model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -41,7 +41,7 @@ public class StatefulSetGenerator : BaseNativeGenerator<V1StatefulSet>
   /// <summary>
   /// Runs kubectl and transforms the deployment output to StatefulSet format.
   /// </summary>
-  static async Task RunKubectlAsyncWithTransformation(V1StatefulSet model, string outputPath, bool overwrite, ReadOnlyCollection<string> arguments, string errorMessage, CancellationToken cancellationToken)
+  static async Task RunKubectlAsyncWithTransformation(StatefulSet model, string outputPath, bool overwrite, ReadOnlyCollection<string> arguments, string errorMessage, CancellationToken cancellationToken)
   {
     // Add default arguments for YAML output and dry-run
     string[] allArguments = [.. arguments, .. new[] { "--output=yaml", "--dry-run=client" }];
@@ -59,7 +59,7 @@ public class StatefulSetGenerator : BaseNativeGenerator<V1StatefulSet>
   /// <summary>
   /// Transforms deployment YAML to StatefulSet YAML.
   /// </summary>
-  static string TransformDeploymentToStatefulSet(string deploymentYaml, V1StatefulSet model)
+  static string TransformDeploymentToStatefulSet(string deploymentYaml, StatefulSet model)
   {
     // Start with the basic transformation
     string result = deploymentYaml;
@@ -74,7 +74,7 @@ public class StatefulSetGenerator : BaseNativeGenerator<V1StatefulSet>
     result = result.Replace("  strategy: {}\n", "", StringComparison.Ordinal);
 
     // Add serviceName after selector section
-    string serviceName = model.Spec?.ServiceName ?? model.Metadata?.Name ?? "statefulset";
+    string serviceName = model.ServiceName;
     result = result.Replace("    matchLabels:\n      app: " + model.Metadata?.Name + "\n",
                            "    matchLabels:\n      app: " + model.Metadata?.Name + "\n  serviceName: " + serviceName + "\n",
                            StringComparison.Ordinal);
@@ -91,13 +91,13 @@ public class StatefulSetGenerator : BaseNativeGenerator<V1StatefulSet>
                            "      labels:\n        app: " + model.Metadata?.Name, StringComparison.Ordinal);
 
     // Replace container name
-    if (model.Spec?.Template?.Spec?.Containers?.FirstOrDefault()?.Name is string containerName)
+    if (model.Containers?.FirstOrDefault()?.Name is string containerName)
     {
       result = result.Replace("        name: nginx", $"        name: {containerName}", StringComparison.Ordinal);
     }
 
     // Add command if specified
-    var container = model.Spec?.Template?.Spec?.Containers?.FirstOrDefault();
+    var container = model.Containers?.FirstOrDefault();
     if (container?.Command != null && container.Command.Count > 0)
     {
       string commandYaml = string.Join("\n        - ", container.Command);
@@ -112,15 +112,15 @@ public class StatefulSetGenerator : BaseNativeGenerator<V1StatefulSet>
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a StatefulSet from a V1StatefulSet object.
+  /// Builds the kubectl arguments for creating a StatefulSet from a StatefulSet object.
   /// </summary>
-  /// <param name="model">The V1StatefulSet object.</param>
+  /// <param name="model">The StatefulSet object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <remarks>
   /// Uses kubectl create deployment as base since there's no direct kubectl create statefulset command.
   /// The output will be transformed from Deployment to StatefulSet structure.
   /// </remarks>
-  static ReadOnlyCollection<string> AddOptions(V1StatefulSet model)
+  static ReadOnlyCollection<string> AddOptions(StatefulSet model)
   {
     var args = new List<string>();
 
@@ -132,7 +132,7 @@ public class StatefulSetGenerator : BaseNativeGenerator<V1StatefulSet>
     args.Add(model.Metadata.Name);
 
     // Add image if the first container has one
-    string? image = model.Spec?.Template?.Spec?.Containers?.FirstOrDefault()?.Image;
+    string? image = model.Containers?.FirstOrDefault()?.Image;
     if (!string.IsNullOrEmpty(image))
     {
       args.Add($"--image={image}");
@@ -144,9 +144,9 @@ public class StatefulSetGenerator : BaseNativeGenerator<V1StatefulSet>
     }
 
     // Add replicas if specified
-    if (model.Spec?.Replicas.HasValue == true)
+    if (model.Replicas.HasValue)
     {
-      args.Add($"--replicas={model.Spec.Replicas.Value}");
+      args.Add($"--replicas={model.Replicas.Value}");
     }
 
     // Add namespace if specified

@@ -1,3 +1,4 @@
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.StatefulSetGeneratorTests;
@@ -17,49 +18,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new StatefulSetGenerator();
-    var model = new V1StatefulSet
+    var model = new StatefulSet
     {
-      ApiVersion = "apps/v1",
-      Kind = "StatefulSet",
       Metadata = new V1ObjectMeta
       {
         Name = "stateful-set",
         NamespaceProperty = "default"
       },
-      Spec = new V1StatefulSetSpec
-      {
-        Replicas = 1,
-        Selector = new V1LabelSelector
+      Replicas = 1,
+      ServiceName = "stateful-set",
+      Containers =
+      [
+        new StatefulSetContainer
         {
-          MatchLabels = new Dictionary<string, string>
-          {
-            ["app"] = "stateful-set"
-          }
-        },
-        ServiceName = "stateful-set",
-        Template = new V1PodTemplateSpec
-        {
-          Metadata = new V1ObjectMeta
-          {
-            Labels = new Dictionary<string, string>
-            {
-              ["app"] = "stateful-set"
-            }
-          },
-          Spec = new V1PodSpec
-          {
-            Containers =
-            [
-              new V1Container
-              {
-                Name = "container",
-                Image = "nginx",
-                Command = ["echo", "hello"]
-              }
-            ]
-          }
+          Name = "container",
+          Image = "nginx",
+          Command = ["echo", "hello"]
         }
-      }
+      ]
     };
 
     // Act
