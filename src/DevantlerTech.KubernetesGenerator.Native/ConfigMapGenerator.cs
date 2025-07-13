@@ -24,7 +24,7 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create configmap '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -35,7 +35,7 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
   /// </summary>
   /// <param name="model">The ConfigMap object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddOptions(ConfigMap model)
+  static ReadOnlyCollection<string> AddArguments(ConfigMap model)
   {
     var args = new List<string>
     {
@@ -48,40 +48,10 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
       args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
-    // Add data from files
-    if (model.FromFiles?.Count > 0)
+    // Add all data as literals
+    foreach (var kvp in model.Data)
     {
-      foreach (string file in model.FromFiles)
-      {
-        args.Add($"--from-file={file}");
-      }
-    }
-
-    // Add data from environment files
-    if (model.FromEnvFiles?.Count > 0)
-    {
-      foreach (string envFile in model.FromEnvFiles)
-      {
-        args.Add($"--from-env-file={envFile}");
-      }
-    }
-
-    // Add literal data
-    if (model.FromLiterals?.Count > 0)
-    {
-      foreach (var kvp in model.FromLiterals)
-      {
-        args.Add($"--from-literal={kvp.Key}={kvp.Value}");
-      }
-    }
-
-    // Add data as literals if no other sources are specified
-    if (model.Data?.Count > 0 && model.FromFiles?.Count == 0 && model.FromEnvFiles?.Count == 0 && model.FromLiterals?.Count == 0)
-    {
-      foreach (var kvp in model.Data)
-      {
-        args.Add($"--from-literal={kvp.Key}={kvp.Value}");
-      }
+      args.Add($"--from-literal={kvp.Key}={kvp.Value}");
     }
 
     return args.AsReadOnly();

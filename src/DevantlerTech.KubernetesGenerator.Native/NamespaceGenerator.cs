@@ -24,7 +24,7 @@ public class NamespaceGenerator : BaseNativeGenerator<Namespace>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create namespace '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -35,7 +35,7 @@ public class NamespaceGenerator : BaseNativeGenerator<Namespace>
   /// </summary>
   /// <param name="model">The Namespace object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddOptions(Namespace model)
+  static ReadOnlyCollection<string> AddArguments(Namespace model)
   {
     var args = new List<string>
     {

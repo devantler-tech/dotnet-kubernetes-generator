@@ -24,7 +24,7 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create cronjob '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -35,7 +35,7 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
   /// </summary>
   /// <param name="model">The CronJob object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddOptions(CronJob model)
+  static ReadOnlyCollection<string> AddArguments(CronJob model)
   {
     var args = new List<string>
     {
@@ -51,7 +51,7 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
     }
 
     // Add command if specified
-    if (model.Command?.Count > 0)
+    if (model.Command.Count > 0)
     {
       args.Add($"--command={string.Join(" ", model.Command)}");
     }

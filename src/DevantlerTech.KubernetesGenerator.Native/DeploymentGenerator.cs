@@ -24,7 +24,7 @@ public class DeploymentGenerator : BaseNativeGenerator<KubernetesDeployment>
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create deployment '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -35,7 +35,7 @@ public class DeploymentGenerator : BaseNativeGenerator<KubernetesDeployment>
   /// </summary>
   /// <param name="model">The KubernetesDeployment object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddOptions(KubernetesDeployment model)
+  static ReadOnlyCollection<string> AddArguments(KubernetesDeployment model)
   {
     var args = new List<string>
     {
@@ -62,12 +62,9 @@ public class DeploymentGenerator : BaseNativeGenerator<KubernetesDeployment>
     }
 
     // Add environment variables
-    if (model.Environment?.Count > 0)
+    foreach (var envVar in model.Environment)
     {
-      foreach (var envVar in model.Environment)
-      {
-        args.Add($"--env={envVar.Key}={envVar.Value}");
-      }
+      args.Add($"--env={envVar.Key}={envVar.Value}");
     }
 
     return args.AsReadOnly();

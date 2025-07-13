@@ -3,17 +3,17 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Represents a Kubernetes Deployment for use with kubectl create deployment.
 /// </summary>
-public class KubernetesDeployment
+public class KubernetesDeployment(string name, string image)
 {
   /// <summary>
   /// Gets or sets the metadata for the deployment.
   /// </summary>
-  public required ObjectMeta Metadata { get; set; }
+  public Metadata Metadata { get; set; } = new() { Name = name };
 
   /// <summary>
   /// Gets or sets the container image to deploy.
   /// </summary>
-  public required string Image { get; set; }
+  public required string Image { get; set; } = image;
 
   /// <summary>
   /// Gets or sets the number of replicas for the deployment.
@@ -26,7 +26,7 @@ public class KubernetesDeployment
   public int? Port { get; set; }
 
   /// <summary>
-  /// Gets or sets additional environment variables for the deployment.
+  /// Gets the environment variables for the deployment.
   /// </summary>
-  public Dictionary<string, string>? Environment { get; init; }
+  public Dictionary<string, string> Environment { get; } = [];
 }

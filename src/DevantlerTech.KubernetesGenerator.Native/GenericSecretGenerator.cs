@@ -10,7 +10,6 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
 {
   static readonly string[] _defaultArgs = ["create", "secret", "generic"];
-
   /// <summary>
   /// Generates a generic secret using kubectl create secret generic command.
   /// </summary>
@@ -19,14 +18,15 @@ public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
   /// <param name="overwrite">Whether to overwrite existing files.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
+  /// <exception cref="KubernetesGeneratorException">Thrown when secret name is not provided.</exception>
   public override async Task GenerateAsync(GenericSecret model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
     var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddOptions(model)]
+      [.. _defaultArgs, .. AddArguments(model)]
     );
-    string errorMessage = $"Failed to create generic secret '{model.Metadata.Name}' using kubectl";
+    string errorMessage = $"Failed to create generic secret '{model.Metadata?.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
@@ -34,11 +34,11 @@ public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
   /// Builds the kubectl arguments for creating a generic secret from a GenericSecret object.
   /// </summary>
   /// <param name="model">The GenericSecret object.</param>
-  /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddOptions(GenericSecret model)
+  static ReadOnlyCollection<string> AddArguments(GenericSecret model)
   {
     var args = new List<string>
     {
+      // The secret name is always available from the metadata (required in constructor)
       model.Metadata.Name
     };
 
@@ -48,46 +48,16 @@ public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
       args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
-    // Add type if specified
+    // Add type if specified (but don't require it)
     if (!string.IsNullOrEmpty(model.Type))
     {
       args.Add($"--type={model.Type}");
     }
 
-    // Add data from files
-    if (model.FromFiles?.Count > 0)
+    // Add all data as literals
+    foreach (var kvp in model.Data)
     {
-      foreach (string file in model.FromFiles)
-      {
-        args.Add($"--from-file={file}");
-      }
-    }
-
-    // Add data from environment files
-    if (model.FromEnvFiles?.Count > 0)
-    {
-      foreach (string envFile in model.FromEnvFiles)
-      {
-        args.Add($"--from-env-file={envFile}");
-      }
-    }
-
-    // Add literal data
-    if (model.FromLiterals?.Count > 0)
-    {
-      foreach (var kvp in model.FromLiterals)
-      {
-        args.Add($"--from-literal={kvp.Key}={kvp.Value}");
-      }
-    }
-
-    // Add data as literals if no other sources are specified
-    if (model.Data?.Count > 0 && model.FromFiles?.Count == 0 && model.FromEnvFiles?.Count == 0 && model.FromLiterals?.Count == 0)
-    {
-      foreach (var kvp in model.Data)
-      {
-        args.Add($"--from-literal={kvp.Key}={kvp.Value}");
-      }
+      args.Add($"--from-literal={kvp.Key}={kvp.Value}");
     }
 
     return args.AsReadOnly();
