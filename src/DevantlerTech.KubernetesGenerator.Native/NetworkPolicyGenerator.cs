@@ -1,4 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
@@ -10,7 +11,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// Since kubectl does not have a native "create networkpolicy" command, this generator
 /// creates NetworkPolicy resources by generating the YAML representation directly.
 /// </remarks>
-public class NetworkPolicyGenerator : BaseNativeGenerator<V1NetworkPolicy>
+public class NetworkPolicyGenerator : BaseNativeGenerator<NetworkPolicy>
 {
   /// <summary>
   /// Generates a NetworkPolicy using kubectl with dry-run to create the YAML output.
@@ -21,7 +22,7 @@ public class NetworkPolicyGenerator : BaseNativeGenerator<V1NetworkPolicy>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when NetworkPolicy name is not provided.</exception>
-  public override async Task GenerateAsync(V1NetworkPolicy model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NetworkPolicy model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -36,9 +37,24 @@ public class NetworkPolicyGenerator : BaseNativeGenerator<V1NetworkPolicy>
       throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the NetworkPolicy name.");
     }
 
+    // Convert the custom model to V1NetworkPolicy for YAML generation
+    var v1NetworkPolicy = new V1NetworkPolicy
+    {
+      ApiVersion = "networking.k8s.io/v1",
+      Kind = "NetworkPolicy",
+      Metadata = model.Metadata,
+      Spec = new V1NetworkPolicySpec
+      {
+        PodSelector = model.PodSelector,
+        Ingress = model.Ingress,
+        Egress = model.Egress,
+        PolicyTypes = model.PolicyTypes
+      }
+    };
+
     // Generate the YAML representation directly using the BaseKubernetesGenerator approach
     // but wrapped in our BaseNativeGenerator pattern
     var baseGenerator = new BaseKubernetesGenerator<V1NetworkPolicy>();
-    await baseGenerator.GenerateAsync(model, outputPath, overwrite, cancellationToken).ConfigureAwait(false);
+    await baseGenerator.GenerateAsync(v1NetworkPolicy, outputPath, overwrite, cancellationToken).ConfigureAwait(false);
   }
 }
