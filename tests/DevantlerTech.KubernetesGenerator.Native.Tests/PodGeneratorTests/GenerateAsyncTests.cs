@@ -17,8 +17,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodGenerator();
-    var model = new Pod("pod", "nginx")
+    var model = new Pod("pod")
     {
+      Image = "nginx",
       Command = ["echo", "hello"],
       Environment = new Dictionary<string, string>
       {
@@ -57,7 +58,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodGenerator();
-    var model = new Pod("minimal-pod", "nginx");
+    var model = new Pod("minimal-pod") { Image = "nginx" };
 
     // Act
     string fileName = "minimal-pod.yaml";

@@ -5,7 +5,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Represents a Pod for use with kubectl run command.
 /// </summary>
-public class Pod(string name, string image)
+public class Pod(string name)
 {
   /// <summary>
   /// Gets or sets the metadata for the pod.
@@ -15,7 +15,7 @@ public class Pod(string name, string image)
   /// <summary>
   /// Gets or sets the container image.
   /// </summary>
-  public string Image { get; set; } = image;
+  public required string Image { get; set; }
 
   /// <summary>
   /// Gets or sets the command to run in the container.
