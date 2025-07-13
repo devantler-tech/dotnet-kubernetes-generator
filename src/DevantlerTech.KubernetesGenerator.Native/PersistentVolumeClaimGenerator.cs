@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -9,10 +10,10 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes PersistentVolumeClaim objects using 'kubectl create -f' commands.
 /// </summary>
-public class PersistentVolumeClaimGenerator : BaseNativeGenerator<V1PersistentVolumeClaim>
+public class PersistentVolumeClaimGenerator : BaseNativeGenerator<PersistentVolumeClaim>
 {
   static readonly string[] _defaultArgs = ["create", "-f"];
-  
+
   /// <summary>
   /// List of temporary files created during generation that need to be cleaned up.
   /// </summary>
@@ -34,7 +35,7 @@ public class PersistentVolumeClaimGenerator : BaseNativeGenerator<V1PersistentVo
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  public override async Task GenerateAsync(V1PersistentVolumeClaim model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(PersistentVolumeClaim model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -48,12 +49,12 @@ public class PersistentVolumeClaimGenerator : BaseNativeGenerator<V1PersistentVo
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a PersistentVolumeClaim from a V1PersistentVolumeClaim object.
+  /// Builds the kubectl arguments for creating a PersistentVolumeClaim from a PersistentVolumeClaim object.
   /// </summary>
-  /// <param name="model">The V1PersistentVolumeClaim object.</param>
+  /// <param name="model">The PersistentVolumeClaim object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The kubectl arguments.</returns>
-  async Task<ReadOnlyCollection<string>> AddOptionsAsync(V1PersistentVolumeClaim model, CancellationToken cancellationToken = default)
+  async Task<ReadOnlyCollection<string>> AddOptionsAsync(PersistentVolumeClaim model, CancellationToken cancellationToken = default)
   {
     var args = new List<string>();
 
@@ -71,22 +72,82 @@ public class PersistentVolumeClaimGenerator : BaseNativeGenerator<V1PersistentVo
   }
 
   /// <summary>
-  /// Creates a temporary YAML file from the V1PersistentVolumeClaim object.
+  /// Creates a temporary YAML file from the PersistentVolumeClaim object.
   /// </summary>
-  /// <param name="model">The V1PersistentVolumeClaim object.</param>
+  /// <param name="model">The PersistentVolumeClaim object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The path to the temporary YAML file.</returns>
-  async Task<string> CreateTemporaryYamlFileAsync(V1PersistentVolumeClaim model, CancellationToken cancellationToken = default)
+  async Task<string> CreateTemporaryYamlFileAsync(PersistentVolumeClaim model, CancellationToken cancellationToken = default)
   {
-    // Ensure the model has the required API version and kind
-    model.ApiVersion ??= "v1";
-    model.Kind ??= "PersistentVolumeClaim";
+    // Convert the custom model to V1PersistentVolumeClaim for serialization
+    var v1Pvc = ConvertToV1PersistentVolumeClaim(model);
 
-    string yaml = _serializer.Serialize(model);
+    // Ensure the model has the required API version and kind
+    v1Pvc.ApiVersion = "v1";
+    v1Pvc.Kind = "PersistentVolumeClaim";
+
+    string yaml = _serializer.Serialize(v1Pvc);
     string tempPath = Path.Combine(Path.GetTempPath(), $"pvc-{Guid.NewGuid()}.yaml");
     await File.WriteAllTextAsync(tempPath, yaml, cancellationToken).ConfigureAwait(false);
     _temporaryFiles.Add(tempPath);
     return tempPath;
+  }
+
+  /// <summary>
+  /// Converts the custom PersistentVolumeClaim model to V1PersistentVolumeClaim.
+  /// </summary>
+  /// <param name="model">The custom PersistentVolumeClaim model.</param>
+  /// <returns>The V1PersistentVolumeClaim object.</returns>
+  static V1PersistentVolumeClaim ConvertToV1PersistentVolumeClaim(PersistentVolumeClaim model)
+  {
+    var v1Pvc = new V1PersistentVolumeClaim
+    {
+      Metadata = model.Metadata,
+      Spec = new V1PersistentVolumeClaimSpec
+      {
+        AccessModes = model.AccessModes,
+        Resources = new V1VolumeResourceRequirements
+        {
+          Requests = new Dictionary<string, ResourceQuantity>
+          {
+            ["storage"] = new ResourceQuantity(model.StorageSize)
+          }
+        }
+      }
+    };
+
+    // Add optional properties if they are set
+    if (!string.IsNullOrEmpty(model.StorageClassName))
+    {
+      v1Pvc.Spec.StorageClassName = model.StorageClassName;
+    }
+
+    if (!string.IsNullOrEmpty(model.VolumeMode))
+    {
+      v1Pvc.Spec.VolumeMode = model.VolumeMode;
+    }
+
+    if (!string.IsNullOrEmpty(model.VolumeName))
+    {
+      v1Pvc.Spec.VolumeName = model.VolumeName;
+    }
+
+    if (model.Selector != null)
+    {
+      v1Pvc.Spec.Selector = model.Selector;
+    }
+
+    if (model.DataSource != null)
+    {
+      v1Pvc.Spec.DataSource = model.DataSource;
+    }
+
+    if (model.DataSourceRef != null)
+    {
+      v1Pvc.Spec.DataSourceRef = model.DataSourceRef;
+    }
+
+    return v1Pvc;
   }
 
   /// <summary>
