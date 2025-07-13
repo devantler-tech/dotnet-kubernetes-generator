@@ -37,19 +37,15 @@ public class DockerRegistrySecretGenerator : BaseNativeGenerator<DockerRegistryS
   /// <returns>The kubectl arguments.</returns>
   static ReadOnlyCollection<string> AddOptions(DockerRegistrySecret model)
   {
-    var args = new List<string> { };
-
-    // Require that a secret name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
+    var args = new List<string>
     {
-      throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the secret name.");
-    }
-    args.Add(model.Metadata.Name);
+      model.Metadata.Name
+    };
 
     // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata?.NamespaceProperty))
+    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
     {
-      args.Add($"--namespace={model.Metadata.NamespaceProperty}");
+      args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
     // Add Docker registry specific arguments
