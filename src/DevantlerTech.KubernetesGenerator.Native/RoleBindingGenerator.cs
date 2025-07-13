@@ -63,7 +63,7 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
         args.Add($"--role={model.RoleRef.Name}");
         break;
       default:
-        throw new KubernetesGeneratorException($"Unsupported RoleRef.Kind '{model.RoleRef.Kind}'. Only 'Role' and 'ClusterRole' are supported.");
+        throw new KubernetesGeneratorException($"Unsupported RoleRef.Kind '{model.RoleRef.Kind}'.");
     }
 
     // Add subjects (users, groups, service accounts)
@@ -71,11 +71,6 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
     {
       foreach (var subject in model.Subjects)
       {
-        if (string.IsNullOrEmpty(subject.Name))
-        {
-          throw new KubernetesGeneratorException("Subject.Name must be set for all subjects.");
-        }
-
         switch (subject.Kind)
         {
           case RoleBindingSubjectKind.User:
@@ -91,7 +86,7 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
             args.Add($"--serviceaccount={serviceAccountRef}");
             break;
           default:
-            throw new KubernetesGeneratorException($"Unsupported subject kind '{subject.Kind}'. Only 'User', 'Group', and 'ServiceAccount' are supported.");
+            throw new KubernetesGeneratorException($"Unsupported subject kind '{subject.Kind}'.");
         }
       }
     }
