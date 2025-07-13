@@ -1,4 +1,4 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests;
 
@@ -17,19 +17,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NamespaceGenerator();
-    var model = new V1Namespace
-    {
-      ApiVersion = "v1",
-      Kind = "Namespace",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "namespace",
-      },
-      Spec = new V1NamespaceSpec
-      {
-        Finalizers = ["kubernetes"]
-      },
-    };
+    var model = new Namespace("namespace");
 
     // Act
     string fileName = "namespace.yaml";

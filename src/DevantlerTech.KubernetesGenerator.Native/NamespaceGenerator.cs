@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
@@ -23,7 +21,7 @@ public class NamespaceGenerator : BaseNativeGenerator<Namespace>
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    var args = new ReadOnlyCollection<string>(
+    var args = new System.Collections.ObjectModel.ReadOnlyCollection<string>(
       [.. _defaultArgs, .. AddArguments(model)]
     );
     string errorMessage = $"Failed to create namespace '{model.Metadata.Name}' using kubectl";
@@ -35,7 +33,7 @@ public class NamespaceGenerator : BaseNativeGenerator<Namespace>
   /// </summary>
   /// <param name="model">The Namespace object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddArguments(Namespace model)
+  static System.Collections.ObjectModel.ReadOnlyCollection<string> AddArguments(Namespace model)
   {
     var args = new List<string>
     {

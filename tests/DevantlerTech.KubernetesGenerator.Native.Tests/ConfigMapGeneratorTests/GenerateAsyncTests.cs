@@ -1,4 +1,4 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests;
 
@@ -17,25 +17,11 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ConfigMapGenerator();
-    var model = new V1ConfigMap
+    var model = new ConfigMap("config-map")
     {
-      ApiVersion = "v1",
-      Kind = "ConfigMap",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "config-map",
-        NamespaceProperty = "default"
-      },
-      Data = new Dictionary<string, string>
-      {
-        ["key"] = "value"
-      },
-      BinaryData = new Dictionary<string, byte[]>
-      {
-        ["key"] = [1, 2, 3]
-      },
-      Immutable = true
+      Metadata = { Namespace = "default" }
     };
+    model.Data["key"] = "value";
 
     // Act
     string fileName = "config-map.yaml";

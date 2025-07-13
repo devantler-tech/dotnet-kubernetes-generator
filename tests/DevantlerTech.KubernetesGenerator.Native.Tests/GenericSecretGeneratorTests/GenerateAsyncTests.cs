@@ -1,5 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.GenericSecretGeneratorTests;
 
@@ -17,22 +17,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new GenericSecretGenerator();
-    var model = new V1Secret
+    var model = new GenericSecret("generic-secret")
     {
-      ApiVersion = "v1",
-      Kind = "Secret",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "generic-secret",
-        NamespaceProperty = "default"
-      },
-      Type = "Opaque",
-      StringData = new Dictionary<string, string>
-      {
-        ["key1"] = "value1",
-        ["key2"] = "value2"
-      }
+      Metadata = { Namespace = "default" },
+      Type = "Opaque"
     };
+    model.Data["key1"] = "value1";
+    model.Data["key2"] = "value2";
 
     // Act
     string fileName = "generic-secret.yaml";
