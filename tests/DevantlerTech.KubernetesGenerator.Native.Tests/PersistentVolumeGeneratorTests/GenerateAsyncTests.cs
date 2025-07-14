@@ -1,7 +1,7 @@
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeGeneratorTests;
-
 
 /// <summary>
 /// Tests for the <see cref="PersistentVolumeGenerator"/> class.
@@ -9,66 +9,39 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeGenerat
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated PersistentVolume object.
+  /// Verifies the generated PersistentVolume object with basic properties.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidPersistentVolume()
+  public async Task GenerateAsync_WithBasicProperties_ShouldGenerateAValidPersistentVolume()
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new V1PersistentVolume
+    var model = new PersistentVolume("test-pv")
     {
-      ApiVersion = "v1",
-      Kind = "PersistentVolume",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
-        Name = "persistent-volume",
-        NamespaceProperty = "default"
+        Name = "test-pv",
+        Namespace = "default",
+        Labels = new Dictionary<string, string>
+        {
+          ["app"] = "test"
+        }
       },
-      Spec = new V1PersistentVolumeSpec
+      Capacity = new ResourceQuantity("1Gi"),
+      AccessModes = ["ReadWriteOnce"],
+      ReclaimPolicy = "Retain",
+      StorageClassName = "standard",
+      VolumeMode = "Filesystem",
+      HostPath = new HostPathVolumeSource
       {
-        AccessModes = ["ReadWriteOnce"],
-        Capacity = new Dictionary<string, ResourceQuantity>
-        {
-          ["storage"] = new ResourceQuantity("1Gi")
-        },
-        ClaimRef = new V1ObjectReference
-        {
-          ApiVersion = "v1",
-          Kind = "PersistentVolumeClaim",
-          Name = "pvc",
-          NamespaceProperty = "default"
-        },
-        PersistentVolumeReclaimPolicy = "Retain",
-        StorageClassName = "storage-class",
-        MountOptions = ["option"],
-        NodeAffinity = new V1VolumeNodeAffinity
-        {
-          Required = new V1NodeSelector
-          {
-            NodeSelectorTerms =
-            [
-              new V1NodeSelectorTerm
-              {
-                MatchExpressions =
-                [
-                  new V1NodeSelectorRequirement
-                  {
-                    Key = "key",
-                    OperatorProperty = "In",
-                    Values = ["value"]
-                  }
-                ]
-              }
-            ]
-          }
-        },
+        Path = "/tmp/data",
+        Type = "DirectoryOrCreate"
       }
     };
 
     // Act
-    string fileName = "persistent-volume.yaml";
+    string fileName = "persistent-volume-basic.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
@@ -80,5 +53,152 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PersistentVolume object with NFS storage.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithNfsStorage_ShouldGenerateAValidPersistentVolume()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume("nfs-pv")
+    {
+      Metadata = new Metadata
+      {
+        Name = "nfs-pv",
+        Namespace = "default"
+      },
+      Capacity = new ResourceQuantity("5Gi"),
+      AccessModes = ["ReadWriteMany"],
+      ReclaimPolicy = "Retain",
+      StorageClassName = "nfs",
+      Nfs = new NfsVolumeSource
+      {
+        Server = "nfs-server.example.com",
+        Path = "/exports/data",
+        ReadOnly = false
+      }
+    };
+
+    // Act
+    string fileName = "persistent-volume-nfs.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PersistentVolume object with local storage and node affinity.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithLocalStorageAndNodeAffinity_ShouldGenerateAValidPersistentVolume()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume("local-pv")
+    {
+      Metadata = new Metadata
+      {
+        Name = "local-pv",
+        Namespace = "default",
+        Annotations = new Dictionary<string, string>
+        {
+          ["description"] = "Local storage persistent volume"
+        }
+      },
+      Capacity = new ResourceQuantity("10Gi"),
+      AccessModes = ["ReadWriteOnce"],
+      ReclaimPolicy = "Delete",
+      StorageClassName = "local-storage",
+      Local = new LocalVolumeSource
+      {
+        Path = "/mnt/local-disk",
+        FsType = "ext4"
+      },
+      NodeAffinity = new NodeAffinity
+      {
+        Required = new List<NodeSelectorTerm>
+        {
+          new NodeSelectorTerm
+          {
+            MatchExpressions = new List<NodeSelectorRequirement>
+            {
+              new NodeSelectorRequirement
+              {
+                Key = "kubernetes.io/hostname",
+                Operator = "In",
+                Values = ["worker-node-1"]
+              }
+            }
+          }
+        }
+      }
+    };
+
+    // Act
+    string fileName = "persistent-volume-local.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies that an exception is thrown when model is null.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithNullModel_ShouldThrowArgumentNullException()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    PersistentVolume model = null!;
+
+    // Act & Assert
+    await Assert.ThrowsAsync<ArgumentNullException>(() =>
+      generator.GenerateAsync(model, "test-output.yaml"));
+  }
+
+  /// <summary>
+  /// Verifies that an exception is thrown when persistent volume name is not provided.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithoutName_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume("test-pv")
+    {
+      Metadata = new Metadata
+      {
+        Name = "" // Empty name
+      }
+    };
+
+    // Act & Assert
+    var exception = await Assert.ThrowsAsync<KubernetesGeneratorException>(() =>
+      generator.GenerateAsync(model, "test-output.yaml"));
+    
+    Assert.Contains("The model.Metadata.Name must be set", exception.Message);
   }
 }
