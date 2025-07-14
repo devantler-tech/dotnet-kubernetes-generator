@@ -3,29 +3,25 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: deployment
-  name: deployment
+    app: deployment-with-command
+  name: deployment-with-command
   namespace: default
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: deployment
+      app: deployment-with-command
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: deployment
+        app: deployment-with-command
     spec:
       containers:
       - command:
-        - sh
-        - -c
-        - echo hello
-        image: nginx:latest
-        name: nginx
-        ports:
-        - containerPort: 8080
+        - date
+        image: busybox
+        name: busybox
         resources: {}
 status: {}

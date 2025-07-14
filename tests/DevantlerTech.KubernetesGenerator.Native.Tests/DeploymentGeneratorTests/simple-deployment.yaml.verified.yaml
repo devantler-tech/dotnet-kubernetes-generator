@@ -3,29 +3,22 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: deployment
-  name: deployment
-  namespace: default
+    app: simple-deployment
+  name: simple-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: deployment
+      app: simple-deployment
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: deployment
+        app: simple-deployment
     spec:
       containers:
-      - command:
-        - sh
-        - -c
-        - echo hello
-        image: nginx:latest
+      - image: nginx
         name: nginx
-        ports:
-        - containerPort: 8080
         resources: {}
 status: {}
