@@ -1,4 +1,4 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.HorizontalPodAutoscalerGeneratorTests;
 
@@ -17,18 +17,18 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new HorizontalPodAutoscalerGenerator();
-    var model = new V2HorizontalPodAutoscaler
+    var model = new HorizontalPodAutoscaler("horizontal-pod-autoscaler")
     {
       ApiVersion = "autoscaling/v2",
       Kind = "HorizontalPodAutoscaler",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
         Name = "horizontal-pod-autoscaler",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
-      Spec = new V2HorizontalPodAutoscalerSpec
+      Spec = new HorizontalPodAutoscalerSpec
       {
-        ScaleTargetRef = new V2CrossVersionObjectReference
+        ScaleTargetRef = new ScaleTargetRef
         {
           ApiVersion = "apps/v1",
           Kind = "Deployment",
