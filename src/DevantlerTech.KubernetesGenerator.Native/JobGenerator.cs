@@ -42,10 +42,6 @@ public class JobGenerator : BaseNativeGenerator<Job>
     var args = new List<string>();
 
     // Require that a job name is provided
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
-    {
-      throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the job name.");
-    }
     args.Add(model.Metadata.Name);
 
     // Add namespace if specified
