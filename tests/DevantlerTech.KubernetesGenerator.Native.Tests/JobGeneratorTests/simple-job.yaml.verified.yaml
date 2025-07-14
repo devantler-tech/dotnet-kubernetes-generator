@@ -1,12 +1,17 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+  creationTimestamp: null
   name: simple-job
   namespace: default
 spec:
   template:
+    metadata:
+      creationTimestamp: null
     spec:
       containers:
       - image: nginx
         name: simple-job
+        resources: {}
       restartPolicy: Never
+status: {}
