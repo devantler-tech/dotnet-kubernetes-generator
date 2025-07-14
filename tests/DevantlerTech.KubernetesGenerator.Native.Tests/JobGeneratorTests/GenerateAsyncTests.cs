@@ -101,7 +101,6 @@ public sealed class GenerateAsyncTests
       },
       Spec = new JobSpec
       {
-        Image = "", // Not used when creating from cronjob
         From = "cronjob/my-cronjob"
       }
     };
@@ -166,7 +165,7 @@ public sealed class GenerateAsyncTests
       },
       Spec = new JobSpec
       {
-        Image = "" // Empty image and no From
+        // No image and no From - should fail
       }
     };
 
