@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: simple-job
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - image: nginx
+        name: simple-job
+      restartPolicy: Never

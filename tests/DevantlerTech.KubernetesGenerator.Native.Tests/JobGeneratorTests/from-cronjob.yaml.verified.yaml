@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: from-cronjob
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - image: busybox
+        name: from-cronjob
+      restartPolicy: Never
