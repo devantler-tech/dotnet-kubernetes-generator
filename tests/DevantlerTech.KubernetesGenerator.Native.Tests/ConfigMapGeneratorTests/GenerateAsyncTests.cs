@@ -1,7 +1,6 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests;
-
 
 /// <summary>
 /// Tests for the <see cref="ConfigMapGenerator"/> class.
@@ -9,33 +8,19 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated ConfigMap object.
+  /// Verifies the generated ConfigMap object with literal data.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidConfigMap()
+  public async Task GenerateAsync_WithLiteralData_ShouldGenerateAValidConfigMap()
   {
     // Arrange
     var generator = new ConfigMapGenerator();
-    var model = new V1ConfigMap
+    var model = new ConfigMap("config-map")
     {
-      ApiVersion = "v1",
-      Kind = "ConfigMap",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "config-map",
-        NamespaceProperty = "default"
-      },
-      Data = new Dictionary<string, string>
-      {
-        ["key"] = "value"
-      },
-      BinaryData = new Dictionary<string, byte[]>
-      {
-        ["key"] = [1, 2, 3]
-      },
-      Immutable = true
+      Metadata = { Namespace = "default" }
     };
+    model.Data.Add("key", "value");
 
     // Act
     string fileName = "config-map.yaml";
@@ -50,5 +35,18 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="ArgumentNullException"/> is thrown when the model is null.
+  /// </summary>
+  [Fact]
+  public async Task GenerateAsync_WithNullModel_ShouldThrowArgumentNullException()
+  {
+    // Arrange
+    var generator = new ConfigMapGenerator();
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<ArgumentNullException>(() => generator.GenerateAsync(null!, Path.GetTempFileName()));
   }
 }
