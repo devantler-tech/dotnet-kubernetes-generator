@@ -1,8 +1,9 @@
+﻿---
 apiVersion: batch/v1
 kind: Job
 metadata:
   creationTimestamp: null
-  name: job
+  name: job-with-image
   namespace: default
 spec:
   template:
@@ -10,11 +11,8 @@ spec:
       creationTimestamp: null
     spec:
       containers:
-      - command:
-        - echo
-        - hello
-        image: busybox
-        name: job
+      - image: nginx
+        name: job-with-image
         resources: {}
       restartPolicy: Never
 status: {}

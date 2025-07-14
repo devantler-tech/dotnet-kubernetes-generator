@@ -39,13 +39,32 @@ public abstract class BaseNativeGenerator<T> : IKubernetesGenerator<T>
   /// <exception cref="KubernetesGeneratorException"></exception>
   public async Task RunKubectlAsync(string outputPath, bool overwrite, ReadOnlyCollection<string> arguments, string errorMessage, CancellationToken cancellationToken)
   {
-    // Add default arguments for YAML output and dry-run
-    string[] allArguments = [.. arguments, .. _defaultArguments];
+    ArgumentNullException.ThrowIfNull(arguments);
+
+    string[] allArguments = CreateArguments(arguments);
 
     var (exitCode, output) = await Kubectl.RunAsync(allArguments, silent: true,
       cancellationToken: cancellationToken).ConfigureAwait(false);
     if (exitCode != 0)
       throw new KubernetesGeneratorException($"{errorMessage}: {output}");
     await YamlFileWriter.WriteToFileAsync(outputPath, output, overwrite, cancellationToken).ConfigureAwait(false);
+  }
+
+  static string[] CreateArguments(ReadOnlyCollection<string> arguments)
+  {
+    int doubleDashIndex = arguments.IndexOf("--");
+    string[] allArguments;
+    if (doubleDashIndex >= 0)
+    {
+      var beforeDoubleDash = arguments.Take(doubleDashIndex);
+      var afterDoubleDash = arguments.Skip(doubleDashIndex);
+      allArguments = [.. beforeDoubleDash, .. _defaultArguments, .. afterDoubleDash];
+    }
+    else
+    {
+      allArguments = [.. arguments, .. _defaultArguments];
+    }
+
+    return allArguments;
   }
 }
