@@ -1,7 +1,6 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NetworkPolicyGeneratorTests;
-
 
 /// <summary>
 /// Tests for the <see cref="NetworkPolicyGenerator"/> class.
@@ -17,52 +16,43 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NetworkPolicyGenerator();
-    var model = new V1NetworkPolicy
+    var model = new NetworkPolicy("network-policy")
     {
-      ApiVersion = "v1",
-      Kind = "NetworkPolicy",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
         Name = "network-policy",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
-      Spec = new V1NetworkPolicySpec
+      PodSelector = new NetworkPolicyPodSelector
       {
-        Egress =
-        [
-          new V1NetworkPolicyEgressRule
-          {
-            Ports =
-            [
-              new V1NetworkPolicyPort
-              {
-                Port = new IntstrIntOrString("80")
-              }
-            ]
-          }
-        ],
-        Ingress =
-        [
-          new V1NetworkPolicyIngressRule
-          {
-            Ports =
-            [
-              new V1NetworkPolicyPort
-              {
-                Port = new IntstrIntOrString("80")
-              }
-            ]
-          }
-        ],
-        PolicyTypes = ["Ingress", "Egress"],
-        PodSelector = new V1LabelSelector
+        MatchLabels = new Dictionary<string, string>
         {
-          MatchLabels = new Dictionary<string, string>
-          {
-            ["app"] = "nginx"
-          }
+          ["app"] = "nginx"
         }
-      }
+      },
+      PolicyTypes = ["Ingress", "Egress"],
+      Ingress = [
+        new NetworkPolicyIngressRule
+        {
+          Ports = [
+            new NetworkPolicyPort
+            {
+              Port = "80"
+            }
+          ]
+        }
+      ],
+      Egress = [
+        new NetworkPolicyEgressRule
+        {
+          Ports = [
+            new NetworkPolicyPort
+            {
+              Port = "80"
+            }
+          ]
+        }
+      ]
     };
 
     // Act
