@@ -14,9 +14,4 @@ public class JobSpec
   /// Gets or sets the command to run in the container.
   /// </summary>
   public IList<string>? Command { get; init; }
-
-  /// <summary>
-  /// Gets or sets the restart policy for the job pods.
-  /// </summary>
-  public PodRestartPolicy? RestartPolicy { get; set; }
 }

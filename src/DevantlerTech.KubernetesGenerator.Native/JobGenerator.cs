@@ -39,10 +39,11 @@ public class JobGenerator : BaseNativeGenerator<Job>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
   static ReadOnlyCollection<string> AddArguments(Job model)
   {
-    var args = new List<string>();
-
-    // Require that a job name is provided
-    args.Add(model.Metadata.Name);
+    var args = new List<string>
+    {
+      // Require that a job name is provided
+      model.Metadata.Name
+    };
 
     // Add namespace if specified
     if (!string.IsNullOrEmpty(model.Metadata?.Namespace))

@@ -92,7 +92,7 @@ public sealed class GenerateAsyncTests
   {
     // This test is no longer needed since Image is now required by the compiler
     // The test would fail at compile time if Image is not provided
-    await Task.CompletedTask;
+    await Task.CompletedTask.ConfigureAwait(true);
     Assert.True(true); // Placeholder to make the test pass
   }
 
@@ -120,7 +120,7 @@ public sealed class GenerateAsyncTests
 
     // Act & Assert
     string outputPath = Path.Combine(Path.GetTempPath(), "test.yaml");
-    await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, outputPath));
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, outputPath));
   }
 
   /// <summary>
@@ -133,7 +133,7 @@ public sealed class GenerateAsyncTests
     // This test verifies that the Image property is required by the compiler
     // If someone tries to create a JobSpec without Image, it will fail at compile time
     // This test ensures the model enforces the requirement
-    await Task.CompletedTask;
+    await Task.CompletedTask.ConfigureAwait(true);
     Assert.True(true); // Placeholder to make the test pass
   }
 }
