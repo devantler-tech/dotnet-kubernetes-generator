@@ -54,26 +54,13 @@ public class JobGenerator : BaseNativeGenerator<Job>
       args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
-    // Handle "from" parameter (create job from cronjob)
-    if (!string.IsNullOrEmpty(model.Spec.From))
-    {
-      args.Add($"--from={model.Spec.From}");
-    }
-    else
-    {
-      // Image is required when not creating from cronjob
-      if (string.IsNullOrEmpty(model.Spec.Image))
-      {
-        throw new KubernetesGeneratorException("The model.Spec.Image must be set when not creating from a cronjob.");
-      }
-      args.Add($"--image={model.Spec.Image}");
+    args.Add($"--image={model.Spec.Image}");
 
-      // Add command if specified
-      if (model.Spec.Command != null && model.Spec.Command.Count > 0)
-      {
-        args.Add("--");
-        args.AddRange(model.Spec.Command);
-      }
+    // Add command if specified
+    if (model.Spec.Command != null && model.Spec.Command.Count > 0)
+    {
+      args.Add("--");
+      args.AddRange(model.Spec.Command);
     }
 
     return args.AsReadOnly();
