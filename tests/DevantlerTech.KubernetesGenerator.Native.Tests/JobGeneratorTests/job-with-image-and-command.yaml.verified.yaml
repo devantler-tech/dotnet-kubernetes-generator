@@ -1,0 +1,21 @@
+﻿---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: job-with-image-and-command
+  namespace: default
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - echo
+        - hello
+        image: busybox
+        name: job-with-image-and-command
+        resources: {}
+      restartPolicy: Never
+status: {}

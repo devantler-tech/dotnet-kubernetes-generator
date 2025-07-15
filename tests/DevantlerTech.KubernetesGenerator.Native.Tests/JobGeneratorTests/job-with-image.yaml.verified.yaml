@@ -1,0 +1,18 @@
+﻿---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: job-with-image
+  namespace: default
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - image: nginx
+        name: job-with-image
+        resources: {}
+      restartPolicy: Never
+status: {}

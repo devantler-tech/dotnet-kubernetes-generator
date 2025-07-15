@@ -1,7 +1,6 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.JobGeneratorTests;
-
 
 /// <summary>
 /// Tests for the <see cref="JobGenerator"/> class.
@@ -9,61 +8,67 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.JobGeneratorTests;
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Job object.
+  /// Verifies the generated Job object with image.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidJob()
+  public async Task GenerateAsync_WithImageAndCommand_ShouldGenerateAValidJob()
   {
     // Arrange
     var generator = new JobGenerator();
-    var model = new V1Job
+    var model = new Job
     {
-      ApiVersion = "batch/v1",
-      Kind = "Job",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
-        Name = "job",
-        NamespaceProperty = "default"
+        Name = "job-with-image-and-command",
+        Namespace = "default"
       },
-      Spec = new V1JobSpec
+      Spec = new JobSpec
       {
-        Parallelism = 1,
-        Completions = 1,
-        Selector = new V1LabelSelector
-        {
-          MatchLabels = new Dictionary<string, string>
-          {
-            ["app"] = "job"
-          }
-        },
-        Template = new V1PodTemplateSpec
-        {
-          Metadata = new V1ObjectMeta
-          {
-            Labels = new Dictionary<string, string>
-            {
-              ["app"] = "job"
-            }
-          },
-          Spec = new V1PodSpec
-          {
-            Containers =
-            [
-              new V1Container
-              {
-                Name = "container",
-                Image = "nginx",
-                Command = ["echo", "hello"]
-              }
-            ]
-          }
-        }
+        Image = "busybox",
+        Command = ["echo", "hello"]
       }
     };
 
     // Act
-    string fileName = "job.yaml";
+    string fileName = "job-with-image-and-command.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated Job object with image only.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithImageOnly_ShouldGenerateAValidJob()
+  {
+    // Arrange
+    var generator = new JobGenerator();
+    var model = new Job
+    {
+      Metadata = new Metadata
+      {
+        Name = "job-with-image",
+        Namespace = "default"
+      },
+      Spec = new JobSpec
+      {
+        Image = "nginx"
+      }
+    };
+
+    // Act
+    string fileName = "job-with-image.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
