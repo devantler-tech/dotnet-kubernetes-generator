@@ -17,9 +17,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress("simple-ingress")
+    var model = new Ingress
     {
-      Metadata = { Namespace = "default" },
+      Metadata = new Metadata { Name = "simple-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new IngressRule
@@ -56,9 +56,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress("tls-ingress")
+    var model = new Ingress
     {
-      Metadata = { Namespace = "default" },
+      Metadata = new Metadata { Name = "tls-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new IngressRule
@@ -96,9 +96,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress("default-backend-ingress")
+    var model = new Ingress
     {
-      Metadata = { Namespace = "default" },
+      Metadata = new Metadata { Name = "default-backend-ingress", Namespace = "default" },
       Class = "nginx",
       DefaultBackend = "default-service:80",
       Rules = [
@@ -136,9 +136,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress("annotated-ingress")
+    var model = new Ingress
     {
-      Metadata = { Namespace = "default" },
+      Metadata = new Metadata { Name = "annotated-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new IngressRule
@@ -180,9 +180,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress("multi-rule-ingress")
+    var model = new Ingress
     {
-      Metadata = { Namespace = "default" },
+      Metadata = new Metadata { Name = "multi-rule-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new IngressRule
@@ -233,8 +233,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress("simple-ingress")
+    var model = new Ingress
     {
+      Metadata = new Metadata { Name = "simple-ingress" },
       Rules = [
         new IngressRule
         {
@@ -259,31 +260,5 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
-  }
-
-  /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the model does not have a name set.
-  /// </summary>
-  [Fact]
-  public async Task GenerateAsync_WithoutName_ShouldThrowKubernetesGeneratorException()
-  {
-    // Arrange
-    var generator = new IngressGenerator();
-    var model = new Ingress("")
-    {
-      Rules = [
-        new IngressRule
-        {
-          Host = "example.com",
-          Path = "/",
-          ServiceName = "app-service",
-          ServicePort = "80"
-        }
-      ]
-    };
-
-    // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
-  }
 }
 

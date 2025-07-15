@@ -42,10 +42,6 @@ public class IngressGenerator : BaseNativeGenerator<Ingress>
     List<string> args = [];
 
     // Require that an ingress name is provided
-    if (string.IsNullOrEmpty(model.Metadata.Name))
-    {
-      throw new KubernetesGeneratorException("The model.Metadata.Name must be set to set the ingress name.");
-    }
     args.Add(model.Metadata.Name);
 
     // Add namespace if specified

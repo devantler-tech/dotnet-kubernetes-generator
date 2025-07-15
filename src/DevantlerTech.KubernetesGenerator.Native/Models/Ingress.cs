@@ -3,12 +3,12 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Represents an Ingress for use with kubectl create ingress.
 /// </summary>
-public class Ingress(string name)
+public class Ingress
 {
   /// <summary>
   /// Gets or sets the metadata for the ingress.
   /// </summary>
-  public Metadata Metadata { get; set; } = new() { Name = name };
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the ingress class to be used.
