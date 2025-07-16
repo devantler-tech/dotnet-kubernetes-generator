@@ -37,19 +37,7 @@ public class IngressRule
   /// <returns>Rule in format host/path=service:port[,tls=secretname]</returns>
   public string ToKubectlFormat()
   {
-    // Build the host/path part
-    string hostPath = "";
-    if (!string.IsNullOrEmpty(Host))
-    {
-      hostPath = Host;
-    }
-    hostPath += "/";
-    if (!string.IsNullOrEmpty(Path))
-    {
-      hostPath += Path;
-    }
-
-    string rule = $"{hostPath}={ServiceName}:{ServicePort}";
+    string rule = $"{Host}/{Path}={ServiceName}:{ServicePort}";
 
     if (!string.IsNullOrEmpty(TlsSecretName))
     {
