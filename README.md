@@ -103,17 +103,23 @@ data:
 
 ### Native
 
+- `ClusterIPServiceGenerator`
 - `ClusterRoleBindingGenerator`
 - `ClusterRoleGenerator`
 - `ConfigMapGenerator`
 - `CronJobGenerator`
 - `DaemonSetGenerator`
 - `DeploymentGenerator`
+- `DockerRegistrySecretGenerator`
+- `ExternalNameServiceGenerator`
+- `GenericSecretGenerator`
 - `HorizontalPodAutoscalerGenerator`
 - `IngressGenerator`
 - `JobGenerator`
+- `LoadBalancerServiceGenerator`
 - `NamespaceGenerator`
 - `NetworkPolicyGenerator`
+- `NodePortServiceGenerator`
 - `PersistentVolumeClaimGenerator`
 - `PersistentVolumeGenerator`
 - `PodDisruptionBudgetGenerator`
@@ -122,7 +128,6 @@ data:
 - `ResourceQuotaGenerator`
 - `RoleBindingGenerator`
 - `RoleGenerator`
-- `SecretGenerator`
 - `ServiceAccountGenerator`
-- `ServiceGenerator`
 - `StatefulSetGenerator`
+- `TLSSecretGenerator`
