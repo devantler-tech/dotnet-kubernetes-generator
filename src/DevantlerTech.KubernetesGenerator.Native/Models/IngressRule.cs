@@ -49,12 +49,6 @@ public class IngressRule
       hostPath += Path;
     }
 
-    // If neither host nor path is specified, just use empty string
-    if (string.IsNullOrEmpty(hostPath))
-    {
-      hostPath = "";
-    }
-
     string rule = $"{hostPath}={ServiceName}:{ServicePort}";
 
     if (!string.IsNullOrEmpty(TlsSecretName))
