@@ -24,7 +24,7 @@ public class Ingress
   /// Gets or sets the rules for the ingress.
   /// Rules are in format host/path=service:port[,tls=secretname].
   /// </summary>
-  public IList<IngressRule> Rules { get; init; } = new List<IngressRule>();
+  public IList<IngressRule> Rules { get; init; } = [];
 
   /// <summary>
   /// Gets or sets the annotations for the ingress.

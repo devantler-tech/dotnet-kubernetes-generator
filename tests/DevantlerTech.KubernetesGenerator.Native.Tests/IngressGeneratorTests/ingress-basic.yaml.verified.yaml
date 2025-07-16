@@ -1,0 +1,22 @@
+﻿---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: simple-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: app-service
+            port:
+              number: 80
+        path: /app
+        pathType: Exact
+status:
+  loadBalancer: {}

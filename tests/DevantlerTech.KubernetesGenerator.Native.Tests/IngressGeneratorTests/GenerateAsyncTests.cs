@@ -1,4 +1,3 @@
-using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.IngressGeneratorTests;
@@ -25,7 +24,7 @@ public sealed class GenerateAsyncTests
         new IngressRule
         {
           Host = "example.com",
-          Path = "/app",
+          Path = "app",
           ServiceName = "app-service",
           ServicePort = "80"
         }
@@ -64,7 +63,7 @@ public sealed class GenerateAsyncTests
         new IngressRule
         {
           Host = "secure.example.com",
-          Path = "/app",
+          Path = "app",
           ServiceName = "app-service",
           ServicePort = "443",
           TlsSecretName = "my-tls-secret"
@@ -105,7 +104,7 @@ public sealed class GenerateAsyncTests
         new IngressRule
         {
           Host = "example.com",
-          Path = "/app",
+          Path = "app",
           ServiceName = "app-service",
           ServicePort = "80"
         }
@@ -144,7 +143,7 @@ public sealed class GenerateAsyncTests
         new IngressRule
         {
           Host = "example.com",
-          Path = "/app",
+          Path = "app",
           ServiceName = "app-service",
           ServicePort = "80"
         }
@@ -187,22 +186,20 @@ public sealed class GenerateAsyncTests
       Rules = [
         new IngressRule
         {
-          Host = "api.example.com",
-          Path = "/",
+          Path = "",
           ServiceName = "api-service",
           ServicePort = "80"
         },
         new IngressRule
         {
           Host = "web.example.com",
-          Path = "/",
           ServiceName = "web-service",
           ServicePort = "80"
         },
         new IngressRule
         {
           Host = "admin.example.com",
-          Path = "/admin*",
+          Path = "admin*",
           ServiceName = "admin-service",
           ServicePort = "8080"
         }
@@ -240,7 +237,7 @@ public sealed class GenerateAsyncTests
         new IngressRule
         {
           Host = "example.com",
-          Path = "/",
+          Path = "",
           ServiceName = "app-service",
           ServicePort = "80"
         }
@@ -260,5 +257,6 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
+  }
 }
 

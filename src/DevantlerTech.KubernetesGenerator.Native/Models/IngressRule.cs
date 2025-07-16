@@ -43,19 +43,20 @@ public class IngressRule
     {
       hostPath = Host;
     }
+    hostPath += "/";
     if (!string.IsNullOrEmpty(Path))
     {
       hostPath += Path;
     }
-    
+
     // If neither host nor path is specified, just use empty string
     if (string.IsNullOrEmpty(hostPath))
     {
       hostPath = "";
     }
-    
-    var rule = $"{hostPath}={ServiceName}:{ServicePort}";
-    
+
+    string rule = $"{hostPath}={ServiceName}:{ServicePort}";
+
     if (!string.IsNullOrEmpty(TlsSecretName))
     {
       rule += $",tls={TlsSecretName}";
