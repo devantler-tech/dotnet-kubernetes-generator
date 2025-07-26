@@ -1,0 +1,94 @@
+name: "Copilot Setup Steps"
+
+# Automatically run the setup steps when they are changed to allow for easy validation, and
+# allow manual testing through the repository's "Actions" tab
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yaml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yaml
+
+jobs:
+  # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot.
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    # Set the permissions to the lowest permissions possible needed for your steps.
+    # Copilot will be given its own token for its operations.
+    permissions:
+      # If you want to clone the repository as part of your setup steps, for example to install dependencies, you'll need the `contents: read` permission. If you don't clone the repository in your setup steps, Copilot will do this for you automatically after the steps complete.
+      contents: read
+
+    # You can define any steps you want, and they will run before the agent starts.
+    # If you do not check out your code, Copilot will do this for you.
+    steps:
+      - name: 📄 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup .NET 9.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: 📦 Install Flux CLI
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
+        with:
+          repo: fluxcd/flux2
+
+      - name: 📦 Install Kubectl CLI
+        uses: azure/setup-kubectl@776406bce94f63e41d621b960d78ee25c8b76ede # v4.0.1
+
+      - name: 📦 Install Kind CLI
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
+        with:
+          repo: kubernetes-sigs/kind
+          rename-to: kind
+
+      - name: 📦 Install K3d CLI
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
+        with:
+          repo: k3d-io/k3d
+          rename-to: k3d
+
+      - name: 📦 Install Helm CLI
+        uses: azure/setup-helm@v4.3.0
+
+      - name: 📦 Install Kustomize CLI
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
+        with:
+          repo: kubernetes-sigs/kustomize
+          rename-to: kustomize
+
+      - name: 📦 Install Cert-Manager CLI (cmctl)
+        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
+        with:
+          repo: cert-manager/cmctl
+          rename-to: cmctl
+
+      - name: 🔄 Restore .NET dependencies
+        run: dotnet restore
+
+      - name: 🏗️ Build solution
+        run: dotnet build --no-restore --configuration Release
+
+      - name: ✅ Verify installation
+        run: |
+          echo "=== .NET Version ==="
+          dotnet --version
+          echo "=== Flux Version ==="
+          flux --version
+          echo "=== Kubectl Version ==="
+          kubectl version --client
+          echo "=== Kind Version ==="
+          kind --version
+          echo "=== K3d Version ==="
+          k3d --version
+          echo "=== Helm Version ==="
+          helm version
+          echo "=== Kustomize Version ==="
+          kustomize version
+          echo "=== Cert-Manager CLI Version ==="
+          cmctl version --client
