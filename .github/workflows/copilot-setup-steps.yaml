@@ -33,40 +33,13 @@ jobs:
         with:
           dotnet-version: "9.0.x"
 
-      - name: 📦 Install Flux CLI
+      - name: 📦 Install flux CLI
         uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
         with:
           repo: fluxcd/flux2
 
       - name: 📦 Install Kubectl CLI
         uses: azure/setup-kubectl@776406bce94f63e41d621b960d78ee25c8b76ede # v4.0.1
-
-      - name: 📦 Install Kind CLI
-        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
-        with:
-          repo: kubernetes-sigs/kind
-          rename-to: kind
-
-      - name: 📦 Install K3d CLI
-        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
-        with:
-          repo: k3d-io/k3d
-          rename-to: k3d
-
-      - name: 📦 Install Helm CLI
-        uses: azure/setup-helm@v4.3.0
-
-      - name: 📦 Install Kustomize CLI
-        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
-        with:
-          repo: kubernetes-sigs/kustomize
-          rename-to: kustomize
-
-      - name: 📦 Install Cert-Manager CLI (cmctl)
-        uses: jaxxstorm/action-install-gh-release@6096f2a2bbfee498ced520b6922ac2c06e990ed2 # v2.1.0
-        with:
-          repo: cert-manager/cmctl
-          rename-to: cmctl
 
       - name: 🔄 Restore .NET dependencies
         run: dotnet restore
