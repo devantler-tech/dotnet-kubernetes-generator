@@ -103,7 +103,7 @@ public sealed class GenerateAsyncTests
         HostPath = new PersistentVolumeHostPath
         {
           Path = "/mnt/data",
-          Type = PersistentVolumeHostPathType.DirectoryOrCreate
+          Type = HostPathType.DirectoryOrCreate
         }
       }
     };
@@ -317,7 +317,7 @@ public sealed class GenerateAsyncTests
         HostPath = new PersistentVolumeHostPath
         {
           Path = "/var/log/app.log",
-          Type = PersistentVolumeHostPathType.File
+          Type = HostPathType.File
         }
       }
     };
@@ -363,7 +363,7 @@ public sealed class GenerateAsyncTests
         HostPath = new PersistentVolumeHostPath
         {
           Path = "/mnt/ssd-storage",
-          Type = PersistentVolumeHostPathType.Directory
+          Type = HostPathType.Directory
         },
         NodeAffinity = new PersistentVolumeNodeAffinity
         {
