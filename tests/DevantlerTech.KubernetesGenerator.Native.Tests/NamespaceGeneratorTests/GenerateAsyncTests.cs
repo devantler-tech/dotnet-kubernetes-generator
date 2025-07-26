@@ -1,4 +1,4 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests;
 
@@ -9,7 +9,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Namespace object.
+  /// Verifies the generated Namespace object with metadata.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,22 +17,56 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NamespaceGenerator();
-    var model = new V1Namespace
+    var model = new Namespace
     {
-      ApiVersion = "v1",
-      Kind = "Namespace",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
-        Name = "namespace",
-      },
-      Spec = new V1NamespaceSpec
-      {
-        Finalizers = ["kubernetes"]
-      },
+        Name = "test-namespace",
+        Labels = new Dictionary<string, string>
+        {
+          ["environment"] = "test"
+        },
+        Annotations = new Dictionary<string, string>
+        {
+          ["description"] = "Test namespace"
+        }
+      }
     };
 
     // Act
     string fileName = "namespace.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated Namespace object with basic name only.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithNameOnly_ShouldGenerateAValidNamespace()
+  {
+    // Arrange
+    var generator = new NamespaceGenerator();
+    var model = new Namespace
+    {
+      Metadata = new Metadata
+      {
+        Name = "simple-namespace"
+      }
+    };
+
+    // Act
+    string fileName = "simple-namespace.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
