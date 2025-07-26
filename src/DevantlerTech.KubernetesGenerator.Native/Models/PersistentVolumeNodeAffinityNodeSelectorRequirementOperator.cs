@@ -1,9 +1,9 @@
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
-/// Enum for supported node selector requirement operators.
+/// Enum for supported match expression operators.
 /// </summary>
-public enum PersistentVolumeNodeAffinityNodeSelectorRequirementOperator
+public enum MatchExpressionOperator
 {
   /// <summary>
   /// The key should be present and equal to one of the specified values.

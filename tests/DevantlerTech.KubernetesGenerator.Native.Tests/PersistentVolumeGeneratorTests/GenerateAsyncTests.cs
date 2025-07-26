@@ -48,10 +48,10 @@ public sealed class GenerateAsyncTests
               {
                 MatchExpressions =
                 [
-                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
+                  new MatchExpression
                   {
                     Key = "key",
-                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.In,
+                    Operator = MatchExpressionOperator.In,
                     Values = ["value"]
                   }
                 ]
@@ -213,10 +213,10 @@ public sealed class GenerateAsyncTests
               {
                 MatchExpressions =
                 [
-                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
+                  new MatchExpression
                   {
                     Key = "kubernetes.io/hostname",
-                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.Exists
+                    Operator = MatchExpressionOperator.Exists
                   }
                 ]
               }
@@ -375,21 +375,21 @@ public sealed class GenerateAsyncTests
               {
                 MatchExpressions =
                 [
-                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
+                  new MatchExpression
                   {
                     Key = "node-type",
-                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.NotIn,
+                    Operator = MatchExpressionOperator.NotIn,
                     Values = ["small", "micro"]
                   },
-                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
+                  new MatchExpression
                   {
                     Key = "ssd-storage",
-                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.DoesNotExist
+                    Operator = MatchExpressionOperator.DoesNotExist
                   },
-                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
+                  new MatchExpression
                   {
                     Key = "storage-size",
-                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.Gt,
+                    Operator = MatchExpressionOperator.Gt,
                     Values = ["100"]
                   }
                 ]

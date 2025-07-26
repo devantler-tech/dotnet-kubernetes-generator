@@ -8,5 +8,5 @@ public class PersistentVolumeNodeAffinityNodeSelectorTerm
   /// <summary>
   /// Gets or sets the match expressions.
   /// </summary>
-  public IList<PersistentVolumeNodeAffinityNodeSelectorRequirement>? MatchExpressions { get; init; }
+  public IList<MatchExpression>? MatchExpressions { get; init; }
 }
