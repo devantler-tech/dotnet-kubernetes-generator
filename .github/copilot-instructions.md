@@ -156,6 +156,23 @@ public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidResourc
 - Maximum line length: 120 characters
 - All projects must build without warnings in release mode
 
+## Documentation Maintenance
+
+### README.md Updates
+- **Must be kept up-to-date** with new features, generators, and capabilities
+- Update usage examples when adding new generator types
+- Include new NuGet package information when packages are added
+- Document breaking changes and migration guidance temporarily via GitHub admonitions at the top of the README
+- Update feature lists and supported Kubernetes resources
+
+### Copilot Instructions Evolution
+- **copilot-instructions.md must be kept current** with new learnings and project evolution
+- Add new patterns and conventions as they emerge during development
+- Document generator-specific patterns when new generator types are added
+- Update coding standards based on practical experience and code reviews
+- Include new testing patterns and verification strategies as they're developed
+- Capture architectural decisions and design principles that prove effective
+
 ## Integration Guidelines
 
 ### Usage Patterns
