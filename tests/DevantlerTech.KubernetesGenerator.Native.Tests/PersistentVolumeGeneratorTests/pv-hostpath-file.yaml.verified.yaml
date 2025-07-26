@@ -1,0 +1,14 @@
+﻿---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-hostpath-file
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  hostPath:
+    path: /var/log/app.log
+    type: File

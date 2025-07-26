@@ -1,11 +1,11 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes PersistentVolume objects.
 /// </summary>
-public class PersistentVolumeGenerator : BaseKubernetesGenerator<V1PersistentVolume>
+public class PersistentVolumeGenerator : BaseKubernetesGenerator<PersistentVolume>
 {
 }

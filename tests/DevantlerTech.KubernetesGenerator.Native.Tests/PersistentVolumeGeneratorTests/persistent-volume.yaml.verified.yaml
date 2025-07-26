@@ -5,17 +5,19 @@ metadata:
   name: persistent-volume
   namespace: default
 spec:
-  accessModes:
-  - ReadWriteOnce
   capacity:
     storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: storage-class
+  mountOptions:
+  - option
   claimRef:
     apiVersion: v1
     kind: PersistentVolumeClaim
     name: pvc
     namespace: default
-  mountOptions:
-  - option
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -24,5 +26,3 @@ spec:
           operator: In
           values:
           - value
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: storage-class
