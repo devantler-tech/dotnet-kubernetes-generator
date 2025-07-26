@@ -44,7 +44,7 @@ public sealed class GenerateAsyncTests
           {
             NodeSelectorTerms =
             [
-              new PersistentVolumeNodeAffinityNodeSelectorTerm
+              new NodeSelectorTerm
               {
                 MatchExpressions =
                 [
@@ -209,7 +209,7 @@ public sealed class GenerateAsyncTests
           {
             NodeSelectorTerms =
             [
-              new PersistentVolumeNodeAffinityNodeSelectorTerm
+              new NodeSelectorTerm
               {
                 MatchExpressions =
                 [
@@ -371,7 +371,7 @@ public sealed class GenerateAsyncTests
           {
             NodeSelectorTerms =
             [
-              new PersistentVolumeNodeAffinityNodeSelectorTerm
+              new NodeSelectorTerm
               {
                 MatchExpressions =
                 [

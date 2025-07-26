@@ -8,5 +8,5 @@ public class PersistentVolumeNodeAffinityNodeSelector
   /// <summary>
   /// Gets or sets the node selector terms.
   /// </summary>
-  public IList<PersistentVolumeNodeAffinityNodeSelectorTerm>? NodeSelectorTerms { get; init; }
+  public IList<NodeSelectorTerm>? NodeSelectorTerms { get; init; }
 }
