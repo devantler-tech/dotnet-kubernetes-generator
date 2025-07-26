@@ -9,11 +9,11 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Namespace object with metadata.
+  /// Verifies the generated Namespace object with a test namespace name.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidNamespace()
+  public async Task GenerateAsync_WithTestNamespace_ShouldGenerateAValidNamespace()
   {
     // Arrange
     var generator = new NamespaceGenerator();
@@ -21,20 +21,12 @@ public sealed class GenerateAsyncTests
     {
       Metadata = new Metadata
       {
-        Name = "test-namespace",
-        Labels = new Dictionary<string, string>
-        {
-          ["environment"] = "test"
-        },
-        Annotations = new Dictionary<string, string>
-        {
-          ["description"] = "Test namespace"
-        }
+        Name = "test-namespace"
       }
     };
 
     // Act
-    string fileName = "namespace.yaml";
+    string fileName = "test-namespace.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
@@ -53,7 +45,7 @@ public sealed class GenerateAsyncTests
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithNameOnly_ShouldGenerateAValidNamespace()
+  public async Task GenerateAsync_WithSimpleName_ShouldGenerateAValidNamespace()
   {
     // Arrange
     var generator = new NamespaceGenerator();
