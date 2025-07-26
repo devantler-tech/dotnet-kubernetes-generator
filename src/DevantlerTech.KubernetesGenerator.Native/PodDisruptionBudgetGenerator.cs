@@ -39,50 +39,40 @@ public class PodDisruptionBudgetGenerator : BaseNativeGenerator<PodDisruptionBud
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
   static ReadOnlyCollection<string> AddArguments(PodDisruptionBudget model)
   {
-    // Validate required fields
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
-      throw new KubernetesGeneratorException("PodDisruptionBudget name is required");
-
-    if (string.IsNullOrEmpty(model.Spec?.Selector))
-      throw new KubernetesGeneratorException("PodDisruptionBudget selector is required");
-
-    // Validate that either MinAvailable or MaxUnavailable is specified
-    bool hasMinAvailable = !string.IsNullOrEmpty(model.Spec.MinAvailable);
-    bool hasMaxUnavailable = !string.IsNullOrEmpty(model.Spec.MaxUnavailable);
-
-    if (!hasMinAvailable && !hasMaxUnavailable)
-      throw new KubernetesGeneratorException("Either MinAvailable or MaxUnavailable must be specified");
-
-    if (hasMinAvailable && hasMaxUnavailable)
-      throw new KubernetesGeneratorException("Cannot specify both MinAvailable and MaxUnavailable");
+    CheckMinMaxAvailabilityConstraints(model, out bool hasMinAvailable, out bool hasMaxUnavailable);
 
     var args = new List<string>
     {
-      // The name is required
       model.Metadata.Name,
-      
-      // The selector is required
       $"--selector={model.Spec.Selector}"
     };
 
-    // Add namespace if specified
     if (!string.IsNullOrEmpty(model.Metadata.Namespace))
     {
       args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
-    // Add min-available if specified
     if (hasMinAvailable)
     {
       args.Add($"--min-available={model.Spec.MinAvailable}");
     }
 
-    // Add max-unavailable if specified
     if (hasMaxUnavailable)
     {
       args.Add($"--max-unavailable={model.Spec.MaxUnavailable}");
     }
 
     return args.AsReadOnly();
+  }
+
+  static void CheckMinMaxAvailabilityConstraints(PodDisruptionBudget model, out bool hasMinAvailable, out bool hasMaxUnavailable)
+  {
+    hasMinAvailable = !string.IsNullOrEmpty(model.Spec.MinAvailable);
+    hasMaxUnavailable = !string.IsNullOrEmpty(model.Spec.MaxUnavailable);
+    if (!hasMinAvailable && !hasMaxUnavailable)
+      throw new KubernetesGeneratorException("Either MinAvailable or MaxUnavailable must be specified");
+
+    if (hasMinAvailable && hasMaxUnavailable)
+      throw new KubernetesGeneratorException("Cannot specify both MinAvailable and MaxUnavailable");
   }
 }
