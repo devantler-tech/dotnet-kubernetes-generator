@@ -27,7 +27,7 @@ public class PodDisruptionBudgetGenerator : BaseNativeGenerator<PodDisruptionBud
     var args = new ReadOnlyCollection<string>(
       [.. _defaultArgs, .. AddArguments(model)]
     );
-    string errorMessage = $"Failed to create pod disruption budget '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create pod disruption budget '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
