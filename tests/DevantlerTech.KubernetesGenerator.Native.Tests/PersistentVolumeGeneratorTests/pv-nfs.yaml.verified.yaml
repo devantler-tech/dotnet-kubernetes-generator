@@ -1,0 +1,17 @@
+﻿---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nfs
+  labels:
+    app: storage
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    server: nfs-server.example.com
+    path: /shared/data
+    readOnly: false

@@ -8,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeGenerat
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated PersistentVolume object.
+  /// Verifies the generated PersistentVolume object with all properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -64,6 +64,103 @@ public sealed class GenerateAsyncTests
 
     // Act
     string fileName = "persistent-volume.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PersistentVolume with host path configuration.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithHostPath_ShouldGenerateAValidPersistentVolume()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume
+    {
+      Metadata = new Metadata
+      {
+        Name = "pv-hostpath",
+      },
+      Spec = new PersistentVolumeSpec
+      {
+        AccessModes = ["ReadWriteOnce"],
+        Capacity = new Dictionary<string, string>
+        {
+          ["storage"] = "5Gi"
+        },
+        PersistentVolumeReclaimPolicy = "Delete",
+        HostPath = new PersistentVolumeHostPath
+        {
+          Path = "/mnt/data",
+          Type = "DirectoryOrCreate"
+        }
+      }
+    };
+
+    // Act
+    string fileName = "pv-hostpath.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PersistentVolume with NFS configuration.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithNfs_ShouldGenerateAValidPersistentVolume()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume
+    {
+      Metadata = new Metadata
+      {
+        Name = "pv-nfs",
+        Labels = new Dictionary<string, string>
+        {
+          ["app"] = "storage"
+        }
+      },
+      Spec = new PersistentVolumeSpec
+      {
+        AccessModes = ["ReadWriteMany"],
+        Capacity = new Dictionary<string, string>
+        {
+          ["storage"] = "10Gi"
+        },
+        PersistentVolumeReclaimPolicy = "Recycle",
+        Nfs = new PersistentVolumeNfs
+        {
+          Server = "nfs-server.example.com",
+          Path = "/shared/data",
+          ReadOnly = false
+        }
+      }
+    };
+
+    // Act
+    string fileName = "pv-nfs.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
