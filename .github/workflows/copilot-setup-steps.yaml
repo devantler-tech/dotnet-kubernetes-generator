@@ -55,13 +55,3 @@ jobs:
           flux --version
           echo "=== Kubectl Version ==="
           kubectl version --client
-          echo "=== Kind Version ==="
-          kind --version
-          echo "=== K3d Version ==="
-          k3d --version
-          echo "=== Helm Version ==="
-          helm version
-          echo "=== Kustomize Version ==="
-          kustomize version
-          echo "=== Cert-Manager CLI Version ==="
-          cmctl version --client
