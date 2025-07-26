@@ -40,15 +40,15 @@ public sealed class GenerateAsyncTests
         MountOptions = ["option"],
         NodeAffinity = new PersistentVolumeNodeAffinity
         {
-          Required = new PersistentVolumeNodeSelector
+          Required = new PersistentVolumeNodeAffinityNodeSelector
           {
             NodeSelectorTerms =
             [
-              new PersistentVolumeNodeSelectorTerm
+              new PersistentVolumeNodeAffinityNodeSelectorTerm
               {
                 MatchExpressions =
                 [
-                  new PersistentVolumeNodeSelectorRequirement
+                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
                   {
                     Key = "key",
                     Operator = "In",
