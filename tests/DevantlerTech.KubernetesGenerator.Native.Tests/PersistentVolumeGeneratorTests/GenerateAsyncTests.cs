@@ -439,7 +439,7 @@ public sealed class GenerateAsyncTests
         },
         HostPath = new PersistentVolumeHostPath
         {
-          Path = "/tmp/data"
+          Path = "/mnt/data"
         }
       }
     };
