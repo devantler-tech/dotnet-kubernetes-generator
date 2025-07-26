@@ -13,5 +13,5 @@ public class PersistentVolumeHostPath
   /// <summary>
   /// Gets or sets the type of the host path.
   /// </summary>
-  public string? Type { get; set; }
+  public PersistentVolumeHostPathType? Type { get; set; }
 }

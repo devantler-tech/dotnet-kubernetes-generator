@@ -13,12 +13,12 @@ public class PersistentVolumeSpec
   /// <summary>
   /// Gets or sets the access modes for the persistent volume.
   /// </summary>
-  public required IList<string> AccessModes { get; init; }
+  public required IList<PersistentVolumeAccessMode> AccessModes { get; init; }
 
   /// <summary>
   /// Gets or sets the reclaim policy for the persistent volume.
   /// </summary>
-  public string? PersistentVolumeReclaimPolicy { get; set; }
+  public PersistentVolumeReclaimPolicy? PersistentVolumeReclaimPolicy { get; set; }
 
   /// <summary>
   /// Gets or sets the storage class name for the persistent volume.

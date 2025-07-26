@@ -25,7 +25,7 @@ public sealed class GenerateAsyncTests
       },
       Spec = new PersistentVolumeSpec
       {
-        AccessModes = ["ReadWriteOnce"],
+        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "1Gi"
@@ -35,7 +35,7 @@ public sealed class GenerateAsyncTests
           Name = "pvc",
           Namespace = "default"
         },
-        PersistentVolumeReclaimPolicy = "Retain",
+        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Retain,
         StorageClassName = "storage-class",
         MountOptions = ["option"],
         NodeAffinity = new PersistentVolumeNodeAffinity
@@ -51,7 +51,7 @@ public sealed class GenerateAsyncTests
                   new PersistentVolumeNodeAffinityNodeSelectorRequirement
                   {
                     Key = "key",
-                    Operator = "In",
+                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.In,
                     Values = ["value"]
                   }
                 ]
@@ -94,16 +94,16 @@ public sealed class GenerateAsyncTests
       },
       Spec = new PersistentVolumeSpec
       {
-        AccessModes = ["ReadWriteOnce"],
+        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "5Gi"
         },
-        PersistentVolumeReclaimPolicy = "Delete",
+        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Delete,
         HostPath = new PersistentVolumeHostPath
         {
           Path = "/mnt/data",
-          Type = "DirectoryOrCreate"
+          Type = PersistentVolumeHostPathType.DirectoryOrCreate
         }
       }
     };
@@ -144,12 +144,12 @@ public sealed class GenerateAsyncTests
       },
       Spec = new PersistentVolumeSpec
       {
-        AccessModes = ["ReadWriteMany"],
+        AccessModes = [PersistentVolumeAccessMode.ReadWriteMany],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "10Gi"
         },
-        PersistentVolumeReclaimPolicy = "Recycle",
+        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Recycle,
         Nfs = new PersistentVolumeNfs
         {
           Server = "nfs-server.example.com",

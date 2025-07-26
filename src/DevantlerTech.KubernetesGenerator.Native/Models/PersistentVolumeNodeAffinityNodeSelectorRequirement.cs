@@ -13,7 +13,7 @@ public class PersistentVolumeNodeAffinityNodeSelectorRequirement
   /// <summary>
   /// Gets or sets the operator.
   /// </summary>
-  public required string Operator { get; set; }
+  public required PersistentVolumeNodeAffinityNodeSelectorRequirementOperator Operator { get; set; }
 
   /// <summary>
   /// Gets or sets the values.
