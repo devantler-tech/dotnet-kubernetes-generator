@@ -2,11 +2,16 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: pod-disruption-budget
+  creationTimestamp: null
+  name: pdb-min-available
   namespace: default
 spec:
-  maxUnavailable: 1
   minAvailable: 1
   selector:
     matchLabels:
       app: nginx
+status:
+  currentHealthy: 0
+  desiredHealthy: 0
+  disruptionsAllowed: 0
+  expectedPods: 0
