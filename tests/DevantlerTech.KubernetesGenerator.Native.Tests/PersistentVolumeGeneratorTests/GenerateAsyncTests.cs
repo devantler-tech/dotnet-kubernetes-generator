@@ -1,7 +1,6 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeGeneratorTests;
-
 
 /// <summary>
 /// Tests for the <see cref="PersistentVolumeGenerator"/> class.
@@ -17,53 +16,49 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new V1PersistentVolume
+    var model = new PersistentVolume
     {
-      ApiVersion = "v1",
-      Kind = "PersistentVolume",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
         Name = "persistent-volume",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
-      Spec = new V1PersistentVolumeSpec
+      Spec = new PersistentVolumeSpec
       {
         AccessModes = ["ReadWriteOnce"],
-        Capacity = new Dictionary<string, ResourceQuantity>
+        Capacity = new Dictionary<string, string>
         {
-          ["storage"] = new ResourceQuantity("1Gi")
+          ["storage"] = "1Gi"
         },
-        ClaimRef = new V1ObjectReference
+        ClaimRef = new PersistentVolumeClaimRef
         {
-          ApiVersion = "v1",
-          Kind = "PersistentVolumeClaim",
           Name = "pvc",
-          NamespaceProperty = "default"
+          Namespace = "default"
         },
         PersistentVolumeReclaimPolicy = "Retain",
         StorageClassName = "storage-class",
         MountOptions = ["option"],
-        NodeAffinity = new V1VolumeNodeAffinity
+        NodeAffinity = new PersistentVolumeNodeAffinity
         {
-          Required = new V1NodeSelector
+          Required = new PersistentVolumeNodeSelector
           {
             NodeSelectorTerms =
             [
-              new V1NodeSelectorTerm
+              new PersistentVolumeNodeSelectorTerm
               {
                 MatchExpressions =
                 [
-                  new V1NodeSelectorRequirement
+                  new PersistentVolumeNodeSelectorRequirement
                   {
                     Key = "key",
-                    OperatorProperty = "In",
+                    Operator = "In",
                     Values = ["value"]
                   }
                 ]
               }
             ]
           }
-        },
+        }
       }
     };
 
