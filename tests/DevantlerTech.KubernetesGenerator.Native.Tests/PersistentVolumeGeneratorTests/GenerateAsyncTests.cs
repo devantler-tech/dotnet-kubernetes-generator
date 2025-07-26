@@ -35,7 +35,7 @@ public sealed class GenerateAsyncTests
           Name = "pvc",
           Namespace = "default"
         },
-        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Retain,
+        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Retain,
         StorageClassName = "storage-class",
         MountOptions = ["option"],
         NodeAffinity = new PersistentVolumeNodeAffinity
@@ -99,11 +99,11 @@ public sealed class GenerateAsyncTests
         {
           ["storage"] = "5Gi"
         },
-        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Delete,
+        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Delete,
         HostPath = new PersistentVolumeHostPath
         {
           Path = "/mnt/data",
-          Type = HostPathType.DirectoryOrCreate
+          Type = PersistentVolumeHostPathType.DirectoryOrCreate
         }
       }
     };
@@ -149,7 +149,7 @@ public sealed class GenerateAsyncTests
         {
           ["storage"] = "10Gi"
         },
-        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Recycle,
+        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Recycle,
         Nfs = new PersistentVolumeNfs
         {
           Server = "nfs-server.example.com",
@@ -196,7 +196,7 @@ public sealed class GenerateAsyncTests
         {
           ["storage"] = "50Gi"
         },
-        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Delete,
+        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Delete,
         StorageClassName = "local-storage",
         Local = new PersistentVolumeLocal
         {
@@ -266,7 +266,7 @@ public sealed class GenerateAsyncTests
         {
           ["storage"] = "100Gi"
         },
-        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Retain,
+        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Retain,
         Nfs = new PersistentVolumeNfs
         {
           Server = "shared-nfs.example.com",
@@ -313,11 +313,11 @@ public sealed class GenerateAsyncTests
         {
           ["storage"] = "1Gi"
         },
-        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Delete,
+        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Delete,
         HostPath = new PersistentVolumeHostPath
         {
           Path = "/var/log/app.log",
-          Type = HostPathType.File
+          Type = PersistentVolumeHostPathType.File
         }
       }
     };
@@ -359,11 +359,11 @@ public sealed class GenerateAsyncTests
         {
           ["storage"] = "20Gi"
         },
-        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Retain,
+        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Retain,
         HostPath = new PersistentVolumeHostPath
         {
           Path = "/mnt/ssd-storage",
-          Type = HostPathType.Directory
+          Type = PersistentVolumeHostPathType.Directory
         },
         NodeAffinity = new PersistentVolumeNodeAffinity
         {
