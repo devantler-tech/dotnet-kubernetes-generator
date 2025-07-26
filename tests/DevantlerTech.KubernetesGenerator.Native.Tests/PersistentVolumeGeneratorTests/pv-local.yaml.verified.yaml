@@ -1,0 +1,21 @@
+﻿---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-local
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+  - ReadWriteOncePod
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: local-storage
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: Exists
+  local:
+    path: /mnt/local-storage
+    fsType: ext4

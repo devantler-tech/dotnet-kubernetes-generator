@@ -1,0 +1,16 @@
+﻿---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-multi-access
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+  - ReadOnlyMany
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: shared-nfs.example.com
+    path: /shared/readonly
+    readOnly: true

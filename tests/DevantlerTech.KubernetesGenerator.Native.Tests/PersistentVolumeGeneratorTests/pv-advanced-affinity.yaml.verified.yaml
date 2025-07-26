@@ -1,0 +1,29 @@
+﻿---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-advanced-affinity
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: node-type
+          operator: NotIn
+          values:
+          - small
+          - micro
+        - key: ssd-storage
+          operator: DoesNotExist
+        - key: storage-size
+          operator: Gt
+          values:
+          - 100
+  hostPath:
+    path: /mnt/ssd-storage
+    type: Directory

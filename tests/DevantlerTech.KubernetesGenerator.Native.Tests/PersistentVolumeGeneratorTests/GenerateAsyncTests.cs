@@ -173,4 +173,289 @@ public sealed class GenerateAsyncTests
     // Cleanup
     File.Delete(outputPath);
   }
+
+  /// <summary>
+  /// Verifies the generated PersistentVolume with Local volume source.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithLocal_ShouldGenerateAValidPersistentVolume()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume
+    {
+      Metadata = new Metadata
+      {
+        Name = "pv-local"
+      },
+      Spec = new PersistentVolumeSpec
+      {
+        AccessModes = [PersistentVolumeAccessMode.ReadWriteOncePod],
+        Capacity = new Dictionary<string, string>
+        {
+          ["storage"] = "50Gi"
+        },
+        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Delete,
+        StorageClassName = "local-storage",
+        Local = new PersistentVolumeLocal
+        {
+          Path = "/mnt/local-storage",
+          FsType = "ext4"
+        },
+        NodeAffinity = new PersistentVolumeNodeAffinity
+        {
+          Required = new PersistentVolumeNodeAffinityNodeSelector
+          {
+            NodeSelectorTerms =
+            [
+              new PersistentVolumeNodeAffinityNodeSelectorTerm
+              {
+                MatchExpressions =
+                [
+                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
+                  {
+                    Key = "kubernetes.io/hostname",
+                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.Exists
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    };
+
+    // Act
+    string fileName = "pv-local.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PersistentVolume with multiple access modes.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithMultipleAccessModes_ShouldGenerateAValidPersistentVolume()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume
+    {
+      Metadata = new Metadata
+      {
+        Name = "pv-multi-access"
+      },
+      Spec = new PersistentVolumeSpec
+      {
+        AccessModes = [
+          PersistentVolumeAccessMode.ReadOnlyMany,
+          PersistentVolumeAccessMode.ReadWriteMany
+        ],
+        Capacity = new Dictionary<string, string>
+        {
+          ["storage"] = "100Gi"
+        },
+        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Retain,
+        Nfs = new PersistentVolumeNfs
+        {
+          Server = "shared-nfs.example.com",
+          Path = "/shared/readonly",
+          ReadOnly = true
+        }
+      }
+    };
+
+    // Act
+    string fileName = "pv-multi-access.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PersistentVolume with different HostPath types.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithDifferentHostPathTypes_ShouldGenerateAValidPersistentVolume()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume
+    {
+      Metadata = new Metadata
+      {
+        Name = "pv-hostpath-file"
+      },
+      Spec = new PersistentVolumeSpec
+      {
+        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
+        Capacity = new Dictionary<string, string>
+        {
+          ["storage"] = "1Gi"
+        },
+        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Delete,
+        HostPath = new PersistentVolumeHostPath
+        {
+          Path = "/var/log/app.log",
+          Type = PersistentVolumeHostPathType.File
+        }
+      }
+    };
+
+    // Act
+    string fileName = "pv-hostpath-file.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PersistentVolume with advanced node affinity operators.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithAdvancedNodeAffinity_ShouldGenerateAValidPersistentVolume()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume
+    {
+      Metadata = new Metadata
+      {
+        Name = "pv-advanced-affinity"
+      },
+      Spec = new PersistentVolumeSpec
+      {
+        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
+        Capacity = new Dictionary<string, string>
+        {
+          ["storage"] = "20Gi"
+        },
+        PersistentVolumeReclaimPolicy = Models.PersistentVolumeReclaimPolicy.Retain,
+        HostPath = new PersistentVolumeHostPath
+        {
+          Path = "/mnt/ssd-storage",
+          Type = PersistentVolumeHostPathType.Directory
+        },
+        NodeAffinity = new PersistentVolumeNodeAffinity
+        {
+          Required = new PersistentVolumeNodeAffinityNodeSelector
+          {
+            NodeSelectorTerms =
+            [
+              new PersistentVolumeNodeAffinityNodeSelectorTerm
+              {
+                MatchExpressions =
+                [
+                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
+                  {
+                    Key = "node-type",
+                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.NotIn,
+                    Values = ["small", "micro"]
+                  },
+                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
+                  {
+                    Key = "ssd-storage",
+                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.DoesNotExist
+                  },
+                  new PersistentVolumeNodeAffinityNodeSelectorRequirement
+                  {
+                    Key = "storage-size",
+                    Operator = PersistentVolumeNodeAffinityNodeSelectorRequirementOperator.Gt,
+                    Values = ["100"]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    };
+
+    // Act
+    string fileName = "pv-advanced-affinity.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PersistentVolume with minimal configuration.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithMinimalConfiguration_ShouldGenerateAValidPersistentVolume()
+  {
+    // Arrange
+    var generator = new PersistentVolumeGenerator();
+    var model = new PersistentVolume
+    {
+      Metadata = new Metadata
+      {
+        Name = "pv-minimal"
+      },
+      Spec = new PersistentVolumeSpec
+      {
+        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
+        Capacity = new Dictionary<string, string>
+        {
+          ["storage"] = "1Gi"
+        },
+        HostPath = new PersistentVolumeHostPath
+        {
+          Path = "/tmp/data"
+        }
+      }
+    };
+
+    // Act
+    string fileName = "pv-minimal.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
 }
