@@ -1,0 +1,17 @@
+﻿---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  creationTimestamp: null
+  name: pdb-percentage
+  namespace: default
+spec:
+  minAvailable: 50%
+  selector:
+    matchLabels:
+      app: nginx
+status:
+  currentHealthy: 0
+  desiredHealthy: 0
+  disruptionsAllowed: 0
+  expectedPods: 0

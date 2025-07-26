@@ -39,7 +39,14 @@ public class PodDisruptionBudgetGenerator : BaseNativeGenerator<PodDisruptionBud
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
   static ReadOnlyCollection<string> AddArguments(PodDisruptionBudget model)
   {
-    CheckMinMaxAvailabilityConstraints(model, out bool hasMinAvailable, out bool hasMaxUnavailable);
+    // Validate required fields
+    if (string.IsNullOrEmpty(model.Metadata.Name))
+      throw new KubernetesGeneratorException("PodDisruptionBudget name is required");
+
+    if (string.IsNullOrEmpty(model.Spec.Selector))
+      throw new KubernetesGeneratorException("PodDisruptionBudget selector is required");
+
+    ValidateMinMaxAvailabilityConstraints(model, out bool hasMinAvailable, out bool hasMaxUnavailable);
 
     var args = new List<string>
     {
@@ -65,7 +72,7 @@ public class PodDisruptionBudgetGenerator : BaseNativeGenerator<PodDisruptionBud
     return args.AsReadOnly();
   }
 
-  static void CheckMinMaxAvailabilityConstraints(PodDisruptionBudget model, out bool hasMinAvailable, out bool hasMaxUnavailable)
+  static void ValidateMinMaxAvailabilityConstraints(PodDisruptionBudget model, out bool hasMinAvailable, out bool hasMaxUnavailable)
   {
     hasMinAvailable = !string.IsNullOrEmpty(model.Spec.MinAvailable);
     hasMaxUnavailable = !string.IsNullOrEmpty(model.Spec.MaxUnavailable);

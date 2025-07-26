@@ -1,3 +1,4 @@
+using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodDisruptionBudgetGeneratorTests;
@@ -183,7 +184,7 @@ public sealed class GenerateAsyncTests
 
     // Act & Assert
     string outputPath = Path.Combine(Path.GetTempPath(), "pdb-both.yaml");
-    await Assert.ThrowsAsync<KubernetesGeneratorException>(() => 
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() =>
       generator.GenerateAsync(model, outputPath));
   }
 
@@ -210,7 +211,7 @@ public sealed class GenerateAsyncTests
 
     // Act & Assert
     string outputPath = Path.Combine(Path.GetTempPath(), "pdb-none.yaml");
-    await Assert.ThrowsAsync<KubernetesGeneratorException>(() => 
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() =>
       generator.GenerateAsync(model, outputPath));
   }
 
@@ -238,7 +239,7 @@ public sealed class GenerateAsyncTests
 
     // Act & Assert
     string outputPath = Path.Combine(Path.GetTempPath(), "pdb-no-selector.yaml");
-    await Assert.ThrowsAsync<KubernetesGeneratorException>(() => 
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() =>
       generator.GenerateAsync(model, outputPath));
   }
 
@@ -266,7 +267,7 @@ public sealed class GenerateAsyncTests
 
     // Act & Assert
     string outputPath = Path.Combine(Path.GetTempPath(), "pdb-no-name.yaml");
-    await Assert.ThrowsAsync<KubernetesGeneratorException>(() => 
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() =>
       generator.GenerateAsync(model, outputPath));
   }
 }
