@@ -74,7 +74,7 @@ This is a .NET 9.0 library that provides code generators for Kubernetes resource
 ### Test Design Principles
 
 - **Avoid redundant tests**: Before creating multiple test methods, analyze if they test meaningfully different scenarios
-- **Understand CLI command capabilities**: Research the underlying kubectl command parameters and options to determine valid test scenarios
+- **Understand CLI command capabilities**: Research underlying CLI command parameters and options to determine valid test scenarios, when generators use external CLIs
 - **One test per distinct functionality**: If a CLI command only accepts a name parameter (like `kubectl create namespace`), one comprehensive test is usually sufficient
 - **Test edge cases and variations**: Focus on testing different parameter combinations, error conditions, and boundary cases rather than cosmetic differences
 - **Validate test necessity**: Each test should verify a unique aspect of the generator's functionality or handle a distinct input scenario
