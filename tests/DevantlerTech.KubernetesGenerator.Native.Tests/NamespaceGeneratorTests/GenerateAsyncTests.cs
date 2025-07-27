@@ -1,3 +1,4 @@
+using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests;
@@ -38,5 +39,26 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the namespace name is empty.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithEmptyNamespaceName_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new NamespaceGenerator();
+    var model = new Namespace
+    {
+      Metadata = new Metadata
+      {
+        Name = ""
+      }
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }
