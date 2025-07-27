@@ -41,7 +41,7 @@ public class ClusterRoleBindingGenerator : BaseNativeGenerator<ClusterRoleBindin
   {
     List<string> args = [];
 
-    // Add cluster role binding name - now guaranteed to be set by primary constructor
+    // Add cluster role binding name
     args.Add(model.Metadata.Name);
 
     // ClusterRoleBinding only supports ClusterRole references, not Role

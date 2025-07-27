@@ -17,8 +17,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding("cluster-role-binding")
+    var model = new ClusterRoleBinding
     {
+      Metadata = new Metadata { Name = "cluster-role-binding" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.ClusterRole,
@@ -58,8 +59,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding("multi-subject-cluster-binding")
+    var model = new ClusterRoleBinding
     {
+      Metadata = new Metadata { Name = "multi-subject-cluster-binding" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.ClusterRole,
@@ -110,8 +112,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding("sa-cluster-binding")
+    var model = new ClusterRoleBinding
     {
+      Metadata = new Metadata { Name = "sa-cluster-binding" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.ClusterRole,
@@ -152,8 +155,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding("sa-default-cluster-binding")
+    var model = new ClusterRoleBinding
     {
+      Metadata = new Metadata { Name = "sa-default-cluster-binding" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.ClusterRole,
@@ -193,8 +197,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding("invalid-binding")
+    var model = new ClusterRoleBinding
     {
+      Metadata = new Metadata { Name = "invalid-binding" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.Role, // Invalid - ClusterRoleBinding requires ClusterRole
@@ -222,8 +227,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding("invalid-binding")
+    var model = new ClusterRoleBinding
     {
+      Metadata = new Metadata { Name = "invalid-binding" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.ClusterRole,
