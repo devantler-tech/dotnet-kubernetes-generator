@@ -23,17 +23,7 @@ public class ConfigMap
   /// <summary>
   /// Gets or sets literal key-value pairs to include in the ConfigMap.
   /// </summary>
-  public IDictionary<string, string>? FromLiteral { get; init; }
-
-  /// <summary>
-  /// Gets or sets files to include in the ConfigMap.
-  /// </summary>
-  public IList<ConfigMapFile>? FromFile { get; init; }
-
-  /// <summary>
-  /// Gets or sets environment files to include in the ConfigMap.
-  /// </summary>
-  public IList<string>? FromEnvFile { get; init; }
+  public required IDictionary<string, string> FromLiteral { get; init; }
 
   /// <summary>
   /// Gets or sets whether to append a hash of the ConfigMap to its name.

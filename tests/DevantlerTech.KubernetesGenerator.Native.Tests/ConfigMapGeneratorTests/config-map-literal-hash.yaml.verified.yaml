@@ -1,9 +1,9 @@
 ﻿---
 apiVersion: v1
 data:
+  api_key: secret-api-key
   database_url: postgresql://localhost:5432/mydb
-  nginx: server { listen 80; }
 kind: ConfigMap
 metadata:
   creationTimestamp: null
-  name: test-config-mixed
+  name: test-config-hash-ccmkc4k92m

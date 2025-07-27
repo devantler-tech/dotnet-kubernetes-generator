@@ -19,7 +19,7 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
   /// <param name="overwrite">Whether to overwrite existing files.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
-  /// <exception cref="KubernetesGeneratorException">Thrown when ConfigMap name is not provided or no data sources are specified.</exception>
+  /// <exception cref="KubernetesGeneratorException">Thrown when ConfigMap name is not provided or no literal data is specified.</exception>
   public override async Task GenerateAsync(ConfigMap model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
@@ -29,9 +29,9 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
       throw new KubernetesGeneratorException("A non-empty ConfigMap name must be provided.");
     }
 
-    if (!HasDataSources(model))
+    if (model.FromLiteral == null || model.FromLiteral.Count == 0)
     {
-      throw new KubernetesGeneratorException("At least one data source must be specified (FromLiteral, FromFile, or FromEnvFile).");
+      throw new KubernetesGeneratorException("At least one literal key-value pair must be specified.");
     }
 
     var args = new ReadOnlyCollection<string>(
@@ -63,40 +63,10 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
     }
 
     // Add literal key-value pairs
-    if (model.FromLiteral != null)
+    foreach (var kvp in model.FromLiteral!)
     {
-      foreach (var kvp in model.FromLiteral)
-      {
-        args.Add("--from-literal");
-        args.Add($"{kvp.Key}={kvp.Value}");
-      }
-    }
-
-    // Add files
-    if (model.FromFile != null)
-    {
-      foreach (var file in model.FromFile)
-      {
-        args.Add("--from-file");
-        if (!string.IsNullOrWhiteSpace(file.Key))
-        {
-          args.Add($"{file.Key}={file.FilePath}");
-        }
-        else
-        {
-          args.Add(file.FilePath);
-        }
-      }
-    }
-
-    // Add environment files
-    if (model.FromEnvFile != null)
-    {
-      foreach (string envFile in model.FromEnvFile)
-      {
-        args.Add("--from-env-file");
-        args.Add(envFile);
-      }
+      args.Add("--from-literal");
+      args.Add($"{kvp.Key}={kvp.Value}");
     }
 
     // Add append hash if specified
@@ -108,15 +78,5 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
     return args.AsReadOnly();
   }
 
-  /// <summary>
-  /// Checks if the ConfigMap model has at least one data source.
-  /// </summary>
-  /// <param name="model">The ConfigMap model to check.</param>
-  /// <returns>True if at least one data source is specified.</returns>
-  static bool HasDataSources(ConfigMap model)
-  {
-    return (model.FromLiteral != null && model.FromLiteral.Count > 0) ||
-           (model.FromFile != null && model.FromFile.Count > 0) ||
-           (model.FromEnvFile != null && model.FromEnvFile.Count > 0);
-  }
+
 }
