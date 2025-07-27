@@ -1,0 +1,13 @@
+﻿---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  namespace: testing
+  name: hpa-statefulset
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: statefulset-name
+  minReplicas: 2
+  maxReplicas: 20
