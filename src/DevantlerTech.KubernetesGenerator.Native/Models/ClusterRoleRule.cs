@@ -1,5 +1,3 @@
-using YamlDotNet.Serialization;
-
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
@@ -10,34 +8,29 @@ public class ClusterRoleRule
   /// <summary>
   /// Gets or sets the verbs that apply to the resources.
   /// </summary>
-  [YamlMember(Alias = "verbs")]
   public required IList<string> Verbs { get; init; } = [];
 
   /// <summary>
   /// Gets or sets the API groups that the rule applies to.
   /// Empty string "" means the core API group.
   /// </summary>
-  [YamlMember(Alias = "apiGroups")]
   public IList<string>? ApiGroups { get; init; }
 
   /// <summary>
   /// Gets or sets the resources that the rule applies to.
   /// </summary>
-  [YamlMember(Alias = "resources")]
   public IList<string>? Resources { get; init; }
 
   /// <summary>
   /// Gets or sets specific resource names that the rule applies to.
   /// If empty, applies to all resources of the specified type.
   /// </summary>
-  [YamlMember(Alias = "resourceNames")]
   public IList<string>? ResourceNames { get; init; }
 
   /// <summary>
   /// Gets or sets non-resource URLs that the rule applies to.
   /// Used for cluster-scoped permissions on non-resource endpoints.
   /// </summary>
-  [YamlMember(Alias = "nonResourceURLs")]
   public IList<string>? NonResourceURLs { get; init; }
 }
 
