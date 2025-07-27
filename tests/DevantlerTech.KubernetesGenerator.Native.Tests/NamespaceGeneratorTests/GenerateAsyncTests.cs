@@ -1,4 +1,5 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests;
 
@@ -9,26 +10,20 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Namespace object.
+  /// Verifies the generated Namespace object with kubectl create namespace functionality.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidNamespace()
+  public async Task GenerateAsync_WithNamespaceModel_ShouldGenerateAValidNamespace()
   {
     // Arrange
     var generator = new NamespaceGenerator();
-    var model = new V1Namespace
+    var model = new Namespace
     {
-      ApiVersion = "v1",
-      Kind = "Namespace",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
-        Name = "namespace",
-      },
-      Spec = new V1NamespaceSpec
-      {
-        Finalizers = ["kubernetes"]
-      },
+        Name = "test-namespace"
+      }
     };
 
     // Act
@@ -44,5 +39,26 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the namespace name is empty.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithEmptyNamespaceName_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new NamespaceGenerator();
+    var model = new Namespace
+    {
+      Metadata = new Metadata
+      {
+        Name = ""
+      }
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }
