@@ -24,10 +24,15 @@ public class NamespaceGenerator : BaseNativeGenerator<Namespace>
   {
     ArgumentNullException.ThrowIfNull(model);
 
+    if (string.IsNullOrWhiteSpace(model.Metadata.Name))
+    {
+      throw new KubernetesGeneratorException("A non-empty Namespace name must be provided.");
+    }
+
     var args = new ReadOnlyCollection<string>(
       [.. _defaultArgs, .. AddArguments(model)]
     );
-    string errorMessage = $"Failed to create namespace '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create namespace '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
