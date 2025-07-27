@@ -1,0 +1,17 @@
+﻿---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: minimal-daemon-set
+spec:
+  selector:
+    matchLabels:
+      app: minimal
+  template:
+    metadata:
+      labels:
+        app: minimal
+    spec:
+      containers:
+      - name: app
+        image: nginx
