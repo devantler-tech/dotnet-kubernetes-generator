@@ -1,9 +1,9 @@
-﻿---
+---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: daemon-set
   namespace: default
+  name: daemon-set
 spec:
   selector:
     matchLabels:
@@ -14,8 +14,8 @@ spec:
         app: daemon-set
     spec:
       containers:
-      - command:
+      - name: container
+        image: nginx
+        command:
         - echo
         - hello
-        image: nginx
-        name: container

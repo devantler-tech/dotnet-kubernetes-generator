@@ -1,4 +1,4 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.DaemonSetGeneratorTests;
 
@@ -17,38 +17,38 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DaemonSetGenerator();
-    var model = new V1DaemonSet
+    var model = new DaemonSet
     {
       ApiVersion = "apps/v1",
       Kind = "DaemonSet",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
         Name = "daemon-set",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
-      Spec = new V1DaemonSetSpec
+      Spec = new DaemonSetSpec
       {
-        Selector = new V1LabelSelector
+        Selector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
             ["app"] = "daemon-set"
           }
         },
-        Template = new V1PodTemplateSpec
+        Template = new PodTemplateSpec
         {
-          Metadata = new V1ObjectMeta
+          Metadata = new PodTemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {
               ["app"] = "daemon-set"
             }
           },
-          Spec = new V1PodSpec
+          Spec = new PodSpec
           {
             Containers =
             [
-              new V1Container
+              new PodContainer
               {
                 Name = "container",
                 Image = "nginx",
