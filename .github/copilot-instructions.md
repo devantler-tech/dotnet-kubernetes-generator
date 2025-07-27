@@ -72,7 +72,6 @@ This is a .NET 9.0 library that provides code generators for Kubernetes resource
 - Clean up test files after execution
 
 ### Test Design Principles
-
 - **Avoid redundant tests**: Before creating multiple test methods, analyze if they test meaningfully different scenarios
 - **Understand CLI command capabilities**: Research underlying CLI command parameters and options to determine valid test scenarios, when generators use external CLIs
 - **One test per distinct functionality**: If a CLI command only accepts a name parameter (like `kubectl create namespace`), one comprehensive test is usually sufficient
@@ -133,7 +132,7 @@ public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidResourc
 
 ### Adding a New Generator
 
-1. **Research the CLI command thoroughly**: Understand the full parameter set, options, and limitations of the underlying kubectl/CLI command
+1. **Research the implementations dependencies thoroughly**: Understand the full parameter set, options, and limitations of the underlying CLI command or library
 2. Create generator class inheriting from `BaseKubernetesGenerator<T>` or a more specific base generator
 3. Create custom model type T in `Models/` subdirectory that aligns with CLI usage patterns
 4. Design the model to reflect CLI command options and parameters accurately
