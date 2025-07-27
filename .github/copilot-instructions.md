@@ -71,6 +71,14 @@ This is a .NET 9.0 library that provides code generators for Kubernetes resource
 - Use temporary file paths for output testing
 - Clean up test files after execution
 
+### Test Design Principles
+
+- **Avoid redundant tests**: Before creating multiple test methods, analyze if they test meaningfully different scenarios
+- **Understand CLI command capabilities**: Research the underlying kubectl command parameters and options to determine valid test scenarios
+- **One test per distinct functionality**: If a CLI command only accepts a name parameter (like `kubectl create namespace`), one comprehensive test is usually sufficient
+- **Test edge cases and variations**: Focus on testing different parameter combinations, error conditions, and boundary cases rather than cosmetic differences
+- **Validate test necessity**: Each test should verify a unique aspect of the generator's functionality or handle a distinct input scenario
+
 ### Example Test Pattern
 
 ```csharp
@@ -125,12 +133,15 @@ public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidResourc
 
 ### Adding a New Generator
 
-1. Create generator class inheriting from `BaseKubernetesGenerator<T>` or a more specific base generator
-2. Create custom model type T in `Models/` subdirectory that aligns with CLI usage patterns
-3. Design the model to reflect CLI command options and parameters
-4. Add minimal implementation (base class handles serialization)
-5. Create comprehensive unit tests with verification
-6. Add project reference to solution file
+1. **Research the CLI command thoroughly**: Understand the full parameter set, options, and limitations of the underlying kubectl/CLI command
+2. Create generator class inheriting from `BaseKubernetesGenerator<T>` or a more specific base generator
+3. Create custom model type T in `Models/` subdirectory that aligns with CLI usage patterns
+4. Design the model to reflect CLI command options and parameters accurately
+5. Add minimal implementation (base class handles serialization)
+6. **Analyze test scenarios**: Identify genuinely different use cases and parameter combinations before writing tests
+7. Create comprehensive unit tests with verification, avoiding redundant test methods
+8. **Self-review for quality**: Check for duplicate functionality, redundant tests, and adherence to established patterns
+9. Add project reference to solution file
 
 ### Adding Custom Models
 
@@ -147,6 +158,26 @@ public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidResourc
 - Custom type converters go in `Converters/` directory
 - Type inspectors for special handling in `Inspectors/` directory
 - Object graph visitors for processing in root of Core project
+
+## Quality Assurance & Self-Review
+
+### Pre-Implementation Analysis
+- **Research CLI commands thoroughly**: Before implementing generators, understand the full scope of the underlying kubectl/CLI command parameters, options, and limitations
+- **Analyze existing patterns**: Review similar generators in the codebase to understand established patterns and avoid inconsistencies
+- **Identify distinct scenarios**: Map out genuinely different use cases and input scenarios before writing tests or implementation
+
+### Pre-Submission Checklist
+- **Review test redundancy**: Ensure each test method validates a meaningfully different scenario or functionality
+- **Verify CLI command alignment**: Confirm that models and tests reflect the actual capabilities and limitations of the underlying CLI commands
+- **Check for duplicate functionality**: Scan for multiple tests that essentially validate the same behavior with cosmetic differences
+- **Validate implementation consistency**: Ensure the generator follows established patterns (BaseNativeGenerator vs BaseKubernetesGenerator, custom models vs KubernetesClient models)
+- **Test edge cases appropriately**: Focus on boundary conditions, error scenarios, and parameter combinations rather than superficial variations
+
+### Code Review Self-Assessment
+- **Ask "What does this test actually validate?"**: Each test should have a clear, unique purpose
+- **Consider "Could these tests be combined?"**: If tests differ only in names or simple values without testing different functionality, consolidate them
+- **Evaluate "Does this reflect real-world usage?"**: Tests should mirror how users would actually use the generator and CLI commands
+- **Confirm "Are there any obvious redundancies?"**: Look for patterns like identical test structures with trivial differences
 
 ## Build and Development
 
@@ -172,6 +203,8 @@ public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidResourc
 - Update coding standards based on practical experience and code reviews
 - Include new testing patterns and verification strategies as they're developed
 - Capture architectural decisions and design principles that prove effective
+- **Document quality assurance lessons**: Add new self-review practices and quality checkpoints based on discovered issues
+- **Update pre-submission guidelines**: Enhance checklists and validation steps as new common mistakes are identified
 
 ## Integration Guidelines
 
