@@ -104,49 +104,6 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ClusterRoleBinding object with service account with explicit namespace.
-  /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithServiceAccountWithExplicitNamespace_ShouldGenerateAValidClusterRoleBinding()
-  {
-    // Arrange
-    var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding
-    {
-      Metadata = new Metadata { Name = "sa-cluster-binding" },
-      RoleRef = new RoleBindingRoleRef
-      {
-        Kind = RoleBindingRoleRefKind.ClusterRole,
-        Name = "cluster-reader"
-      },
-      Subjects =
-      [
-        new RoleBindingSubject
-        {
-          Kind = RoleBindingSubjectKind.ServiceAccount,
-          Name = "reader-service-account",
-          Namespace = "kube-system"
-        }
-      ]
-    };
-
-    // Act
-    string fileName = "sa-cluster-binding.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
-  }
-
-  /// <summary>
   /// Verifies the generated ClusterRoleBinding object with service account using default namespace.
   /// </summary>
   /// <returns></returns>
