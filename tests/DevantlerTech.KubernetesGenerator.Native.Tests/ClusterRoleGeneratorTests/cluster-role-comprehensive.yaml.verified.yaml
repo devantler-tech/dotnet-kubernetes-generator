@@ -1,0 +1,35 @@
+﻿---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: comprehensive-role
+  labels:
+    app: test
+    version: v1
+  annotations:
+    description: A comprehensive cluster role for testing
+rules:
+- verbs:
+  - get
+  - list
+  - watch
+  apiGroups:
+  - ''
+  resources:
+  - pods
+  - services
+- verbs:
+  - get
+  - list
+  apiGroups:
+  - apps
+  resources:
+  - deployments
+  - replicasets
+  resourceNames:
+  - my-deployment
+- verbs:
+  - get
+  nonResourceURLs:
+  - /api/*
+  - /metrics
