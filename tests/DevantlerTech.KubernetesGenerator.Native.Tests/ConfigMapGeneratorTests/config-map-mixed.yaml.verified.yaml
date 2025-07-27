@@ -1,0 +1,9 @@
+﻿---
+apiVersion: v1
+data:
+  database_url: postgresql://localhost:5432/mydb
+  nginx: server { listen 80; }
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: test-config-mixed

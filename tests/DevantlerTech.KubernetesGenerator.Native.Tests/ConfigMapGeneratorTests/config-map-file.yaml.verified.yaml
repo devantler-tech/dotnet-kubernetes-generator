@@ -1,0 +1,10 @@
+﻿---
+apiVersion: v1
+data:
+  config: 'key: value'
+  data.txt: sample data
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: test-config-file
+  namespace: default
