@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-pod
   namespace: default
+  name: nginx-pod
   labels:
     app: nginx
   annotations:
