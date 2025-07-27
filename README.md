@@ -10,7 +10,7 @@ A simple code generator that can generate Kubernetes resources.
 
 - [.NET](https://dotnet.microsoft.com/en-us/download)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
-- [flux](https://fluxcd.io/flux/installation/#install-the-flux-cli]
+- [flux](https://fluxcd.io/flux/installation/#install-the-flux-cli)
 
 ## 🚀 Getting Started
 
