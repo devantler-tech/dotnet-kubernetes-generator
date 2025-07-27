@@ -18,7 +18,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pod-reader"
       },
@@ -59,7 +59,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "specific-pod-reader"
       },
@@ -101,7 +101,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "replica-set-manager"
       },
@@ -142,7 +142,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "log-reader"
       },
@@ -182,7 +182,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "monitoring"
       },
@@ -227,7 +227,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "comprehensive-role",
         Labels = new Dictionary<string, string>

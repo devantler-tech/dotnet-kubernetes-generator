@@ -20,7 +20,7 @@ public sealed class GenerateAsyncTests
     var generator = new NamespaceGenerator();
     var model = new Namespace
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "test-namespace"
       }
@@ -52,7 +52,7 @@ public sealed class GenerateAsyncTests
     var generator = new NamespaceGenerator();
     var model = new Namespace
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = ""
       }

@@ -18,10 +18,9 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new PersistentVolume
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
-        Name = "persistent-volume",
-        Namespace = "default"
+        Name = "persistent-volume"
       },
       Spec = new PersistentVolumeSpec
       {
@@ -88,7 +87,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new PersistentVolume
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-hostpath",
       },
@@ -134,7 +133,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new PersistentVolume
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-nfs",
         Labels = new Dictionary<string, string>
@@ -185,7 +184,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new PersistentVolume
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-local"
       },
@@ -252,7 +251,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new PersistentVolume
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-multi-access"
       },
@@ -302,7 +301,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new PersistentVolume
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-hostpath-file"
       },
@@ -348,7 +347,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new PersistentVolume
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-advanced-affinity"
       },
@@ -426,7 +425,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new PersistentVolume
     {
-      Metadata = new Metadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-minimal"
       },

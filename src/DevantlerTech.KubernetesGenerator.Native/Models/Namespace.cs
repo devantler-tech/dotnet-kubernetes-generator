@@ -18,5 +18,5 @@ public class Namespace
   /// <summary>
   /// Gets or sets the metadata for the namespace.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required ClusterScopedMetadata Metadata { get; set; }
 }
