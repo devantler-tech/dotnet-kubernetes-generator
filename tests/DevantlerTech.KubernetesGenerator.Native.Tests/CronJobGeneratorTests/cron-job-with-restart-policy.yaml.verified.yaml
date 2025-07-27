@@ -1,0 +1,24 @@
+﻿---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: cron-job-with-restart
+  namespace: default
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: cron-job-with-restart
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - image: alpine
+            name: cron-job-with-restart
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: '*/5 * * * *'
+status: {}
