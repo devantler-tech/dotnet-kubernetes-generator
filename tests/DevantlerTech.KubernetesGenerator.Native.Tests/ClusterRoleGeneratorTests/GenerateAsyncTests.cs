@@ -18,7 +18,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new ClusterRoleMetadata
+      Metadata = new Metadata
       {
         Name = "pod-reader"
       },
@@ -26,7 +26,7 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = ClusterRoleRuleBuilder.ConvertVerbs(ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch),
+          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch],
           ApiGroups = [""],
           Resources = ["pods"]
         }
@@ -59,7 +59,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new ClusterRoleMetadata
+      Metadata = new Metadata
       {
         Name = "specific-pod-reader"
       },
@@ -67,7 +67,7 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = ClusterRoleRuleBuilder.ConvertVerbs(ClusterRoleVerb.Get),
+          Verbs = [ClusterRoleVerb.Get],
           ApiGroups = [""],
           Resources = ["pods"],
           ResourceNames = ["my-pod", "another-pod"]
@@ -101,7 +101,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new ClusterRoleMetadata
+      Metadata = new Metadata
       {
         Name = "replica-set-manager"
       },
@@ -109,7 +109,7 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = ClusterRoleRuleBuilder.ConvertVerbs(ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch),
+          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch],
           ApiGroups = ["apps"],
           Resources = ["replicasets"]
         }
@@ -142,7 +142,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new ClusterRoleMetadata
+      Metadata = new Metadata
       {
         Name = "log-reader"
       },
@@ -150,7 +150,7 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = ClusterRoleRuleBuilder.ConvertVerbs(ClusterRoleVerb.Get),
+          Verbs = [ClusterRoleVerb.Get],
           NonResourceURLs = ["/logs/*", "/metrics"]
         }
       ]
@@ -182,7 +182,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new ClusterRoleMetadata
+      Metadata = new Metadata
       {
         Name = "monitoring"
       },
@@ -227,7 +227,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleGenerator();
     var model = new ClusterRole
     {
-      Metadata = new ClusterRoleMetadata
+      Metadata = new Metadata
       {
         Name = "comprehensive-role",
         Labels = new Dictionary<string, string>
@@ -244,20 +244,20 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = ClusterRoleRuleBuilder.ConvertVerbs(ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch),
+          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch],
           ApiGroups = [""],
           Resources = ["pods", "services"]
         },
         new ClusterRoleRule
         {
-          Verbs = ClusterRoleRuleBuilder.ConvertVerbs(ClusterRoleVerb.Get, ClusterRoleVerb.List),
+          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.List],
           ApiGroups = ["apps"],
           Resources = ["deployments", "replicasets"],
           ResourceNames = ["my-deployment"]
         },
         new ClusterRoleRule
         {
-          Verbs = ClusterRoleRuleBuilder.ConvertVerbs(ClusterRoleVerb.Get),
+          Verbs = [ClusterRoleVerb.Get],
           NonResourceURLs = ["/api/*", "/metrics"]
         }
       ]

@@ -19,7 +19,7 @@ public class ClusterRole
   /// <summary>
   /// Gets or sets the metadata for the cluster role.
   /// </summary>
-  public required ClusterRoleMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the rules that define the permissions.
