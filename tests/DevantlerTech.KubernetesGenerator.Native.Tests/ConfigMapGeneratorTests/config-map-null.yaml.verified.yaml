@@ -1,0 +1,7 @@
+﻿---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: test-null
+  namespace: default

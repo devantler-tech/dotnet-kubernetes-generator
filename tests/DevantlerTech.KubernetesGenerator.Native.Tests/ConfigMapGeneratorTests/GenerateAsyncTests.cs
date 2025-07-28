@@ -111,11 +111,11 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when no data is specified.
+  /// Verifies the generated ConfigMap object with no data creates an empty ConfigMap.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithNoData_ShouldThrowKubernetesGeneratorException()
+  public async Task GenerateAsync_WithNoData_ShouldGenerateEmptyConfigMap()
   {
     // Arrange
     var generator = new ConfigMapGenerator();
@@ -123,12 +123,58 @@ public sealed class GenerateAsyncTests
     {
       Metadata = new Metadata
       {
-        Name = "test-config"
+        Name = "test-empty",
+        Namespace = "default"
       },
       Data = new Dictionary<string, string>()
     };
 
-    // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+    // Act
+    string fileName = "config-map-empty.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated ConfigMap object with null data creates an empty ConfigMap.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithNullData_ShouldGenerateEmptyConfigMap()
+  {
+    // Arrange
+    var generator = new ConfigMapGenerator();
+    var model = new ConfigMap
+    {
+      Metadata = new Metadata
+      {
+        Name = "test-null",
+        Namespace = "default"
+      },
+      Data = null
+    };
+
+    // Act
+    string fileName = "config-map-null.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
   }
 }

@@ -23,7 +23,7 @@ public class ConfigMap
   /// <summary>
   /// Gets or sets the key-value pairs to include in the ConfigMap data.
   /// </summary>
-  public required IDictionary<string, string> Data { get; init; }
+  public IDictionary<string, string>? Data { get; init; }
 
   /// <summary>
   /// Gets or sets whether to append a hash of the ConfigMap to its name.

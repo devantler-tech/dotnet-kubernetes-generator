@@ -19,7 +19,7 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
   /// <param name="overwrite">Whether to overwrite existing files.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
-  /// <exception cref="KubernetesGeneratorException">Thrown when ConfigMap name is not provided or no literal data is specified.</exception>
+  /// <exception cref="KubernetesGeneratorException">Thrown when ConfigMap name is not provided.</exception>
   public override async Task GenerateAsync(ConfigMap model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
@@ -27,11 +27,6 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
     if (string.IsNullOrWhiteSpace(model.Metadata.Name))
     {
       throw new KubernetesGeneratorException("A non-empty ConfigMap name must be provided.");
-    }
-
-    if (model.Data == null || model.Data.Count == 0)
-    {
-      throw new KubernetesGeneratorException("At least one data key-value pair must be specified.");
     }
 
     var args = new ReadOnlyCollection<string>(
@@ -62,11 +57,14 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
       args.Add(model.Metadata.Namespace);
     }
 
-    // Add literal key-value pairs
-    foreach (var kvp in model.Data!)
+    if (model.Data != null && model.Data.Count > 0)
     {
-      args.Add("--from-literal");
-      args.Add($"{kvp.Key}={kvp.Value}");
+      // Add literal key-value pairs
+      foreach (var kvp in model.Data)
+      {
+        args.Add("--from-literal");
+        args.Add($"{kvp.Key}={kvp.Value}");
+      }
     }
 
     // Add append hash if specified
