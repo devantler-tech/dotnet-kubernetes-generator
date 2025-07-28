@@ -1,0 +1,9 @@
+﻿---
+apiVersion: v1
+data:
+  api_key: secret-api-key
+  database_url: postgresql://localhost:5432/mydb
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: test-config-hash-ccmkc4k92m
