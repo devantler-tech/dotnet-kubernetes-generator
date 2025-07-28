@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\DevantlerTech.KubernetesGenerator.Native\DevantlerTech.KubernetesGenerator.Native.csproj" />
-    <ProjectReference Include="..\..\src\Utils\DevantlerTech.KubernetesGenerator.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

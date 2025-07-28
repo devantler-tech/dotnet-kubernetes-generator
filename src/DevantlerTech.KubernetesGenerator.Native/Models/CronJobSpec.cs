@@ -13,5 +13,5 @@ public class CronJobSpec
   /// <summary>
   /// Gets or sets the job template for the cronjob.
   /// </summary>
-  public required CronJobJobTemplate JobTemplate { get; init; }
+  public required JobTemplate JobTemplate { get; init; }
 }

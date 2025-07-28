@@ -1,9 +1,9 @@
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
-/// Represents the pod template for a CronJob.
+/// Represents a pod template for job specifications.
 /// </summary>
-public class CronJobPodTemplate
+public class PodTemplate
 {
   /// <summary>
   /// Gets or sets the metadata for the pod template.

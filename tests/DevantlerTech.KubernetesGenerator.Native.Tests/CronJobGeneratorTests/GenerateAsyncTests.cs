@@ -26,23 +26,20 @@ public sealed class GenerateAsyncTests
       Spec = new CronJobSpec
       {
         Schedule = "*/1 * * * *",
-        JobTemplate = new CronJobJobTemplate
+        JobTemplate = new JobTemplate
         {
           Metadata = new Metadata { Name = "cron-job" },
-          Spec = new PodTemplate
+          Template = new PodTemplate
           {
-            Template = new CronJobPodTemplate
+            Spec = new PodSpec
             {
-              Spec = new PodSpec
-              {
-                Containers = [
-                  new PodContainer
-                  {
-                    Name = "cron-job",
-                    Image = "nginx"
-                  }
-                ]
-              }
+              Containers = [
+                new PodContainer
+                {
+                  Name = "cron-job",
+                  Image = "nginx"
+                }
+              ]
             }
           }
         }
@@ -83,24 +80,21 @@ public sealed class GenerateAsyncTests
       Spec = new CronJobSpec
       {
         Schedule = "0 0 * * *",
-        JobTemplate = new CronJobJobTemplate
+        JobTemplate = new JobTemplate
         {
           Metadata = new Metadata { Name = "cron-job-with-command" },
-          Spec = new PodTemplate
+          Template = new PodTemplate
           {
-            Template = new CronJobPodTemplate
+            Spec = new PodSpec
             {
-              Spec = new PodSpec
-              {
-                Containers = [
-                  new PodContainer
-                  {
-                    Name = "cron-job-with-command",
-                    Image = "busybox",
-                    Command = ["echo", "hello", "world"]
-                  }
-                ]
-              }
+              Containers = [
+                new PodContainer
+                {
+                  Name = "cron-job-with-command",
+                  Image = "busybox",
+                  Command = ["echo", "hello", "world"]
+                }
+              ]
             }
           }
         }
@@ -141,24 +135,21 @@ public sealed class GenerateAsyncTests
       Spec = new CronJobSpec
       {
         Schedule = "*/5 * * * *",
-        JobTemplate = new CronJobJobTemplate
+        JobTemplate = new JobTemplate
         {
           Metadata = new Metadata { Name = "cron-job-with-restart" },
-          Spec = new PodTemplate
+          Template = new PodTemplate
           {
-            Template = new CronJobPodTemplate
+            Spec = new PodSpec
             {
-              Spec = new PodSpec
-              {
-                Containers = [
-                  new PodContainer
-                  {
-                    Name = "cron-job-with-restart",
-                    Image = "alpine"
-                  }
-                ],
-                RestartPolicy = PodRestartPolicy.OnFailure
-              }
+              Containers = [
+                new PodContainer
+                {
+                  Name = "cron-job-with-restart",
+                  Image = "alpine"
+                }
+              ],
+              RestartPolicy = PodRestartPolicy.OnFailure
             }
           }
         }
@@ -199,25 +190,22 @@ public sealed class GenerateAsyncTests
       Spec = new CronJobSpec
       {
         Schedule = "0 2 * * *",
-        JobTemplate = new CronJobJobTemplate
+        JobTemplate = new JobTemplate
         {
           Metadata = new Metadata { Name = "cron-job-complete" },
-          Spec = new PodTemplate
+          Template = new PodTemplate
           {
-            Template = new CronJobPodTemplate
+            Spec = new PodSpec
             {
-              Spec = new PodSpec
-              {
-                Containers = [
-                  new PodContainer
-                  {
-                    Name = "cron-job-complete",
-                    Image = "nginx:latest",
-                    Command = ["sh", "-c", "echo 'Running daily backup'"]
-                  }
-                ],
-                RestartPolicy = PodRestartPolicy.Never
-              }
+              Containers = [
+                new PodContainer
+                {
+                  Name = "cron-job-complete",
+                  Image = "nginx:latest",
+                  Command = ["sh", "-c", "echo 'Running daily backup'"]
+                }
+              ],
+              RestartPolicy = PodRestartPolicy.Never
             }
           }
         }
@@ -258,25 +246,22 @@ public sealed class GenerateAsyncTests
       Spec = new CronJobSpec
       {
         Schedule = "30 3 * * *", // 3:30 AM daily
-        JobTemplate = new CronJobJobTemplate
+        JobTemplate = new JobTemplate
         {
           Metadata = new Metadata { Name = "cron-job-hierarchical" },
-          Spec = new PodTemplate
+          Template = new PodTemplate
           {
-            Template = new CronJobPodTemplate
+            Spec = new PodSpec
             {
-              Spec = new PodSpec
-              {
-                Containers = [
-                  new PodContainer
-                  {
-                    Name = "backup-container",
-                    Image = "backup:v1.2.3",
-                    Command = ["backup", "--full"]
-                  }
-                ],
-                RestartPolicy = PodRestartPolicy.OnFailure
-              }
+              Containers = [
+                new PodContainer
+                {
+                  Name = "backup-container",
+                  Image = "backup:v1.2.3",
+                  Command = ["backup", "--full"]
+                }
+              ],
+              RestartPolicy = PodRestartPolicy.OnFailure
             }
           }
         }
