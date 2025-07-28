@@ -39,9 +39,13 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
   static ReadOnlyCollection<string> AddArguments(CronJob model)
   {
+    if (model.Metadata?.Name is null or "")
+    {
+      throw new KubernetesGeneratorException("CronJob name is required and cannot be null or empty.");
+    }
+
     var args = new List<string>
     {
-      // Require that a cronjob name is provided
       model.Metadata.Name
     };
 
@@ -51,20 +55,41 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
       args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
-    args.Add($"--image={model.Spec.Image}");
+    // Use either the convenience properties or the hierarchical structure
+    string image;
+    IList<string>? command;
+    PodRestartPolicy? restartPolicy;
+
+    if (model.Spec.JobTemplate != null)
+    {
+      // Use hierarchical structure
+      var firstContainer = model.Spec.JobTemplate.Spec.Template.Spec.Containers.FirstOrDefault() ?? throw new KubernetesGeneratorException("CronJob must have at least one container defined in JobTemplate.Spec.Template.Spec.Containers.");
+      image = firstContainer.Image;
+      command = firstContainer.Command;
+      restartPolicy = model.Spec.JobTemplate.Spec.Template.Spec.RestartPolicy;
+    }
+    else
+    {
+      // Use convenience properties
+      image = model.Spec.Image;
+      command = model.Spec.Command;
+      restartPolicy = model.Spec.RestartPolicy;
+    }
+
+    args.Add($"--image={image}");
     args.Add($"--schedule={model.Spec.Schedule}");
 
     // Add restart policy if specified
-    if (model.Spec.RestartPolicy.HasValue)
+    if (restartPolicy.HasValue)
     {
-      args.Add($"--restart={model.Spec.RestartPolicy.Value}");
+      args.Add($"--restart={restartPolicy.Value}");
     }
 
     // Add command if specified
-    if (model.Spec.Command != null && model.Spec.Command.Count > 0)
+    if (command != null && command.Count > 0)
     {
       args.Add("--");
-      args.AddRange(model.Spec.Command);
+      args.AddRange(command);
     }
 
     return args.AsReadOnly();
