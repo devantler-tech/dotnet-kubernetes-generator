@@ -6,11 +6,6 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 public class PodTemplate
 {
   /// <summary>
-  /// Gets or sets the metadata for the pod template.
-  /// </summary>
-  public Metadata? Metadata { get; set; }
-
-  /// <summary>
   /// Gets or sets the specification for the pod template.
   /// </summary>
   public required PodSpec Spec { get; init; }

@@ -28,7 +28,6 @@ public sealed class GenerateAsyncTests
         Schedule = "*/1 * * * *",
         JobTemplate = new JobTemplate
         {
-          Metadata = new Metadata { Name = "cron-job" },
           Template = new PodTemplate
           {
             Spec = new PodSpec
@@ -82,7 +81,6 @@ public sealed class GenerateAsyncTests
         Schedule = "0 0 * * *",
         JobTemplate = new JobTemplate
         {
-          Metadata = new Metadata { Name = "cron-job-with-command" },
           Template = new PodTemplate
           {
             Spec = new PodSpec
@@ -137,7 +135,6 @@ public sealed class GenerateAsyncTests
         Schedule = "*/5 * * * *",
         JobTemplate = new JobTemplate
         {
-          Metadata = new Metadata { Name = "cron-job-with-restart" },
           Template = new PodTemplate
           {
             Spec = new PodSpec
@@ -192,7 +189,6 @@ public sealed class GenerateAsyncTests
         Schedule = "0 2 * * *",
         JobTemplate = new JobTemplate
         {
-          Metadata = new Metadata { Name = "cron-job-complete" },
           Template = new PodTemplate
           {
             Spec = new PodSpec
@@ -248,7 +244,6 @@ public sealed class GenerateAsyncTests
         Schedule = "30 3 * * *", // 3:30 AM daily
         JobTemplate = new JobTemplate
         {
-          Metadata = new Metadata { Name = "cron-job-hierarchical" },
           Template = new PodTemplate
           {
             Spec = new PodSpec
