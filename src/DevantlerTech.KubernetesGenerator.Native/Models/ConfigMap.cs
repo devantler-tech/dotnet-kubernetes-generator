@@ -1,7 +1,7 @@
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
-/// Represents a Kubernetes ConfigMap for use with kubectl create configmap.
+/// Represents a Kubernetes ConfigMap.
 /// </summary>
 public class ConfigMap
 {
@@ -21,9 +21,9 @@ public class ConfigMap
   public required Metadata Metadata { get; set; }
 
   /// <summary>
-  /// Gets or sets literal key-value pairs to include in the ConfigMap.
+  /// Gets or sets the key-value pairs to include in the ConfigMap data.
   /// </summary>
-  public required IDictionary<string, string> FromLiteral { get; init; }
+  public required IDictionary<string, string> Data { get; init; }
 
   /// <summary>
   /// Gets or sets whether to append a hash of the ConfigMap to its name.

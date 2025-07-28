@@ -29,9 +29,9 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
       throw new KubernetesGeneratorException("A non-empty ConfigMap name must be provided.");
     }
 
-    if (model.FromLiteral == null || model.FromLiteral.Count == 0)
+    if (model.Data == null || model.Data.Count == 0)
     {
-      throw new KubernetesGeneratorException("At least one literal key-value pair must be specified.");
+      throw new KubernetesGeneratorException("At least one data key-value pair must be specified.");
     }
 
     var args = new ReadOnlyCollection<string>(
@@ -63,7 +63,7 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
     }
 
     // Add literal key-value pairs
-    foreach (var kvp in model.FromLiteral!)
+    foreach (var kvp in model.Data!)
     {
       args.Add("--from-literal");
       args.Add($"{kvp.Key}={kvp.Value}");

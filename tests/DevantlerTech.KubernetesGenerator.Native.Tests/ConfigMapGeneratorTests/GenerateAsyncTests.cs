@@ -25,7 +25,7 @@ public sealed class GenerateAsyncTests
         Name = "test-config",
         Namespace = "default"
       },
-      FromLiteral = new Dictionary<string, string>
+      Data = new Dictionary<string, string>
       {
         ["key1"] = "value1",
         ["key2"] = "value2"
@@ -62,7 +62,7 @@ public sealed class GenerateAsyncTests
       {
         Name = "test-config-hash"
       },
-      FromLiteral = new Dictionary<string, string>
+      Data = new Dictionary<string, string>
       {
         ["database_url"] = "postgresql://localhost:5432/mydb",
         ["api_key"] = "secret-api-key"
@@ -100,7 +100,7 @@ public sealed class GenerateAsyncTests
       {
         Name = ""
       },
-      FromLiteral = new Dictionary<string, string>
+      Data = new Dictionary<string, string>
       {
         ["key"] = "value"
       }
@@ -111,11 +111,11 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when no literal data is specified.
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when no data is specified.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithNoLiteralData_ShouldThrowKubernetesGeneratorException()
+  public async Task GenerateAsync_WithNoData_ShouldThrowKubernetesGeneratorException()
   {
     // Arrange
     var generator = new ConfigMapGenerator();
@@ -125,7 +125,7 @@ public sealed class GenerateAsyncTests
       {
         Name = "test-config"
       },
-      FromLiteral = new Dictionary<string, string>()
+      Data = new Dictionary<string, string>()
     };
 
     // Act & Assert
