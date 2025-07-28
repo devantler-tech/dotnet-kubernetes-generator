@@ -39,7 +39,7 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
   static ReadOnlyCollection<string> AddArguments(CronJob model)
   {
-    if (model.Metadata?.Name is null or "")
+    if (string.IsNullOrEmpty(model.Metadata?.Name))
     {
       throw new KubernetesGeneratorException("CronJob name is required and cannot be null or empty.");
     }

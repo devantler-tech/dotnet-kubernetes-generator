@@ -6,6 +6,7 @@
   <Project Path="src/DevantlerTech.KubernetesGenerator.Kind/DevantlerTech.KubernetesGenerator.Kind.csproj" />
   <Project Path="src/DevantlerTech.KubernetesGenerator.Kustomize/DevantlerTech.KubernetesGenerator.Kustomize.csproj" />
   <Project Path="src/DevantlerTech.KubernetesGenerator.Native/DevantlerTech.KubernetesGenerator.Native.csproj" />
+  <Project Path="src/Utils/DevantlerTech.KubernetesGenerator.Utils.csproj" />
   <Project Path="tests/DevantlerTech.KubernetesGenerator.CertManager.Tests/DevantlerTech.KubernetesGenerator.CertManager.Tests.csproj" />
   <Project Path="tests/DevantlerTech.KubernetesGenerator.Core.Tests/DevantlerTech.KubernetesGenerator.Core.Tests.csproj" />
   <Project Path="tests/DevantlerTech.KubernetesGenerator.Flux.Tests/DevantlerTech.KubernetesGenerator.Flux.Tests.csproj" />

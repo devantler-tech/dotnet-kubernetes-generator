@@ -13,5 +13,5 @@ public class CronJobJobTemplate
   /// <summary>
   /// Gets or sets the specification for the job template.
   /// </summary>
-  public required CronJobJobTemplateSpec Spec { get; init; }
+  public required PodTemplate Spec { get; init; }
 }
