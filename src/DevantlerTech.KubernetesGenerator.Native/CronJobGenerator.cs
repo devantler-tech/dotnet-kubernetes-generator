@@ -44,6 +44,9 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
       throw new KubernetesGeneratorException("CronJob name is required and cannot be null or empty.");
     }
 
+    // Extract the first container or throw if none exists
+    var firstContainer = model.Spec.JobTemplate.Spec.Template.Spec.Containers.FirstOrDefault() ?? throw new KubernetesGeneratorException("CronJob must have at least one container defined in JobTemplate.Spec.Template.Spec.Containers.");
+
     var args = new List<string>
     {
       model.Metadata.Name
@@ -55,41 +58,21 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
       args.Add($"--namespace={model.Metadata.Namespace}");
     }
 
-    // Use either the convenience properties or the hierarchical structure
-    string image;
-    IList<string>? command;
-    PodRestartPolicy? restartPolicy;
-
-    if (model.Spec.JobTemplate != null)
-    {
-      // Use hierarchical structure
-      var firstContainer = model.Spec.JobTemplate.Spec.Template.Spec.Containers.FirstOrDefault() ?? throw new KubernetesGeneratorException("CronJob must have at least one container defined in JobTemplate.Spec.Template.Spec.Containers.");
-      image = firstContainer.Image;
-      command = firstContainer.Command;
-      restartPolicy = model.Spec.JobTemplate.Spec.Template.Spec.RestartPolicy;
-    }
-    else
-    {
-      // Use convenience properties
-      image = model.Spec.Image;
-      command = model.Spec.Command;
-      restartPolicy = model.Spec.RestartPolicy;
-    }
-
-    args.Add($"--image={image}");
+    args.Add($"--image={firstContainer.Image}");
     args.Add($"--schedule={model.Spec.Schedule}");
 
     // Add restart policy if specified
+    var restartPolicy = model.Spec.JobTemplate.Spec.Template.Spec.RestartPolicy;
     if (restartPolicy.HasValue)
     {
       args.Add($"--restart={restartPolicy.Value}");
     }
 
     // Add command if specified
-    if (command != null && command.Count > 0)
+    if (firstContainer.Command != null && firstContainer.Command.Count > 0)
     {
       args.Add("--");
-      args.AddRange(command);
+      args.AddRange(firstContainer.Command);
     }
 
     return args.AsReadOnly();

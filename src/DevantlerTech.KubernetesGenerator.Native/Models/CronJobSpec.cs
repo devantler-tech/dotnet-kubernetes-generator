@@ -13,24 +13,44 @@ public class CronJobSpec
   /// <summary>
   /// Gets or sets the job template for the cronjob.
   /// </summary>
-  public CronJobJobTemplate? JobTemplate { get; set; }
+  public required CronJobJobTemplate JobTemplate { get; init; }
 
   /// <summary>
-  /// Gets or sets the container image for the cronjob.
-  /// This is a convenience property that creates the jobTemplate structure automatically.
+  /// Creates a CronJobSpec with the required hierarchical structure from simple parameters.
   /// </summary>
-  public required string Image { get; set; }
-
-  /// <summary>
-  /// Gets or sets the command to run in the container.
-  /// This is a convenience property.
-  /// </summary>
-  public IList<string>? Command { get; init; }
-
-  /// <summary>
-  /// Gets or sets the restart policy for the job.
-  /// This is a convenience property.
-  /// Supported values: OnFailure, Never.
-  /// </summary>
-  public PodRestartPolicy? RestartPolicy { get; init; }
+  /// <param name="schedule">The cron schedule.</param>
+  /// <param name="image">The container image.</param>
+  /// <param name="name">The job name.</param>
+  /// <param name="command">Optional container command.</param>
+  /// <param name="restartPolicy">Optional restart policy.</param>
+  /// <returns>A properly structured CronJobSpec.</returns>
+  public static CronJobSpec Create(CronSchedule schedule, string image, string name, IList<string>? command = null, PodRestartPolicy? restartPolicy = null)
+  {
+    return new CronJobSpec
+    {
+      Schedule = schedule,
+      JobTemplate = new CronJobJobTemplate
+      {
+        Metadata = new Metadata { Name = name },
+        Spec = new CronJobJobTemplateSpec
+        {
+          Template = new CronJobPodTemplate
+          {
+            Spec = new CronJobPodTemplateSpec
+            {
+              Containers = [
+                new PodContainer
+                {
+                  Name = name,
+                  Image = image,
+                  Command = command
+                }
+              ],
+              RestartPolicy = restartPolicy
+            }
+          }
+        }
+      }
+    };
+  }
 }

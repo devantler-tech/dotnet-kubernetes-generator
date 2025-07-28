@@ -23,11 +23,7 @@ public sealed class GenerateAsyncTests
         Name = "cron-job",
         Namespace = "default"
       },
-      Spec = new CronJobSpec
-      {
-        Image = "nginx",
-        Schedule = "*/1 * * * *"
-      }
+      Spec = CronJobSpec.Create("*/1 * * * *", "nginx", "cron-job")
     };
 
     // Act
@@ -61,12 +57,7 @@ public sealed class GenerateAsyncTests
         Name = "cron-job-with-command",
         Namespace = "default"
       },
-      Spec = new CronJobSpec
-      {
-        Image = "busybox",
-        Schedule = "0 0 * * *",
-        Command = ["echo", "hello", "world"]
-      }
+      Spec = CronJobSpec.Create("0 0 * * *", "busybox", "cron-job-with-command", ["echo", "hello", "world"])
     };
 
     // Act
@@ -100,12 +91,7 @@ public sealed class GenerateAsyncTests
         Name = "cron-job-with-restart",
         Namespace = "default"
       },
-      Spec = new CronJobSpec
-      {
-        Image = "alpine",
-        Schedule = "*/5 * * * *",
-        RestartPolicy = PodRestartPolicy.OnFailure
-      }
+      Spec = CronJobSpec.Create("*/5 * * * *", "alpine", "cron-job-with-restart", null, PodRestartPolicy.OnFailure)
     };
 
     // Act
@@ -139,17 +125,70 @@ public sealed class GenerateAsyncTests
         Name = "cron-job-complete",
         Namespace = "production"
       },
-      Spec = new CronJobSpec
-      {
-        Image = "nginx:latest",
-        Schedule = "0 2 * * *",
-        RestartPolicy = PodRestartPolicy.Never,
-        Command = ["sh", "-c", "echo 'Running daily backup'"]
-      }
+      Spec = CronJobSpec.Create("0 2 * * *", "nginx:latest", "cron-job-complete", ["sh", "-c", "echo 'Running daily backup'"], PodRestartPolicy.Never)
     };
 
     // Act
     string fileName = "cron-job-complete.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated CronJob object using the hierarchical API directly.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithHierarchicalStructure_ShouldGenerateAValidCronJob()
+  {
+    // Arrange
+    var generator = new CronJobGenerator();
+    var model = new CronJob
+    {
+      Metadata = new Metadata
+      {
+        Name = "cron-job-hierarchical",
+        Namespace = "test"
+      },
+      Spec = new CronJobSpec
+      {
+        Schedule = CronSchedule.Daily(3, 30), // 3:30 AM daily
+        JobTemplate = new CronJobJobTemplate
+        {
+          Metadata = new Metadata { Name = "cron-job-hierarchical" },
+          Spec = new CronJobJobTemplateSpec
+          {
+            Template = new CronJobPodTemplate
+            {
+              Spec = new CronJobPodTemplateSpec
+              {
+                Containers = [
+                  new PodContainer
+                  {
+                    Name = "backup-container",
+                    Image = "backup:v1.2.3",
+                    Command = ["backup", "--full"]
+                  }
+                ],
+                RestartPolicy = PodRestartPolicy.OnFailure
+              }
+            }
+          }
+        }
+      }
+    };
+
+    // Act
+    string fileName = "cron-job-hierarchical.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
