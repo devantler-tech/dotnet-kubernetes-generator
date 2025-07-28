@@ -1,4 +1,5 @@
 using Cronos;
+using DevantlerTech.KubernetesGenerator.Core;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
@@ -7,31 +8,24 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// </summary>
 public class CronJobSpec
 {
+  /// <summary>
+  /// Represents the schedule in cron format for the cronjob.
+  /// </summary>
   string _schedule = string.Empty;
 
   /// <summary>
-  /// Gets or sets the schedule in cron format for the cronjob.
-  /// Accepts both string and CronExpression values with validation.
+  /// Represents the schedule in cron format for the cronjob.
   /// </summary>
   public required string Schedule
   {
     get => _schedule;
-    set
+    init
     {
-      // Validate the cron expression using CronSchedule utility
-      CronSchedule.Validate(value);
-      _schedule = value;
+      // Validate the schedule format
+      _schedule = CronExpression.TryParse(value, out _)
+        ? value
+        : throw new KubernetesGeneratorException($"Invalid cron schedule format: '{value}'.");
     }
-  }
-
-  /// <summary>
-  /// Sets the schedule from a CronExpression.
-  /// </summary>
-  /// <param name="cronExpression">The CronExpression to set.</param>
-  public void SetSchedule(CronExpression cronExpression)
-  {
-    ArgumentNullException.ThrowIfNull(cronExpression);
-    _schedule = CronSchedule.FromCronExpression(cronExpression);
   }
 
   /// <summary>

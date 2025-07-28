@@ -25,7 +25,7 @@ public sealed class GenerateAsyncTests
       },
       Spec = new CronJobSpec
       {
-        Schedule = "*/1 * * * *",
+        Schedule = "*/1 * * * *", // Every minute
         JobTemplate = new JobTemplate
         {
           Template = new PodTemplate
@@ -78,7 +78,7 @@ public sealed class GenerateAsyncTests
       },
       Spec = new CronJobSpec
       {
-        Schedule = "0 0 * * *",
+        Schedule = "0 0 * * *", // Daily at midnight
         JobTemplate = new JobTemplate
         {
           Template = new PodTemplate
@@ -186,7 +186,7 @@ public sealed class GenerateAsyncTests
       },
       Spec = new CronJobSpec
       {
-        Schedule = "0 2 * * *",
+        Schedule = "0 2 * * *", // Daily at 2 AM
         JobTemplate = new JobTemplate
         {
           Template = new PodTemplate
