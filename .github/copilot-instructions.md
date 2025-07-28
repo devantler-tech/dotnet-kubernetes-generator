@@ -122,3 +122,11 @@ This library provides code generators for Kubernetes resources across multiple d
 - Each domain should be modular and independently packageable
 - Core functionality should be shared across implementations
 - Version packages consistently to maintain compatibility
+
+## Commit, PR, and Branch Naming
+
+- Use semantic commit conventions for all commit messages, PR titles, and branch names.
+- Format:
+  - `<semantic-name>/branch` for branch names (e.g., `feat/add-generator`)
+  - `<semantic-name>: commit message` for commit messages (e.g., `fix: correct YAML serialization`)
+  - `<semantic-name>: PR Title` for pull request titles (e.g., `chore: update documentation`)
