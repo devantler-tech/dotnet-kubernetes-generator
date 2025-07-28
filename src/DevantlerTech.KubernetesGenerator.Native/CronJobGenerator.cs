@@ -24,7 +24,7 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    if (string.IsNullOrEmpty(model.Metadata?.Name))
+    if (string.IsNullOrEmpty(model.Metadata.Name))
     {
       throw new KubernetesGeneratorException("CronJob name is required and cannot be null or empty.");
     }
