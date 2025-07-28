@@ -37,7 +37,7 @@ public sealed class GenerateAsyncTests
         },
         Template = new PodTemplateSpec
         {
-          Metadata = new PodTemplateMetadata
+          Metadata = new TemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {
@@ -101,7 +101,7 @@ public sealed class GenerateAsyncTests
         },
         Template = new PodTemplateSpec
         {
-          Metadata = new PodTemplateMetadata
+          Metadata = new TemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {
@@ -165,7 +165,7 @@ public sealed class GenerateAsyncTests
         },
         Template = new PodTemplateSpec
         {
-          Metadata = new PodTemplateMetadata
+          Metadata = new TemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {

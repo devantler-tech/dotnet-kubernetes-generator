@@ -8,7 +8,7 @@ public class PodTemplateSpec
   /// <summary>
   /// Gets or sets the metadata for the pod template.
   /// </summary>
-  public PodTemplateMetadata? Metadata { get; set; }
+  public TemplateMetadata? Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the specification for the pod template.
