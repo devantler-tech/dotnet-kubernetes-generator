@@ -13,5 +13,5 @@ public class NetworkPolicyEgressRule
   /// <summary>
   /// Gets or sets the destinations which can be reached by this rule.
   /// </summary>
-  public IList<NetworkPolicyPeer>? To { get; init; }
+  public IReadOnlyList<NetworkPolicyPeer>? To { get; init; }
 }
