@@ -1,0 +1,25 @@
+﻿---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: default
+  name: rolling-update-daemon-set
+spec:
+  selector:
+    matchLabels:
+      app: rolling-update
+  template:
+    metadata:
+      labels:
+        app: rolling-update
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.21
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  minReadySeconds: 30
+  revisionHistoryLimit: 5
