@@ -8,7 +8,7 @@ public class NetworkPolicyIngressRule
   /// <summary>
   /// Gets or sets the ports that are allowed by this rule.
   /// </summary>
-  public IList<NetworkPolicyPort>? Ports { get; init; }
+  public IReadOnlyList<NetworkPolicyPort>? Ports { get; init; }
 
   /// <summary>
   /// Gets or sets the sources which can access the selected pods.
