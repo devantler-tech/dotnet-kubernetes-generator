@@ -13,5 +13,5 @@ public class NetworkPolicyIPBlock
   /// <summary>
   /// Gets or sets the list of IP addresses or CIDR blocks to exclude from the CIDR block.
   /// </summary>
-  public IList<string>? Except { get; init; }
+  public IReadOnlyList<string>? Except { get; init; }
 }
