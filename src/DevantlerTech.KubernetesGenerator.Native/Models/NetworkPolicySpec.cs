@@ -23,5 +23,5 @@ public class NetworkPolicySpec
   /// <summary>
   /// Gets or sets the egress rules for this NetworkPolicy.
   /// </summary>
-  public IList<NetworkPolicyEgressRule>? Egress { get; init; }
+  public IReadOnlyList<NetworkPolicyEgressRule>? Egress { get; init; }
 }
