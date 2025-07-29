@@ -1,0 +1,28 @@
+﻿---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: cron-job-with-command
+  namespace: default
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: cron-job-with-command
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - command:
+            - echo
+            - hello
+            - world
+            image: busybox
+            name: cron-job-with-command
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: 0 0 * * *
+status: {}
