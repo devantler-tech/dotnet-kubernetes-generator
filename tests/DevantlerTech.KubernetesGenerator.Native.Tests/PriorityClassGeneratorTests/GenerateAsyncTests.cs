@@ -1,7 +1,6 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PriorityClassGeneratorTests;
-
 
 /// <summary>
 /// Tests for the <see cref="PriorityClassGenerator"/> class.
@@ -9,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PriorityClassGeneratorT
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated PriorityClass object.
+  /// Verifies the generated PriorityClass object with all properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,23 +16,89 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new V1PriorityClass
+    var model = new PriorityClass
     {
-      ApiVersion = "scheduling.k8s.io/v1",
-      Kind = "PriorityClass",
-      Metadata = new V1ObjectMeta
+      Metadata = new ClusterScopedMetadata
       {
-        Name = "priority-class",
-        NamespaceProperty = "default"
+        Name = "high-priority"
       },
+      Value = 1000,
       Description = "PriorityClass for high-priority pods",
       GlobalDefault = false,
-      Value = 1000,
-      PreemptionPolicy = "Never"
+      PreemptionPolicy = PreemptionPolicy.Never
     };
 
     // Act
     string fileName = "priority-class.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PriorityClass object with minimal properties.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithMinimalProperties_ShouldGenerateAValidPriorityClass()
+  {
+    // Arrange
+    var generator = new PriorityClassGenerator();
+    var model = new PriorityClass
+    {
+      Metadata = new ClusterScopedMetadata
+      {
+        Name = "basic-priority"
+      },
+      Value = 500
+    };
+
+    // Act
+    string fileName = "priority-class-minimal.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies the generated PriorityClass object with global default set to true.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithGlobalDefault_ShouldGenerateAValidPriorityClass()
+  {
+    // Arrange
+    var generator = new PriorityClassGenerator();
+    var model = new PriorityClass
+    {
+      Metadata = new ClusterScopedMetadata
+      {
+        Name = "default-priority"
+      },
+      Value = 100,
+      Description = "Default priority class",
+      GlobalDefault = true,
+      PreemptionPolicy = PreemptionPolicy.PreemptLowerPriority
+    };
+
+    // Act
+    string fileName = "priority-class-global-default.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
