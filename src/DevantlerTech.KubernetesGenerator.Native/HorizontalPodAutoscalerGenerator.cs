@@ -1,11 +1,11 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
-/// A generator for Kubernetes HorizontalPodAutoscaler objects.
+/// A generator for Kubernetes HorizontalPodAutoscaler objects with custom model.
 /// </summary>
-public class HorizontalPodAutoscalerGenerator : BaseKubernetesGenerator<V2HorizontalPodAutoscaler>
+public class HorizontalPodAutoscalerGenerator : BaseKubernetesGenerator<HorizontalPodAutoscaler>
 {
 }
