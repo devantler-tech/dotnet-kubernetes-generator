@@ -13,5 +13,5 @@ public class NetworkPolicyIngressRule
   /// <summary>
   /// Gets or sets the sources which can access the selected pods.
   /// </summary>
-  public IList<NetworkPolicyPeer>? From { get; init; }
+  public IReadOnlyList<NetworkPolicyPeer>? From { get; init; }
 }
