@@ -29,7 +29,7 @@ public class DeploymentGenerator : BaseNativeGenerator<Deployment>
       throw new KubernetesGeneratorException("A non-empty Deployment name must be provided.");
     }
 
-    if (model.Spec.Images == null || model.Spec.Images.Count == 0)
+    if (model.Spec.Images.Count == 0)
     {
       throw new KubernetesGeneratorException("At least one container image must be provided.");
     }
