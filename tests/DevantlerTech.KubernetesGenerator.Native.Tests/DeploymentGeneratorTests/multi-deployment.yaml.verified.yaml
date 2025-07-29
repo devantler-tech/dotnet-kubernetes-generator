@@ -4,23 +4,28 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: my-deployment
-  name: my-deployment
-  namespace: default
+    app: multi-container-deployment
+  name: multi-container-deployment
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      app: my-deployment
+      app: multi-container-deployment
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: my-deployment
+        app: multi-container-deployment
     spec:
       containers:
       - image: nginx
         name: nginx
+        resources: {}
+      - image: busybox
+        name: busybox
+        resources: {}
+      - image: ubuntu
+        name: ubuntu
         resources: {}
 status: {}
