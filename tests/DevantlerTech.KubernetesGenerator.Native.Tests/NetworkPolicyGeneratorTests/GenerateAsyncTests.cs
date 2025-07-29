@@ -1,4 +1,4 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NetworkPolicyGeneratorTests;
 
@@ -17,51 +17,51 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NetworkPolicyGenerator();
-    var model = new V1NetworkPolicy
+    var model = new NetworkPolicy
     {
-      ApiVersion = "v1",
-      Kind = "NetworkPolicy",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
         Name = "network-policy",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
-      Spec = new V1NetworkPolicySpec
+      Spec = new NetworkPolicySpec
       {
+        PodSelector = new LabelSelector
+        {
+          MatchLabels = new Dictionary<string, string>
+          {
+            ["app"] = "nginx"
+          }
+        },
+        PolicyTypes = [NetworkPolicyType.Ingress, NetworkPolicyType.Egress],
         Egress =
         [
-          new V1NetworkPolicyEgressRule
+          new NetworkPolicyEgressRule
           {
             Ports =
             [
-              new V1NetworkPolicyPort
+              new NetworkPolicyPort
               {
-                Port = new IntstrIntOrString("80")
+                Port = "80",
+                Protocol = NetworkPolicyProtocol.TCP
               }
             ]
           }
         ],
         Ingress =
         [
-          new V1NetworkPolicyIngressRule
+          new NetworkPolicyIngressRule
           {
             Ports =
             [
-              new V1NetworkPolicyPort
+              new NetworkPolicyPort
               {
-                Port = new IntstrIntOrString("80")
+                Port = "80",
+                Protocol = NetworkPolicyProtocol.TCP
               }
             ]
           }
-        ],
-        PolicyTypes = ["Ingress", "Egress"],
-        PodSelector = new V1LabelSelector
-        {
-          MatchLabels = new Dictionary<string, string>
-          {
-            ["app"] = "nginx"
-          }
-        }
+        ]
       }
     };
 
