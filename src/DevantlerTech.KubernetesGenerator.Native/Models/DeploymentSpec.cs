@@ -13,7 +13,7 @@ public class DeploymentSpec
   /// <summary>
   /// Gets or sets the list of container images to run.
   /// </summary>
-  public required IList<string> Images { get; init; }
+  public required IReadOnlyList<string> Images { get; init; }
 
   /// <summary>
   /// Gets or sets the port that this deployment exposes.
