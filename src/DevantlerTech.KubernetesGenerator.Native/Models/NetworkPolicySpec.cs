@@ -13,7 +13,7 @@ public class NetworkPolicySpec
   /// <summary>
   /// Gets or sets the policy types for this NetworkPolicy.
   /// </summary>
-  public IList<NetworkPolicyType>? PolicyTypes { get; init; }
+  public IReadOnlyList<NetworkPolicyType>? PolicyTypes { get; init; }
 
   /// <summary>
   /// Gets or sets the ingress rules for this NetworkPolicy.
