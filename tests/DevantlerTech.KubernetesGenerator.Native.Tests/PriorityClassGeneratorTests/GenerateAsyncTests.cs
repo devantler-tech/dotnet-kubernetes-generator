@@ -44,11 +44,12 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PriorityClass object with minimal properties.
+  /// Verifies the generated PriorityClass object with only required properties (name and value).
+  /// This test validates that kubectl applies correct defaults for optional properties like preemptionPolicy.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithMinimalProperties_ShouldGenerateAValidPriorityClass()
+  public async Task GenerateAsync_WithOnlyRequiredProperties_ShouldApplyCorrectDefaults()
   {
     // Arrange
     var generator = new PriorityClassGenerator();
@@ -62,7 +63,7 @@ public sealed class GenerateAsyncTests
     };
 
     // Act
-    string fileName = "priority-class-minimal.yaml";
+    string fileName = "priority-class-required-only.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
