@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 public class DaemonSetSpec
 {
   /// <summary>
-  /// Gets or sets the label selector for pods. Existing ReplicaSets whose pods are selected by this will be the ones affected by this deployment.
+  /// Gets or sets the label selector for pods. Existing ReplicaSets whose pods are matching this selector will be managed by this DaemonSet.
   /// </summary>
   public required LabelSelector Selector { get; set; }
 
