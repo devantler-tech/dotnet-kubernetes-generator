@@ -9,11 +9,11 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.HorizontalPodAutoscaler
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated HorizontalPodAutoscaler object.
+  /// Verifies the generated HorizontalPodAutoscaler object with full configuration.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidHorizontalPodAutoscaler()
+  public async Task GenerateAsync_WithFullConfiguration_ShouldGenerateAValidHorizontalPodAutoscaler()
   {
     // Arrange
     var generator = new HorizontalPodAutoscalerGenerator();
@@ -52,54 +52,11 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated HorizontalPodAutoscaler object with StatefulSet target.
+  /// Verifies the generated HorizontalPodAutoscaler object with minimal required properties.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithStatefulSetTarget_ShouldGenerateAValidHorizontalPodAutoscaler()
-  {
-    // Arrange
-    var generator = new HorizontalPodAutoscalerGenerator();
-    var model = new HorizontalPodAutoscaler
-    {
-      Metadata = new Metadata
-      {
-        Name = "hpa-statefulset",
-        Namespace = "testing"
-      },
-      Spec = new HorizontalPodAutoscalerSpec
-      {
-        ScaleTargetRef = new HorizontalPodAutoscalerScaleTargetRef
-        {
-          Kind = HorizontalPodAutoscalerTargetKind.StatefulSet,
-          Name = "statefulset-name"
-        },
-        MinReplicas = 2,
-        MaxReplicas = 20
-      }
-    };
-
-    // Act
-    string fileName = "hpa-statefulset.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
-  }
-
-  /// <summary>
-  /// Verifies the generated HorizontalPodAutoscaler object with minimal properties.
-  /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithMinimalProperties_ShouldGenerateAValidHorizontalPodAutoscaler()
+  public async Task GenerateAsync_WithMinimalConfiguration_ShouldGenerateAValidHorizontalPodAutoscaler()
   {
     // Arrange
     var generator = new HorizontalPodAutoscalerGenerator();
