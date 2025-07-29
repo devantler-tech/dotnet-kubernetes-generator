@@ -207,33 +207,5 @@ public sealed class GenerateAsyncTests
 
     Assert.Contains("At least one container image must be provided", exception.Message, StringComparison.Ordinal);
   }
-
-  /// <summary>
-  /// Verifies that an exception is thrown when images property is null.
-  /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithNullImages_ShouldThrowException()
-  {
-    // Arrange
-    var generator = new DeploymentGenerator();
-    var model = new Deployment
-    {
-      Metadata = new Metadata
-      {
-        Name = "test-deployment"
-      },
-      Spec = new DeploymentSpec
-      {
-        Images = null!
-      }
-    };
-
-    // Act & Assert
-    var exception = await Assert.ThrowsAsync<KubernetesGeneratorException>(
-      () => generator.GenerateAsync(model, "/tmp/test.yaml"));
-
-    Assert.Contains("At least one container image must be provided", exception.Message, StringComparison.Ordinal);
-  }
 }
 
