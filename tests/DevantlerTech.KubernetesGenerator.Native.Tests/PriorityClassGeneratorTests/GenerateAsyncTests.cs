@@ -1,3 +1,4 @@
+using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PriorityClassGeneratorTests;
@@ -100,6 +101,111 @@ public sealed class GenerateAsyncTests
 
     // Act
     string fileName = "priority-class-global-default.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies that ArgumentNullException is thrown when model is null.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithNullModel_ShouldThrowArgumentNullException()
+  {
+    // Arrange
+    var generator = new PriorityClassGenerator();
+    PriorityClass? model = null;
+
+    // Act & Assert
+    var exception = await Assert.ThrowsAsync<ArgumentNullException>(
+      () => generator.GenerateAsync(model!, "output.yaml"));
+
+    Assert.Equal("model", exception.ParamName);
+  }
+
+  /// <summary>
+  /// Verifies that KubernetesGeneratorException is thrown when PriorityClass name is null or empty.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithEmptyName_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new PriorityClassGenerator();
+    var model = new PriorityClass
+    {
+      Metadata = new ClusterScopedMetadata
+      {
+        Name = ""  // Empty name
+      },
+      Value = 500
+    };
+
+    // Act & Assert
+    var exception = await Assert.ThrowsAsync<KubernetesGeneratorException>(
+      () => generator.GenerateAsync(model, "output.yaml"));
+
+    Assert.Equal("A non-empty PriorityClass name must be provided.", exception.Message);
+  }
+
+  /// <summary>
+  /// Verifies that KubernetesGeneratorException is thrown when PriorityClass name is whitespace.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithWhitespaceName_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new PriorityClassGenerator();
+    var model = new PriorityClass
+    {
+      Metadata = new ClusterScopedMetadata
+      {
+        Name = "   "  // Whitespace name
+      },
+      Value = 500
+    };
+
+    // Act & Assert
+    var exception = await Assert.ThrowsAsync<KubernetesGeneratorException>(
+      () => generator.GenerateAsync(model, "output.yaml"));
+
+    Assert.Equal("A non-empty PriorityClass name must be provided.", exception.Message);
+  }
+
+  /// <summary>
+  /// Verifies the generated PriorityClass object with empty description string.
+  /// This test ensures that empty description strings are handled correctly by the AddArguments method.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithEmptyDescription_ShouldGenerateAValidPriorityClass()
+  {
+    // Arrange
+    var generator = new PriorityClassGenerator();
+    var model = new PriorityClass
+    {
+      Metadata = new ClusterScopedMetadata
+      {
+        Name = "test-priority"
+      },
+      Value = 300,
+      Description = "",  // Empty description to test the AddArguments method
+      GlobalDefault = false,
+      PreemptionPolicy = PreemptionPolicy.PreemptLowerPriority
+    };
+
+    // Act
+    string fileName = "priority-class-empty-description.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
