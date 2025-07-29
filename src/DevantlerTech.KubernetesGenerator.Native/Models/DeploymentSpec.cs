@@ -23,5 +23,5 @@ public class DeploymentSpec
   /// <summary>
   /// Gets or sets the command to run in the container.
   /// </summary>
-  public IList<string>? Command { get; init; }
+  public IReadOnlyList<string>? Command { get; init; }
 }
