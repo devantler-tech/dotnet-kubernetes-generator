@@ -1,0 +1,28 @@
+﻿---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: cron-job-complete
+  namespace: production
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: cron-job-complete
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - command:
+            - sh
+            - -c
+            - echo 'Running daily backup'
+            image: nginx:latest
+            name: cron-job-complete
+            resources: {}
+          restartPolicy: Never
+  schedule: 0 2 * * *
+status: {}
