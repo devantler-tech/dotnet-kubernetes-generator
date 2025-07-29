@@ -1,0 +1,23 @@
+﻿---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: cron-job-no-namespace
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: cron-job-no-namespace
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - image: alpine
+            name: cron-job-no-namespace
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: 0 1 * * *
+status: {}

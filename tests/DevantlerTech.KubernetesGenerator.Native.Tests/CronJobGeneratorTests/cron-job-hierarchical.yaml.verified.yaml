@@ -1,0 +1,27 @@
+﻿---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: cron-job-hierarchical
+  namespace: test
+spec:
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: cron-job-hierarchical
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - command:
+            - backup
+            - --full
+            image: backup:v1.2.3
+            name: cron-job-hierarchical
+            resources: {}
+          restartPolicy: OnFailure
+  schedule: 30 3 * * *
+status: {}
