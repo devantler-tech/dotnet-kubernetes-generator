@@ -3,9 +3,8 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Represents a TLS secret for use with kubectl create secret tls.
 /// </summary>
-public class TLSSecret(string name) : BaseSecret(name)
+public class TLSSecret : BaseSecret
 {
-
   /// <summary>
   /// Gets or sets the certificate data, either as a file path or the certificate content.
   /// </summary>

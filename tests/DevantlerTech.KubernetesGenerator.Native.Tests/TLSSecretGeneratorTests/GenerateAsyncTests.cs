@@ -21,8 +21,9 @@ public sealed class GenerateAsyncTests
     string privateKeyContent = await File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.key"));
 
     var generator = new TLSSecretGenerator();
-    var model = new TLSSecret("tls-secret-content")
+    var model = new TLSSecret
     {
+      Name = "tls-secret-content",
       Certificate = certificateContent,
       PrivateKey = privateKeyContent
     };
@@ -63,8 +64,9 @@ public sealed class GenerateAsyncTests
     // Arrange
     var generator = new TLSSecretGenerator();
 
-    var model = new TLSSecret("tls-secret-files")
+    var model = new TLSSecret
     {
+      Name = "tls-secret-files",
       Certificate = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.crt"),
       PrivateKey = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.key")
     };
@@ -98,8 +100,9 @@ public sealed class GenerateAsyncTests
     // Arrange
     var generator = new TLSSecretGenerator();
 
-    var model = new TLSSecret("tls-secret-invalid-cert")
+    var model = new TLSSecret
     {
+      Name = "tls-secret-invalid-cert",
       Certificate = "invalid-certificate-data",
       PrivateKey = "invalid-private-key-data"
     };

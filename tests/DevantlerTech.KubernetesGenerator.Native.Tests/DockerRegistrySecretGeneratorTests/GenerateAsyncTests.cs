@@ -16,8 +16,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DockerRegistrySecretGenerator();
-    var model = new DockerRegistrySecret("docker-registry-secret")
+    var model = new DockerRegistrySecret
     {
+      Name = "docker-registry-secret",
       DockerServer = "https://index.docker.io/v1/",
       DockerUsername = "myuser",
       DockerPassword = "mypassword",
@@ -49,8 +50,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DockerRegistrySecretGenerator();
-    var model = new DockerRegistrySecret("docker-registry-secret-minimal")
+    var model = new DockerRegistrySecret
     {
+      Name = "docker-registry-secret-minimal",
       DockerUsername = "user",
       DockerPassword = "pass",
       DockerEmail = "user@example.com"
