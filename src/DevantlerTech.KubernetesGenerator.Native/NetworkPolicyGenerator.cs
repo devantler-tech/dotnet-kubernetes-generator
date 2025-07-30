@@ -1,11 +1,11 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
-/// A generator for Kubernetes NetworkPolicy objects.
+/// A generator for Kubernetes NetworkPolicy objects using custom models.
 /// </summary>
-public class NetworkPolicyGenerator : BaseKubernetesGenerator<V1NetworkPolicy>
+public class NetworkPolicyGenerator : BaseKubernetesGenerator<NetworkPolicy>
 {
 }

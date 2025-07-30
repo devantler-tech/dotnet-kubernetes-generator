@@ -1,0 +1,28 @@
+﻿---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  namespace: production
+  name: comprehensive-policy
+spec:
+  podSelector:
+    matchLabels:
+      tier: backend
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 8080
+    - protocol: TCP
+      port: 9090
+      endPort: 9099
+    from:
+    - podSelector:
+        matchLabels:
+          tier: frontend
+  egress:
+  - ports:
+    - protocol: TCP
+      port: 80
