@@ -13,8 +13,7 @@ spec:
   ingress:
   - ports:
     - protocol: TCP
-      port: 9090
-      endPort: 9099
+      port: 8080
     from:
     - podSelector:
         matchLabels:
