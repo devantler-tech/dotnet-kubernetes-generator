@@ -1,11 +1,12 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
-/// A generator for Kubernetes Role objects.
+/// A generator for Kubernetes Role objects using custom models with type-safe options.
+/// Uses BaseKubernetesGenerator since kubectl create role requires API server connectivity.
 /// </summary>
-public class RoleGenerator : BaseKubernetesGenerator<V1Role>
+public class RoleGenerator : BaseKubernetesGenerator<Role>
 {
 }
