@@ -186,7 +186,7 @@ public sealed class GenerateAsyncTests
         },
         UpdateStrategy = new DaemonSetUpdateStrategy
         {
-          Type = DaemonSetUpdateStrategyType.RollingUpdate,
+          Type = UpdateStrategyType.RollingUpdate,
           RollingUpdate = new DaemonSetRollingUpdateStrategy
           {
             MaxUnavailable = "1",

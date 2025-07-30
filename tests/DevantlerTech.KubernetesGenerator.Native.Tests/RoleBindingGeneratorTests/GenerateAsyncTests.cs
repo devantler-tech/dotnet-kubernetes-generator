@@ -78,7 +78,7 @@ public sealed class GenerateAsyncTests
     model.Metadata.Namespace = "default";
 
     // Act
-    string fileName = "cluster-role-binding.yaml";
+    string fileName = "role-binding-with-cluster-role.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);

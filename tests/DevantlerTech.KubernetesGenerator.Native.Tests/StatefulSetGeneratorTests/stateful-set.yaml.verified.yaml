@@ -2,8 +2,8 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: stateful-set
   namespace: default
+  name: stateful-set
 spec:
   replicas: 1
   selector:
@@ -16,8 +16,8 @@ spec:
         app: stateful-set
     spec:
       containers:
-      - command:
+      - name: container
+        image: nginx
+        command:
         - echo
         - hello
-        image: nginx
-        name: container

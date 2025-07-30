@@ -1,4 +1,5 @@
-using k8s.Models;
+using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeClaimGeneratorTests;
 
@@ -9,47 +10,56 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeClaimGe
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated PersistentVolumeClaim object.
+  /// Verifies the generated PersistentVolumeClaim object with comprehensive properties set.
+  /// Tests all major PersistentVolumeClaim features including multiple access modes, volume modes,
+  /// data sources, resource requirements, selectors, and storage class configuration.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidPersistentVolumeClaim()
+  public async Task GenerateAsync_WithComprehensiveProperties_ShouldGenerateAValidPersistentVolumeClaim()
   {
     // Arrange
     var generator = new PersistentVolumeClaimGenerator();
-    var model = new V1PersistentVolumeClaim
+    var model = new PersistentVolumeClaim
     {
       ApiVersion = "v1",
       Kind = "PersistentVolumeClaim",
-      Metadata = new V1ObjectMeta
+      Metadata = new Metadata
       {
         Name = "persistent-volume-claim",
-        NamespaceProperty = "default"
+        Namespace = "default"
       },
-      Spec = new V1PersistentVolumeClaimSpec
+      Spec = new PersistentVolumeClaimSpec
       {
-        AccessModes = ["ReadWriteOnce"],
-        DataSource = new V1TypedLocalObjectReference
+        AccessModes = [
+          PersistentVolumeAccessMode.ReadWriteOnce,
+          PersistentVolumeAccessMode.ReadOnlyMany
+        ],
+        DataSource = new TypedLocalObjectReference
         {
           ApiGroup = "storage.k8s.io",
           Kind = "StorageClass",
           Name = "storage-class"
         },
-        DataSourceRef = new V1TypedObjectReference
+        DataSourceRef = new TypedObjectReference
         {
           ApiGroup = "storage.k8s.io",
           Kind = "PersistentVolumeClaim",
           Name = "pvc",
-          NamespaceProperty = "default"
+          Namespace = "default"
         },
-        Resources = new V1VolumeResourceRequirements
+        Resources = new VolumeResourceRequirements
         {
-          Requests = new Dictionary<string, ResourceQuantity>
+          Requests = new Dictionary<string, string>
           {
-            ["storage"] = new ResourceQuantity("1Gi")
+            ["storage"] = "5Gi"
+          },
+          Limits = new Dictionary<string, string>
+          {
+            ["storage"] = "10Gi"
           }
         },
-        Selector = new V1LabelSelector
+        Selector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -57,7 +67,7 @@ public sealed class GenerateAsyncTests
           }
         },
         StorageClassName = "storage-class",
-        VolumeMode = "Filesystem",
+        VolumeMode = VolumeMode.Block,
         VolumeName = "volume-name"
       }
     };
@@ -75,5 +85,30 @@ public sealed class GenerateAsyncTests
 
     // Cleanup
     File.Delete(outputPath);
+  }
+
+  /// <summary>
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the PersistentVolumeClaim name is empty.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithEmptyName_ShouldThrowKubernetesGeneratorException()
+  {
+    // Arrange
+    var generator = new PersistentVolumeClaimGenerator();
+    var model = new PersistentVolumeClaim
+    {
+      Metadata = new Metadata
+      {
+        Name = ""
+      },
+      Spec = new PersistentVolumeClaimSpec
+      {
+        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce]
+      }
+    };
+
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }

@@ -1,0 +1,31 @@
+﻿---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: my-app-deployment
+  name: my-app-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-app-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: my-app-deployment
+    spec:
+      containers:
+      - command:
+        - echo
+        - hello
+        - world
+        image: busybox
+        name: busybox
+        ports:
+        - containerPort: 8080
+        resources: {}
+status: {}
