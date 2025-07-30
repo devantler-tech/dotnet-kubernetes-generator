@@ -29,7 +29,7 @@ public sealed class GenerateAsyncTests
       [
         new RoleRule
         {
-          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch],
+          Verbs = [RoleVerb.Get, RoleVerb.List, RoleVerb.Watch],
           Resources = ["pods"]
         }
       ]
@@ -70,7 +70,7 @@ public sealed class GenerateAsyncTests
       [
         new RoleRule
         {
-          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.Create],
+          Verbs = [RoleVerb.Get, RoleVerb.Create],
           Resources = ["pods", "services"],
           ApiGroups = ["", "apps"],
           ResourceNames = ["my-pod", "my-service"]
@@ -111,7 +111,7 @@ public sealed class GenerateAsyncTests
       [
         new RoleRule
         {
-          Verbs = [ClusterRoleVerb.Get],
+          Verbs = [RoleVerb.Get],
           Resources = ["pods"]
         }
       ]
@@ -187,7 +187,7 @@ public sealed class GenerateAsyncTests
       [
         new RoleRule
         {
-          Verbs = [ClusterRoleVerb.Get]
+          Verbs = [RoleVerb.Get]
           // Resources missing - should trigger validation
         }
       ]

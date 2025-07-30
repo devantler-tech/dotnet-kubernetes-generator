@@ -8,7 +8,7 @@ public class RoleRule
   /// <summary>
   /// Gets or sets the verbs that apply to the resources.
   /// </summary>
-  public required IList<ClusterRoleVerb> Verbs { get; init; } = [];
+  public required IList<RoleVerb> Verbs { get; init; } = [];
 
   /// <summary>
   /// Gets or sets the API groups that the rule applies to.

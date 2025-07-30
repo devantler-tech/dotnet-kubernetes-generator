@@ -3,9 +3,9 @@ using System.Runtime.Serialization;
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
-/// Represents the verbs that can be used in ClusterRole rules.
+/// Represents the verbs that can be used in Role and ClusterRole rules.
 /// </summary>
-public enum ClusterRoleVerb
+public enum RoleVerb
 {
   /// <summary>
   /// Read the specified resource.
