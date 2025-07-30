@@ -1,4 +1,5 @@
 using System.Net;
+using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NetworkPolicyGeneratorTests;
@@ -10,11 +11,12 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.NetworkPolicyGeneratorT
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated NetworkPolicy object with ingress and egress rules.
+  /// Verifies the generated NetworkPolicy object with comprehensive features.
+  /// Tests ingress and egress rules, multiple ports, pod selectors, policy types, and EndPort ranges.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithIngressAndEgressRules_ShouldGenerateAValidNetworkPolicy()
+  public async Task GenerateAsync_WithComprehensiveConfiguration_ShouldGenerateAValidNetworkPolicy()
   {
     // Arrange
     var generator = new NetworkPolicyGenerator();
@@ -22,8 +24,8 @@ public sealed class GenerateAsyncTests
     {
       Metadata = new Metadata
       {
-        Name = "network-policy",
-        Namespace = "default"
+        Name = "comprehensive-policy",
+        Namespace = "production"
       },
       Spec = new NetworkPolicySpec
       {
@@ -31,27 +33,46 @@ public sealed class GenerateAsyncTests
         {
           MatchLabels = new Dictionary<string, string>
           {
-            ["app"] = "nginx"
+            ["tier"] = "backend"
           }
         },
         PolicyTypes = [NetworkPolicyType.Ingress, NetworkPolicyType.Egress],
-        Egress =
+        Ingress =
         [
-          new NetworkPolicyEgressRule
+          new NetworkPolicyIngressRule
           {
             Ports =
             [
               new NetworkPolicyPort
               {
-                Port = "80",
+                Port = "8080",
                 Protocol = NetworkPolicyProtocol.TCP
+              },
+              new NetworkPolicyPort
+              {
+                Port = "9090",
+                Protocol = NetworkPolicyProtocol.TCP,
+                EndPort = 9099
+              }
+            ],
+            From =
+            [
+              new NetworkPolicyPeer
+              {
+                PodSelector = new LabelSelector
+                {
+                  MatchLabels = new Dictionary<string, string>
+                  {
+                    ["tier"] = "frontend"
+                  }
+                }
               }
             ]
           }
         ],
-        Ingress =
+        Egress =
         [
-          new NetworkPolicyIngressRule
+          new NetworkPolicyEgressRule
           {
             Ports =
             [
@@ -82,83 +103,8 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated NetworkPolicy object with only ingress rules.
-  /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithIngressOnly_ShouldGenerateAValidNetworkPolicy()
-  {
-    // Arrange
-    var generator = new NetworkPolicyGenerator();
-    var model = new NetworkPolicy
-    {
-      Metadata = new Metadata
-      {
-        Name = "ingress-only-policy",
-        Namespace = "production"
-      },
-      Spec = new NetworkPolicySpec
-      {
-        PodSelector = new LabelSelector
-        {
-          MatchLabels = new Dictionary<string, string>
-          {
-            ["tier"] = "backend"
-          }
-        },
-        PolicyTypes = [NetworkPolicyType.Ingress],
-        Ingress =
-        [
-          new NetworkPolicyIngressRule
-          {
-            Ports =
-            [
-              new NetworkPolicyPort
-              {
-                Port = "8080",
-                Protocol = NetworkPolicyProtocol.TCP
-              },
-              new NetworkPolicyPort
-              {
-                Port = "443",
-                Protocol = NetworkPolicyProtocol.TCP
-              }
-            ],
-            From =
-            [
-              new NetworkPolicyPeer
-              {
-                PodSelector = new LabelSelector
-                {
-                  MatchLabels = new Dictionary<string, string>
-                  {
-                    ["tier"] = "frontend"
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      }
-    };
-
-    // Act
-    string fileName = "ingress-only-policy.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
-  }
-
-  /// <summary>
   /// Verifies the generated NetworkPolicy object with IP block restrictions.
+  /// Tests distinct IPNetwork functionality for CIDR-based network access control.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -238,6 +184,7 @@ public sealed class GenerateAsyncTests
 
   /// <summary>
   /// Verifies the generated NetworkPolicy object with namespace selector.
+  /// Tests distinct cross-namespace policy functionality for allowing traffic between namespaces.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -290,9 +237,8 @@ public sealed class GenerateAsyncTests
             [
               new NetworkPolicyPort
               {
-                Port = "9090",
-                Protocol = NetworkPolicyProtocol.TCP,
-                EndPort = 9099
+                Port = "8080",
+                Protocol = NetworkPolicyProtocol.TCP
               }
             ]
           }
@@ -316,11 +262,11 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated NetworkPolicy object with minimal configuration.
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the NetworkPolicy name is empty.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithMinimalConfiguration_ShouldGenerateAValidNetworkPolicy()
+  public async Task GenerateAsync_WithEmptyName_ShouldThrowKubernetesGeneratorException()
   {
     // Arrange
     var generator = new NetworkPolicyGenerator();
@@ -328,8 +274,7 @@ public sealed class GenerateAsyncTests
     {
       Metadata = new Metadata
       {
-        Name = "minimal-policy",
-        Namespace = "default"
+        Name = ""
       },
       Spec = new NetworkPolicySpec
       {
@@ -340,22 +285,10 @@ public sealed class GenerateAsyncTests
             ["app"] = "webapp"
           }
         }
-        // No PolicyTypes, Ingress, or Egress - minimal valid policy
       }
     };
 
-    // Act
-    string fileName = "minimal-policy.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }
