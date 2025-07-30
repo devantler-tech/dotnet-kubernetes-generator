@@ -3,12 +3,8 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Represents a Docker registry secret for use with kubectl create secret docker-registry.
 /// </summary>
-public class DockerRegistrySecret(string name)
+public class DockerRegistrySecret(string name) : BaseSecret(name)
 {
-  /// <summary>
-  /// Gets or sets the metadata for the secret.
-  /// </summary>
-  public Metadata Metadata { get; set; } = new() { Name = name };
 
   /// <summary>
   /// Gets or sets the Docker registry server URL.
