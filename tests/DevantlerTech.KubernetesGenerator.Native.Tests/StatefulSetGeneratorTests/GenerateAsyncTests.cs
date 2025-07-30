@@ -161,6 +161,77 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
+  /// Verifies the generated StatefulSet object with persistent volume claim retention policy.
+  /// </summary>
+  /// <returns></returns>
+  [Fact]
+  public async Task GenerateAsync_WithPersistentVolumeClaimRetentionPolicy_ShouldGenerateAValidStatefulSet()
+  {
+    // Arrange
+    var generator = new StatefulSetGenerator();
+    var model = new StatefulSet
+    {
+      Metadata = new Metadata
+      {
+        Name = "pvc-retention-statefulset",
+        Namespace = "default"
+      },
+      Spec = new StatefulSetSpec
+      {
+        Replicas = 1,
+        Selector = new LabelSelector
+        {
+          MatchLabels = new Dictionary<string, string>
+          {
+            ["app"] = "pvc-app"
+          }
+        },
+        ServiceName = "pvc-service",
+        Template = new PodTemplateSpec
+        {
+          Metadata = new TemplateMetadata
+          {
+            Labels = new Dictionary<string, string>
+            {
+              ["app"] = "pvc-app"
+            }
+          },
+          Spec = new PodSpec
+          {
+            Containers =
+            [
+              new PodContainer
+              {
+                Name = "storage-container",
+                Image = "nginx:latest"
+              }
+            ]
+          }
+        },
+        PersistentVolumeClaimRetentionPolicy = new StatefulSetPersistentVolumeClaimRetentionPolicy
+        {
+          WhenDeleted = StatefulSetPersistentVolumeClaimRetentionPolicyType.Delete,
+          WhenScaled = StatefulSetPersistentVolumeClaimRetentionPolicyType.Retain
+        }
+      }
+    };
+
+    // Act
+    string fileName = "pvc-retention-statefulset.yaml";
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    // Assert
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    // Cleanup
+    File.Delete(outputPath);
+  }
+
+  /// <summary>
   /// Verifies that an exception is thrown when model is null.
   /// </summary>
   /// <returns></returns>

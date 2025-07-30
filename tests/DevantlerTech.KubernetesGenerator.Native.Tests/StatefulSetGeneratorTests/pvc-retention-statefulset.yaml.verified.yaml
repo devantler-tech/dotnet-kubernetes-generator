@@ -1,0 +1,23 @@
+﻿---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: default
+  name: pvc-retention-statefulset
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pvc-app
+  serviceName: pvc-service
+  template:
+    metadata:
+      labels:
+        app: pvc-app
+    spec:
+      containers:
+      - name: storage-container
+        image: nginx:latest
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
+    whenScaled: Retain
