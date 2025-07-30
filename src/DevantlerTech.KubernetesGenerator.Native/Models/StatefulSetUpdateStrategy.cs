@@ -8,7 +8,7 @@ public class StatefulSetUpdateStrategy
   /// <summary>
   /// Gets or sets the type of update strategy.
   /// </summary>
-  public StatefulSetUpdateStrategyType? Type { get; set; }
+  public UpdateStrategyType? Type { get; set; }
 
   /// <summary>
   /// Gets or sets the rolling update strategy configuration. Only used when Type is RollingUpdate.

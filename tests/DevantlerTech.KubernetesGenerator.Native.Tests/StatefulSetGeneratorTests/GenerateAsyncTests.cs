@@ -197,7 +197,7 @@ public sealed class GenerateAsyncTests
         },
         UpdateStrategy = new StatefulSetUpdateStrategy
         {
-          Type = StatefulSetUpdateStrategyType.RollingUpdate,
+          Type = UpdateStrategyType.RollingUpdate,
           RollingUpdate = new StatefulSetRollingUpdateStrategy
           {
             Partition = 1
