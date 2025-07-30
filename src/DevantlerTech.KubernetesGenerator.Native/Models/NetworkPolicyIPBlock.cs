@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
@@ -8,7 +10,7 @@ public class NetworkPolicyIPBlock
   /// <summary>
   /// Gets or sets the CIDR block for the IP range.
   /// </summary>
-  public required string CIDR { get; init; }
+  public required IPNetwork CIDR { get; init; }
 
   /// <summary>
   /// Gets or sets the list of IP addresses or CIDR blocks to exclude from the CIDR block.

@@ -1,3 +1,4 @@
+using System.Net;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NetworkPolicyGeneratorTests;
@@ -186,7 +187,7 @@ public sealed class GenerateAsyncTests
               {
                 IPBlock = new NetworkPolicyIPBlock
                 {
-                  CIDR = "10.0.0.0/8",
+                  CIDR = IPNetwork.Parse("10.0.0.0/8"),
                   Except = ["10.0.1.0/24", "10.0.2.0/24"]
                 }
               }
@@ -203,7 +204,7 @@ public sealed class GenerateAsyncTests
               {
                 IPBlock = new NetworkPolicyIPBlock
                 {
-                  CIDR = "192.168.0.0/16"
+                  CIDR = IPNetwork.Parse("192.168.0.0/16")
                 }
               }
             ],

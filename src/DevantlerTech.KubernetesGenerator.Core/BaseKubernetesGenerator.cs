@@ -19,6 +19,7 @@ public partial class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where 
     .WithTypeConverter(new IntstrIntOrStringTypeConverter())
     .WithTypeConverter(new ResourceQuantityTypeConverter())
     .WithTypeConverter(new ByteArrayTypeConverter())
+    .WithTypeConverter(new IPNetworkTypeConverter())
     .WithEmissionPhaseObjectGraphVisitor(inner => new KubernetesObjectGraphVisitor<T>(new CommentsObjectGraphVisitor(inner.InnerVisitor), Activator.CreateInstance<T>()))
     .WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
 
