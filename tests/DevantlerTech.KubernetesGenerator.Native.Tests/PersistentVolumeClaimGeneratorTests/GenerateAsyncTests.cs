@@ -1,3 +1,4 @@
+using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeClaimGeneratorTests;
@@ -9,11 +10,13 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeClaimGe
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated PersistentVolumeClaim object with all properties set.
+  /// Verifies the generated PersistentVolumeClaim object with comprehensive properties set.
+  /// Tests all major PersistentVolumeClaim features including multiple access modes, volume modes,
+  /// data sources, resource requirements, selectors, and storage class configuration.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithAllPropertiesSet_ShouldGenerateAValidPersistentVolumeClaim()
+  public async Task GenerateAsync_WithComprehensiveProperties_ShouldGenerateAValidPersistentVolumeClaim()
   {
     // Arrange
     var generator = new PersistentVolumeClaimGenerator();
@@ -28,7 +31,10 @@ public sealed class GenerateAsyncTests
       },
       Spec = new PersistentVolumeClaimSpec
       {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
+        AccessModes = [
+          PersistentVolumeAccessMode.ReadWriteOnce,
+          PersistentVolumeAccessMode.ReadOnlyMany
+        ],
         DataSource = new TypedLocalObjectReference
         {
           ApiGroup = "storage.k8s.io",
@@ -46,7 +52,11 @@ public sealed class GenerateAsyncTests
         {
           Requests = new Dictionary<string, string>
           {
-            ["storage"] = "1Gi"
+            ["storage"] = "5Gi"
+          },
+          Limits = new Dictionary<string, string>
+          {
+            ["storage"] = "10Gi"
           }
         },
         Selector = new LabelSelector
@@ -57,7 +67,7 @@ public sealed class GenerateAsyncTests
           }
         },
         StorageClassName = "storage-class",
-        VolumeMode = VolumeMode.Filesystem,
+        VolumeMode = VolumeMode.Block,
         VolumeName = "volume-name"
       }
     };
@@ -78,11 +88,11 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PersistentVolumeClaim object with minimal properties set.
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the PersistentVolumeClaim name is empty.
   /// </summary>
   /// <returns></returns>
   [Fact]
-  public async Task GenerateAsync_WithMinimalProperties_ShouldGenerateAValidPersistentVolumeClaim()
+  public async Task GenerateAsync_WithEmptyName_ShouldThrowKubernetesGeneratorException()
   {
     // Arrange
     var generator = new PersistentVolumeClaimGenerator();
@@ -90,7 +100,7 @@ public sealed class GenerateAsyncTests
     {
       Metadata = new Metadata
       {
-        Name = "minimal-pvc"
+        Name = ""
       },
       Spec = new PersistentVolumeClaimSpec
       {
@@ -98,113 +108,7 @@ public sealed class GenerateAsyncTests
       }
     };
 
-    // Act
-    string fileName = "minimal-persistent-volume-claim.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
-  }
-
-  /// <summary>
-  /// Verifies the generated PersistentVolumeClaim object with multiple access modes.
-  /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithMultipleAccessModes_ShouldGenerateAValidPersistentVolumeClaim()
-  {
-    // Arrange
-    var generator = new PersistentVolumeClaimGenerator();
-    var model = new PersistentVolumeClaim
-    {
-      Metadata = new Metadata
-      {
-        Name = "multi-access-pvc",
-        Namespace = "test-namespace"
-      },
-      Spec = new PersistentVolumeClaimSpec
-      {
-        AccessModes = [
-          PersistentVolumeAccessMode.ReadWriteOnce,
-          PersistentVolumeAccessMode.ReadOnlyMany
-        ],
-        Resources = new VolumeResourceRequirements
-        {
-          Requests = new Dictionary<string, string>
-          {
-            ["storage"] = "5Gi"
-          },
-          Limits = new Dictionary<string, string>
-          {
-            ["storage"] = "10Gi"
-          }
-        }
-      }
-    };
-
-    // Act
-    string fileName = "multi-access-persistent-volume-claim.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
-  }
-
-  /// <summary>
-  /// Verifies the generated PersistentVolumeClaim object with Block volume mode.
-  /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithBlockVolumeMode_ShouldGenerateAValidPersistentVolumeClaim()
-  {
-    // Arrange
-    var generator = new PersistentVolumeClaimGenerator();
-    var model = new PersistentVolumeClaim
-    {
-      Metadata = new Metadata
-      {
-        Name = "block-volume-pvc"
-      },
-      Spec = new PersistentVolumeClaimSpec
-      {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteOncePod],
-        VolumeMode = VolumeMode.Block,
-        Resources = new VolumeResourceRequirements
-        {
-          Requests = new Dictionary<string, string>
-          {
-            ["storage"] = "100Gi"
-          }
-        }
-      }
-    };
-
-    // Act
-    string fileName = "block-volume-persistent-volume-claim.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
+    // Act & Assert
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 }
