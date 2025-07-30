@@ -23,7 +23,7 @@ public class DockerRegistrySecretGenerator : BaseSecretGenerator<DockerRegistryS
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    var args = BuildCommonArguments(model).ToList();
+    var args = new List<string>();
 
     // Add Docker registry specific arguments
     if (!string.IsNullOrEmpty(model.DockerServer))

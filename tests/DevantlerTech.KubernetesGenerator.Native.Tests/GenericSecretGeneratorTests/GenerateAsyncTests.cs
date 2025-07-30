@@ -18,8 +18,7 @@ public sealed class GenerateAsyncTests
     var generator = new GenericSecretGenerator();
     var model = new GenericSecret
     {
-      Name = "generic-secret",
-      Metadata = { Namespace = "default" },
+      Metadata = new() { Name = "generic-secret", Namespace = "default" },
       Type = "Opaque"
     };
     model.Data.Add("key1", "value1");
@@ -51,8 +50,7 @@ public sealed class GenerateAsyncTests
     var generator = new GenericSecretGenerator();
     var model = new GenericSecret
     {
-      Name = "generic-secret-no-type",
-      Metadata = { Namespace = "default" }
+      Metadata = new() { Name = "generic-secret-no-type", Namespace = "default" }
     };
     model.Data.Add("key1", "value1");
 
@@ -82,8 +80,7 @@ public sealed class GenerateAsyncTests
     var generator = new GenericSecretGenerator();
     var model = new GenericSecret
     {
-      Name = "generic-secret-mixed",
-      Metadata = { Namespace = "default" },
+      Metadata = new() { Name = "generic-secret-mixed", Namespace = "default" },
       Type = "Opaque"
     };
     model.Data.Add("data-key", "data-value");

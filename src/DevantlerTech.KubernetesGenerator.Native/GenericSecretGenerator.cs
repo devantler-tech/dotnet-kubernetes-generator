@@ -23,7 +23,7 @@ public class GenericSecretGenerator : BaseSecretGenerator<GenericSecret>
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    var args = BuildCommonArguments(model).ToList();
+    var args = new List<string>();
 
     // Add type if specified (but don't require it)
     if (!string.IsNullOrEmpty(model.Type))

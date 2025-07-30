@@ -28,8 +28,11 @@ public abstract class BaseSecretGenerator<T> : BaseNativeGenerator<T> where T : 
   {
     ArgumentNullException.ThrowIfNull(model);
 
+    var commonArgs = BuildCommonArguments(model);
+    var specificArgs = await BuildSpecificArgumentsAsync(model, cancellationToken).ConfigureAwait(false);
+
     var args = new ReadOnlyCollection<string>(
-      [.. CommandPrefix, .. await BuildSpecificArgumentsAsync(model, cancellationToken).ConfigureAwait(false)]
+      [.. CommandPrefix, .. commonArgs, .. specificArgs]
     );
     string errorMessage = $"Failed to create {GetSecretTypeName()} secret '{model.Metadata?.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
@@ -40,7 +43,7 @@ public abstract class BaseSecretGenerator<T> : BaseNativeGenerator<T> where T : 
   /// </summary>
   /// <param name="model">The secret model.</param>
   /// <returns>The common arguments.</returns>
-  protected ReadOnlyCollection<string> BuildCommonArguments(T model)
+  static ReadOnlyCollection<string> BuildCommonArguments(T model)
   {
     ArgumentNullException.ThrowIfNull(model);
 

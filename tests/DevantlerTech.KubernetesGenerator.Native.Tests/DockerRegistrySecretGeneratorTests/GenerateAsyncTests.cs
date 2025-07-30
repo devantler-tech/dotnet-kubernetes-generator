@@ -18,13 +18,12 @@ public sealed class GenerateAsyncTests
     var generator = new DockerRegistrySecretGenerator();
     var model = new DockerRegistrySecret
     {
-      Name = "docker-registry-secret",
+      Metadata = new() { Name = "docker-registry-secret", Namespace = "default" },
       DockerServer = "https://index.docker.io/v1/",
       DockerUsername = "myuser",
       DockerPassword = "mypassword",
       DockerEmail = "myuser@example.com"
     };
-    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "docker-registry-secret.yaml";
@@ -52,7 +51,7 @@ public sealed class GenerateAsyncTests
     var generator = new DockerRegistrySecretGenerator();
     var model = new DockerRegistrySecret
     {
-      Name = "docker-registry-secret-minimal",
+      Metadata = new() { Name = "docker-registry-secret-minimal" },
       DockerUsername = "user",
       DockerPassword = "pass",
       DockerEmail = "user@example.com"

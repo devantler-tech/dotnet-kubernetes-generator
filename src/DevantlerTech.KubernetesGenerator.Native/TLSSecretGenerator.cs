@@ -50,7 +50,7 @@ public class TLSSecretGenerator : BaseSecretGenerator<TLSSecret>
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    var args = BuildCommonArguments(model).ToList();
+    var args = new List<string>();
 
     // Handle certificate and key data
     string certPath = await GetFilePathAsync(model.Certificate, "tls-cert.crt", cancellationToken).ConfigureAwait(false);

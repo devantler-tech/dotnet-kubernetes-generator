@@ -23,11 +23,10 @@ public sealed class GenerateAsyncTests
     var generator = new TLSSecretGenerator();
     var model = new TLSSecret
     {
-      Name = "tls-secret-content",
+      Metadata = new() { Name = "tls-secret-content", Namespace = "default" },
       Certificate = certificateContent,
       PrivateKey = privateKeyContent
     };
-    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "tls-secret-content.yaml";
@@ -66,11 +65,10 @@ public sealed class GenerateAsyncTests
 
     var model = new TLSSecret
     {
-      Name = "tls-secret-files",
+      Metadata = new() { Name = "tls-secret-files", Namespace = "default" },
       Certificate = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.crt"),
       PrivateKey = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.key")
     };
-    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "tls-secret-files.yaml";
@@ -102,11 +100,10 @@ public sealed class GenerateAsyncTests
 
     var model = new TLSSecret
     {
-      Name = "tls-secret-invalid-cert",
+      Metadata = new() { Name = "tls-secret-invalid-cert", Namespace = "default" },
       Certificate = "invalid-certificate-data",
       PrivateKey = "invalid-private-key-data"
     };
-    model.Metadata.Namespace = "default";
 
     // Act & Assert
     _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
