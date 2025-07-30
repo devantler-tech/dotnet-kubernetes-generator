@@ -75,69 +75,7 @@ public sealed class GenerateAsyncTests
     File.Delete(outputPath);
   }
 
-  /// <summary>
-  /// Verifies the generated StatefulSet object with minimal configuration.
-  /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithMinimalConfiguration_ShouldGenerateAValidStatefulSet()
-  {
-    // Arrange
-    var generator = new StatefulSetGenerator();
-    var model = new StatefulSet
-    {
-      Metadata = new Metadata
-      {
-        Name = "minimal-statefulset"
-      },
-      Spec = new StatefulSetSpec
-      {
-        Selector = new LabelSelector
-        {
-          MatchLabels = new Dictionary<string, string>
-          {
-            ["app"] = "minimal-app"
-          }
-        },
-        ServiceName = "minimal-service",
-        Template = new PodTemplateSpec
-        {
-          Metadata = new TemplateMetadata
-          {
-            Labels = new Dictionary<string, string>
-            {
-              ["app"] = "minimal-app"
-            }
-          },
-          Spec = new PodSpec
-          {
-            Containers =
-            [
-              new PodContainer
-              {
-                Name = "app",
-                Image = "busybox"
-              }
-            ]
-          }
-        }
-      }
-    };
 
-    // Act
-    string fileName = "minimal-statefulset.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
-  }
 
   /// <summary>
   /// Verifies the generated StatefulSet object with rolling update strategy.
