@@ -41,7 +41,7 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
   {
     List<string> args = [];
 
-    // Add role binding name - now guaranteed to be set by primary constructor
+    // Add role binding name - guaranteed to be set as a required property
     args.Add(model.Metadata.Name);
 
     // Add namespace if specified

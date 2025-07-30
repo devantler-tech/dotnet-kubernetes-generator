@@ -1,6 +1,3 @@
-#pragma warning disable IDE0008 // Use explicit type instead of 'var'
-#pragma warning disable IDE0058 // Expression value is never used
-
 using System.Net;
 using DevantlerTech.KubernetesGenerator.Core.Converters;
 using Moq;
@@ -27,7 +24,7 @@ public class IPNetworkTypeConverterTests
     var type = typeof(IPNetwork);
 
     // Act
-    var result = _converter.Accepts(type);
+    bool result = _converter.Accepts(type);
 
     // Assert
     Assert.True(result);
@@ -43,7 +40,7 @@ public class IPNetworkTypeConverterTests
     var type = typeof(IPNetwork?);
 
     // Act
-    var result = _converter.Accepts(type);
+    bool result = _converter.Accepts(type);
 
     // Assert
     Assert.True(result);
@@ -59,7 +56,7 @@ public class IPNetworkTypeConverterTests
     var type = typeof(string);
 
     // Act
-    var result = _converter.Accepts(type);
+    bool result = _converter.Accepts(type);
 
     // Assert
     Assert.False(result);
@@ -74,7 +71,7 @@ public class IPNetworkTypeConverterTests
     // Arrange
     var mockParser = new Mock<IParser>();
     var scalar = new Scalar("192.168.1.0/24");
-    var setup = mockParser.Setup(p => p.Current).Returns(scalar);
+    _ = mockParser.Setup(p => p.Current).Returns(scalar);
     var type = typeof(IPNetwork);
 
     // Act
@@ -82,7 +79,7 @@ public class IPNetworkTypeConverterTests
 
     // Assert
     Assert.NotNull(result);
-    Assert.IsType<IPNetwork>(result);
+    _ = Assert.IsType<IPNetwork>(result);
     var network = (IPNetwork)result;
     Assert.Equal("192.168.1.0/24", network.ToString());
   }
@@ -96,7 +93,7 @@ public class IPNetworkTypeConverterTests
     // Arrange
     var mockParser = new Mock<IParser>();
     var scalar = new Scalar("invalid-cidr");
-    var setup = mockParser.Setup(p => p.Current).Returns(scalar);
+    _ = mockParser.Setup(p => p.Current).Returns(scalar);
     var type = typeof(IPNetwork);
 
     // Act
@@ -131,8 +128,8 @@ public class IPNetworkTypeConverterTests
   {
     // Arrange
     var mockParser = new Mock<IParser>();
-    var sequenceStart = new SequenceStart(null, null, false, SequenceStyle.Block);
-    var setup = mockParser.Setup(p => p.Current).Returns(sequenceStart);
+    var sequenceStart = new SequenceStart(null, null, true, SequenceStyle.Any);
+    _ = mockParser.Setup(p => p.Current).Returns(sequenceStart);
     var type = typeof(IPNetwork);
 
     // Act
