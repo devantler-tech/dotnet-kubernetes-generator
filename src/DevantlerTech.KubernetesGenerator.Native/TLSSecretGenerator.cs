@@ -7,13 +7,17 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for TLS Kubernetes Secret objects using 'kubectl create secret tls' commands.
 /// </summary>
-public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
+public class TLSSecretGenerator : BaseSecretGenerator<TLSSecret>
 {
-  static readonly string[] _defaultArgs = ["create", "secret", "tls"];
   /// <summary>
   /// List of temporary files created during generation that need to be cleaned up.
   /// </summary>
   readonly List<string> _temporaryFiles = [];
+
+  /// <summary>
+  /// Gets the command prefix for TLS secrets.
+  /// </summary>
+  protected override ReadOnlyCollection<string> CommandPrefix => new(["create", "secret", "tls"]);
 
   /// <summary>
   /// Generates a TLS secret using kubectl create secret tls command.
@@ -26,35 +30,27 @@ public class TLSSecretGenerator : BaseNativeGenerator<TLSSecret>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
   public override async Task GenerateAsync(TLSSecret model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
-    ArgumentNullException.ThrowIfNull(model);
-
-    var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. await AddOptionsAsync(model, cancellationToken).ConfigureAwait(false)]
-    );
-    string errorMessage = $"Failed to create TLS secret '{model.Metadata?.Name}' using kubectl";
-    await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
-
-    CleanUpTemporaryFiles();
+    try
+    {
+      await base.GenerateAsync(model, outputPath, overwrite, cancellationToken).ConfigureAwait(false);
+    }
+    finally
+    {
+      CleanUpTemporaryFiles();
+    }
   }
 
   /// <summary>
-  /// Builds the kubectl arguments for creating a TLS secret from a TLSSecret object.
+  /// Builds the specific arguments for creating a TLS secret from a TLSSecret object.
   /// </summary>
   /// <param name="model">The TLSSecret object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The kubectl arguments.</returns>
-  async Task<ReadOnlyCollection<string>> AddOptionsAsync(TLSSecret model, CancellationToken cancellationToken = default)
+  protected override async Task<ReadOnlyCollection<string>> BuildSpecificArgumentsAsync(TLSSecret model, CancellationToken cancellationToken = default)
   {
-    var args = new List<string>
-    {
-      model.Metadata.Name
-    };
+    ArgumentNullException.ThrowIfNull(model);
 
-    // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
-    {
-      args.Add($"--namespace={model.Metadata.Namespace}");
-    }
+    var args = BuildCommonArguments(model).ToList();
 
     // Handle certificate and key data
     string certPath = await GetFilePathAsync(model.Certificate, "tls-cert.crt", cancellationToken).ConfigureAwait(false);
