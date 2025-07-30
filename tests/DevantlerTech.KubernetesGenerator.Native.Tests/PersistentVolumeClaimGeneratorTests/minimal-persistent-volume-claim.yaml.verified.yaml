@@ -1,8 +1,0 @@
-﻿---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: minimal-pvc
-spec:
-  accessModes:
-  - ReadWriteOnce
