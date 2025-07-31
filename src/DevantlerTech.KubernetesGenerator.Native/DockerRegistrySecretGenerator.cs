@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
@@ -7,46 +6,24 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Docker registry Kubernetes Secret objects using 'kubectl create secret docker-registry' commands.
 /// </summary>
-public class DockerRegistrySecretGenerator : BaseNativeGenerator<DockerRegistrySecret>
+public class DockerRegistrySecretGenerator : BaseSecretGenerator<DockerRegistrySecret>
 {
-  static readonly string[] _defaultArgs = ["create", "secret", "docker-registry"];
   /// <summary>
-  /// Generates a Docker registry secret using kubectl create secret docker-registry command.
+  /// Gets the command prefix for Docker registry secrets.
   /// </summary>
-  /// <param name="model">The Docker registry secret object.</param>
-  /// <param name="outputPath">The output path for the generated YAML.</param>
-  /// <param name="overwrite">Whether to overwrite existing files.</param>
+  protected override ReadOnlyCollection<string> CommandPrefix => new(["create", "secret", "docker-registry"]);
+
+  /// <summary>
+  /// Builds the specific arguments for creating a Docker registry secret from a DockerRegistrySecret object.
+  /// </summary>
+  /// <param name="model">The DockerRegistrySecret object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
-  /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
-  /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  public override async Task GenerateAsync(DockerRegistrySecret model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  /// <returns>The kubectl arguments.</returns>
+  protected override Task<ReadOnlyCollection<string>> BuildSpecificArgumentsAsync(DockerRegistrySecret model, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddArguments(model)]
-    );
-    string errorMessage = $"Failed to create Docker registry secret '{model.Metadata?.Name}' using kubectl";
-    await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  /// Builds the kubectl arguments for creating a Docker registry secret from a DockerRegistrySecret object.
-  /// </summary>
-  /// <param name="model">The DockerRegistrySecret object.</param>
-  /// <returns>The kubectl arguments.</returns>
-  static ReadOnlyCollection<string> AddArguments(DockerRegistrySecret model)
-  {
-    var args = new List<string>
-    {
-      model.Metadata.Name
-    };
-
-    // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
-    {
-      args.Add($"--namespace={model.Metadata.Namespace}");
-    }
+    var args = new List<string>();
 
     // Add Docker registry specific arguments
     if (!string.IsNullOrEmpty(model.DockerServer))
@@ -58,6 +35,6 @@ public class DockerRegistrySecretGenerator : BaseNativeGenerator<DockerRegistryS
     args.Add($"--docker-password={model.DockerPassword}");
     args.Add($"--docker-email={model.DockerEmail}");
 
-    return args.AsReadOnly();
+    return Task.FromResult(args.AsReadOnly());
   }
 }
