@@ -9,7 +9,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ResourceQuotaGeneratorT
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated ResourceQuota object.
+  /// Verifies the generated NativeResourceQuota object.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,7 +17,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new ResourceQuota("resource-quota")
+    var model = new NativeResourceQuota("resource-quota")
     {
       Metadata = { Namespace = "default" },
       Hard = new Dictionary<string, ResourceQuantity>
@@ -45,7 +45,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ResourceQuota object without namespace.
+  /// Verifies the generated NativeResourceQuota object without namespace.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -53,7 +53,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new ResourceQuota("resource-quota-no-namespace")
+    var model = new NativeResourceQuota("resource-quota-no-namespace")
     {
       Hard = new Dictionary<string, ResourceQuantity>
       {
@@ -78,7 +78,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ResourceQuota object with scopes.
+  /// Verifies the generated NativeResourceQuota object with scopes.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -86,7 +86,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new ResourceQuota("resource-quota-with-scopes")
+    var model = new NativeResourceQuota("resource-quota-with-scopes")
     {
       Metadata = { Namespace = "test-namespace" },
       Hard = new Dictionary<string, ResourceQuantity>
@@ -112,7 +112,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ResourceQuota object without hard limits.
+  /// Verifies the generated NativeResourceQuota object without hard limits.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -120,7 +120,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ResourceQuotaGenerator();
-    var model = new ResourceQuota("resource-quota-no-limits")
+    var model = new NativeResourceQuota("resource-quota-no-limits")
     {
       Metadata = { Namespace = "default" },
       Scopes = ["BestEffort"]

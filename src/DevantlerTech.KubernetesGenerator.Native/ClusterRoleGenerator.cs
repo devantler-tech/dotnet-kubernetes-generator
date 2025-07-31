@@ -6,6 +6,6 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// A generator for Kubernetes ClusterRole objects using custom models with type-safe options.
 /// Falls back to BaseKubernetesGenerator since kubectl create clusterrole requires API server connectivity.
 /// </summary>
-public class ClusterRoleGenerator : BaseKubernetesGenerator<ClusterRole>
+public class ClusterRoleGenerator : BaseKubernetesGenerator<NativeClusterRole>
 {
 }

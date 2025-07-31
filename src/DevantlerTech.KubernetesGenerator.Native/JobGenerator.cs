@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes Job objects using 'kubectl create job' commands.
 /// </summary>
-public class JobGenerator : BaseNativeGenerator<Job>
+public class JobGenerator : BaseNativeGenerator<NativeJob>
 {
   static readonly string[] _defaultArgs = ["create", "job"];
 
@@ -19,7 +19,7 @@ public class JobGenerator : BaseNativeGenerator<Job>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when job name is not provided.</exception>
-  public override async Task GenerateAsync(Job model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeJob model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -36,7 +36,7 @@ public class JobGenerator : BaseNativeGenerator<Job>
   /// <param name="model">The Job object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(Job model)
+  static ReadOnlyCollection<string> AddArguments(NativeJob model)
   {
     var args = new List<string>
     {

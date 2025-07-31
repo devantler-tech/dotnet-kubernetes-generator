@@ -6,6 +6,6 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// A generator for Kubernetes Role objects using custom models with type-safe options.
 /// Uses BaseKubernetesGenerator since kubectl create role requires API server connectivity.
 /// </summary>
-public class RoleGenerator : BaseKubernetesGenerator<Role>
+public class RoleGenerator : BaseKubernetesGenerator<NativeRole>
 {
 }

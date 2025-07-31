@@ -3,7 +3,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Represents a node selector requirement for persistent volume node affinity.
 /// </summary>
-public class MatchExpression
+public class NativeMatchExpression
 {
   /// <summary>
   /// Gets or sets the key.
@@ -13,7 +13,7 @@ public class MatchExpression
   /// <summary>
   /// Gets or sets the operator.
   /// </summary>
-  public required MatchExpressionOperator Operator { get; set; }
+  public required NativeMatchExpressionOperator Operator { get; set; }
 
   /// <summary>
   /// Gets or sets the values.

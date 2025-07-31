@@ -8,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodDisruptionBudgetGene
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated PodDisruptionBudget object with MinAvailable.
+  /// Verifies the generated NativePodDisruptionBudget object with MinAvailable.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -16,14 +16,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodDisruptionBudgetGenerator();
-    var model = new PodDisruptionBudget
+    var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "pdb-min-available",
         Namespace = "default"
       },
-      Spec = new PodDisruptionBudgetSpec
+      Spec = new NativePodDisruptionBudgetSpec
       {
         Selector = "app=nginx",
         MinAvailable = "1"
@@ -46,7 +46,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PodDisruptionBudget object with MaxUnavailable.
+  /// Verifies the generated NativePodDisruptionBudget object with MaxUnavailable.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -54,14 +54,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodDisruptionBudgetGenerator();
-    var model = new PodDisruptionBudget
+    var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "pdb-max-unavailable",
         Namespace = "default"
       },
-      Spec = new PodDisruptionBudgetSpec
+      Spec = new NativePodDisruptionBudgetSpec
       {
         Selector = "app=nginx",
         MaxUnavailable = "1"
@@ -84,7 +84,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PodDisruptionBudget object with percentage values.
+  /// Verifies the generated NativePodDisruptionBudget object with percentage values.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -92,14 +92,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodDisruptionBudgetGenerator();
-    var model = new PodDisruptionBudget
+    var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "pdb-percentage",
         Namespace = "default"
       },
-      Spec = new PodDisruptionBudgetSpec
+      Spec = new NativePodDisruptionBudgetSpec
       {
         Selector = "app=nginx",
         MinAvailable = "50%"
@@ -122,7 +122,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PodDisruptionBudget object without namespace.
+  /// Verifies the generated NativePodDisruptionBudget object without namespace.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -130,13 +130,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodDisruptionBudgetGenerator();
-    var model = new PodDisruptionBudget
+    var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "pdb-no-namespace"
       },
-      Spec = new PodDisruptionBudgetSpec
+      Spec = new NativePodDisruptionBudgetSpec
       {
         Selector = "app=nginx",
         MinAvailable = "2"
@@ -167,13 +167,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodDisruptionBudgetGenerator();
-    var model = new PodDisruptionBudget
+    var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "pdb-both"
       },
-      Spec = new PodDisruptionBudgetSpec
+      Spec = new NativePodDisruptionBudgetSpec
       {
         Selector = "app=nginx",
         MinAvailable = "1",
@@ -196,13 +196,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodDisruptionBudgetGenerator();
-    var model = new PodDisruptionBudget
+    var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "pdb-none"
       },
-      Spec = new PodDisruptionBudgetSpec
+      Spec = new NativePodDisruptionBudgetSpec
       {
         Selector = "app=nginx"
       }
@@ -223,13 +223,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodDisruptionBudgetGenerator();
-    var model = new PodDisruptionBudget
+    var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "pdb-no-selector"
       },
-      Spec = new PodDisruptionBudgetSpec
+      Spec = new NativePodDisruptionBudgetSpec
       {
         Selector = "",
         MinAvailable = "1"
@@ -251,13 +251,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodDisruptionBudgetGenerator();
-    var model = new PodDisruptionBudget
+    var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = ""
       },
-      Spec = new PodDisruptionBudgetSpec
+      Spec = new NativePodDisruptionBudgetSpec
       {
         Selector = "app=nginx",
         MinAvailable = "1"

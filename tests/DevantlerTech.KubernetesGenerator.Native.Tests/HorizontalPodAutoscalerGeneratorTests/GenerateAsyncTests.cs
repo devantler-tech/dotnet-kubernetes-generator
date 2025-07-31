@@ -8,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.HorizontalPodAutoscaler
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated HorizontalPodAutoscaler object with full configuration.
+  /// Verifies the generated NativeHorizontalPodAutoscaler object with full configuration.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -16,18 +16,18 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new HorizontalPodAutoscalerGenerator();
-    var model = new HorizontalPodAutoscaler
+    var model = new NativeHorizontalPodAutoscaler
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "horizontal-pod-autoscaler",
         Namespace = "default"
       },
-      Spec = new HorizontalPodAutoscalerSpec
+      Spec = new NativeHorizontalPodAutoscalerSpec
       {
-        ScaleTargetRef = new HorizontalPodAutoscalerScaleTargetRef
+        ScaleTargetRef = new NativeHorizontalPodAutoscalerScaleTargetRef
         {
-          Kind = HorizontalPodAutoscalerTargetKind.Deployment,
+          Kind = NativeHorizontalPodAutoscalerTargetKind.Deployment,
           Name = "deployment-name"
         },
         MinReplicas = 1,
@@ -51,7 +51,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated HorizontalPodAutoscaler object with minimal required properties.
+  /// Verifies the generated NativeHorizontalPodAutoscaler object with minimal required properties.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -59,17 +59,17 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new HorizontalPodAutoscalerGenerator();
-    var model = new HorizontalPodAutoscaler
+    var model = new NativeHorizontalPodAutoscaler
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "minimal-hpa"
       },
-      Spec = new HorizontalPodAutoscalerSpec
+      Spec = new NativeHorizontalPodAutoscalerSpec
       {
-        ScaleTargetRef = new HorizontalPodAutoscalerScaleTargetRef
+        ScaleTargetRef = new NativeHorizontalPodAutoscalerScaleTargetRef
         {
-          Kind = HorizontalPodAutoscalerTargetKind.ReplicaSet,
+          Kind = NativeHorizontalPodAutoscalerTargetKind.ReplicaSet,
           Name = "replicaset-name"
         },
         MaxReplicas = 5

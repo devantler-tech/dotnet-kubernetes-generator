@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes PriorityClass objects using 'kubectl create priorityclass' commands.
 /// </summary>
-public class PriorityClassGenerator : BaseNativeGenerator<PriorityClass>
+public class PriorityClassGenerator : BaseNativeGenerator<NativePriorityClass>
 {
   static readonly string[] _defaultArgs = ["create", "priorityclass"];
 
@@ -19,7 +19,7 @@ public class PriorityClassGenerator : BaseNativeGenerator<PriorityClass>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  public override async Task GenerateAsync(PriorityClass model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativePriorityClass model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -41,7 +41,7 @@ public class PriorityClassGenerator : BaseNativeGenerator<PriorityClass>
   /// <param name="model">The PriorityClass object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(PriorityClass model)
+  static ReadOnlyCollection<string> AddArguments(NativePriorityClass model)
   {
     var args = new List<string>
     {

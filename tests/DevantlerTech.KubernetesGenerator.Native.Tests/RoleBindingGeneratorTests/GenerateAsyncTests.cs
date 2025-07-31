@@ -8,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.RoleBindingGeneratorTes
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated RoleBinding object with all properties set.
+  /// Verifies the generated NativeRoleBinding object with all properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -16,19 +16,19 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new NativeRoleBinding
     {
       Metadata = new() { Name = "role-binding", Namespace = "default" },
-      RoleRef = new RoleBindingRoleRef
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.Role,
+        Kind = NativeRoleBindingRoleRefKind.Role,
         Name = "role"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.User,
+          Kind = NativeRoleBindingSubjectKind.User,
           Name = "user",
         }
       ]
@@ -50,7 +50,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated RoleBinding object with ClusterRole reference.
+  /// Verifies the generated NativeRoleBinding object with NativeClusterRole reference.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -58,19 +58,19 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new NativeRoleBinding
     {
       Metadata = new() { Name = "cluster-role-binding", Namespace = "default" },
-      RoleRef = new RoleBindingRoleRef
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.ClusterRole,
+        Kind = NativeRoleBindingRoleRefKind.ClusterRole,
         Name = "admin"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.User,
+          Kind = NativeRoleBindingSubjectKind.User,
           Name = "admin-user",
         }
       ]
@@ -92,7 +92,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated RoleBinding object with multiple subjects.
+  /// Verifies the generated NativeRoleBinding object with multiple subjects.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -100,29 +100,29 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new NativeRoleBinding
     {
       Metadata = new() { Name = "multi-subject-binding", Namespace = "default" },
-      RoleRef = new RoleBindingRoleRef
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.Role,
+        Kind = NativeRoleBindingRoleRefKind.Role,
         Name = "reader"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.User,
+          Kind = NativeRoleBindingSubjectKind.User,
           Name = "user1",
         },
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.Group,
+          Kind = NativeRoleBindingSubjectKind.Group,
           Name = "readers",
         },
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.ServiceAccount,
+          Kind = NativeRoleBindingSubjectKind.ServiceAccount,
           Name = "reader-sa",
           Namespace = "default"
         }
@@ -145,7 +145,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated RoleBinding object without namespace.
+  /// Verifies the generated NativeRoleBinding object without namespace.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -153,19 +153,19 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new NativeRoleBinding
     {
       Metadata = new() { Name = "simple-binding" },
-      RoleRef = new RoleBindingRoleRef
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.Role,
+        Kind = NativeRoleBindingRoleRefKind.Role,
         Name = "simple-role"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.User,
+          Kind = NativeRoleBindingSubjectKind.User,
           Name = "simple-user",
         }
       ]
@@ -194,19 +194,19 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new NativeRoleBinding
     {
       Metadata = new() { Name = "invalid-binding" },
-      RoleRef = new RoleBindingRoleRef
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = (RoleBindingRoleRefKind)999, // Invalid enum value
+        Kind = (NativeRoleBindingRoleRefKind)999, // Invalid enum value
         Name = "invalid"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.User,
+          Kind = NativeRoleBindingSubjectKind.User,
           Name = "test-user"
         }
       ]
@@ -224,19 +224,19 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding
+    var model = new NativeRoleBinding
     {
       Metadata = new() { Name = "invalid-binding" },
-      RoleRef = new RoleBindingRoleRef
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.Role,
+        Kind = NativeRoleBindingRoleRefKind.Role,
         Name = "role"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = (RoleBindingSubjectKind)999, // Invalid enum value
+          Kind = (NativeRoleBindingSubjectKind)999, // Invalid enum value
           Name = "invalid",
         }
       ]

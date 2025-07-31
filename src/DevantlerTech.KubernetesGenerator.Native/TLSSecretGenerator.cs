@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for TLS Kubernetes Secret objects using 'kubectl create secret tls' commands.
 /// </summary>
-public class TLSSecretGenerator : BaseSecretGenerator<TLSSecret>
+public class TLSSecretGenerator : BaseSecretGenerator<NativeTLSSecret>
 {
   /// <summary>
   /// List of temporary files created during generation that need to be cleaned up.
@@ -27,7 +27,7 @@ public class TLSSecretGenerator : BaseSecretGenerator<TLSSecret>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  public override async Task GenerateAsync(TLSSecret model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeTLSSecret model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     try
     {
@@ -45,7 +45,7 @@ public class TLSSecretGenerator : BaseSecretGenerator<TLSSecret>
   /// <param name="model">The TLSSecret object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The kubectl arguments.</returns>
-  protected override async Task<ReadOnlyCollection<string>> BuildSpecificArgumentsAsync(TLSSecret model, CancellationToken cancellationToken = default)
+  protected override async Task<ReadOnlyCollection<string>> BuildSpecificArgumentsAsync(NativeTLSSecret model, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 

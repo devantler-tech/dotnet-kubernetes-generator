@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes Ingress objects using 'kubectl create ingress' commands.
 /// </summary>
-public class IngressGenerator : BaseNativeGenerator<Ingress>
+public class IngressGenerator : BaseNativeGenerator<NativeIngress>
 {
   static readonly string[] _defaultArgs = ["create", "ingress"];
 
@@ -19,7 +19,7 @@ public class IngressGenerator : BaseNativeGenerator<Ingress>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when ingress name is not provided.</exception>
-  public override async Task GenerateAsync(Ingress model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeIngress model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -36,7 +36,7 @@ public class IngressGenerator : BaseNativeGenerator<Ingress>
   /// <param name="model">The Ingress object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required properties are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(Ingress model)
+  static ReadOnlyCollection<string> AddArguments(NativeIngress model)
   {
     List<string> args = [];
 

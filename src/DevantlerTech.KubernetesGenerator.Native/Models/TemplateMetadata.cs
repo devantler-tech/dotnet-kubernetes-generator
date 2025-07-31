@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// This is used for resource templates where only labels and annotations are needed.
 /// </summary>
 [SuppressMessage("Naming", "CA1724:Type names should not match namespaces", Justification = "This is a template metadata class intended for reuse in templates")]
-public class TemplateMetadata
+public class NativeTemplateMetadata
 {
   /// <summary>
   /// Gets or sets the labels for this object.

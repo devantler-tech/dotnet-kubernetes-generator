@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.GenericSecretGeneratorT
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated generic Secret object using GenericSecret input.
+  /// Verifies the generated generic Secret object using NativeGenericSecret input.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -15,7 +15,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new GenericSecretGenerator();
-    var model = new GenericSecret
+    var model = new NativeGenericSecret
     {
       Metadata = new() { Name = "generic-secret", Namespace = "default" },
       Type = "Opaque"
@@ -47,7 +47,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new GenericSecretGenerator();
-    var model = new GenericSecret
+    var model = new NativeGenericSecret
     {
       Metadata = new() { Name = "generic-secret-no-type", Namespace = "default" }
     };
@@ -77,7 +77,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new GenericSecretGenerator();
-    var model = new GenericSecret
+    var model = new NativeGenericSecret
     {
       Metadata = new() { Name = "generic-secret-mixed", Namespace = "default" },
       Type = "Opaque"

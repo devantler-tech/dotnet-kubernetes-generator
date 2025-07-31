@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes Deployment objects using 'kubectl create deployment' commands.
 /// </summary>
-public class DeploymentGenerator : BaseNativeGenerator<Deployment>
+public class DeploymentGenerator : BaseNativeGenerator<NativeDeployment>
 {
   static readonly string[] _defaultArgs = ["create", "deployment"];
 
@@ -19,7 +19,7 @@ public class DeploymentGenerator : BaseNativeGenerator<Deployment>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when deployment name is not provided or no images are specified.</exception>
-  public override async Task GenerateAsync(Deployment model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeDeployment model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -51,7 +51,7 @@ public class DeploymentGenerator : BaseNativeGenerator<Deployment>
   /// <param name="model">The Deployment object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(Deployment model)
+  static ReadOnlyCollection<string> AddArguments(NativeDeployment model)
   {
     var args = new List<string>
     {

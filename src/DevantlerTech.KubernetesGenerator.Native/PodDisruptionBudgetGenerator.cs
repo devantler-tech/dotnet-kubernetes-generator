@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes PodDisruptionBudget objects using 'kubectl create poddisruptionbudget' commands.
 /// </summary>
-public class PodDisruptionBudgetGenerator : BaseNativeGenerator<PodDisruptionBudget>
+public class PodDisruptionBudgetGenerator : BaseNativeGenerator<NativePodDisruptionBudget>
 {
   static readonly string[] _defaultArgs = ["create", "poddisruptionbudget"];
 
@@ -19,7 +19,7 @@ public class PodDisruptionBudgetGenerator : BaseNativeGenerator<PodDisruptionBud
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  public override async Task GenerateAsync(PodDisruptionBudget model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativePodDisruptionBudget model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -36,7 +36,7 @@ public class PodDisruptionBudgetGenerator : BaseNativeGenerator<PodDisruptionBud
   /// <param name="model">The PodDisruptionBudget object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(PodDisruptionBudget model)
+  static ReadOnlyCollection<string> AddArguments(NativePodDisruptionBudget model)
   {
     // Validate required fields
     if (string.IsNullOrEmpty(model.Metadata.Name))
@@ -71,7 +71,7 @@ public class PodDisruptionBudgetGenerator : BaseNativeGenerator<PodDisruptionBud
     return args.AsReadOnly();
   }
 
-  static void ValidateMinMaxAvailabilityConstraints(PodDisruptionBudget model, out bool hasMinAvailable, out bool hasMaxUnavailable)
+  static void ValidateMinMaxAvailabilityConstraints(NativePodDisruptionBudget model, out bool hasMinAvailable, out bool hasMaxUnavailable)
   {
     hasMinAvailable = !string.IsNullOrEmpty(model.Spec.MinAvailable);
     hasMaxUnavailable = !string.IsNullOrEmpty(model.Spec.MaxUnavailable);

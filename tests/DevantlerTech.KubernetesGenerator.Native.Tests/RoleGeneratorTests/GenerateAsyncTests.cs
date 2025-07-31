@@ -9,7 +9,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.RoleGeneratorTests;
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Role object with basic permissions.
+  /// Verifies the generated NativeRole object with basic permissions.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,18 +17,18 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "pod-reader",
         Namespace = "default"
       },
       Rules =
       [
-        new RoleRule
+        new NativeRoleRule
         {
-          Verbs = [RoleVerb.Get, RoleVerb.List, RoleVerb.Watch],
+          Verbs = [NativeRoleVerb.Get, NativeRoleVerb.List, NativeRoleVerb.Watch],
           Resources = ["pods"]
         }
       ]
@@ -50,7 +50,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Role object with complex permissions including API groups and resource names.
+  /// Verifies the generated NativeRole object with complex permissions including API groups and resource names.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -58,18 +58,18 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "complex-role",
         Namespace = "test-namespace"
       },
       Rules =
       [
-        new RoleRule
+        new NativeRoleRule
         {
-          Verbs = [RoleVerb.Get, RoleVerb.Create],
+          Verbs = [NativeRoleVerb.Get, NativeRoleVerb.Create],
           Resources = ["pods", "services"],
           ApiGroups = ["", "apps"],
           ResourceNames = ["my-pod", "my-service"]
@@ -100,17 +100,17 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = ""  // Empty name should trigger validation
       },
       Rules =
       [
-        new RoleRule
+        new NativeRoleRule
         {
-          Verbs = [RoleVerb.Get],
+          Verbs = [NativeRoleVerb.Get],
           Resources = ["pods"]
         }
       ]
@@ -128,9 +128,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "test-role"
       }
@@ -148,15 +148,15 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "test-role"
       },
       Rules =
       [
-        new RoleRule
+        new NativeRoleRule
         {
           Verbs = [], // Empty verbs should trigger validation
           Resources = ["pods"]
@@ -176,17 +176,17 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleGenerator();
-    var model = new Role
+    var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "test-role"
       },
       Rules =
       [
-        new RoleRule
+        new NativeRoleRule
         {
-          Verbs = [RoleVerb.Get]
+          Verbs = [NativeRoleVerb.Get]
           // Resources missing - should trigger validation
         }
       ]

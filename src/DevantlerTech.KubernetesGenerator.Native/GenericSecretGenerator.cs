@@ -5,7 +5,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for generic Kubernetes Secret objects using 'kubectl create secret generic' commands.
 /// </summary>
-public class GenericSecretGenerator : BaseSecretGenerator<GenericSecret>
+public class GenericSecretGenerator : BaseSecretGenerator<NativeGenericSecret>
 {
   /// <summary>
   /// Gets the command prefix for generic secrets.
@@ -18,7 +18,7 @@ public class GenericSecretGenerator : BaseSecretGenerator<GenericSecret>
   /// <param name="model">The GenericSecret object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The kubectl arguments.</returns>
-  protected override Task<ReadOnlyCollection<string>> BuildSpecificArgumentsAsync(GenericSecret model, CancellationToken cancellationToken = default)
+  protected override Task<ReadOnlyCollection<string>> BuildSpecificArgumentsAsync(NativeGenericSecret model, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 

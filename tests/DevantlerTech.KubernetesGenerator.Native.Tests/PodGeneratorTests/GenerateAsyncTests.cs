@@ -8,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodGeneratorTests;
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Pod object.
+  /// Verifies the generated NativePod object.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -16,38 +16,38 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PodGenerator();
-    var model = new Pod
+    var model = new NativePod
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "nginx-pod",
         Namespace = "default",
         Labels = new Dictionary<string, string> { ["app"] = "nginx" },
         Annotations = new Dictionary<string, string> { ["example.com/annotation"] = "value" }
       },
-      Spec = new PodSpec
+      Spec = new NativePodSpec
       {
         Containers =
         [
-          new PodContainer
+          new NativePodContainer
           {
             Name = "nginx",
             Image = "nginx:1.21",
-            ImagePullPolicy = PodImagePullPolicy.IfNotPresent,
+            ImagePullPolicy = NativePodImagePullPolicy.IfNotPresent,
             Command = ["nginx"],
             Args = ["-g", "daemon off;"],
             Env =
             [
-              new PodContainerEnvVar{
+              new NativePodContainerEnvVar{
                 Name = "ENV_VAR",
                 Value = "value"
               },
             ],
             Ports =
             [
-              new PodContainerPort{ Name = "http", Protocol = PodContainerPortProtocol.TCP, ContainerPort = 80 }
+              new NativePodContainerPort{ Name = "http", Protocol = NativePodContainerPortProtocol.TCP, ContainerPort = 80 }
             ],
-            SecurityContext = new PodContainerSecurityContext
+            SecurityContext = new NativePodContainerSecurityContext
             {
               Privileged = false,
               RunAsNonRoot = true,
@@ -55,7 +55,7 @@ public sealed class GenerateAsyncTests
             }
           }
         ],
-        RestartPolicy = PodRestartPolicy.Always,
+        RestartPolicy = NativePodRestartPolicy.Always,
         Tty = false,
         Stdin = false
       }

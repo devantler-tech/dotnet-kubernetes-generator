@@ -8,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterRoleBindingGener
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated ClusterRoleBinding object with all properties set.
+  /// Verifies the generated NativeClusterRoleBinding object with all properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -16,19 +16,19 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding
+    var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "cluster-role-binding" },
-      RoleRef = new RoleBindingRoleRef
+      Metadata = new NativeMetadata { Name = "cluster-role-binding" },
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.ClusterRole,
+        Kind = NativeRoleBindingRoleRefKind.ClusterRole,
         Name = "cluster-admin"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.User,
+          Kind = NativeRoleBindingSubjectKind.User,
           Name = "admin-user",
         }
       ]
@@ -50,7 +50,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ClusterRoleBinding object with multiple subjects.
+  /// Verifies the generated NativeClusterRoleBinding object with multiple subjects.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -58,29 +58,29 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding
+    var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "multi-subject-cluster-binding" },
-      RoleRef = new RoleBindingRoleRef
+      Metadata = new NativeMetadata { Name = "multi-subject-cluster-binding" },
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.ClusterRole,
+        Kind = NativeRoleBindingRoleRefKind.ClusterRole,
         Name = "view"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.User,
+          Kind = NativeRoleBindingSubjectKind.User,
           Name = "user1",
         },
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.Group,
+          Kind = NativeRoleBindingSubjectKind.Group,
           Name = "viewers",
         },
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.ServiceAccount,
+          Kind = NativeRoleBindingSubjectKind.ServiceAccount,
           Name = "viewer-sa",
           Namespace = "kube-system"
         }
@@ -103,7 +103,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ClusterRoleBinding object with service account using default namespace.
+  /// Verifies the generated NativeClusterRoleBinding object with service account using default namespace.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -111,19 +111,19 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding
+    var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "sa-default-cluster-binding" },
-      RoleRef = new RoleBindingRoleRef
+      Metadata = new NativeMetadata { Name = "sa-default-cluster-binding" },
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.ClusterRole,
+        Kind = NativeRoleBindingRoleRefKind.ClusterRole,
         Name = "view"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.ServiceAccount,
+          Kind = NativeRoleBindingSubjectKind.ServiceAccount,
           Name = "default-sa"
           // No namespace specified, should default to 'default'
         }
@@ -153,19 +153,19 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding
+    var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "invalid-binding" },
-      RoleRef = new RoleBindingRoleRef
+      Metadata = new NativeMetadata { Name = "invalid-binding" },
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.Role, // Invalid - ClusterRoleBinding requires ClusterRole
+        Kind = NativeRoleBindingRoleRefKind.Role, // Invalid - NativeClusterRoleBinding requires NativeClusterRole
         Name = "role"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = RoleBindingSubjectKind.User,
+          Kind = NativeRoleBindingSubjectKind.User,
           Name = "test-user"
         }
       ]
@@ -183,19 +183,19 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleBindingGenerator();
-    var model = new ClusterRoleBinding
+    var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "invalid-binding" },
-      RoleRef = new RoleBindingRoleRef
+      Metadata = new NativeMetadata { Name = "invalid-binding" },
+      RoleRef = new NativeRoleBindingRoleRef
       {
-        Kind = RoleBindingRoleRefKind.ClusterRole,
+        Kind = NativeRoleBindingRoleRefKind.ClusterRole,
         Name = "cluster-admin"
       },
       Subjects =
       [
-        new RoleBindingSubject
+        new NativeRoleBindingSubject
         {
-          Kind = (RoleBindingSubjectKind)999, // Invalid enum value
+          Kind = (NativeRoleBindingSubjectKind)999, // Invalid enum value
           Name = "invalid",
         }
       ]

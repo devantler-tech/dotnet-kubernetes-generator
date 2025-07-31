@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes Namespace objects using 'kubectl create namespace' commands.
 /// </summary>
-public class NamespaceGenerator : BaseNativeGenerator<Namespace>
+public class NamespaceGenerator : BaseNativeGenerator<NativeNamespace>
 {
   static readonly string[] _defaultArgs = ["create", "namespace"];
 
@@ -19,7 +19,7 @@ public class NamespaceGenerator : BaseNativeGenerator<Namespace>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when namespace name is not provided.</exception>
-  public override async Task GenerateAsync(Namespace model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeNamespace model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -41,7 +41,7 @@ public class NamespaceGenerator : BaseNativeGenerator<Namespace>
   /// <param name="model">The Namespace object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(Namespace model)
+  static ReadOnlyCollection<string> AddArguments(NativeNamespace model)
   {
     var args = new List<string>
     {

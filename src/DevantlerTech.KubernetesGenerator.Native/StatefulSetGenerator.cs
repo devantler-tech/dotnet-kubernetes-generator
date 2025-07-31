@@ -5,6 +5,6 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes StatefulSet objects.
 /// </summary>
-public class StatefulSetGenerator : BaseKubernetesGenerator<StatefulSet>
+public class StatefulSetGenerator : BaseKubernetesGenerator<NativeStatefulSet>
 {
 }

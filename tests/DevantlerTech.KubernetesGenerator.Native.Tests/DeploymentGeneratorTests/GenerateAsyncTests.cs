@@ -9,7 +9,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.DeploymentGeneratorTest
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Deployment object with basic configuration.
+  /// Verifies the generated NativeDeployment object with basic configuration.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,14 +17,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "my-deployment",
         Namespace = "default"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["nginx"],
         Replicas = 3
@@ -47,7 +47,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Deployment with port and command.
+  /// Verifies the generated NativeDeployment with port and command.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -55,13 +55,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "my-app-deployment"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["busybox"],
         Replicas = 2,
@@ -86,7 +86,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Deployment with multiple images (without command).
+  /// Verifies the generated NativeDeployment with multiple images (without command).
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -94,13 +94,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "multi-container-deployment"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["nginx", "busybox", "ubuntu"],
         Replicas = 2
@@ -131,13 +131,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = string.Empty
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["nginx"]
       }
@@ -147,7 +147,7 @@ public sealed class GenerateAsyncTests
     var exception = await Assert.ThrowsAsync<KubernetesGeneratorException>(
       () => generator.GenerateAsync(model, "/tmp/test.yaml"));
 
-    Assert.Contains("A non-empty Deployment name must be provided", exception.Message, StringComparison.Ordinal);
+    Assert.Contains("A non-empty NativeDeployment name must be provided", exception.Message, StringComparison.Ordinal);
   }
 
   /// <summary>
@@ -159,13 +159,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "test-deployment"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["nginx", "busybox"],
         Command = ["echo", "hello"]
@@ -188,13 +188,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NativeMetadata
       {
         Name = "test-deployment"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = []
       }

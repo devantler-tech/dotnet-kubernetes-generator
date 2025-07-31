@@ -1,0 +1,27 @@
+namespace DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolume;
+
+/// <summary>
+/// Represents a Kubernetes PersistentVolume for use with kubectl create.
+/// </summary>
+public class NativePersistentVolume
+{
+  /// <summary>
+  /// Gets or sets the API version of this PersistentVolume.
+  /// </summary>
+  public string ApiVersion { get; set; } = "v1";
+
+  /// <summary>
+  /// Gets or sets the kind of this resource.
+  /// </summary>
+  public string Kind { get; set; } = "PersistentVolume";
+
+  /// <summary>
+  /// Gets or sets the metadata for the persistent volume.
+  /// </summary>
+  public required NativeClusterScopedMetadata Metadata { get; set; }
+
+  /// <summary>
+  /// Gets or sets the specification for the persistent volume.
+  /// </summary>
+  public required NativePersistentVolumeSpec Spec { get; init; }
+}
