@@ -1,0 +1,12 @@
+﻿---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: image-policy-alpha
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: nginx
+  policy:
+    alphabetical:
+      order: desc
