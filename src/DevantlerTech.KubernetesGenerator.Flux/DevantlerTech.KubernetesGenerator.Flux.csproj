@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../DevantlerTech.KubernetesGenerator.Core/DevantlerTech.KubernetesGenerator.Core.csproj" />
     <ProjectReference Include="../DevantlerTech.KubernetesGenerator.Kustomize/DevantlerTech.KubernetesGenerator.Kustomize.csproj" />
   </ItemGroup>
 

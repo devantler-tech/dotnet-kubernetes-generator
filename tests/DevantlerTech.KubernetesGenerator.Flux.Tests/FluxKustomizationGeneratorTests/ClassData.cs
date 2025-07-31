@@ -1,4 +1,5 @@
 using System.Collections;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Flux.Models;
 using DevantlerTech.KubernetesGenerator.Flux.Models.Kustomization;
 
@@ -14,7 +15,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Simple Kustomization
     [new FluxKustomization()
     {
-      Metadata = new FluxNamespacedMetadata()
+      Metadata = new Metadata()
       {
         Name = "kustomization-simple",
       }
@@ -23,7 +24,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Complex Kustomization
     [new FluxKustomization()
     {
-      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>()
+      Metadata = new Metadata(new Dictionary<string, string>()
         {
           ["key"] = "value"
         }

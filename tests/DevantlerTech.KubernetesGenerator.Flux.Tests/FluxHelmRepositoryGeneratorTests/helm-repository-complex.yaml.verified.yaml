@@ -2,8 +2,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: helm-repository-complex
   namespace: helm-repository-complex
+  name: helm-repository-complex
   labels:
     key: value
 spec:

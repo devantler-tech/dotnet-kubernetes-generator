@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Core.Models;
+
 namespace DevantlerTech.KubernetesGenerator.Flux.Models.Kustomization;
 
 /// <summary>
@@ -18,7 +20,7 @@ public class FluxKustomization
   /// <summary>
   /// The metadata of the Flux Kustomization object.
   /// </summary>
-  public required FluxNamespacedMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// The spec of the Flux Kustomization object.

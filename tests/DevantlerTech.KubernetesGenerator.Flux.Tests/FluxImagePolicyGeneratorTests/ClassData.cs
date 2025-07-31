@@ -1,5 +1,5 @@
 using System.Collections;
-using DevantlerTech.KubernetesGenerator.Flux.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Flux.Models.ImagePolicy;
 
 namespace DevantlerTech.KubernetesGenerator.Flux.Tests.FluxImagePolicyGeneratorTests;
@@ -14,7 +14,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Simple image policy with semver
     [new FluxImagePolicy()
       {
-        Metadata = new FluxNamespacedMetadata
+        Metadata = new Metadata
         {
           Name = "image-policy-semver",
         },
@@ -29,7 +29,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Complex image policy with numeric sorting and filters
     [new FluxImagePolicy
     {
-      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>
+      Metadata = new Metadata(new Dictionary<string, string>
         {
           ["app"] = "podinfo"
         }
@@ -53,7 +53,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Image policy with alpha sorting
     [new FluxImagePolicy
     {
-      Metadata = new FluxNamespacedMetadata
+      Metadata = new Metadata
       {
         Name = "image-policy-alpha",
         Namespace = "flux-system"

@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Core.Models;
+
 namespace DevantlerTech.KubernetesGenerator.Flux.Models.ImagePolicy;
 
 /// <summary>
@@ -8,7 +10,7 @@ public class FluxImagePolicy
   /// <summary>
   /// Metadata of the ImagePolicy.
   /// </summary>
-  public required FluxNamespacedMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// Spec of the ImagePolicy.

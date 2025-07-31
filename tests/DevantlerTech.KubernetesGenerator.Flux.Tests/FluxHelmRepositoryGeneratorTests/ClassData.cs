@@ -1,5 +1,5 @@
 using System.Collections;
-using DevantlerTech.KubernetesGenerator.Flux.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Flux.Models.HelmRepository;
 
 namespace DevantlerTech.KubernetesGenerator.Flux.Tests.FluxHelmRepositoryGeneratorTests;
@@ -14,7 +14,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Simple HelmRepository
     [new FluxHelmRepository()
     {
-      Metadata = new FluxNamespacedMetadata()
+      Metadata = new Metadata()
       {
         Name = "helm-repository-simple",
       },
@@ -27,7 +27,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Complex HelmRepository
     [new FluxHelmRepository()
     {
-      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>()
+      Metadata = new Metadata(new Dictionary<string, string>()
         {
           ["key"] = "value"
         }
