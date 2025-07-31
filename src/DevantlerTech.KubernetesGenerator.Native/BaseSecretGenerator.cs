@@ -34,7 +34,7 @@ public abstract class BaseSecretGenerator<T> : BaseNativeGenerator<T> where T : 
     var args = new ReadOnlyCollection<string>(
       [.. CommandPrefix, .. commonArgs, .. specificArgs]
     );
-    string errorMessage = $"Failed to create {GetSecretTypeName()} secret '{model.Metadata?.Name}' using kubectl";
+    string errorMessage = $"Failed to create {GetSecretTypeName()} secret '{model.Metadata.Name}' using kubectl";
     await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
   }
 
