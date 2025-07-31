@@ -1,6 +1,5 @@
 using System.Net;
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NetworkPolicyGeneratorTests;
 

@@ -1,0 +1,9 @@
+global using DevantlerTech.KubernetesGenerator.Native.Models;
+global using DevantlerTech.KubernetesGenerator.Native.Models.Autoscaling;
+global using DevantlerTech.KubernetesGenerator.Native.Models.Config;
+global using DevantlerTech.KubernetesGenerator.Native.Models.Core;
+global using DevantlerTech.KubernetesGenerator.Native.Models.Networking;
+global using DevantlerTech.KubernetesGenerator.Native.Models.Secrets;
+global using DevantlerTech.KubernetesGenerator.Native.Models.Security;
+global using DevantlerTech.KubernetesGenerator.Native.Models.Storage;
+global using DevantlerTech.KubernetesGenerator.Native.Models.Workloads;
