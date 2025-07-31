@@ -3,7 +3,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Enum for supported match expression operators.
 /// </summary>
-public enum NativeMatchExpressionOperator
+public enum MatchExpressionOperator
 {
   /// <summary>
   /// The key should be present and equal to one of the specified values.

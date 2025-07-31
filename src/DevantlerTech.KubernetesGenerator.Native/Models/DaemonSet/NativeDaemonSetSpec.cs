@@ -8,7 +8,7 @@ public class NativeDaemonSetSpec
   /// <summary>
   /// Gets or sets the label selector for pods. Existing ReplicaSets whose pods are matching this selector will be managed by this DaemonSet.
   /// </summary>
-  public required NativeLabelSelector Selector { get; set; }
+  public required LabelSelector Selector { get; set; }
 
   /// <summary>
   /// Gets or sets the pod template for this DaemonSet.

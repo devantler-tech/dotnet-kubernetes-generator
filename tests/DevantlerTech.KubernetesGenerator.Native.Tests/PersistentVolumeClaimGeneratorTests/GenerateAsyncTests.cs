@@ -23,7 +23,7 @@ public sealed class GenerateAsyncTests
     {
       ApiVersion = "v1",
       Kind = "PersistentVolumeClaim",
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "persistent-volume-claim",
         Namespace = "default"
@@ -34,13 +34,13 @@ public sealed class GenerateAsyncTests
           NativePersistentVolumeAccessMode.ReadWriteOnce,
           NativePersistentVolumeAccessMode.ReadOnlyMany
         ],
-        DataSource = new NativeTypedLocalObjectReference
+        DataSource = new TypedLocalObjectReference
         {
           ApiGroup = "storage.k8s.io",
           Kind = "StorageClass",
           Name = "storage-class"
         },
-        DataSourceRef = new NativeTypedObjectReference
+        DataSourceRef = new TypedObjectReference
         {
           ApiGroup = "storage.k8s.io",
           Kind = "PersistentVolumeClaim",
@@ -58,7 +58,7 @@ public sealed class GenerateAsyncTests
             ["storage"] = "10Gi"
           }
         },
-        Selector = new NativeLabelSelector
+        Selector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -97,7 +97,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeClaimGenerator();
     var model = new NativePersistentVolumeClaim
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = ""
       },

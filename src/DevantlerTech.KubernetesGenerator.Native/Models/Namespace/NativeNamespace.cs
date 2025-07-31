@@ -18,5 +18,5 @@ public class NativeNamespace
   /// <summary>
   /// Gets or sets the metadata for the namespace.
   /// </summary>
-  public required NativeClusterScopedMetadata Metadata { get; set; }
+  public required ClusterScopedMetadata Metadata { get; set; }
 }

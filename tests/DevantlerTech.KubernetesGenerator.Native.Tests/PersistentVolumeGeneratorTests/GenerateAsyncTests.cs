@@ -17,7 +17,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new NativePersistentVolume
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "persistent-volume"
       },
@@ -46,10 +46,10 @@ public sealed class GenerateAsyncTests
               {
                 MatchExpressions =
                 [
-                  new NativeMatchExpression
+                  new MatchExpression
                   {
                     Key = "key",
-                    Operator = NativeMatchExpressionOperator.In,
+                    Operator = MatchExpressionOperator.In,
                     Values = ["value"]
                   }
                 ]
@@ -86,7 +86,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new NativePersistentVolume
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-hostpath",
       },
@@ -132,7 +132,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new NativePersistentVolume
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-nfs",
         Labels = new Dictionary<string, string>
@@ -183,7 +183,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new NativePersistentVolume
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-local"
       },
@@ -211,10 +211,10 @@ public sealed class GenerateAsyncTests
               {
                 MatchExpressions =
                 [
-                  new NativeMatchExpression
+                  new MatchExpression
                   {
                     Key = "kubernetes.io/hostname",
-                    Operator = NativeMatchExpressionOperator.Exists
+                    Operator = MatchExpressionOperator.Exists
                   }
                 ]
               }
@@ -250,7 +250,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new NativePersistentVolume
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-multi-access"
       },
@@ -300,7 +300,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new NativePersistentVolume
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-hostpath-file"
       },
@@ -346,7 +346,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new NativePersistentVolume
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-advanced-affinity"
       },
@@ -373,21 +373,21 @@ public sealed class GenerateAsyncTests
               {
                 MatchExpressions =
                 [
-                  new NativeMatchExpression
+                  new MatchExpression
                   {
                     Key = "node-type",
-                    Operator = NativeMatchExpressionOperator.NotIn,
+                    Operator = MatchExpressionOperator.NotIn,
                     Values = ["small", "micro"]
                   },
-                  new NativeMatchExpression
+                  new MatchExpression
                   {
                     Key = "ssd-storage",
-                    Operator = NativeMatchExpressionOperator.DoesNotExist
+                    Operator = MatchExpressionOperator.DoesNotExist
                   },
-                  new NativeMatchExpression
+                  new MatchExpression
                   {
                     Key = "storage-size",
-                    Operator = NativeMatchExpressionOperator.Gt,
+                    Operator = MatchExpressionOperator.Gt,
                     Values = ["100"]
                   }
                 ]
@@ -424,7 +424,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeGenerator();
     var model = new NativePersistentVolume
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "pv-minimal"
       },

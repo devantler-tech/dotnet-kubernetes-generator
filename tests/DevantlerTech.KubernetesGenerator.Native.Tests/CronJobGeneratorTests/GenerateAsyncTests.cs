@@ -18,7 +18,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "cron-job",
         Namespace = "default"
@@ -71,7 +71,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "cron-job-with-command",
         Namespace = "default"
@@ -125,7 +125,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "cron-job-with-restart",
         Namespace = "default"
@@ -179,7 +179,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "cron-job-complete",
         Namespace = "production"
@@ -234,7 +234,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "cron-job-hierarchical",
         Namespace = "test"
@@ -306,7 +306,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = null!, // Null name
         Namespace = "default"
@@ -339,7 +339,7 @@ public sealed class GenerateAsyncTests
       await generator.GenerateAsync(model, "test.yaml"));
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
 
-    Assert.Contains("NativeCronJob name is required and cannot be null or empty", exception.Message, StringComparison.Ordinal);
+    Assert.Contains("CronJob name is required and cannot be null or empty", exception.Message, StringComparison.Ordinal);
   }
 
   /// <summary>
@@ -353,7 +353,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "", // Empty name
         Namespace = "default"
@@ -386,7 +386,7 @@ public sealed class GenerateAsyncTests
       await generator.GenerateAsync(model, "test.yaml"));
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
 
-    Assert.Contains("NativeCronJob name is required and cannot be null or empty", exception.Message, StringComparison.Ordinal);
+    Assert.Contains("CronJob name is required and cannot be null or empty", exception.Message, StringComparison.Ordinal);
   }
 
   /// <summary>
@@ -400,7 +400,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "test-cronjob",
         Namespace = "default"
@@ -427,7 +427,7 @@ public sealed class GenerateAsyncTests
       await generator.GenerateAsync(model, "test.yaml"));
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
 
-    Assert.Contains("NativeCronJob must have at least one container defined", exception.Message, StringComparison.Ordinal);
+    Assert.Contains("CronJob must have at least one container defined", exception.Message, StringComparison.Ordinal);
   }
 
   /// <summary>
@@ -474,7 +474,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "cron-job-no-namespace"
         // No namespace specified

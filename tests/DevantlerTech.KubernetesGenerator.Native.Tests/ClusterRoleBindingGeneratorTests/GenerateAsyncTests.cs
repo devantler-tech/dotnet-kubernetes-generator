@@ -18,7 +18,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new NativeMetadata { Name = "cluster-role-binding" },
+      Metadata = new Metadata { Name = "cluster-role-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.ClusterRole,
@@ -60,7 +60,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new NativeMetadata { Name = "multi-subject-cluster-binding" },
+      Metadata = new Metadata { Name = "multi-subject-cluster-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.ClusterRole,
@@ -113,7 +113,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new NativeMetadata { Name = "sa-default-cluster-binding" },
+      Metadata = new Metadata { Name = "sa-default-cluster-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.ClusterRole,
@@ -155,7 +155,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new NativeMetadata { Name = "invalid-binding" },
+      Metadata = new Metadata { Name = "invalid-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.Role, // Invalid - NativeClusterRoleBinding requires NativeClusterRole
@@ -185,7 +185,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new NativeMetadata { Name = "invalid-binding" },
+      Metadata = new Metadata { Name = "invalid-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.ClusterRole,

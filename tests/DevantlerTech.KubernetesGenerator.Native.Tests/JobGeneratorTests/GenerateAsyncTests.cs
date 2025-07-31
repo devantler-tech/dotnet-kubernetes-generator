@@ -17,7 +17,7 @@ public sealed class GenerateAsyncTests
     var generator = new JobGenerator();
     var model = new NativeJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "job-with-image-and-command",
         Namespace = "default"
@@ -55,7 +55,7 @@ public sealed class GenerateAsyncTests
     var generator = new JobGenerator();
     var model = new NativeJob
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "job-with-image",
         Namespace = "default"

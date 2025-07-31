@@ -20,14 +20,14 @@ public sealed class GenerateAsyncTests
     {
       ApiVersion = "apps/v1",
       Kind = "DaemonSet",
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "daemon-set",
         Namespace = "default"
       },
       Spec = new NativeDaemonSetSpec
       {
-        Selector = new NativeLabelSelector
+        Selector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -36,7 +36,7 @@ public sealed class GenerateAsyncTests
         },
         Template = new NativePodTemplateSpec
         {
-          Metadata = new NativeTemplateMetadata
+          Metadata = new TemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {
@@ -85,13 +85,13 @@ public sealed class GenerateAsyncTests
     var generator = new DaemonSetGenerator();
     var model = new NativeDaemonSet
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "minimal-daemon-set"
       },
       Spec = new NativeDaemonSetSpec
       {
-        Selector = new NativeLabelSelector
+        Selector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -100,7 +100,7 @@ public sealed class GenerateAsyncTests
         },
         Template = new NativePodTemplateSpec
         {
-          Metadata = new NativeTemplateMetadata
+          Metadata = new TemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {
@@ -148,14 +148,14 @@ public sealed class GenerateAsyncTests
     var generator = new DaemonSetGenerator();
     var model = new NativeDaemonSet
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "rolling-update-daemon-set",
         Namespace = "default"
       },
       Spec = new NativeDaemonSetSpec
       {
-        Selector = new NativeLabelSelector
+        Selector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -164,7 +164,7 @@ public sealed class GenerateAsyncTests
         },
         Template = new NativePodTemplateSpec
         {
-          Metadata = new NativeTemplateMetadata
+          Metadata = new TemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {
@@ -185,7 +185,7 @@ public sealed class GenerateAsyncTests
         },
         UpdateStrategy = new NativeDaemonSetUpdateStrategy
         {
-          Type = NativeUpdateStrategyType.RollingUpdate,
+          Type = UpdateStrategyType.RollingUpdate,
           RollingUpdate = new NativeDaemonSetRollingUpdateStrategy
           {
             MaxUnavailable = "1",

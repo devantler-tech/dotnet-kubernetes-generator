@@ -18,7 +18,7 @@ public class NativeDaemonSet
   /// <summary>
   /// Gets or sets the metadata for the DaemonSet.
   /// </summary>
-  public required NativeMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the specification for the DaemonSet.

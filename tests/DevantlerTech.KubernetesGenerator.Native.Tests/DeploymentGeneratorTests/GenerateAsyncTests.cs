@@ -19,7 +19,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "my-deployment",
         Namespace = "default"
@@ -57,7 +57,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "my-app-deployment"
       },
@@ -96,7 +96,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "multi-container-deployment"
       },
@@ -133,7 +133,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = string.Empty
       },
@@ -147,7 +147,7 @@ public sealed class GenerateAsyncTests
     var exception = await Assert.ThrowsAsync<KubernetesGeneratorException>(
       () => generator.GenerateAsync(model, "/tmp/test.yaml"));
 
-    Assert.Contains("A non-empty NativeDeployment name must be provided", exception.Message, StringComparison.Ordinal);
+    Assert.Contains("A non-empty Deployment name must be provided", exception.Message, StringComparison.Ordinal);
   }
 
   /// <summary>
@@ -161,7 +161,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "test-deployment"
       },
@@ -190,7 +190,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "test-deployment"
       },

@@ -8,7 +8,7 @@ public class NativeNetworkPolicySpec
   /// <summary>
   /// Gets or sets the pod selector for selecting pods that this policy applies to.
   /// </summary>
-  public required NativeLabelSelector PodSelector { get; init; }
+  public required LabelSelector PodSelector { get; init; }
 
   /// <summary>
   /// Gets or sets the policy types for this NetworkPolicy.

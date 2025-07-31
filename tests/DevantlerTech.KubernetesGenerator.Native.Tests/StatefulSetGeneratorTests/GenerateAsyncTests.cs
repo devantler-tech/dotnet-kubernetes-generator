@@ -18,7 +18,7 @@ public sealed class GenerateAsyncTests
     var generator = new StatefulSetGenerator();
     var model = new NativeStatefulSet
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "stateful-set",
         Namespace = "default"
@@ -26,7 +26,7 @@ public sealed class GenerateAsyncTests
       Spec = new NativeStatefulSetSpec
       {
         Replicas = 1,
-        Selector = new NativeLabelSelector
+        Selector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -36,7 +36,7 @@ public sealed class GenerateAsyncTests
         ServiceName = "stateful-set",
         Template = new NativePodTemplateSpec
         {
-          Metadata = new NativeTemplateMetadata
+          Metadata = new TemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {
@@ -87,7 +87,7 @@ public sealed class GenerateAsyncTests
     var generator = new StatefulSetGenerator();
     var model = new NativeStatefulSet
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "rolling-update-statefulset",
         Namespace = "default"
@@ -95,7 +95,7 @@ public sealed class GenerateAsyncTests
       Spec = new NativeStatefulSetSpec
       {
         Replicas = 3,
-        Selector = new NativeLabelSelector
+        Selector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -105,7 +105,7 @@ public sealed class GenerateAsyncTests
         ServiceName = "rolling-service",
         Template = new NativePodTemplateSpec
         {
-          Metadata = new NativeTemplateMetadata
+          Metadata = new TemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {
@@ -134,7 +134,7 @@ public sealed class GenerateAsyncTests
         },
         UpdateStrategy = new NativeStatefulSetUpdateStrategy
         {
-          Type = NativeUpdateStrategyType.RollingUpdate,
+          Type = UpdateStrategyType.RollingUpdate,
           RollingUpdate = new NativeStatefulSetRollingUpdateStrategy
           {
             Partition = 1
@@ -170,7 +170,7 @@ public sealed class GenerateAsyncTests
     var generator = new StatefulSetGenerator();
     var model = new NativeStatefulSet
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "pvc-retention-statefulset",
         Namespace = "default"
@@ -178,7 +178,7 @@ public sealed class GenerateAsyncTests
       Spec = new NativeStatefulSetSpec
       {
         Replicas = 1,
-        Selector = new NativeLabelSelector
+        Selector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -188,7 +188,7 @@ public sealed class GenerateAsyncTests
         ServiceName = "pvc-service",
         Template = new NativePodTemplateSpec
         {
-          Metadata = new NativeTemplateMetadata
+          Metadata = new TemplateMetadata
           {
             Labels = new Dictionary<string, string>
             {

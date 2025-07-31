@@ -18,7 +18,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodGenerator();
     var model = new NativePod
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "nginx-pod",
         Namespace = "default",

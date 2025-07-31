@@ -13,7 +13,7 @@ public class NativeStatefulSetSpec
   /// <summary>
   /// Gets or sets the label selector for pods. Existing ReplicaSets whose pods are matching this selector will be managed by this StatefulSet.
   /// </summary>
-  public required NativeLabelSelector Selector { get; set; }
+  public required LabelSelector Selector { get; set; }
 
   /// <summary>
   /// Gets or sets the name of the service that governs this StatefulSet.

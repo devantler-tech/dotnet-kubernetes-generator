@@ -8,7 +8,7 @@ public class NativeClusterRoleBinding
   /// <summary>
   /// Gets or sets the metadata for the cluster role binding.
   /// </summary>
-  public required NativeMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the reference to the cluster role.

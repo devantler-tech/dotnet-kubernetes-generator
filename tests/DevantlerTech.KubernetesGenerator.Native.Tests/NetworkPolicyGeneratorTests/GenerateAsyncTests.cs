@@ -21,14 +21,14 @@ public sealed class GenerateAsyncTests
     var generator = new NetworkPolicyGenerator();
     var model = new NativeNetworkPolicy
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "comprehensive-policy",
         Namespace = "production"
       },
       Spec = new NativeNetworkPolicySpec
       {
-        PodSelector = new NativeLabelSelector
+        PodSelector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -58,7 +58,7 @@ public sealed class GenerateAsyncTests
             [
               new NativeNetworkPolicyPeer
               {
-                PodSelector = new NativeLabelSelector
+                PodSelector = new LabelSelector
                 {
                   MatchLabels = new Dictionary<string, string>
                   {
@@ -113,14 +113,14 @@ public sealed class GenerateAsyncTests
     var generator = new NetworkPolicyGenerator();
     var model = new NativeNetworkPolicy
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "ip-block-policy",
         Namespace = "secure"
       },
       Spec = new NativeNetworkPolicySpec
       {
-        PodSelector = new NativeLabelSelector(), // Empty selector selects all pods
+        PodSelector = new LabelSelector(), // Empty selector selects all pods
         PolicyTypes = [NativeNetworkPolicyType.Ingress, NativeNetworkPolicyType.Egress],
         Ingress =
         [
@@ -193,14 +193,14 @@ public sealed class GenerateAsyncTests
     var generator = new NetworkPolicyGenerator();
     var model = new NativeNetworkPolicy
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "namespace-selector-policy",
         Namespace = "staging"
       },
       Spec = new NativeNetworkPolicySpec
       {
-        PodSelector = new NativeLabelSelector
+        PodSelector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {
@@ -216,14 +216,14 @@ public sealed class GenerateAsyncTests
             [
               new NativeNetworkPolicyPeer
               {
-                NamespaceSelector = new NativeLabelSelector
+                NamespaceSelector = new LabelSelector
                 {
                   MatchLabels = new Dictionary<string, string>
                   {
                     ["environment"] = "production"
                   }
                 },
-                PodSelector = new NativeLabelSelector
+                PodSelector = new LabelSelector
                 {
                   MatchLabels = new Dictionary<string, string>
                   {
@@ -271,13 +271,13 @@ public sealed class GenerateAsyncTests
     var generator = new NetworkPolicyGenerator();
     var model = new NativeNetworkPolicy
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = ""
       },
       Spec = new NativeNetworkPolicySpec
       {
-        PodSelector = new NativeLabelSelector
+        PodSelector = new LabelSelector
         {
           MatchLabels = new Dictionary<string, string>
           {

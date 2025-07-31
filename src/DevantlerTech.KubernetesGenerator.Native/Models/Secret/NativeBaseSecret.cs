@@ -8,5 +8,5 @@ public abstract class BaseSecret
   /// <summary>
   /// Gets or sets the metadata for the secret.
   /// </summary>
-  public required NativeMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 }

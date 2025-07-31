@@ -17,7 +17,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new NativeMetadata { Name = "simple-ingress", Namespace = "default" },
+      Metadata = new Metadata { Name = "simple-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new NativeIngressRule
@@ -56,7 +56,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new NativeMetadata { Name = "tls-ingress", Namespace = "default" },
+      Metadata = new Metadata { Name = "tls-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new NativeIngressRule
@@ -96,7 +96,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new NativeMetadata { Name = "default-backend-ingress", Namespace = "default" },
+      Metadata = new Metadata { Name = "default-backend-ingress", Namespace = "default" },
       Class = "nginx",
       DefaultBackend = "default-service:80",
       Rules = [
@@ -136,7 +136,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new NativeMetadata { Name = "annotated-ingress", Namespace = "default" },
+      Metadata = new Metadata { Name = "annotated-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new NativeIngressRule
@@ -180,7 +180,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new NativeMetadata { Name = "multi-rule-ingress", Namespace = "default" },
+      Metadata = new Metadata { Name = "multi-rule-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new NativeIngressRule
@@ -231,7 +231,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new NativeMetadata { Name = "simple-ingress" },
+      Metadata = new Metadata { Name = "simple-ingress" },
       Rules = [
         new NativeIngressRule
         {

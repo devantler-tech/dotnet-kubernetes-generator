@@ -18,7 +18,7 @@ public class NativeConfigMap
   /// <summary>
   /// Gets or sets the metadata for the ConfigMap.
   /// </summary>
-  public required NativeMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the key-value pairs to include in the ConfigMap data.

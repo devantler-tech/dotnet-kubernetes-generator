@@ -18,7 +18,7 @@ public sealed class GenerateAsyncTests
     var generator = new HorizontalPodAutoscalerGenerator();
     var model = new NativeHorizontalPodAutoscaler
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "horizontal-pod-autoscaler",
         Namespace = "default"
@@ -61,7 +61,7 @@ public sealed class GenerateAsyncTests
     var generator = new HorizontalPodAutoscalerGenerator();
     var model = new NativeHorizontalPodAutoscaler
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "minimal-hpa"
       },

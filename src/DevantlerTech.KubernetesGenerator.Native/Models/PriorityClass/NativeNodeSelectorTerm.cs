@@ -8,5 +8,5 @@ public class NativeNodeSelectorTerm
   /// <summary>
   /// Gets or sets the match expressions.
   /// </summary>
-  public IList<NativeMatchExpression>? MatchExpressions { get; init; }
+  public IList<MatchExpression>? MatchExpressions { get; init; }
 }

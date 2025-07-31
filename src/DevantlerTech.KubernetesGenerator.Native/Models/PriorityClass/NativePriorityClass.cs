@@ -18,7 +18,7 @@ public class NativePriorityClass
   /// <summary>
   /// Gets or sets the metadata for the priority class.
   /// </summary>
-  public required NativeClusterScopedMetadata Metadata { get; set; }
+  public required ClusterScopedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the priority value (required). Higher numbers indicate higher priority.

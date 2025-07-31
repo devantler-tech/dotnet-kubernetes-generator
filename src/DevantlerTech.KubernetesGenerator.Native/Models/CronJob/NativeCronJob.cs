@@ -18,7 +18,7 @@ public class NativeCronJob
   /// <summary>
   /// Gets or sets the metadata for the cronjob.
   /// </summary>
-  public required NativeMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the specification for the cronjob.

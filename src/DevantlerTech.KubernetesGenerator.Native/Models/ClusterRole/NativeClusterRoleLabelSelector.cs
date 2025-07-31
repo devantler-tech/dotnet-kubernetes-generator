@@ -13,5 +13,5 @@ public class NativeClusterRoleLabelSelector
   /// <summary>
   /// Gets or sets the match expressions for the selector.
   /// </summary>
-  public IList<NativeMatchExpression>? MatchExpressions { get; init; }
+  public IList<MatchExpression>? MatchExpressions { get; init; }
 }

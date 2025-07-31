@@ -19,7 +19,7 @@ public sealed class GenerateAsyncTests
     var generator = new ConfigMapGenerator();
     var model = new NativeConfigMap
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "test-config",
         Namespace = "default"
@@ -57,7 +57,7 @@ public sealed class GenerateAsyncTests
     var generator = new ConfigMapGenerator();
     var model = new NativeConfigMap
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "test-config-hash"
       },
@@ -95,7 +95,7 @@ public sealed class GenerateAsyncTests
     var generator = new ConfigMapGenerator();
     var model = new NativeConfigMap
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = ""
       },
@@ -121,7 +121,7 @@ public sealed class GenerateAsyncTests
     var generator = new ConfigMapGenerator();
     var model = new NativeConfigMap
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "test-empty",
         Namespace = "default"

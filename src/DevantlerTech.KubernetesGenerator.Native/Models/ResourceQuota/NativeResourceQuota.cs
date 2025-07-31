@@ -10,7 +10,7 @@ public class NativeResourceQuota(string name)
   /// <summary>
   /// Gets or sets the metadata for the resource quota.
   /// </summary>
-  public NativeMetadata Metadata { get; set; } = new() { Name = name };
+  public Metadata Metadata { get; set; } = new() { Name = name };
 
   /// <summary>
   /// Gets or sets the hard resource limits for the resource quota.

@@ -18,12 +18,12 @@ public sealed class GenerateAsyncTests
     var generator = new PriorityClassGenerator();
     var model = new NativePriorityClass
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "high-priority"
       },
       Value = 1000,
-      Description = "NativePriorityClass for high-priority pods",
+      Description = "PriorityClass for high-priority pods",
       GlobalDefault = false,
       PreemptionPolicy = NativePreemptionPolicy.Never
     };
@@ -55,7 +55,7 @@ public sealed class GenerateAsyncTests
     var generator = new PriorityClassGenerator();
     var model = new NativePriorityClass
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "basic-priority"
       },
@@ -88,7 +88,7 @@ public sealed class GenerateAsyncTests
     var generator = new PriorityClassGenerator();
     var model = new NativePriorityClass
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "default-priority"
       },
@@ -142,7 +142,7 @@ public sealed class GenerateAsyncTests
     var generator = new PriorityClassGenerator();
     var model = new NativePriorityClass
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = ""  // Empty name
       },
@@ -153,7 +153,7 @@ public sealed class GenerateAsyncTests
     var exception = await Assert.ThrowsAsync<KubernetesGeneratorException>(
       () => generator.GenerateAsync(model, "output.yaml"));
 
-    Assert.Equal("A non-empty NativePriorityClass name must be provided.", exception.Message);
+    Assert.Equal("A non-empty PriorityClass name must be provided.", exception.Message);
   }
 
   /// <summary>
@@ -167,7 +167,7 @@ public sealed class GenerateAsyncTests
     var generator = new PriorityClassGenerator();
     var model = new NativePriorityClass
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "   "  // Whitespace name
       },
@@ -178,7 +178,7 @@ public sealed class GenerateAsyncTests
     var exception = await Assert.ThrowsAsync<KubernetesGeneratorException>(
       () => generator.GenerateAsync(model, "output.yaml"));
 
-    Assert.Equal("A non-empty NativePriorityClass name must be provided.", exception.Message);
+    Assert.Equal("A non-empty PriorityClass name must be provided.", exception.Message);
   }
 
   /// <summary>
@@ -193,7 +193,7 @@ public sealed class GenerateAsyncTests
     var generator = new PriorityClassGenerator();
     var model = new NativePriorityClass
     {
-      Metadata = new NativeClusterScopedMetadata
+      Metadata = new ClusterScopedMetadata
       {
         Name = "test-priority"
       },

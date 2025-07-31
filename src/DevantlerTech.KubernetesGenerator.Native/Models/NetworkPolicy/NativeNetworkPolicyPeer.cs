@@ -8,12 +8,12 @@ public class NativeNetworkPolicyPeer
   /// <summary>
   /// Gets or sets the pod selector for selecting pods.
   /// </summary>
-  public NativeLabelSelector? PodSelector { get; init; }
+  public LabelSelector? PodSelector { get; init; }
 
   /// <summary>
   /// Gets or sets the namespace selector for selecting namespaces.
   /// </summary>
-  public NativeLabelSelector? NamespaceSelector { get; init; }
+  public LabelSelector? NamespaceSelector { get; init; }
 
   /// <summary>
   /// Gets or sets the IP block for IP-based rules.

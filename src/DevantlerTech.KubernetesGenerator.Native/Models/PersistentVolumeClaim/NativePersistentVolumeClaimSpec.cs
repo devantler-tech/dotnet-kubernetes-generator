@@ -13,12 +13,12 @@ public class NativePersistentVolumeClaimSpec
   /// <summary>
   /// Gets or sets the data source for the PersistentVolumeClaim.
   /// </summary>
-  public NativeTypedLocalObjectReference? DataSource { get; set; }
+  public TypedLocalObjectReference? DataSource { get; set; }
 
   /// <summary>
   /// Gets or sets the data source reference for the PersistentVolumeClaim.
   /// </summary>
-  public NativeTypedObjectReference? DataSourceRef { get; set; }
+  public TypedObjectReference? DataSourceRef { get; set; }
 
   /// <summary>
   /// Gets or sets the resource requirements for the PersistentVolumeClaim.
@@ -28,7 +28,7 @@ public class NativePersistentVolumeClaimSpec
   /// <summary>
   /// Gets or sets the label selector for the PersistentVolumeClaim.
   /// </summary>
-  public NativeLabelSelector? Selector { get; set; }
+  public LabelSelector? Selector { get; set; }
 
   /// <summary>
   /// Gets or sets the storage class name for the PersistentVolumeClaim.

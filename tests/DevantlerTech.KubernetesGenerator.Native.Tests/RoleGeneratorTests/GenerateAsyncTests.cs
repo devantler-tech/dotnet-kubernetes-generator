@@ -19,7 +19,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "pod-reader",
         Namespace = "default"
@@ -60,7 +60,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "complex-role",
         Namespace = "test-namespace"
@@ -102,7 +102,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = ""  // Empty name should trigger validation
       },
@@ -130,7 +130,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "test-role"
       }
@@ -150,7 +150,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "test-role"
       },
@@ -178,7 +178,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new NativeMetadata
+      Metadata = new Metadata
       {
         Name = "test-role"
       },

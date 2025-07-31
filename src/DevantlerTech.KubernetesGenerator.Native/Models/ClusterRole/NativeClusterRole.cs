@@ -19,7 +19,7 @@ public class NativeClusterRole
   /// <summary>
   /// Gets or sets the metadata for the cluster role.
   /// </summary>
-  public required NativeClusterScopedMetadata Metadata { get; set; }
+  public required ClusterScopedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the rules that define the permissions.

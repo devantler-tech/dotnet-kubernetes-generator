@@ -3,7 +3,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models;
 /// <summary>
 /// Represents a typed local object reference.
 /// </summary>
-public class NativeTypedLocalObjectReference
+public class TypedLocalObjectReference
 {
   /// <summary>
   /// Gets or sets the API group of the referent.

@@ -8,7 +8,7 @@ public class NativeDaemonSetUpdateStrategy
   /// <summary>
   /// Gets or sets the type of daemon set update.
   /// </summary>
-  public NativeUpdateStrategyType? Type { get; set; }
+  public UpdateStrategyType? Type { get; set; }
 
   /// <summary>
   /// Gets or sets the rolling update configuration parameters. Present only if type = "RollingUpdate".
