@@ -1,0 +1,19 @@
+﻿---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  labels:
+    app: podinfo
+  name: image-policy-numeric
+  namespace: default
+spec:
+  digestReflectionPolicy: Always
+  filterTags:
+    extract: $ts
+    pattern: ^main-[a-f0-9]+-(?P<ts>[0-9]+)
+  imageRepositoryRef:
+    name: podinfo-repo
+  interval: 5m0s
+  policy:
+    numerical:
+      order: asc
