@@ -17,8 +17,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding("role-binding")
+    var model = new RoleBinding
     {
+      Metadata = new() { Name = "role-binding", Namespace = "default" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.Role,
@@ -33,7 +34,6 @@ public sealed class GenerateAsyncTests
         }
       ]
     };
-    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "role-binding.yaml";
@@ -59,8 +59,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding("cluster-role-binding")
+    var model = new RoleBinding
     {
+      Metadata = new() { Name = "cluster-role-binding", Namespace = "default" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.ClusterRole,
@@ -75,7 +76,6 @@ public sealed class GenerateAsyncTests
         }
       ]
     };
-    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "role-binding-with-cluster-role.yaml";
@@ -101,8 +101,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding("multi-subject-binding")
+    var model = new RoleBinding
     {
+      Metadata = new() { Name = "multi-subject-binding", Namespace = "default" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.Role,
@@ -128,7 +129,6 @@ public sealed class GenerateAsyncTests
         }
       ]
     };
-    model.Metadata.Namespace = "default";
 
     // Act
     string fileName = "multi-subject-binding.yaml";
@@ -154,8 +154,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding("simple-binding")
+    var model = new RoleBinding
     {
+      Metadata = new() { Name = "simple-binding" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.Role,
@@ -194,8 +195,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding("invalid-binding")
+    var model = new RoleBinding
     {
+      Metadata = new() { Name = "invalid-binding" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = (RoleBindingRoleRefKind)999, // Invalid enum value
@@ -223,8 +225,9 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new RoleBindingGenerator();
-    var model = new RoleBinding("invalid-binding")
+    var model = new RoleBinding
     {
+      Metadata = new() { Name = "invalid-binding" },
       RoleRef = new RoleBindingRoleRef
       {
         Kind = RoleBindingRoleRefKind.Role,

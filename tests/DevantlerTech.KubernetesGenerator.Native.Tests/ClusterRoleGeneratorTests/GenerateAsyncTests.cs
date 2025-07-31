@@ -26,7 +26,7 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch],
+          Verbs = [RoleVerb.Get, RoleVerb.List, RoleVerb.Watch],
           ApiGroups = [""],
           Resources = ["pods"]
         }
@@ -67,7 +67,7 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = [ClusterRoleVerb.Get],
+          Verbs = [RoleVerb.Get],
           ApiGroups = [""],
           Resources = ["pods"],
           ResourceNames = ["my-pod", "another-pod"]
@@ -109,7 +109,7 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch],
+          Verbs = [RoleVerb.Get, RoleVerb.List, RoleVerb.Watch],
           ApiGroups = ["apps"],
           Resources = ["replicasets"]
         }
@@ -150,7 +150,7 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = [ClusterRoleVerb.Get],
+          Verbs = [RoleVerb.Get],
           NonResourceURLs = ["/logs/*", "/metrics"]
         }
       ]
@@ -244,20 +244,20 @@ public sealed class GenerateAsyncTests
       [
         new ClusterRoleRule
         {
-          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.List, ClusterRoleVerb.Watch],
+          Verbs = [RoleVerb.Get, RoleVerb.List, RoleVerb.Watch],
           ApiGroups = [""],
           Resources = ["pods", "services"]
         },
         new ClusterRoleRule
         {
-          Verbs = [ClusterRoleVerb.Get, ClusterRoleVerb.List],
+          Verbs = [RoleVerb.Get, RoleVerb.List],
           ApiGroups = ["apps"],
           Resources = ["deployments", "replicasets"],
           ResourceNames = ["my-deployment"]
         },
         new ClusterRoleRule
         {
-          Verbs = [ClusterRoleVerb.Get],
+          Verbs = [RoleVerb.Get],
           NonResourceURLs = ["/api/*", "/metrics"]
         }
       ]
