@@ -1,4 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models.NetworkPolicy;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 

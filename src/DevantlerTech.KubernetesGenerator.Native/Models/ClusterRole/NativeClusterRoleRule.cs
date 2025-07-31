@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Native.Models.Role;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Models.ClusterRole;
 
 /// <summary>

@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using DevantlerTech.KubernetesGenerator.Native.Models.Secret;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 

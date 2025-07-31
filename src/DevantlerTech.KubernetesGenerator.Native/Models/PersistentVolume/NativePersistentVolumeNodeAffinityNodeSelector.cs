@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Native.Models.PriorityClass;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolume;
 
 /// <summary>

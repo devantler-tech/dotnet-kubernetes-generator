@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Native.Models.ClusterRoleBinding;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Models.RoleBinding;
 
 /// <summary>

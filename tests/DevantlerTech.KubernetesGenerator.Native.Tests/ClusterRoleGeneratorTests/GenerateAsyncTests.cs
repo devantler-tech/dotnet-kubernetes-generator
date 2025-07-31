@@ -1,4 +1,8 @@
 
+using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.ClusterRole;
+using DevantlerTech.KubernetesGenerator.Native.Models.Role;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterRoleGeneratorTests;
 
 /// <summary>

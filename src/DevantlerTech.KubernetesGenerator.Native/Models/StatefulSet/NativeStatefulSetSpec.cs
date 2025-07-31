@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Models.StatefulSet;
 
 /// <summary>

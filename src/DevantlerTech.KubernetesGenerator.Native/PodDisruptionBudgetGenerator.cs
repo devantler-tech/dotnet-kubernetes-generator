@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 

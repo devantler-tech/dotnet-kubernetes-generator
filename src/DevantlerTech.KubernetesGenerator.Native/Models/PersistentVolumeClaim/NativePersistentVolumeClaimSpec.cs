@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolume;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolumeClaim;
 
 /// <summary>

@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models.RoleBinding;
+using DevantlerTech.KubernetesGenerator.Native.Models.ClusterRoleBinding;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 

@@ -1,4 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models.StatefulSet;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 

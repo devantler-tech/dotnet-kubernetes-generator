@@ -1,4 +1,7 @@
 
+using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.DaemonSet;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.DaemonSetGeneratorTests;
 
 

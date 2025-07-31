@@ -1,5 +1,6 @@
 using Cronos;
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models.Job;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Models.CronJob;
 
