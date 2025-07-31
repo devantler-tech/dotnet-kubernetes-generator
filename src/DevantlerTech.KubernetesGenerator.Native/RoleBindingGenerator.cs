@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes RoleBinding objects using 'kubectl create rolebinding' commands.
 /// </summary>
-public class RoleBindingGenerator : BaseNativeGenerator<NativeRoleBinding>
+public class RoleBindingGenerator : NativeGenerator<NativeRoleBinding>
 {
   static readonly string[] _defaultArgs = ["create", "rolebinding"];
 

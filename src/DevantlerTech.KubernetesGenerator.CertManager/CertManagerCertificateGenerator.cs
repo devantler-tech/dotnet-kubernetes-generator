@@ -6,6 +6,6 @@ namespace DevantlerTech.KubernetesGenerator.CertManager;
 /// <summary>
 /// Generator for generating Cert Manager Certificate objects.
 /// </summary>
-public class CertManagerCertificateGenerator : BaseKubernetesGenerator<CertManagerCertificate>
+public class CertManagerCertificateGenerator : Generator<CertManagerCertificate>
 {
 }

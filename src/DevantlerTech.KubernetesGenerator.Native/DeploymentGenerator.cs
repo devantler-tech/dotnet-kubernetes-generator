@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes Deployment objects using 'kubectl create deployment' commands.
 /// </summary>
-public class DeploymentGenerator : BaseNativeGenerator<NativeDeployment>
+public class DeploymentGenerator : NativeGenerator<NativeDeployment>
 {
   static readonly string[] _defaultArgs = ["create", "deployment"];
 

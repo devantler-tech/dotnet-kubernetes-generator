@@ -2,7 +2,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models.ClusterRole;
 
 /// <summary>
 /// Represents a cluster role for Kubernetes RBAC with type-safe options.
-/// Uses BaseKubernetesGenerator since kubectl create clusterrole requires API server connectivity.
+/// Uses KubernetesGenerator since kubectl create clusterrole requires API server connectivity.
 /// </summary>
 public class NativeClusterRole
 {

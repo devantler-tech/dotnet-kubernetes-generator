@@ -11,7 +11,7 @@ namespace DevantlerTech.KubernetesGenerator.Core;
 /// A base class for Kubernetes generators.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public partial class BaseKubernetesGenerator<T> : IKubernetesGenerator<T> where T : class
+public partial class Generator<T> : IKubernetesGenerator<T> where T : class
 {
   readonly ISerializer _serializer = new SerializerBuilder()
     .DisableAliases()

@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes ConfigMap objects using 'kubectl create configmap' commands.
 /// </summary>
-public class ConfigMapGenerator : BaseNativeGenerator<NativeConfigMap>
+public class ConfigMapGenerator : NativeGenerator<NativeConfigMap>
 {
   static readonly string[] _defaultArgs = ["create", "configmap"];
 

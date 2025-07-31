@@ -6,6 +6,6 @@ namespace DevantlerTech.KubernetesGenerator.Flux;
 /// <summary>
 /// Generator for generating Flux HelmRepository objects.
 /// </summary>
-public class FluxHelmRepositoryGenerator : BaseKubernetesGenerator<FluxHelmRepository>
+public class FluxHelmRepositoryGenerator : Generator<FluxHelmRepository>
 {
 }

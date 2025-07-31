@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes ServiceAccount objects using 'kubectl create serviceaccount' commands.
 /// </summary>
-public class ServiceAccountGenerator : BaseNativeGenerator<V1ServiceAccount>
+public class ServiceAccountGenerator : NativeGenerator<V1ServiceAccount>
 {
   static readonly string[] _defaultArgs = ["create", "serviceaccount"];
 

@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes PriorityClass objects using 'kubectl create priorityclass' commands.
 /// </summary>
-public class PriorityClassGenerator : BaseNativeGenerator<NativePriorityClass>
+public class PriorityClassGenerator : NativeGenerator<NativePriorityClass>
 {
   static readonly string[] _defaultArgs = ["create", "priorityclass"];
 

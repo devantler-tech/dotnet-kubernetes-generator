@@ -5,7 +5,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Docker registry Kubernetes Secret objects using 'kubectl create secret docker-registry' commands.
 /// </summary>
-public class DockerRegistrySecretGenerator : BaseSecretGenerator<NativeDockerRegistrySecret>
+public class DockerRegistrySecretGenerator : SecretGenerator<NativeDockerRegistrySecret>
 {
   /// <summary>
   /// Gets the command prefix for Docker registry secrets.

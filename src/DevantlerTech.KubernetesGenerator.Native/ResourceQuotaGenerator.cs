@@ -4,7 +4,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes ResourceQuota objects using 'kubectl create quota' commands.
 /// </summary>
-public class ResourceQuotaGenerator : BaseNativeGenerator<NativeResourceQuota>
+public class ResourceQuotaGenerator : NativeGenerator<NativeResourceQuota>
 {
   static readonly string[] _defaultArgs = ["create", "quota"];
 

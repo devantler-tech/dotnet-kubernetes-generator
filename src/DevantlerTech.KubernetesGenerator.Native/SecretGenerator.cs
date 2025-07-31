@@ -6,8 +6,8 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// Base class for secret generators.
 /// </summary>
-/// <typeparam name="T">The secret model type that inherits from BaseSecret.</typeparam>
-public abstract class BaseSecretGenerator<T> : BaseNativeGenerator<T> where T : BaseSecret
+/// <typeparam name="T">The secret model type that inherits from NativeSecret.</typeparam>
+public abstract class SecretGenerator<T> : NativeGenerator<T> where T : NativeSecret
 {
   /// <summary>
   /// Gets the command prefix for the specific secret type (e.g., ["create", "secret", "tls"]).

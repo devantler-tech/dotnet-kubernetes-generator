@@ -5,6 +5,6 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes DaemonSet objects.
 /// </summary>
-public class DaemonSetGenerator : BaseKubernetesGenerator<NativeDaemonSet>
+public class DaemonSetGenerator : Generator<NativeDaemonSet>
 {
 }

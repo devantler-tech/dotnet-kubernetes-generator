@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes PodDisruptionBudget objects using 'kubectl create poddisruptionbudget' commands.
 /// </summary>
-public class PodDisruptionBudgetGenerator : BaseNativeGenerator<NativePodDisruptionBudget>
+public class PodDisruptionBudgetGenerator : NativeGenerator<NativePodDisruptionBudget>
 {
   static readonly string[] _defaultArgs = ["create", "poddisruptionbudget"];
 

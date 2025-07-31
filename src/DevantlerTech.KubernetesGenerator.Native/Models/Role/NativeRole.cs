@@ -2,7 +2,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models.Role;
 
 /// <summary>
 /// Represents a role for Kubernetes RBAC with type-safe options.
-/// Uses BaseKubernetesGenerator to generate Kubernetes RBAC roles programmatically.
+/// Uses KubernetesGenerator to generate Kubernetes RBAC roles programmatically.
 /// </summary>
 public class NativeRole
 {

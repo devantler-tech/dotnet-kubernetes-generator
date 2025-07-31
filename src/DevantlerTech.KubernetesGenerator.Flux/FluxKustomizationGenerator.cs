@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Flux;
 /// <summary>
 /// Generator for generating Flux Kustomization objects.
 /// </summary>
-public class FluxKustomizationGenerator : BaseKubernetesGenerator<FluxKustomization>
+public class FluxKustomizationGenerator : Generator<FluxKustomization>
 {
 }
 

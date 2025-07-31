@@ -3,7 +3,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Models.Secret;
 /// <summary>
 /// Represents a generic secret for use with kubectl create secret generic.
 /// </summary>
-public class NativeGenericSecret : BaseSecret
+public class NativeGenericSecret : NativeSecret
 {
   /// <summary>
   /// Gets or sets the secret type. If not specified, defaults to 'Opaque'.

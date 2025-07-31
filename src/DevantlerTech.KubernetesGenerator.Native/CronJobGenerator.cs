@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes CronJob objects using 'kubectl create cronjob' commands.
 /// </summary>
-public class CronJobGenerator : BaseNativeGenerator<NativeCronJob>
+public class CronJobGenerator : NativeGenerator<NativeCronJob>
 {
   static readonly string[] _defaultArgs = ["create", "cronjob"];
 

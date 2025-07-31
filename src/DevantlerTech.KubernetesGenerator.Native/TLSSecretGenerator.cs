@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for TLS Kubernetes Secret objects using 'kubectl create secret tls' commands.
 /// </summary>
-public class TLSSecretGenerator : BaseSecretGenerator<NativeTLSSecret>
+public class TLSSecretGenerator : SecretGenerator<NativeTLSSecret>
 {
   /// <summary>
   /// List of temporary files created during generation that need to be cleaned up.

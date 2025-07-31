@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes Ingress objects using 'kubectl create ingress' commands.
 /// </summary>
-public class IngressGenerator : BaseNativeGenerator<NativeIngress>
+public class IngressGenerator : NativeGenerator<NativeIngress>
 {
   static readonly string[] _defaultArgs = ["create", "ingress"];
 

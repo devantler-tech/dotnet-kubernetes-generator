@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes NodePort Service objects using 'kubectl create service nodeport' commands.
 /// </summary>
-public class NodePortServiceGenerator : ServiceGeneratorBase
+public class NodePortServiceGenerator : ServiceGenerator
 {
   static readonly string[] _defaultArgs = ["create", "service", "nodeport"];
 

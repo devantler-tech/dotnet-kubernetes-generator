@@ -9,7 +9,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// Base class for native generators.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public abstract class BaseNativeGenerator<T> : IKubernetesGenerator<T>
+public abstract class NativeGenerator<T> : IKubernetesGenerator<T>
 {
   /// <summary>
   /// Default arguments for kubectl commands.

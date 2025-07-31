@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes Namespace objects using 'kubectl create namespace' commands.
 /// </summary>
-public class NamespaceGenerator : BaseNativeGenerator<NativeNamespace>
+public class NamespaceGenerator : NativeGenerator<NativeNamespace>
 {
   static readonly string[] _defaultArgs = ["create", "namespace"];
 

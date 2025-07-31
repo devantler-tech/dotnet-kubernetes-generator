@@ -8,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Flux;
 /// Base class for Flux generators.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public abstract class BaseFluxGenerator<T> : IKubernetesGenerator<T>
+public abstract class FluxGenerator<T> : IKubernetesGenerator<T>
 {
   /// <summary>
   /// Generates a Flux object.

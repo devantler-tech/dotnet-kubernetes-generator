@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes Job objects using 'kubectl create job' commands.
 /// </summary>
-public class JobGenerator : BaseNativeGenerator<NativeJob>
+public class JobGenerator : NativeGenerator<NativeJob>
 {
   static readonly string[] _defaultArgs = ["create", "job"];
 

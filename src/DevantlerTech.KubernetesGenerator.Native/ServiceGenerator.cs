@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// Base class for Kubernetes Service generators that provides shared functionality.
 /// </summary>
-public abstract class ServiceGeneratorBase : BaseNativeGenerator<V1Service>
+public abstract class ServiceGenerator : NativeGenerator<V1Service>
 {
   /// <summary>
   /// Adds TCP port mappings to the arguments.

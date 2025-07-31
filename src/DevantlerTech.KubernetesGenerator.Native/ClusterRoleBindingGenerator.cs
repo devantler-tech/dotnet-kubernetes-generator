@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes ClusterRoleBinding objects using 'kubectl create clusterrolebinding' commands.
 /// </summary>
-public class ClusterRoleBindingGenerator : BaseNativeGenerator<NativeClusterRoleBinding>
+public class ClusterRoleBindingGenerator : NativeGenerator<NativeClusterRoleBinding>
 {
   static readonly string[] _defaultArgs = ["create", "clusterrolebinding"];
 

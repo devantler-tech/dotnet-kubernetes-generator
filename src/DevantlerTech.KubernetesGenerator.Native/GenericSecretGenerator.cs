@@ -5,7 +5,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for generic Kubernetes Secret objects using 'kubectl create secret generic' commands.
 /// </summary>
-public class GenericSecretGenerator : BaseSecretGenerator<NativeGenericSecret>
+public class GenericSecretGenerator : SecretGenerator<NativeGenericSecret>
 {
   /// <summary>
   /// Gets the command prefix for generic secrets.
