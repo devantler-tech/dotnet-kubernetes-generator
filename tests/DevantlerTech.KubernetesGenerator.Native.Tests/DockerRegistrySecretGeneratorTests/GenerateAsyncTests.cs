@@ -1,4 +1,6 @@
 
+using DevantlerTech.KubernetesGenerator.Native.Models.Secret;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.DockerRegistrySecretGeneratorTests;
 
 /// <summary>

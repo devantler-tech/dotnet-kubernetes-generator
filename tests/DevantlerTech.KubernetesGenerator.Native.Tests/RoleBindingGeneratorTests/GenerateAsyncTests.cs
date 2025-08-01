@@ -1,4 +1,6 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models.ClusterRoleBinding;
+using DevantlerTech.KubernetesGenerator.Native.Models.RoleBinding;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.RoleBindingGeneratorTests;
 

@@ -1,4 +1,9 @@
 
+using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolume;
+using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolumeClaim;
+using DevantlerTech.KubernetesGenerator.Native.Models.PriorityClass;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeGeneratorTests;
 
 /// <summary>

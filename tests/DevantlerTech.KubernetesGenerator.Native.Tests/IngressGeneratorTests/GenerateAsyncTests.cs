@@ -1,4 +1,7 @@
 
+using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Ingress;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.IngressGeneratorTests;
 
 /// <summary>

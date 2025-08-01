@@ -1,3 +1,4 @@
+using DevantlerTech.KubernetesGenerator.Native.Models.ResourceQuota;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ResourceQuotaGeneratorTests;

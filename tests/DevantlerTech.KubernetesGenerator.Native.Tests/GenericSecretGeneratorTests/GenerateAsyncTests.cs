@@ -1,5 +1,3 @@
-
-using DevantlerTech.KubernetesGenerator.Native.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.Secret;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.GenericSecretGeneratorTests;

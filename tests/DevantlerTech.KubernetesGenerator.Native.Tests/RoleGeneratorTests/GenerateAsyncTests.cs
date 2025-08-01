@@ -1,4 +1,6 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Role;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.RoleGeneratorTests;
 
