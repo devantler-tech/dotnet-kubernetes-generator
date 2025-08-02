@@ -1,3 +1,4 @@
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using k8s.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Models.ResourceQuota;

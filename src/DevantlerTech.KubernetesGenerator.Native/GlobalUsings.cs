@@ -1,1 +1,0 @@
-global using DevantlerTech.KubernetesGenerator.Core.Models;

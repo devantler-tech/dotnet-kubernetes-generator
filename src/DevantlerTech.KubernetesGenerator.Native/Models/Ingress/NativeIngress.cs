@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Core.Models;
+
 namespace DevantlerTech.KubernetesGenerator.Native.Models.Ingress;
 
 /// <summary>
