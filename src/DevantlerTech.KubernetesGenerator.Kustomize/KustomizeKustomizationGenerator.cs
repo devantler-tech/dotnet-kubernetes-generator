@@ -6,6 +6,6 @@ namespace DevantlerTech.KubernetesGenerator.Kustomize;
 /// <summary>
 /// Generator for generating Kustomize Kustomizations.
 /// </summary>
-public class KustomizeKustomizationGenerator : BaseKubernetesGenerator<KustomizeKustomization>
+public class KustomizeKustomizationGenerator : Generator<KustomizeKustomization>
 {
 }

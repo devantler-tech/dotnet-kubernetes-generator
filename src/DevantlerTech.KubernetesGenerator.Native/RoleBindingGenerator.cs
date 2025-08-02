@@ -1,13 +1,14 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.RoleBinding;
+using DevantlerTech.KubernetesGenerator.Native.Models.ClusterRoleBinding;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes RoleBinding objects using 'kubectl create rolebinding' commands.
 /// </summary>
-public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
+public class RoleBindingGenerator : NativeGenerator<NativeRoleBinding>
 {
   static readonly string[] _defaultArgs = ["create", "rolebinding"];
 
@@ -20,7 +21,7 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when role binding name is not provided.</exception>
-  public override async Task GenerateAsync(RoleBinding model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeRoleBinding model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -37,7 +38,7 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
   /// <param name="model">The RoleBinding object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required properties are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(RoleBinding model)
+  static ReadOnlyCollection<string> AddArguments(NativeRoleBinding model)
   {
     List<string> args = [];
 
@@ -50,10 +51,10 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
 
     switch (model.RoleRef.Kind)
     {
-      case RoleBindingRoleRefKind.ClusterRole:
+      case NativeRoleBindingRoleRefKind.ClusterRole:
         args.Add($"--clusterrole={model.RoleRef.Name}");
         break;
-      case RoleBindingRoleRefKind.Role:
+      case NativeRoleBindingRoleRefKind.Role:
         args.Add($"--role={model.RoleRef.Name}");
         break;
       default:
@@ -67,13 +68,13 @@ public class RoleBindingGenerator : BaseNativeGenerator<RoleBinding>
       {
         switch (subject.Kind)
         {
-          case RoleBindingSubjectKind.User:
+          case NativeRoleBindingSubjectKind.User:
             args.Add($"--user={subject.Name}");
             break;
-          case RoleBindingSubjectKind.Group:
+          case NativeRoleBindingSubjectKind.Group:
             args.Add($"--group={subject.Name}");
             break;
-          case RoleBindingSubjectKind.ServiceAccount:
+          case NativeRoleBindingSubjectKind.ServiceAccount:
             string serviceAccountRef = !string.IsNullOrEmpty(subject.Namespace)
               ? $"{subject.Namespace}:{subject.Name}"
               : subject.Name;

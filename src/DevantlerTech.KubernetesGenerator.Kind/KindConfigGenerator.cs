@@ -6,6 +6,6 @@ namespace DevantlerTech.KubernetesGenerator.Kind;
 /// <summary>
 /// Generator for generating K3d config files.
 /// </summary>
-public class KindConfigGenerator : BaseKubernetesGenerator<KindConfig>
+public class KindConfigGenerator : Generator<KindConfig>
 {
 }

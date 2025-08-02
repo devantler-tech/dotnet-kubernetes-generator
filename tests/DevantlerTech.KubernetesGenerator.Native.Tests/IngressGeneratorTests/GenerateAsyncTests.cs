@@ -1,4 +1,6 @@
+
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Ingress;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.IngressGeneratorTests;
 
@@ -8,7 +10,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.IngressGeneratorTests;
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Ingress object with basic properties.
+  /// Verifies the generated NativeIngress object with basic properties.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -16,12 +18,12 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress
+    var model = new NativeIngress
     {
       Metadata = new Metadata { Name = "simple-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
-        new IngressRule
+        new NativeIngressRule
         {
           Host = "example.com",
           Path = "app",
@@ -47,7 +49,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Ingress object with TLS.
+  /// Verifies the generated NativeIngress object with TLS.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -55,12 +57,12 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress
+    var model = new NativeIngress
     {
       Metadata = new Metadata { Name = "tls-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
-        new IngressRule
+        new NativeIngressRule
         {
           Host = "secure.example.com",
           Path = "app",
@@ -87,7 +89,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Ingress object with default backend.
+  /// Verifies the generated NativeIngress object with default backend.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -95,13 +97,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress
+    var model = new NativeIngress
     {
       Metadata = new Metadata { Name = "default-backend-ingress", Namespace = "default" },
       Class = "nginx",
       DefaultBackend = "default-service:80",
       Rules = [
-        new IngressRule
+        new NativeIngressRule
         {
           Host = "example.com",
           Path = "app",
@@ -127,7 +129,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Ingress object with annotations.
+  /// Verifies the generated NativeIngress object with annotations.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -135,12 +137,12 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress
+    var model = new NativeIngress
     {
       Metadata = new Metadata { Name = "annotated-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
-        new IngressRule
+        new NativeIngressRule
         {
           Host = "example.com",
           Path = "app",
@@ -171,7 +173,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Ingress object with multiple rules.
+  /// Verifies the generated NativeIngress object with multiple rules.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -179,24 +181,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress
+    var model = new NativeIngress
     {
       Metadata = new Metadata { Name = "multi-rule-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
-        new IngressRule
+        new NativeIngressRule
         {
           Path = "",
           ServiceName = "api-service",
           ServicePort = "80"
         },
-        new IngressRule
+        new NativeIngressRule
         {
           Host = "web.example.com",
           ServiceName = "web-service",
           ServicePort = "80"
         },
-        new IngressRule
+        new NativeIngressRule
         {
           Host = "admin.example.com",
           Path = "admin*",
@@ -222,7 +224,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Ingress object with name only (no namespace).
+  /// Verifies the generated NativeIngress object with name only (no namespace).
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -230,11 +232,11 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new IngressGenerator();
-    var model = new Ingress
+    var model = new NativeIngress
     {
       Metadata = new Metadata { Name = "simple-ingress" },
       Rules = [
-        new IngressRule
+        new NativeIngressRule
         {
           Host = "example.com",
           Path = "",

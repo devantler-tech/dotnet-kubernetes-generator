@@ -1,4 +1,7 @@
+
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.DaemonSet;
+using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.DaemonSetGeneratorTests;
 
@@ -9,7 +12,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.DaemonSetGeneratorTests
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated DaemonSet object.
+  /// Verifies the generated NativeDaemonSet object.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,7 +20,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DaemonSetGenerator();
-    var model = new DaemonSet
+    var model = new NativeDaemonSet
     {
       ApiVersion = "apps/v1",
       Kind = "DaemonSet",
@@ -26,7 +29,7 @@ public sealed class GenerateAsyncTests
         Name = "daemon-set",
         Namespace = "default"
       },
-      Spec = new DaemonSetSpec
+      Spec = new NativeDaemonSetSpec
       {
         Selector = new LabelSelector
         {
@@ -35,7 +38,7 @@ public sealed class GenerateAsyncTests
             ["app"] = "daemon-set"
           }
         },
-        Template = new PodTemplateSpec
+        Template = new NativePodTemplateSpec
         {
           Metadata = new TemplateMetadata
           {
@@ -44,11 +47,11 @@ public sealed class GenerateAsyncTests
               ["app"] = "daemon-set"
             }
           },
-          Spec = new PodSpec
+          Spec = new NativePodSpec
           {
             Containers =
             [
-              new PodContainer
+              new NativePodContainer
               {
                 Name = "container",
                 Image = "nginx",
@@ -76,7 +79,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies a minimal DaemonSet can be generated.
+  /// Verifies a minimal NativeDaemonSet can be generated.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -84,13 +87,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DaemonSetGenerator();
-    var model = new DaemonSet
+    var model = new NativeDaemonSet
     {
       Metadata = new Metadata
       {
         Name = "minimal-daemon-set"
       },
-      Spec = new DaemonSetSpec
+      Spec = new NativeDaemonSetSpec
       {
         Selector = new LabelSelector
         {
@@ -99,7 +102,7 @@ public sealed class GenerateAsyncTests
             ["app"] = "minimal"
           }
         },
-        Template = new PodTemplateSpec
+        Template = new NativePodTemplateSpec
         {
           Metadata = new TemplateMetadata
           {
@@ -108,11 +111,11 @@ public sealed class GenerateAsyncTests
               ["app"] = "minimal"
             }
           },
-          Spec = new PodSpec
+          Spec = new NativePodSpec
           {
             Containers =
             [
-              new PodContainer
+              new NativePodContainer
               {
                 Name = "app",
                 Image = "nginx"
@@ -139,7 +142,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies a DaemonSet with rolling update strategy can be generated.
+  /// Verifies a NativeDaemonSet with rolling update strategy can be generated.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -147,14 +150,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DaemonSetGenerator();
-    var model = new DaemonSet
+    var model = new NativeDaemonSet
     {
       Metadata = new Metadata
       {
         Name = "rolling-update-daemon-set",
         Namespace = "default"
       },
-      Spec = new DaemonSetSpec
+      Spec = new NativeDaemonSetSpec
       {
         Selector = new LabelSelector
         {
@@ -163,7 +166,7 @@ public sealed class GenerateAsyncTests
             ["app"] = "rolling-update"
           }
         },
-        Template = new PodTemplateSpec
+        Template = new NativePodTemplateSpec
         {
           Metadata = new TemplateMetadata
           {
@@ -172,11 +175,11 @@ public sealed class GenerateAsyncTests
               ["app"] = "rolling-update"
             }
           },
-          Spec = new PodSpec
+          Spec = new NativePodSpec
           {
             Containers =
             [
-              new PodContainer
+              new NativePodContainer
               {
                 Name = "app",
                 Image = "nginx:1.21"
@@ -184,10 +187,10 @@ public sealed class GenerateAsyncTests
             ]
           }
         },
-        UpdateStrategy = new DaemonSetUpdateStrategy
+        UpdateStrategy = new NativeDaemonSetUpdateStrategy
         {
           Type = UpdateStrategyType.RollingUpdate,
-          RollingUpdate = new DaemonSetRollingUpdateStrategy
+          RollingUpdate = new NativeDaemonSetRollingUpdateStrategy
           {
             MaxUnavailable = "1",
             MaxSurge = "1"

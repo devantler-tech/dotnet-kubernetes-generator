@@ -1,5 +1,7 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolume;
+using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolumeClaim;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeClaimGeneratorTests;
 
@@ -10,8 +12,8 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeClaimGe
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated PersistentVolumeClaim object with comprehensive properties set.
-  /// Tests all major PersistentVolumeClaim features including multiple access modes, volume modes,
+  /// Verifies the generated NativePersistentVolumeClaim object with comprehensive properties set.
+  /// Tests all major NativePersistentVolumeClaim features including multiple access modes, volume modes,
   /// data sources, resource requirements, selectors, and storage class configuration.
   /// </summary>
   /// <returns></returns>
@@ -20,7 +22,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeClaimGenerator();
-    var model = new PersistentVolumeClaim
+    var model = new NativePersistentVolumeClaim
     {
       ApiVersion = "v1",
       Kind = "PersistentVolumeClaim",
@@ -29,11 +31,11 @@ public sealed class GenerateAsyncTests
         Name = "persistent-volume-claim",
         Namespace = "default"
       },
-      Spec = new PersistentVolumeClaimSpec
+      Spec = new NativePersistentVolumeClaimSpec
       {
         AccessModes = [
-          PersistentVolumeAccessMode.ReadWriteOnce,
-          PersistentVolumeAccessMode.ReadOnlyMany
+          NativePersistentVolumeAccessMode.ReadWriteOnce,
+          NativePersistentVolumeAccessMode.ReadOnlyMany
         ],
         DataSource = new TypedLocalObjectReference
         {
@@ -48,7 +50,7 @@ public sealed class GenerateAsyncTests
           Name = "pvc",
           Namespace = "default"
         },
-        Resources = new VolumeResourceRequirements
+        Resources = new NativeVolumeResourceRequirements
         {
           Requests = new Dictionary<string, string>
           {
@@ -67,7 +69,7 @@ public sealed class GenerateAsyncTests
           }
         },
         StorageClassName = "storage-class",
-        VolumeMode = VolumeMode.Block,
+        VolumeMode = NativeVolumeMode.Block,
         VolumeName = "volume-name"
       }
     };
@@ -88,7 +90,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the PersistentVolumeClaim name is empty.
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the NativePersistentVolumeClaim name is empty.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -96,15 +98,15 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeClaimGenerator();
-    var model = new PersistentVolumeClaim
+    var model = new NativePersistentVolumeClaim
     {
       Metadata = new Metadata
       {
         Name = ""
       },
-      Spec = new PersistentVolumeClaimSpec
+      Spec = new NativePersistentVolumeClaimSpec
       {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce]
+        AccessModes = [NativePersistentVolumeAccessMode.ReadWriteOnce]
       }
     };
 

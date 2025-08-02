@@ -1,4 +1,7 @@
+
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.ClusterRole;
+using DevantlerTech.KubernetesGenerator.Native.Models.Role;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterRoleGeneratorTests;
 
@@ -8,7 +11,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterRoleGeneratorTes
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated ClusterRole object with basic rules.
+  /// Verifies the generated NativeClusterRole object with basic rules.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -16,7 +19,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new ClusterRole
+    var model = new NativeClusterRole
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -24,9 +27,9 @@ public sealed class GenerateAsyncTests
       },
       Rules =
       [
-        new ClusterRoleRule
+        new NativeClusterRoleRule
         {
-          Verbs = [RoleVerb.Get, RoleVerb.List, RoleVerb.Watch],
+          Verbs = [NativeRoleVerb.Get, NativeRoleVerb.List, NativeRoleVerb.Watch],
           ApiGroups = [""],
           Resources = ["pods"]
         }
@@ -49,7 +52,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ClusterRole object with resource names.
+  /// Verifies the generated NativeClusterRole object with resource names.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -57,7 +60,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new ClusterRole
+    var model = new NativeClusterRole
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -65,9 +68,9 @@ public sealed class GenerateAsyncTests
       },
       Rules =
       [
-        new ClusterRoleRule
+        new NativeClusterRoleRule
         {
-          Verbs = [RoleVerb.Get],
+          Verbs = [NativeRoleVerb.Get],
           ApiGroups = [""],
           Resources = ["pods"],
           ResourceNames = ["my-pod", "another-pod"]
@@ -91,7 +94,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ClusterRole object with API groups.
+  /// Verifies the generated NativeClusterRole object with API groups.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -99,7 +102,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new ClusterRole
+    var model = new NativeClusterRole
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -107,9 +110,9 @@ public sealed class GenerateAsyncTests
       },
       Rules =
       [
-        new ClusterRoleRule
+        new NativeClusterRoleRule
         {
-          Verbs = [RoleVerb.Get, RoleVerb.List, RoleVerb.Watch],
+          Verbs = [NativeRoleVerb.Get, NativeRoleVerb.List, NativeRoleVerb.Watch],
           ApiGroups = ["apps"],
           Resources = ["replicasets"]
         }
@@ -132,7 +135,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ClusterRole object with non-resource URLs.
+  /// Verifies the generated NativeClusterRole object with non-resource URLs.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -140,7 +143,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new ClusterRole
+    var model = new NativeClusterRole
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -148,9 +151,9 @@ public sealed class GenerateAsyncTests
       },
       Rules =
       [
-        new ClusterRoleRule
+        new NativeClusterRoleRule
         {
-          Verbs = [RoleVerb.Get],
+          Verbs = [NativeRoleVerb.Get],
           NonResourceURLs = ["/logs/*", "/metrics"]
         }
       ]
@@ -172,7 +175,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ClusterRole object with aggregation rule.
+  /// Verifies the generated NativeClusterRole object with aggregation rule.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -180,17 +183,17 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new ClusterRole
+    var model = new NativeClusterRole
     {
       Metadata = new ClusterScopedMetadata
       {
         Name = "monitoring"
       },
-      AggregationRule = new ClusterRoleAggregationRule
+      AggregationRule = new NativeClusterRoleAggregationRule
       {
         ClusterRoleSelectors =
         [
-          new ClusterRoleLabelSelector
+          new NativeClusterRoleLabelSelector
           {
             MatchLabels = new Dictionary<string, string>
             {
@@ -217,7 +220,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ClusterRole object with comprehensive features.
+  /// Verifies the generated NativeClusterRole object with comprehensive features.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -225,7 +228,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ClusterRoleGenerator();
-    var model = new ClusterRole
+    var model = new NativeClusterRole
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -242,22 +245,22 @@ public sealed class GenerateAsyncTests
       },
       Rules =
       [
-        new ClusterRoleRule
+        new NativeClusterRoleRule
         {
-          Verbs = [RoleVerb.Get, RoleVerb.List, RoleVerb.Watch],
+          Verbs = [NativeRoleVerb.Get, NativeRoleVerb.List, NativeRoleVerb.Watch],
           ApiGroups = [""],
           Resources = ["pods", "services"]
         },
-        new ClusterRoleRule
+        new NativeClusterRoleRule
         {
-          Verbs = [RoleVerb.Get, RoleVerb.List],
+          Verbs = [NativeRoleVerb.Get, NativeRoleVerb.List],
           ApiGroups = ["apps"],
           Resources = ["deployments", "replicasets"],
           ResourceNames = ["my-deployment"]
         },
-        new ClusterRoleRule
+        new NativeClusterRoleRule
         {
-          Verbs = [RoleVerb.Get],
+          Verbs = [NativeRoleVerb.Get],
           NonResourceURLs = ["/api/*", "/metrics"]
         }
       ]

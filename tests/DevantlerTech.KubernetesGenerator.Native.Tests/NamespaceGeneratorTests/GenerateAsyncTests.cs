@@ -1,5 +1,6 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Namespace;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests;
 
@@ -10,7 +11,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Namespace object with kubectl create namespace functionality.
+  /// Verifies the generated NativeNamespace object with kubectl create namespace functionality.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -18,7 +19,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NamespaceGenerator();
-    var model = new Namespace
+    var model = new NativeNamespace
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -50,7 +51,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NamespaceGenerator();
-    var model = new Namespace
+    var model = new NativeNamespace
     {
       Metadata = new ClusterScopedMetadata
       {

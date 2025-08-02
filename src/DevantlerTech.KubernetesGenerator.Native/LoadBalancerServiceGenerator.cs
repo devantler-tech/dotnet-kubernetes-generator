@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes LoadBalancer Service objects using 'kubectl create service loadbalancer' commands.
 /// </summary>
-public class LoadBalancerServiceGenerator : ServiceGeneratorBase
+public class LoadBalancerServiceGenerator : ServiceGenerator
 {
   static readonly string[] _defaultArgs = ["create", "service", "loadbalancer"];
 

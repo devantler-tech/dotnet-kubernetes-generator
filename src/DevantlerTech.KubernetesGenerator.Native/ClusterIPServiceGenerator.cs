@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes ClusterIP Service objects using 'kubectl create service clusterip' commands.
 /// </summary>
-public class ClusterIPServiceGenerator : ServiceGeneratorBase
+public class ClusterIPServiceGenerator : ServiceGenerator
 {
   static readonly string[] _defaultArgs = ["create", "service", "clusterip"];
 

@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.CronJob;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes CronJob objects using 'kubectl create cronjob' commands.
 /// </summary>
-public class CronJobGenerator : BaseNativeGenerator<CronJob>
+public class CronJobGenerator : NativeGenerator<NativeCronJob>
 {
   static readonly string[] _defaultArgs = ["create", "cronjob"];
 
@@ -20,7 +20,7 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  public override async Task GenerateAsync(CronJob model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeCronJob model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -41,7 +41,7 @@ public class CronJobGenerator : BaseNativeGenerator<CronJob>
   /// <param name="model">The CronJob object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(CronJob model)
+  static ReadOnlyCollection<string> AddArguments(NativeCronJob model)
   {
     // Extract the first container or throw if none exists
     var firstContainer = model.Spec.JobTemplate.Template.Spec.Containers.FirstOrDefault() ?? throw new KubernetesGeneratorException("CronJob must have at least one container defined in JobTemplate.Template.Spec.Containers.");

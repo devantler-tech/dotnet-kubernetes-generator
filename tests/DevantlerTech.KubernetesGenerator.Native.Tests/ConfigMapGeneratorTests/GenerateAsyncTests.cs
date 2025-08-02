@@ -1,5 +1,6 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.ConfigMap;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests;
 
@@ -10,7 +11,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated ConfigMap object using kubectl create configmap with literal data.
+  /// Verifies the generated NativeConfigMap object using kubectl create configmap with literal data.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -18,7 +19,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ConfigMapGenerator();
-    var model = new ConfigMap
+    var model = new NativeConfigMap
     {
       Metadata = new Metadata
       {
@@ -48,7 +49,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ConfigMap object using kubectl create configmap with literal data and append hash.
+  /// Verifies the generated NativeConfigMap object using kubectl create configmap with literal data and append hash.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -56,7 +57,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ConfigMapGenerator();
-    var model = new ConfigMap
+    var model = new NativeConfigMap
     {
       Metadata = new Metadata
       {
@@ -86,7 +87,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the ConfigMap name is empty.
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the NativeConfigMap name is empty.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -94,7 +95,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ConfigMapGenerator();
-    var model = new ConfigMap
+    var model = new NativeConfigMap
     {
       Metadata = new Metadata
       {
@@ -111,7 +112,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated ConfigMap object with empty or null data creates an empty ConfigMap.
+  /// Verifies the generated NativeConfigMap object with empty or null data creates an empty ConfigMap.
   /// Tests that both empty dictionary and null data scenarios produce identical output.
   /// </summary>
   /// <returns></returns>
@@ -120,7 +121,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new ConfigMapGenerator();
-    var model = new ConfigMap
+    var model = new NativeConfigMap
     {
       Metadata = new Metadata
       {

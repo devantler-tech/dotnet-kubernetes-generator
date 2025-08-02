@@ -1,52 +1,29 @@
 using System.Collections.ObjectModel;
-using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Secret;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for generic Kubernetes Secret objects using 'kubectl create secret generic' commands.
 /// </summary>
-public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
+public class GenericSecretGenerator : SecretGenerator<NativeGenericSecret>
 {
-  static readonly string[] _defaultArgs = ["create", "secret", "generic"];
   /// <summary>
-  /// Generates a generic secret using kubectl create secret generic command.
+  /// Gets the command prefix for generic secrets.
   /// </summary>
-  /// <param name="model">The secret object.</param>
-  /// <param name="outputPath">The output path for the generated YAML.</param>
-  /// <param name="overwrite">Whether to overwrite existing files.</param>
+  protected override ReadOnlyCollection<string> CommandPrefix => new(["create", "secret", "generic"]);
+
+  /// <summary>
+  /// Builds the specific arguments for creating a generic secret from a GenericSecret object.
+  /// </summary>
+  /// <param name="model">The GenericSecret object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
-  /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
-  /// <exception cref="KubernetesGeneratorException">Thrown when secret name is not provided.</exception>
-  public override async Task GenerateAsync(GenericSecret model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  /// <returns>The kubectl arguments.</returns>
+  protected override Task<ReadOnlyCollection<string>> BuildSpecificArgumentsAsync(NativeGenericSecret model, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
-    var args = new ReadOnlyCollection<string>(
-      [.. _defaultArgs, .. AddArguments(model)]
-    );
-    string errorMessage = $"Failed to create generic secret '{model.Metadata?.Name}' using kubectl";
-    await RunKubectlAsync(outputPath, overwrite, args, errorMessage, cancellationToken).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  /// Builds the kubectl arguments for creating a generic secret from a GenericSecret object.
-  /// </summary>
-  /// <param name="model">The GenericSecret object.</param>
-  static ReadOnlyCollection<string> AddArguments(GenericSecret model)
-  {
-    var args = new List<string>
-    {
-      // The secret name is always available from the metadata (required in constructor)
-      model.Metadata.Name
-    };
-
-    // Add namespace if specified
-    if (!string.IsNullOrEmpty(model.Metadata.Namespace))
-    {
-      args.Add($"--namespace={model.Metadata.Namespace}");
-    }
+    var args = new List<string>();
 
     // Add type if specified (but don't require it)
     if (!string.IsNullOrEmpty(model.Type))
@@ -60,6 +37,6 @@ public class GenericSecretGenerator : BaseNativeGenerator<GenericSecret>
       args.Add($"--from-literal={kvp.Key}={kvp.Value}");
     }
 
-    return args.AsReadOnly();
+    return Task.FromResult(args.AsReadOnly());
   }
 }

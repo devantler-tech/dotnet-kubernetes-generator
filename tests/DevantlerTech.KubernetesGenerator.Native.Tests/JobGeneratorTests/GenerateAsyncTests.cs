@@ -1,4 +1,6 @@
+
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Job;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.JobGeneratorTests;
 
@@ -8,7 +10,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.JobGeneratorTests;
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Job object with image.
+  /// Verifies the generated NativeJob object with image.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -16,14 +18,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new JobGenerator();
-    var model = new Job
+    var model = new NativeJob
     {
       Metadata = new Metadata
       {
         Name = "job-with-image-and-command",
         Namespace = "default"
       },
-      Spec = new JobSpec
+      Spec = new NativeJobSpec
       {
         Image = "busybox",
         Command = ["echo", "hello"]
@@ -46,7 +48,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Job object with image only.
+  /// Verifies the generated NativeJob object with image only.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -54,14 +56,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new JobGenerator();
-    var model = new Job
+    var model = new NativeJob
     {
       Metadata = new Metadata
       {
         Name = "job-with-image",
         Namespace = "default"
       },
-      Spec = new JobSpec
+      Spec = new NativeJobSpec
       {
         Image = "nginx"
       }

@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native;
 /// <summary>
 /// A generator for Kubernetes ExternalName Service objects using 'kubectl create service externalname' commands.
 /// </summary>
-public class ExternalNameServiceGenerator : ServiceGeneratorBase
+public class ExternalNameServiceGenerator : ServiceGenerator
 {
   static readonly string[] _defaultArgs = ["create", "service", "externalname"];
 

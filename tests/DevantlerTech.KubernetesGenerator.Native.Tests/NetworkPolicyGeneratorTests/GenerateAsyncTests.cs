@@ -1,6 +1,7 @@
 using System.Net;
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.NetworkPolicy;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NetworkPolicyGeneratorTests;
 
@@ -11,7 +12,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.NetworkPolicyGeneratorT
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated NetworkPolicy object with comprehensive features.
+  /// Verifies the generated NativeNetworkPolicy object with comprehensive features.
   /// Tests ingress and egress rules, multiple ports, pod selectors, policy types, and EndPort ranges.
   /// </summary>
   /// <returns></returns>
@@ -20,14 +21,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NetworkPolicyGenerator();
-    var model = new NetworkPolicy
+    var model = new NativeNetworkPolicy
     {
       Metadata = new Metadata
       {
         Name = "comprehensive-policy",
         Namespace = "production"
       },
-      Spec = new NetworkPolicySpec
+      Spec = new NativeNetworkPolicySpec
       {
         PodSelector = new LabelSelector
         {
@@ -36,28 +37,28 @@ public sealed class GenerateAsyncTests
             ["tier"] = "backend"
           }
         },
-        PolicyTypes = [NetworkPolicyType.Ingress, NetworkPolicyType.Egress],
+        PolicyTypes = [NativeNetworkPolicyType.Ingress, NativeNetworkPolicyType.Egress],
         Ingress =
         [
-          new NetworkPolicyIngressRule
+          new NativeNetworkPolicyIngressRule
           {
             Ports =
             [
-              new NetworkPolicyPort
+              new NativeNetworkPolicyPort
               {
                 Port = "8080",
-                Protocol = NetworkPolicyProtocol.TCP
+                Protocol = NativeNetworkPolicyProtocol.TCP
               },
-              new NetworkPolicyPort
+              new NativeNetworkPolicyPort
               {
                 Port = "9090",
-                Protocol = NetworkPolicyProtocol.TCP,
+                Protocol = NativeNetworkPolicyProtocol.TCP,
                 EndPort = 9099
               }
             ],
             From =
             [
-              new NetworkPolicyPeer
+              new NativeNetworkPolicyPeer
               {
                 PodSelector = new LabelSelector
                 {
@@ -72,14 +73,14 @@ public sealed class GenerateAsyncTests
         ],
         Egress =
         [
-          new NetworkPolicyEgressRule
+          new NativeNetworkPolicyEgressRule
           {
             Ports =
             [
-              new NetworkPolicyPort
+              new NativeNetworkPolicyPort
               {
                 Port = "80",
-                Protocol = NetworkPolicyProtocol.TCP
+                Protocol = NativeNetworkPolicyProtocol.TCP
               }
             ]
           }
@@ -103,7 +104,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated NetworkPolicy object with IP block restrictions.
+  /// Verifies the generated NativeNetworkPolicy object with IP block restrictions.
   /// Tests distinct IPNetwork functionality for CIDR-based network access control.
   /// </summary>
   /// <returns></returns>
@@ -112,26 +113,26 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NetworkPolicyGenerator();
-    var model = new NetworkPolicy
+    var model = new NativeNetworkPolicy
     {
       Metadata = new Metadata
       {
         Name = "ip-block-policy",
         Namespace = "secure"
       },
-      Spec = new NetworkPolicySpec
+      Spec = new NativeNetworkPolicySpec
       {
         PodSelector = new LabelSelector(), // Empty selector selects all pods
-        PolicyTypes = [NetworkPolicyType.Ingress, NetworkPolicyType.Egress],
+        PolicyTypes = [NativeNetworkPolicyType.Ingress, NativeNetworkPolicyType.Egress],
         Ingress =
         [
-          new NetworkPolicyIngressRule
+          new NativeNetworkPolicyIngressRule
           {
             From =
             [
-              new NetworkPolicyPeer
+              new NativeNetworkPolicyPeer
               {
-                IPBlock = new NetworkPolicyIPBlock
+                IPBlock = new NativeNetworkPolicyIPBlock
                 {
                   CIDR = IPNetwork.Parse("10.0.0.0/8"),
                   Except = ["10.0.1.0/24", "10.0.2.0/24"]
@@ -142,13 +143,13 @@ public sealed class GenerateAsyncTests
         ],
         Egress =
         [
-          new NetworkPolicyEgressRule
+          new NativeNetworkPolicyEgressRule
           {
             To =
             [
-              new NetworkPolicyPeer
+              new NativeNetworkPolicyPeer
               {
-                IPBlock = new NetworkPolicyIPBlock
+                IPBlock = new NativeNetworkPolicyIPBlock
                 {
                   CIDR = IPNetwork.Parse("192.168.0.0/16")
                 }
@@ -156,10 +157,10 @@ public sealed class GenerateAsyncTests
             ],
             Ports =
             [
-              new NetworkPolicyPort
+              new NativeNetworkPolicyPort
               {
                 Port = "53",
-                Protocol = NetworkPolicyProtocol.UDP
+                Protocol = NativeNetworkPolicyProtocol.UDP
               }
             ]
           }
@@ -183,7 +184,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated NetworkPolicy object with namespace selector.
+  /// Verifies the generated NativeNetworkPolicy object with namespace selector.
   /// Tests distinct cross-namespace policy functionality for allowing traffic between namespaces.
   /// </summary>
   /// <returns></returns>
@@ -192,14 +193,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NetworkPolicyGenerator();
-    var model = new NetworkPolicy
+    var model = new NativeNetworkPolicy
     {
       Metadata = new Metadata
       {
         Name = "namespace-selector-policy",
         Namespace = "staging"
       },
-      Spec = new NetworkPolicySpec
+      Spec = new NativeNetworkPolicySpec
       {
         PodSelector = new LabelSelector
         {
@@ -208,14 +209,14 @@ public sealed class GenerateAsyncTests
             ["app"] = "api"
           }
         },
-        PolicyTypes = [NetworkPolicyType.Ingress],
+        PolicyTypes = [NativeNetworkPolicyType.Ingress],
         Ingress =
         [
-          new NetworkPolicyIngressRule
+          new NativeNetworkPolicyIngressRule
           {
             From =
             [
-              new NetworkPolicyPeer
+              new NativeNetworkPolicyPeer
               {
                 NamespaceSelector = new LabelSelector
                 {
@@ -235,10 +236,10 @@ public sealed class GenerateAsyncTests
             ],
             Ports =
             [
-              new NetworkPolicyPort
+              new NativeNetworkPolicyPort
               {
                 Port = "8080",
-                Protocol = NetworkPolicyProtocol.TCP
+                Protocol = NativeNetworkPolicyProtocol.TCP
               }
             ]
           }
@@ -262,7 +263,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the NetworkPolicy name is empty.
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the NativeNetworkPolicy name is empty.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -270,13 +271,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new NetworkPolicyGenerator();
-    var model = new NetworkPolicy
+    var model = new NativeNetworkPolicy
     {
       Metadata = new Metadata
       {
         Name = ""
       },
-      Spec = new NetworkPolicySpec
+      Spec = new NativeNetworkPolicySpec
       {
         PodSelector = new LabelSelector
         {

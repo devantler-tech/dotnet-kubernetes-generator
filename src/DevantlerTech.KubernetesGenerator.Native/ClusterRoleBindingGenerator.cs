@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.ClusterRoleBinding;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes ClusterRoleBinding objects using 'kubectl create clusterrolebinding' commands.
 /// </summary>
-public class ClusterRoleBindingGenerator : BaseNativeGenerator<ClusterRoleBinding>
+public class ClusterRoleBindingGenerator : NativeGenerator<NativeClusterRoleBinding>
 {
   static readonly string[] _defaultArgs = ["create", "clusterrolebinding"];
 
@@ -20,7 +20,7 @@ public class ClusterRoleBindingGenerator : BaseNativeGenerator<ClusterRoleBindin
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when cluster role binding name is not provided.</exception>
-  public override async Task GenerateAsync(ClusterRoleBinding model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeClusterRoleBinding model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -37,7 +37,7 @@ public class ClusterRoleBindingGenerator : BaseNativeGenerator<ClusterRoleBindin
   /// <param name="model">The ClusterRoleBinding object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required properties are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(ClusterRoleBinding model)
+  static ReadOnlyCollection<string> AddArguments(NativeClusterRoleBinding model)
   {
     List<string> args = [];
 
@@ -45,7 +45,7 @@ public class ClusterRoleBindingGenerator : BaseNativeGenerator<ClusterRoleBindin
     args.Add(model.Metadata.Name);
 
     // ClusterRoleBinding only supports ClusterRole references, not Role
-    if (model.RoleRef.Kind != RoleBindingRoleRefKind.ClusterRole)
+    if (model.RoleRef.Kind != NativeRoleBindingRoleRefKind.ClusterRole)
       throw new KubernetesGeneratorException($"ClusterRoleBinding only supports ClusterRole references, but got '{model.RoleRef.Kind}'.");
 
     args.Add($"--clusterrole={model.RoleRef.Name}");
@@ -57,13 +57,13 @@ public class ClusterRoleBindingGenerator : BaseNativeGenerator<ClusterRoleBindin
       {
         switch (subject.Kind)
         {
-          case RoleBindingSubjectKind.User:
+          case NativeRoleBindingSubjectKind.User:
             args.Add($"--user={subject.Name}");
             break;
-          case RoleBindingSubjectKind.Group:
+          case NativeRoleBindingSubjectKind.Group:
             args.Add($"--group={subject.Name}");
             break;
-          case RoleBindingSubjectKind.ServiceAccount:
+          case NativeRoleBindingSubjectKind.ServiceAccount:
             string serviceAccountRef = !string.IsNullOrEmpty(subject.Namespace)
               ? $"{subject.Namespace}:{subject.Name}"
               : $"default:{subject.Name}";  // Default to 'default' namespace if not specified

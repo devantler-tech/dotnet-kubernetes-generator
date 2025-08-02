@@ -1,5 +1,6 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.PriorityClass;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PriorityClassGeneratorTests;
 
@@ -9,7 +10,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PriorityClassGeneratorT
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated PriorityClass object with all properties set.
+  /// Verifies the generated NativePriorityClass object with all properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,7 +18,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new PriorityClass
+    var model = new NativePriorityClass
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -26,7 +27,7 @@ public sealed class GenerateAsyncTests
       Value = 1000,
       Description = "PriorityClass for high-priority pods",
       GlobalDefault = false,
-      PreemptionPolicy = PreemptionPolicy.Never
+      PreemptionPolicy = NativePreemptionPolicy.Never
     };
 
     // Act
@@ -45,7 +46,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PriorityClass object with only required properties (name and value).
+  /// Verifies the generated NativePriorityClass object with only required properties (name and value).
   /// This test validates that kubectl applies correct defaults for optional properties like preemptionPolicy.
   /// </summary>
   /// <returns></returns>
@@ -54,7 +55,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new PriorityClass
+    var model = new NativePriorityClass
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -79,7 +80,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PriorityClass object with global default set to true.
+  /// Verifies the generated NativePriorityClass object with global default set to true.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -87,7 +88,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new PriorityClass
+    var model = new NativePriorityClass
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -96,7 +97,7 @@ public sealed class GenerateAsyncTests
       Value = 100,
       Description = "Default priority class",
       GlobalDefault = true,
-      PreemptionPolicy = PreemptionPolicy.PreemptLowerPriority
+      PreemptionPolicy = NativePreemptionPolicy.PreemptLowerPriority
     };
 
     // Act
@@ -123,7 +124,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    PriorityClass? model = null;
+    NativePriorityClass? model = null;
 
     // Act & Assert
     var exception = await Assert.ThrowsAsync<ArgumentNullException>(
@@ -133,7 +134,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that KubernetesGeneratorException is thrown when PriorityClass name is null or empty.
+  /// Verifies that KubernetesGeneratorException is thrown when NativePriorityClass name is null or empty.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -141,7 +142,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new PriorityClass
+    var model = new NativePriorityClass
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -158,7 +159,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies that KubernetesGeneratorException is thrown when PriorityClass name is whitespace.
+  /// Verifies that KubernetesGeneratorException is thrown when NativePriorityClass name is whitespace.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -166,7 +167,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new PriorityClass
+    var model = new NativePriorityClass
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -183,7 +184,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PriorityClass object with empty description string.
+  /// Verifies the generated NativePriorityClass object with empty description string.
   /// This test ensures that empty description strings are handled correctly by the AddArguments method.
   /// </summary>
   /// <returns></returns>
@@ -192,7 +193,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PriorityClassGenerator();
-    var model = new PriorityClass
+    var model = new NativePriorityClass
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -201,7 +202,7 @@ public sealed class GenerateAsyncTests
       Value = 300,
       Description = "",  // Empty description to test the AddArguments method
       GlobalDefault = false,
-      PreemptionPolicy = PreemptionPolicy.PreemptLowerPriority
+      PreemptionPolicy = NativePreemptionPolicy.PreemptLowerPriority
     };
 
     // Act

@@ -6,6 +6,6 @@ namespace DevantlerTech.KubernetesGenerator.K3d;
 /// <summary>
 /// Generator for generating K3d config files.
 /// </summary>
-public class K3dConfigGenerator : BaseKubernetesGenerator<K3dConfig>
+public class K3dConfigGenerator : Generator<K3dConfig>
 {
 }
