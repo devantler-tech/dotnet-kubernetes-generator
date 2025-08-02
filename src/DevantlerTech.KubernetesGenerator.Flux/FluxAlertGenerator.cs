@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Flux;
 /// <summary>
 /// Generator for generating Flux Alert objects.
 /// </summary>
-public class FluxAlertGenerator : BaseFluxGenerator<FluxAlert>
+public class FluxAlertGenerator : FluxGenerator<FluxAlert>
 {
   /// <summary>
   /// Generates a Flux Alert object.

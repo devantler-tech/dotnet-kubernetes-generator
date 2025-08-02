@@ -1,11 +1,11 @@
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.ResourceQuota;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes ResourceQuota objects using 'kubectl create quota' commands.
 /// </summary>
-public class ResourceQuotaGenerator : BaseNativeGenerator<ResourceQuota>
+public class ResourceQuotaGenerator : NativeGenerator<NativeResourceQuota>
 {
   static readonly string[] _defaultArgs = ["create", "quota"];
 
@@ -17,7 +17,7 @@ public class ResourceQuotaGenerator : BaseNativeGenerator<ResourceQuota>
   /// <param name="overwrite">Whether to overwrite existing files.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
-  public override async Task GenerateAsync(ResourceQuota model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeResourceQuota model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -33,7 +33,7 @@ public class ResourceQuotaGenerator : BaseNativeGenerator<ResourceQuota>
   /// </summary>
   /// <param name="model">The ResourceQuota object.</param>
   /// <returns>The kubectl arguments.</returns>
-  static System.Collections.ObjectModel.ReadOnlyCollection<string> AddOptions(ResourceQuota model)
+  static System.Collections.ObjectModel.ReadOnlyCollection<string> AddOptions(NativeResourceQuota model)
   {
     List<string> args = [];
 

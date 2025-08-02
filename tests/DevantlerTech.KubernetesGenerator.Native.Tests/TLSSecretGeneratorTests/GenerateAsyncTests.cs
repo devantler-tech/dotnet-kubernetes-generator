@@ -1,5 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Secret;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.TLSSecretGeneratorTests;
 
@@ -21,7 +21,7 @@ public sealed class GenerateAsyncTests
     string privateKeyContent = await File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.key"));
 
     var generator = new TLSSecretGenerator();
-    var model = new TLSSecret
+    var model = new NativeTLSSecret
     {
       Metadata = new() { Name = "tls-secret-content", Namespace = "default" },
       Certificate = certificateContent,
@@ -63,7 +63,7 @@ public sealed class GenerateAsyncTests
     // Arrange
     var generator = new TLSSecretGenerator();
 
-    var model = new TLSSecret
+    var model = new NativeTLSSecret
     {
       Metadata = new() { Name = "tls-secret-files", Namespace = "default" },
       Certificate = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "tls.crt"),
@@ -98,7 +98,7 @@ public sealed class GenerateAsyncTests
     // Arrange
     var generator = new TLSSecretGenerator();
 
-    var model = new TLSSecret
+    var model = new NativeTLSSecret
     {
       Metadata = new() { Name = "tls-secret-invalid-cert", Namespace = "default" },
       Certificate = "invalid-certificate-data",

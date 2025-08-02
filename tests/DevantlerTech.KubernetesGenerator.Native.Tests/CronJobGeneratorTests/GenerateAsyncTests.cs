@@ -1,5 +1,8 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.CronJob;
+using DevantlerTech.KubernetesGenerator.Native.Models.Job;
+using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.CronJobGeneratorTests;
 
@@ -9,7 +12,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.CronJobGeneratorTests;
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated CronJob object with image and schedule.
+  /// Verifies the generated NativeCronJob object with image and schedule.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,24 +20,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new CronJobGenerator();
-    var model = new CronJob
+    var model = new NativeCronJob
     {
       Metadata = new Metadata
       {
         Name = "cron-job",
         Namespace = "default"
       },
-      Spec = new CronJobSpec
+      Spec = new NativeCronJobSpec
       {
         Schedule = "*/1 * * * *", // Every minute
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [
-                new PodContainer
+                new NativePodContainer
                 {
                   Name = "cron-job",
                   Image = "nginx"
@@ -62,7 +65,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated CronJob object with image, schedule, and command.
+  /// Verifies the generated NativeCronJob object with image, schedule, and command.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -70,24 +73,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new CronJobGenerator();
-    var model = new CronJob
+    var model = new NativeCronJob
     {
       Metadata = new Metadata
       {
         Name = "cron-job-with-command",
         Namespace = "default"
       },
-      Spec = new CronJobSpec
+      Spec = new NativeCronJobSpec
       {
         Schedule = "0 0 * * *", // Daily at midnight
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [
-                new PodContainer
+                new NativePodContainer
                 {
                   Name = "cron-job-with-command",
                   Image = "busybox",
@@ -116,7 +119,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated CronJob object with restart policy.
+  /// Verifies the generated NativeCronJob object with restart policy.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -124,30 +127,30 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new CronJobGenerator();
-    var model = new CronJob
+    var model = new NativeCronJob
     {
       Metadata = new Metadata
       {
         Name = "cron-job-with-restart",
         Namespace = "default"
       },
-      Spec = new CronJobSpec
+      Spec = new NativeCronJobSpec
       {
         Schedule = "*/5 * * * *",
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [
-                new PodContainer
+                new NativePodContainer
                 {
                   Name = "cron-job-with-restart",
                   Image = "alpine"
                 }
               ],
-              RestartPolicy = PodRestartPolicy.OnFailure
+              RestartPolicy = NativePodRestartPolicy.OnFailure
             }
           }
         }
@@ -170,7 +173,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated CronJob object with all properties.
+  /// Verifies the generated NativeCronJob object with all properties.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -178,31 +181,31 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new CronJobGenerator();
-    var model = new CronJob
+    var model = new NativeCronJob
     {
       Metadata = new Metadata
       {
         Name = "cron-job-complete",
         Namespace = "production"
       },
-      Spec = new CronJobSpec
+      Spec = new NativeCronJobSpec
       {
         Schedule = "0 2 * * *", // Daily at 2 AM
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [
-                new PodContainer
+                new NativePodContainer
                 {
                   Name = "cron-job-complete",
                   Image = "nginx:latest",
                   Command = ["sh", "-c", "echo 'Running daily backup'"]
                 }
               ],
-              RestartPolicy = PodRestartPolicy.Never
+              RestartPolicy = NativePodRestartPolicy.Never
             }
           }
         }
@@ -225,7 +228,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated CronJob object using the hierarchical API directly.
+  /// Verifies the generated NativeCronJob object using the hierarchical API directly.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -233,31 +236,31 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new CronJobGenerator();
-    var model = new CronJob
+    var model = new NativeCronJob
     {
       Metadata = new Metadata
       {
         Name = "cron-job-hierarchical",
         Namespace = "test"
       },
-      Spec = new CronJobSpec
+      Spec = new NativeCronJobSpec
       {
         Schedule = "30 3 * * *", // 3:30 AM daily
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [
-                new PodContainer
+                new NativePodContainer
                 {
                   Name = "backup-container",
                   Image = "backup:v1.2.3",
                   Command = ["backup", "--full"]
                 }
               ],
-              RestartPolicy = PodRestartPolicy.OnFailure
+              RestartPolicy = NativePodRestartPolicy.OnFailure
             }
           }
         }
@@ -305,24 +308,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new CronJobGenerator();
-    var model = new CronJob
+    var model = new NativeCronJob
     {
       Metadata = new Metadata
       {
         Name = null!, // Null name
         Namespace = "default"
       },
-      Spec = new CronJobSpec
+      Spec = new NativeCronJobSpec
       {
         Schedule = "*/1 * * * *",
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [
-                new PodContainer
+                new NativePodContainer
                 {
                   Name = "test",
                   Image = "nginx"
@@ -352,24 +355,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new CronJobGenerator();
-    var model = new CronJob
+    var model = new NativeCronJob
     {
       Metadata = new Metadata
       {
         Name = "", // Empty name
         Namespace = "default"
       },
-      Spec = new CronJobSpec
+      Spec = new NativeCronJobSpec
       {
         Schedule = "*/1 * * * *",
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [
-                new PodContainer
+                new NativePodContainer
                 {
                   Name = "test",
                   Image = "nginx"
@@ -399,21 +402,21 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new CronJobGenerator();
-    var model = new CronJob
+    var model = new NativeCronJob
     {
       Metadata = new Metadata
       {
         Name = "test-cronjob",
         Namespace = "default"
       },
-      Spec = new CronJobSpec
+      Spec = new NativeCronJobSpec
       {
         Schedule = "*/1 * * * *",
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [] // Empty containers list
             }
@@ -440,17 +443,17 @@ public sealed class GenerateAsyncTests
   {
     // Act & Assert
     var exception = Assert.Throws<KubernetesGeneratorException>(() =>
-      new CronJobSpec
+      new NativeCronJobSpec
       {
         Schedule = "invalid-cron", // Invalid cron format
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [
-                new PodContainer
+                new NativePodContainer
                 {
                   Name = "test",
                   Image = "nginx"
@@ -465,7 +468,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated CronJob object without namespace.
+  /// Verifies the generated NativeCronJob object without namespace.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -473,24 +476,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new CronJobGenerator();
-    var model = new CronJob
+    var model = new NativeCronJob
     {
       Metadata = new Metadata
       {
         Name = "cron-job-no-namespace"
         // No namespace specified
       },
-      Spec = new CronJobSpec
+      Spec = new NativeCronJobSpec
       {
         Schedule = "0 1 * * *",
-        JobTemplate = new JobTemplate
+        JobTemplate = new NativeJobTemplate
         {
-          Template = new PodTemplate
+          Template = new NativePodTemplate
           {
-            Spec = new PodSpec
+            Spec = new NativePodSpec
             {
               Containers = [
-                new PodContainer
+                new NativePodContainer
                 {
                   Name = "cron-job-no-namespace",
                   Image = "alpine"

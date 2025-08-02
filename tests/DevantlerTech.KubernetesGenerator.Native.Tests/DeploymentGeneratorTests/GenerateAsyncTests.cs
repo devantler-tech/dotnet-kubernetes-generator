@@ -1,5 +1,6 @@
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Deployment;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.DeploymentGeneratorTests;
 
@@ -10,7 +11,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.DeploymentGeneratorTest
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated Deployment object with basic configuration.
+  /// Verifies the generated NativeDeployment object with basic configuration.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -18,14 +19,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
       Metadata = new Metadata
       {
         Name = "my-deployment",
         Namespace = "default"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["nginx"],
         Replicas = 3
@@ -48,7 +49,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Deployment with port and command.
+  /// Verifies the generated NativeDeployment with port and command.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -56,13 +57,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
       Metadata = new Metadata
       {
         Name = "my-app-deployment"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["busybox"],
         Replicas = 2,
@@ -87,7 +88,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated Deployment with multiple images (without command).
+  /// Verifies the generated NativeDeployment with multiple images (without command).
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -95,13 +96,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
       Metadata = new Metadata
       {
         Name = "multi-container-deployment"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["nginx", "busybox", "ubuntu"],
         Replicas = 2
@@ -132,13 +133,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
       Metadata = new Metadata
       {
         Name = string.Empty
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["nginx"]
       }
@@ -160,13 +161,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
       Metadata = new Metadata
       {
         Name = "test-deployment"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = ["nginx", "busybox"],
         Command = ["echo", "hello"]
@@ -189,13 +190,13 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DeploymentGenerator();
-    var model = new Deployment
+    var model = new NativeDeployment
     {
       Metadata = new Metadata
       {
         Name = "test-deployment"
       },
-      Spec = new DeploymentSpec
+      Spec = new NativeDeploymentSpec
       {
         Images = []
       }

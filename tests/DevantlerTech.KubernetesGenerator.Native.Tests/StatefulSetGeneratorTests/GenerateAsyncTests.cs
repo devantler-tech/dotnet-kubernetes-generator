@@ -1,4 +1,7 @@
+
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
+using DevantlerTech.KubernetesGenerator.Native.Models.StatefulSet;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.StatefulSetGeneratorTests;
 
@@ -9,7 +12,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.StatefulSetGeneratorTes
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated StatefulSet object with all properties set.
+  /// Verifies the generated NativeStatefulSet object with all properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -17,14 +20,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new StatefulSetGenerator();
-    var model = new StatefulSet
+    var model = new NativeStatefulSet
     {
       Metadata = new Metadata
       {
         Name = "stateful-set",
         Namespace = "default"
       },
-      Spec = new StatefulSetSpec
+      Spec = new NativeStatefulSetSpec
       {
         Replicas = 1,
         Selector = new LabelSelector
@@ -35,7 +38,7 @@ public sealed class GenerateAsyncTests
           }
         },
         ServiceName = "stateful-set",
-        Template = new PodTemplateSpec
+        Template = new NativePodTemplateSpec
         {
           Metadata = new TemplateMetadata
           {
@@ -44,11 +47,11 @@ public sealed class GenerateAsyncTests
               ["app"] = "stateful-set"
             }
           },
-          Spec = new PodSpec
+          Spec = new NativePodSpec
           {
             Containers =
             [
-              new PodContainer
+              new NativePodContainer
               {
                 Name = "container",
                 Image = "nginx",
@@ -78,7 +81,7 @@ public sealed class GenerateAsyncTests
 
 
   /// <summary>
-  /// Verifies the generated StatefulSet object with rolling update strategy.
+  /// Verifies the generated NativeStatefulSet object with rolling update strategy.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -86,14 +89,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new StatefulSetGenerator();
-    var model = new StatefulSet
+    var model = new NativeStatefulSet
     {
       Metadata = new Metadata
       {
         Name = "rolling-update-statefulset",
         Namespace = "default"
       },
-      Spec = new StatefulSetSpec
+      Spec = new NativeStatefulSetSpec
       {
         Replicas = 3,
         Selector = new LabelSelector
@@ -104,7 +107,7 @@ public sealed class GenerateAsyncTests
           }
         },
         ServiceName = "rolling-service",
-        Template = new PodTemplateSpec
+        Template = new NativePodTemplateSpec
         {
           Metadata = new TemplateMetadata
           {
@@ -113,17 +116,17 @@ public sealed class GenerateAsyncTests
               ["app"] = "rolling-app"
             }
           },
-          Spec = new PodSpec
+          Spec = new NativePodSpec
           {
             Containers =
             [
-              new PodContainer
+              new NativePodContainer
               {
                 Name = "app-container",
                 Image = "nginx:latest",
                 Ports =
                 [
-                  new PodContainerPort
+                  new NativePodContainerPort
                   {
                     ContainerPort = 80,
                     Name = "http"
@@ -133,15 +136,15 @@ public sealed class GenerateAsyncTests
             ]
           }
         },
-        UpdateStrategy = new StatefulSetUpdateStrategy
+        UpdateStrategy = new NativeStatefulSetUpdateStrategy
         {
           Type = UpdateStrategyType.RollingUpdate,
-          RollingUpdate = new StatefulSetRollingUpdateStrategy
+          RollingUpdate = new NativeStatefulSetRollingUpdateStrategy
           {
             Partition = 1
           }
         },
-        PodManagementPolicy = StatefulSetPodManagementPolicy.Parallel
+        PodManagementPolicy = NativeStatefulSetPodManagementPolicy.Parallel
       }
     };
 
@@ -161,7 +164,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated StatefulSet object with persistent volume claim retention policy.
+  /// Verifies the generated NativeStatefulSet object with persistent volume claim retention policy.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -169,14 +172,14 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new StatefulSetGenerator();
-    var model = new StatefulSet
+    var model = new NativeStatefulSet
     {
       Metadata = new Metadata
       {
         Name = "pvc-retention-statefulset",
         Namespace = "default"
       },
-      Spec = new StatefulSetSpec
+      Spec = new NativeStatefulSetSpec
       {
         Replicas = 1,
         Selector = new LabelSelector
@@ -187,7 +190,7 @@ public sealed class GenerateAsyncTests
           }
         },
         ServiceName = "pvc-service",
-        Template = new PodTemplateSpec
+        Template = new NativePodTemplateSpec
         {
           Metadata = new TemplateMetadata
           {
@@ -196,11 +199,11 @@ public sealed class GenerateAsyncTests
               ["app"] = "pvc-app"
             }
           },
-          Spec = new PodSpec
+          Spec = new NativePodSpec
           {
             Containers =
             [
-              new PodContainer
+              new NativePodContainer
               {
                 Name = "storage-container",
                 Image = "nginx:latest"
@@ -208,10 +211,10 @@ public sealed class GenerateAsyncTests
             ]
           }
         },
-        PersistentVolumeClaimRetentionPolicy = new StatefulSetPersistentVolumeClaimRetentionPolicy
+        PersistentVolumeClaimRetentionPolicy = new NativeStatefulSetPersistentVolumeClaimRetentionPolicy
         {
-          WhenDeleted = StatefulSetPersistentVolumeClaimRetentionPolicyType.Delete,
-          WhenScaled = StatefulSetPersistentVolumeClaimRetentionPolicyType.Retain
+          WhenDeleted = NativeStatefulSetPersistentVolumeClaimRetentionPolicyType.Delete,
+          WhenScaled = NativeStatefulSetPersistentVolumeClaimRetentionPolicyType.Retain
         }
       }
     };

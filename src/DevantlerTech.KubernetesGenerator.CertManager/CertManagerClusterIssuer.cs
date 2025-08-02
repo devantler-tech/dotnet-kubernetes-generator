@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.CertManager;
 /// <summary>
 /// Generator for generating Cert Manager ClusterIssuer objects.
 /// </summary>
-public class CertManagerClusterIssuerGenerator : BaseKubernetesGenerator<CertManagerClusterIssuer>
+public class CertManagerClusterIssuerGenerator : Generator<CertManagerClusterIssuer>
 {
 }
 

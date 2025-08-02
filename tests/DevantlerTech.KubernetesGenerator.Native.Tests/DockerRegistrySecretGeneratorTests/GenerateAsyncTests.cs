@@ -1,4 +1,5 @@
-using DevantlerTech.KubernetesGenerator.Native.Models;
+
+using DevantlerTech.KubernetesGenerator.Native.Models.Secret;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.DockerRegistrySecretGeneratorTests;
 
@@ -16,7 +17,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DockerRegistrySecretGenerator();
-    var model = new DockerRegistrySecret
+    var model = new NativeDockerRegistrySecret
     {
       Metadata = new() { Name = "docker-registry-secret", Namespace = "default" },
       DockerServer = "https://index.docker.io/v1/",
@@ -49,7 +50,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new DockerRegistrySecretGenerator();
-    var model = new DockerRegistrySecret
+    var model = new NativeDockerRegistrySecret
     {
       Metadata = new() { Name = "docker-registry-secret-minimal" },
       DockerUsername = "user",

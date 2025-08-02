@@ -1,4 +1,8 @@
+
 using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolume;
+using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolumeClaim;
+using DevantlerTech.KubernetesGenerator.Native.Models.PriorityClass;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeGeneratorTests;
 
@@ -8,7 +12,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PersistentVolumeGenerat
 public sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated PersistentVolume object with all properties set.
+  /// Verifies the generated NativePersistentVolume object with all properties set.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -16,34 +20,34 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new PersistentVolume
+    var model = new NativePersistentVolume
     {
       Metadata = new ClusterScopedMetadata
       {
         Name = "persistent-volume"
       },
-      Spec = new PersistentVolumeSpec
+      Spec = new NativePersistentVolumeSpec
       {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
+        AccessModes = [NativePersistentVolumeAccessMode.ReadWriteOnce],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "1Gi"
         },
-        ClaimRef = new PersistentVolumeClaimRef
+        ClaimRef = new NativePersistentVolumeClaimRef
         {
           Name = "pvc",
           Namespace = "default"
         },
-        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Retain,
+        PersistentVolumeReclaimPolicy = NativePersistentVolumeReclaimPolicy.Retain,
         StorageClassName = "storage-class",
         MountOptions = ["option"],
-        NodeAffinity = new PersistentVolumeNodeAffinity
+        NodeAffinity = new NativePersistentVolumeNodeAffinity
         {
-          Required = new PersistentVolumeNodeAffinityNodeSelector
+          Required = new NativePersistentVolumeNodeAffinityNodeSelector
           {
             NodeSelectorTerms =
             [
-              new NodeSelectorTerm
+              new NativeNodeSelectorTerm
               {
                 MatchExpressions =
                 [
@@ -77,7 +81,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PersistentVolume with host path configuration.
+  /// Verifies the generated NativePersistentVolume with host path configuration.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -85,24 +89,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new PersistentVolume
+    var model = new NativePersistentVolume
     {
       Metadata = new ClusterScopedMetadata
       {
         Name = "pv-hostpath",
       },
-      Spec = new PersistentVolumeSpec
+      Spec = new NativePersistentVolumeSpec
       {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
+        AccessModes = [NativePersistentVolumeAccessMode.ReadWriteOnce],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "5Gi"
         },
-        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Delete,
-        HostPath = new PersistentVolumeHostPath
+        PersistentVolumeReclaimPolicy = NativePersistentVolumeReclaimPolicy.Delete,
+        HostPath = new NativePersistentVolumeHostPath
         {
           Path = "/mnt/data",
-          Type = PersistentVolumeHostPathType.DirectoryOrCreate
+          Type = NativePersistentVolumeHostPathType.DirectoryOrCreate
         }
       }
     };
@@ -123,7 +127,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PersistentVolume with NFS configuration.
+  /// Verifies the generated NativePersistentVolume with NFS configuration.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -131,7 +135,7 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new PersistentVolume
+    var model = new NativePersistentVolume
     {
       Metadata = new ClusterScopedMetadata
       {
@@ -141,15 +145,15 @@ public sealed class GenerateAsyncTests
           ["app"] = "storage"
         }
       },
-      Spec = new PersistentVolumeSpec
+      Spec = new NativePersistentVolumeSpec
       {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteMany],
+        AccessModes = [NativePersistentVolumeAccessMode.ReadWriteMany],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "10Gi"
         },
-        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Recycle,
-        Nfs = new PersistentVolumeNfs
+        PersistentVolumeReclaimPolicy = NativePersistentVolumeReclaimPolicy.Recycle,
+        Nfs = new NativePersistentVolumeNfs
         {
           Server = "nfs-server.example.com",
           Path = "/shared/data",
@@ -174,7 +178,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PersistentVolume with Local volume source.
+  /// Verifies the generated NativePersistentVolume with Local volume source.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -182,33 +186,33 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new PersistentVolume
+    var model = new NativePersistentVolume
     {
       Metadata = new ClusterScopedMetadata
       {
         Name = "pv-local"
       },
-      Spec = new PersistentVolumeSpec
+      Spec = new NativePersistentVolumeSpec
       {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteOncePod],
+        AccessModes = [NativePersistentVolumeAccessMode.ReadWriteOncePod],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "50Gi"
         },
-        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Delete,
+        PersistentVolumeReclaimPolicy = NativePersistentVolumeReclaimPolicy.Delete,
         StorageClassName = "local-storage",
-        Local = new PersistentVolumeLocal
+        Local = new NativePersistentVolumeLocal
         {
           Path = "/mnt/local-storage",
           FsType = "ext4"
         },
-        NodeAffinity = new PersistentVolumeNodeAffinity
+        NodeAffinity = new NativePersistentVolumeNodeAffinity
         {
-          Required = new PersistentVolumeNodeAffinityNodeSelector
+          Required = new NativePersistentVolumeNodeAffinityNodeSelector
           {
             NodeSelectorTerms =
             [
-              new NodeSelectorTerm
+              new NativeNodeSelectorTerm
               {
                 MatchExpressions =
                 [
@@ -241,7 +245,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PersistentVolume with multiple access modes.
+  /// Verifies the generated NativePersistentVolume with multiple access modes.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -249,24 +253,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new PersistentVolume
+    var model = new NativePersistentVolume
     {
       Metadata = new ClusterScopedMetadata
       {
         Name = "pv-multi-access"
       },
-      Spec = new PersistentVolumeSpec
+      Spec = new NativePersistentVolumeSpec
       {
         AccessModes = [
-          PersistentVolumeAccessMode.ReadOnlyMany,
-          PersistentVolumeAccessMode.ReadWriteMany
+          NativePersistentVolumeAccessMode.ReadOnlyMany,
+          NativePersistentVolumeAccessMode.ReadWriteMany
         ],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "100Gi"
         },
-        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Retain,
-        Nfs = new PersistentVolumeNfs
+        PersistentVolumeReclaimPolicy = NativePersistentVolumeReclaimPolicy.Retain,
+        Nfs = new NativePersistentVolumeNfs
         {
           Server = "shared-nfs.example.com",
           Path = "/shared/readonly",
@@ -291,7 +295,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PersistentVolume with different HostPath types.
+  /// Verifies the generated NativePersistentVolume with different HostPath types.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -299,24 +303,24 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new PersistentVolume
+    var model = new NativePersistentVolume
     {
       Metadata = new ClusterScopedMetadata
       {
         Name = "pv-hostpath-file"
       },
-      Spec = new PersistentVolumeSpec
+      Spec = new NativePersistentVolumeSpec
       {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
+        AccessModes = [NativePersistentVolumeAccessMode.ReadWriteOnce],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "1Gi"
         },
-        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Delete,
-        HostPath = new PersistentVolumeHostPath
+        PersistentVolumeReclaimPolicy = NativePersistentVolumeReclaimPolicy.Delete,
+        HostPath = new NativePersistentVolumeHostPath
         {
           Path = "/var/log/app.log",
-          Type = PersistentVolumeHostPathType.File
+          Type = NativePersistentVolumeHostPathType.File
         }
       }
     };
@@ -337,7 +341,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PersistentVolume with advanced node affinity operators.
+  /// Verifies the generated NativePersistentVolume with advanced node affinity operators.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -345,32 +349,32 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new PersistentVolume
+    var model = new NativePersistentVolume
     {
       Metadata = new ClusterScopedMetadata
       {
         Name = "pv-advanced-affinity"
       },
-      Spec = new PersistentVolumeSpec
+      Spec = new NativePersistentVolumeSpec
       {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
+        AccessModes = [NativePersistentVolumeAccessMode.ReadWriteOnce],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "20Gi"
         },
-        PersistentVolumeReclaimPolicy = PersistentVolumeReclaimPolicy.Retain,
-        HostPath = new PersistentVolumeHostPath
+        PersistentVolumeReclaimPolicy = NativePersistentVolumeReclaimPolicy.Retain,
+        HostPath = new NativePersistentVolumeHostPath
         {
           Path = "/mnt/ssd-storage",
-          Type = PersistentVolumeHostPathType.Directory
+          Type = NativePersistentVolumeHostPathType.Directory
         },
-        NodeAffinity = new PersistentVolumeNodeAffinity
+        NodeAffinity = new NativePersistentVolumeNodeAffinity
         {
-          Required = new PersistentVolumeNodeAffinityNodeSelector
+          Required = new NativePersistentVolumeNodeAffinityNodeSelector
           {
             NodeSelectorTerms =
             [
-              new NodeSelectorTerm
+              new NativeNodeSelectorTerm
               {
                 MatchExpressions =
                 [
@@ -415,7 +419,7 @@ public sealed class GenerateAsyncTests
   }
 
   /// <summary>
-  /// Verifies the generated PersistentVolume with minimal configuration.
+  /// Verifies the generated NativePersistentVolume with minimal configuration.
   /// </summary>
   /// <returns></returns>
   [Fact]
@@ -423,20 +427,20 @@ public sealed class GenerateAsyncTests
   {
     // Arrange
     var generator = new PersistentVolumeGenerator();
-    var model = new PersistentVolume
+    var model = new NativePersistentVolume
     {
       Metadata = new ClusterScopedMetadata
       {
         Name = "pv-minimal"
       },
-      Spec = new PersistentVolumeSpec
+      Spec = new NativePersistentVolumeSpec
       {
-        AccessModes = [PersistentVolumeAccessMode.ReadWriteOnce],
+        AccessModes = [NativePersistentVolumeAccessMode.ReadWriteOnce],
         Capacity = new Dictionary<string, string>
         {
           ["storage"] = "1Gi"
         },
-        HostPath = new PersistentVolumeHostPath
+        HostPath = new NativePersistentVolumeHostPath
         {
           Path = "/mnt/data"
         }

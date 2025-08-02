@@ -1,13 +1,13 @@
 using System.Collections.ObjectModel;
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.ConfigMap;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Kubernetes ConfigMap objects using 'kubectl create configmap' commands.
 /// </summary>
-public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
+public class ConfigMapGenerator : NativeGenerator<NativeConfigMap>
 {
   static readonly string[] _defaultArgs = ["create", "configmap"];
 
@@ -20,7 +20,7 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <exception cref="ArgumentNullException">Thrown when model is null.</exception>
   /// <exception cref="KubernetesGeneratorException">Thrown when ConfigMap name is not provided.</exception>
-  public override async Task GenerateAsync(ConfigMap model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
+  public override async Task GenerateAsync(NativeConfigMap model, string outputPath, bool overwrite = false, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
@@ -42,7 +42,7 @@ public class ConfigMapGenerator : BaseNativeGenerator<ConfigMap>
   /// <param name="model">The ConfigMap object.</param>
   /// <returns>The kubectl arguments.</returns>
   /// <exception cref="KubernetesGeneratorException">Thrown when required parameters are missing.</exception>
-  static ReadOnlyCollection<string> AddArguments(ConfigMap model)
+  static ReadOnlyCollection<string> AddArguments(NativeConfigMap model)
   {
     var args = new List<string>
     {

@@ -1,12 +1,12 @@
 using System.Collections.ObjectModel;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models.Secret;
 
 namespace DevantlerTech.KubernetesGenerator.Native;
 
 /// <summary>
 /// A generator for Docker registry Kubernetes Secret objects using 'kubectl create secret docker-registry' commands.
 /// </summary>
-public class DockerRegistrySecretGenerator : BaseSecretGenerator<DockerRegistrySecret>
+public class DockerRegistrySecretGenerator : SecretGenerator<NativeDockerRegistrySecret>
 {
   /// <summary>
   /// Gets the command prefix for Docker registry secrets.
@@ -19,7 +19,7 @@ public class DockerRegistrySecretGenerator : BaseSecretGenerator<DockerRegistryS
   /// <param name="model">The DockerRegistrySecret object.</param>
   /// <param name="cancellationToken">The cancellation token.</param>
   /// <returns>The kubectl arguments.</returns>
-  protected override Task<ReadOnlyCollection<string>> BuildSpecificArgumentsAsync(DockerRegistrySecret model, CancellationToken cancellationToken = default)
+  protected override Task<ReadOnlyCollection<string>> BuildSpecificArgumentsAsync(NativeDockerRegistrySecret model, CancellationToken cancellationToken = default)
   {
     ArgumentNullException.ThrowIfNull(model);
 
