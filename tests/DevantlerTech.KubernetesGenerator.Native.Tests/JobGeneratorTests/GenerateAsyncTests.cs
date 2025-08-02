@@ -1,5 +1,4 @@
-
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.Job;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.JobGeneratorTests;
@@ -20,7 +19,7 @@ public sealed class GenerateAsyncTests
     var generator = new JobGenerator();
     var model = new NativeJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "job-with-image-and-command",
         Namespace = "default"
@@ -58,7 +57,7 @@ public sealed class GenerateAsyncTests
     var generator = new JobGenerator();
     var model = new NativeJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "job-with-image",
         Namespace = "default"

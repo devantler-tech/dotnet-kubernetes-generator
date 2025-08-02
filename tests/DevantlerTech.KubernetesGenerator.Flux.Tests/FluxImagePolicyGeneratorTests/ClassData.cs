@@ -14,7 +14,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Simple image policy with semver
     [new FluxImagePolicy()
       {
-        Metadata = new Metadata
+        Metadata = new NamespacedMetadata
         {
           Name = "image-policy-semver",
         },
@@ -29,7 +29,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Complex image policy with numeric sorting and filters
     [new FluxImagePolicy
     {
-      Metadata = new Metadata(new Dictionary<string, string>
+      Metadata = new NamespacedMetadata(new Dictionary<string, string>
         {
           ["app"] = "podinfo"
         }
@@ -53,7 +53,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Image policy with alpha sorting
     [new FluxImagePolicy
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "image-policy-alpha",
         Namespace = "flux-system"

@@ -1,5 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodDisruptionBudgetGeneratorTests;
@@ -20,7 +20,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodDisruptionBudgetGenerator();
     var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "pdb-min-available",
         Namespace = "default"
@@ -58,7 +58,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodDisruptionBudgetGenerator();
     var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "pdb-max-unavailable",
         Namespace = "default"
@@ -96,7 +96,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodDisruptionBudgetGenerator();
     var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "pdb-percentage",
         Namespace = "default"
@@ -134,7 +134,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodDisruptionBudgetGenerator();
     var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "pdb-no-namespace"
       },
@@ -171,7 +171,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodDisruptionBudgetGenerator();
     var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "pdb-both"
       },
@@ -200,7 +200,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodDisruptionBudgetGenerator();
     var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "pdb-none"
       },
@@ -227,7 +227,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodDisruptionBudgetGenerator();
     var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "pdb-no-selector"
       },
@@ -255,7 +255,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodDisruptionBudgetGenerator();
     var model = new NativePodDisruptionBudget
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = ""
       },

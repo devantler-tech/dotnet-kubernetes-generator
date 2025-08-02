@@ -1,5 +1,6 @@
 using System.Net;
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.NetworkPolicy;
 
@@ -23,7 +24,7 @@ public sealed class GenerateAsyncTests
     var generator = new NetworkPolicyGenerator();
     var model = new NativeNetworkPolicy
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "comprehensive-policy",
         Namespace = "production"
@@ -115,7 +116,7 @@ public sealed class GenerateAsyncTests
     var generator = new NetworkPolicyGenerator();
     var model = new NativeNetworkPolicy
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "ip-block-policy",
         Namespace = "secure"
@@ -195,7 +196,7 @@ public sealed class GenerateAsyncTests
     var generator = new NetworkPolicyGenerator();
     var model = new NativeNetworkPolicy
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "namespace-selector-policy",
         Namespace = "staging"
@@ -273,7 +274,7 @@ public sealed class GenerateAsyncTests
     var generator = new NetworkPolicyGenerator();
     var model = new NativeNetworkPolicy
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = ""
       },

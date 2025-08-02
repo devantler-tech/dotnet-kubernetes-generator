@@ -1,5 +1,4 @@
-
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.Ingress;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.IngressGeneratorTests;
@@ -20,7 +19,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new Metadata { Name = "simple-ingress", Namespace = "default" },
+      Metadata = new NamespacedMetadata { Name = "simple-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new NativeIngressRule
@@ -59,7 +58,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new Metadata { Name = "tls-ingress", Namespace = "default" },
+      Metadata = new NamespacedMetadata { Name = "tls-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new NativeIngressRule
@@ -99,7 +98,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new Metadata { Name = "default-backend-ingress", Namespace = "default" },
+      Metadata = new NamespacedMetadata { Name = "default-backend-ingress", Namespace = "default" },
       Class = "nginx",
       DefaultBackend = "default-service:80",
       Rules = [
@@ -139,7 +138,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new Metadata { Name = "annotated-ingress", Namespace = "default" },
+      Metadata = new NamespacedMetadata { Name = "annotated-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new NativeIngressRule
@@ -183,7 +182,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new Metadata { Name = "multi-rule-ingress", Namespace = "default" },
+      Metadata = new NamespacedMetadata { Name = "multi-rule-ingress", Namespace = "default" },
       Class = "nginx",
       Rules = [
         new NativeIngressRule
@@ -234,7 +233,7 @@ public sealed class GenerateAsyncTests
     var generator = new IngressGenerator();
     var model = new NativeIngress
     {
-      Metadata = new Metadata { Name = "simple-ingress" },
+      Metadata = new NamespacedMetadata { Name = "simple-ingress" },
       Rules = [
         new NativeIngressRule
         {

@@ -20,7 +20,7 @@ public class FluxHelmRepository
   /// <summary>
   /// Metadata of the HelmRepository.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required NamespacedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Spec of the HelmRepository.

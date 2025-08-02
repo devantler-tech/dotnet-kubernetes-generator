@@ -18,7 +18,7 @@ public class NativePersistentVolumeClaim
   /// <summary>
   /// Gets or sets the metadata for the PersistentVolumeClaim.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required NamespacedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the specification for the PersistentVolumeClaim.

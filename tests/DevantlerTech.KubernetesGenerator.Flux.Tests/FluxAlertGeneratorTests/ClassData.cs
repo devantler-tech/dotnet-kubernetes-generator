@@ -15,7 +15,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Simple alert
     [new FluxAlert()
       {
-        Metadata = new Metadata
+        Metadata = new NamespacedMetadata
         {
           Name = "alert-simple",
         },
@@ -39,7 +39,7 @@ sealed class ClassData : IEnumerable<object[]>
       // Complex alert
       [new FluxAlert
       {
-        Metadata = new Metadata(new Dictionary<string, string>
+        Metadata = new NamespacedMetadata(new Dictionary<string, string>
           {
             ["key"] = "value"
           }

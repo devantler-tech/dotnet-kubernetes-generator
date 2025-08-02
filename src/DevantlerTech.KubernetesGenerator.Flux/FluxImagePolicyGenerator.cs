@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Flux;
 /// <summary>
 /// Generator for generating Flux ImagePolicy objects.
 /// </summary>
-public class FluxImagePolicyGenerator : BaseFluxGenerator<FluxImagePolicy>
+public class FluxImagePolicyGenerator : FluxGenerator<FluxImagePolicy>
 {
   /// <summary>
   /// Generates a Flux ImagePolicy object.

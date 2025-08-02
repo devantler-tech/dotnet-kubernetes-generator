@@ -21,7 +21,7 @@ public class NativeStatefulSet
   /// <summary>
   /// Gets or sets the metadata for the StatefulSet.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required NamespacedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the specification for the StatefulSet.

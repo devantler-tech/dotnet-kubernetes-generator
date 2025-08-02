@@ -1,4 +1,5 @@
 
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
 using DevantlerTech.KubernetesGenerator.Native.Models.StatefulSet;
@@ -22,7 +23,7 @@ public sealed class GenerateAsyncTests
     var generator = new StatefulSetGenerator();
     var model = new NativeStatefulSet
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "stateful-set",
         Namespace = "default"
@@ -91,7 +92,7 @@ public sealed class GenerateAsyncTests
     var generator = new StatefulSetGenerator();
     var model = new NativeStatefulSet
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "rolling-update-statefulset",
         Namespace = "default"
@@ -174,7 +175,7 @@ public sealed class GenerateAsyncTests
     var generator = new StatefulSetGenerator();
     var model = new NativeStatefulSet
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "pvc-retention-statefulset",
         Namespace = "default"

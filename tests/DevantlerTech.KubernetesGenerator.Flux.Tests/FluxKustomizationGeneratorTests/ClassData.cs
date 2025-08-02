@@ -15,7 +15,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Simple Kustomization
     [new FluxKustomization()
     {
-      Metadata = new Metadata()
+      Metadata = new NamespacedMetadata()
       {
         Name = "kustomization-simple",
       }
@@ -24,7 +24,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Complex Kustomization
     [new FluxKustomization()
     {
-      Metadata = new Metadata(new Dictionary<string, string>()
+      Metadata = new NamespacedMetadata(new Dictionary<string, string>()
         {
           ["key"] = "value"
         }

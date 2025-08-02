@@ -14,7 +14,7 @@ sealed class ClassData : IEnumerable<object[]>
   [
     // Simple HelmRelease - Chart
     [new FluxHelmRelease(){
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "helm-release-chart-simple",
       },
@@ -31,7 +31,7 @@ sealed class ClassData : IEnumerable<object[]>
 
     // Complex HelmRelease - Chart
     [new FluxHelmRelease(){
-      Metadata = new Metadata(new Dictionary<string, string>
+      Metadata = new NamespacedMetadata(new Dictionary<string, string>
         {
           { "key", "value" },
         }
@@ -90,7 +90,7 @@ sealed class ClassData : IEnumerable<object[]>
 
     // Simple HelmRelease - ChartRef
     [new FluxHelmRelease(){
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "helm-release-chart-ref-simple",
       },
@@ -105,7 +105,7 @@ sealed class ClassData : IEnumerable<object[]>
 
     // Complex HelmRelease - ChartRef
     [new FluxHelmRelease(){
-      Metadata = new Metadata(new Dictionary<string, string>
+      Metadata = new NamespacedMetadata(new Dictionary<string, string>
         {
           ["key"] = "value"
         }

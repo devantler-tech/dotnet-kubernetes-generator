@@ -1,4 +1,5 @@
 
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.DaemonSet;
 using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
@@ -24,7 +25,7 @@ public sealed class GenerateAsyncTests
     {
       ApiVersion = "apps/v1",
       Kind = "DaemonSet",
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "daemon-set",
         Namespace = "default"
@@ -89,7 +90,7 @@ public sealed class GenerateAsyncTests
     var generator = new DaemonSetGenerator();
     var model = new NativeDaemonSet
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "minimal-daemon-set"
       },
@@ -152,7 +153,7 @@ public sealed class GenerateAsyncTests
     var generator = new DaemonSetGenerator();
     var model = new NativeDaemonSet
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "rolling-update-daemon-set",
         Namespace = "default"

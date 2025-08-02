@@ -14,7 +14,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Simple HelmRepository
     [new FluxHelmRepository()
     {
-      Metadata = new Metadata()
+      Metadata = new NamespacedMetadata()
       {
         Name = "helm-repository-simple",
       },
@@ -27,7 +27,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Complex HelmRepository
     [new FluxHelmRepository()
     {
-      Metadata = new Metadata(new Dictionary<string, string>()
+      Metadata = new NamespacedMetadata(new Dictionary<string, string>()
         {
           ["key"] = "value"
         }

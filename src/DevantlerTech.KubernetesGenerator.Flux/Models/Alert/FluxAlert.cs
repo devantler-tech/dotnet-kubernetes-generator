@@ -10,7 +10,7 @@ public class FluxAlert
   /// <summary>
   /// Metadata of the Alert.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required NamespacedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Spec of the Alert.

@@ -8,7 +8,7 @@ public class NativeIngress
   /// <summary>
   /// Gets or sets the metadata for the ingress.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required NamespacedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the ingress class to be used.

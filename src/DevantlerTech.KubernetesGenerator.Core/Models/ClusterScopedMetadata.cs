@@ -3,7 +3,7 @@ namespace DevantlerTech.KubernetesGenerator.Core.Models;
 /// <summary>
 /// Represents metadata for cluster-scoped resources that don't have a namespace.
 /// </summary>
-public class ClusterScopedMetadata : BaseMetadata
+public class ClusterScopedMetadata : Metadata
 {
   /// <summary>
   /// Initializes a new instance of the <see cref="ClusterScopedMetadata"/> class.

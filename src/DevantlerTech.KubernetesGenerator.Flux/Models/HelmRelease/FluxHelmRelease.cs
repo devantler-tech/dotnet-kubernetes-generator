@@ -10,7 +10,7 @@ public class FluxHelmRelease
   /// <summary>
   /// Metadata of the HelmRelease.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required NamespacedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Spec of the HelmRelease.

@@ -14,7 +14,7 @@ sealed class ClassData : IEnumerable<object[]>
   [
     // Simple provider
     [new FluxAlertProvider(){
-      Metadata = new Metadata()
+      Metadata = new NamespacedMetadata()
       {
         Name = "provider-simple",
       },
@@ -26,7 +26,7 @@ sealed class ClassData : IEnumerable<object[]>
 
     // Complex provider
     [new FluxAlertProvider(){
-      Metadata = new Metadata(new Dictionary<string, string>()
+      Metadata = new NamespacedMetadata(new Dictionary<string, string>()
         {
           ["key"] = "value"
         }

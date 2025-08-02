@@ -1,5 +1,4 @@
-
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodGeneratorTests;
@@ -21,7 +20,7 @@ public sealed class GenerateAsyncTests
     var generator = new PodGenerator();
     var model = new NativePod
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "nginx-pod",
         Namespace = "default",

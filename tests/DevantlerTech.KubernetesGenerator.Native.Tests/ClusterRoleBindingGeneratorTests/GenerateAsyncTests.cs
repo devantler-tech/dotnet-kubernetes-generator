@@ -1,5 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.ClusterRoleBinding;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterRoleBindingGeneratorTests;
@@ -20,7 +20,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "cluster-role-binding" },
+      Metadata = new NamespacedMetadata { Name = "cluster-role-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.ClusterRole,
@@ -62,7 +62,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "multi-subject-cluster-binding" },
+      Metadata = new NamespacedMetadata { Name = "multi-subject-cluster-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.ClusterRole,
@@ -115,7 +115,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "sa-default-cluster-binding" },
+      Metadata = new NamespacedMetadata { Name = "sa-default-cluster-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.ClusterRole,
@@ -157,7 +157,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "invalid-binding" },
+      Metadata = new NamespacedMetadata { Name = "invalid-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.Role, // Invalid - NativeClusterRoleBinding requires NativeClusterRole
@@ -187,7 +187,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new Metadata { Name = "invalid-binding" },
+      Metadata = new NamespacedMetadata { Name = "invalid-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.ClusterRole,

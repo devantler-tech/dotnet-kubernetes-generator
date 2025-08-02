@@ -18,7 +18,7 @@ public class NativePodDisruptionBudget
   /// <summary>
   /// Gets or sets the metadata for the pod disruption budget.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required NamespacedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Gets or sets the specification for the pod disruption budget.

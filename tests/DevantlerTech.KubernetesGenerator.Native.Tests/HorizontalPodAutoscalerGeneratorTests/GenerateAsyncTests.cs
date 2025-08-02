@@ -1,5 +1,4 @@
-
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.HorizontalPodAutoscaler;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.HorizontalPodAutoscalerGeneratorTests;
@@ -21,7 +20,7 @@ public sealed class GenerateAsyncTests
     var generator = new HorizontalPodAutoscalerGenerator();
     var model = new NativeHorizontalPodAutoscaler
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "horizontal-pod-autoscaler",
         Namespace = "default"
@@ -64,7 +63,7 @@ public sealed class GenerateAsyncTests
     var generator = new HorizontalPodAutoscalerGenerator();
     var model = new NativeHorizontalPodAutoscaler
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "minimal-hpa"
       },

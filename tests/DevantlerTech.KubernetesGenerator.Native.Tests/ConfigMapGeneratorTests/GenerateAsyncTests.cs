@@ -1,5 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.ConfigMap;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests;
@@ -21,7 +21,7 @@ public sealed class GenerateAsyncTests
     var generator = new ConfigMapGenerator();
     var model = new NativeConfigMap
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "test-config",
         Namespace = "default"
@@ -59,7 +59,7 @@ public sealed class GenerateAsyncTests
     var generator = new ConfigMapGenerator();
     var model = new NativeConfigMap
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "test-config-hash"
       },
@@ -97,7 +97,7 @@ public sealed class GenerateAsyncTests
     var generator = new ConfigMapGenerator();
     var model = new NativeConfigMap
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = ""
       },
@@ -123,7 +123,7 @@ public sealed class GenerateAsyncTests
     var generator = new ConfigMapGenerator();
     var model = new NativeConfigMap
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "test-empty",
         Namespace = "default"

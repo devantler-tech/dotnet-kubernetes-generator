@@ -1,4 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolume;
 using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolumeClaim;
@@ -26,7 +27,7 @@ public sealed class GenerateAsyncTests
     {
       ApiVersion = "v1",
       Kind = "PersistentVolumeClaim",
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "persistent-volume-claim",
         Namespace = "default"
@@ -100,7 +101,7 @@ public sealed class GenerateAsyncTests
     var generator = new PersistentVolumeClaimGenerator();
     var model = new NativePersistentVolumeClaim
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = ""
       },

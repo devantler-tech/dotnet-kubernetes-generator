@@ -1,5 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.Role;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.RoleGeneratorTests;
@@ -21,7 +21,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "pod-reader",
         Namespace = "default"
@@ -62,7 +62,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "complex-role",
         Namespace = "test-namespace"
@@ -104,7 +104,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = ""  // Empty name should trigger validation
       },
@@ -132,7 +132,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "test-role"
       }
@@ -152,7 +152,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "test-role"
       },
@@ -180,7 +180,7 @@ public sealed class GenerateAsyncTests
     var generator = new RoleGenerator();
     var model = new NativeRole
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "test-role"
       },

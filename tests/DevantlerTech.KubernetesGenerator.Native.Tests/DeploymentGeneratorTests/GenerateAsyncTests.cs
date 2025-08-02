@@ -1,5 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.Deployment;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.DeploymentGeneratorTests;
@@ -21,7 +21,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "my-deployment",
         Namespace = "default"
@@ -59,7 +59,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "my-app-deployment"
       },
@@ -98,7 +98,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "multi-container-deployment"
       },
@@ -135,7 +135,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = string.Empty
       },
@@ -163,7 +163,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "test-deployment"
       },
@@ -192,7 +192,7 @@ public sealed class GenerateAsyncTests
     var generator = new DeploymentGenerator();
     var model = new NativeDeployment
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "test-deployment"
       },

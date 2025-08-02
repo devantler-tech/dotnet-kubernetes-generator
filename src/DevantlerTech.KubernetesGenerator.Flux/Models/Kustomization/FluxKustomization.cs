@@ -20,7 +20,7 @@ public class FluxKustomization
   /// <summary>
   /// The metadata of the Flux Kustomization object.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required NamespacedMetadata Metadata { get; set; }
 
   /// <summary>
   /// The spec of the Flux Kustomization object.

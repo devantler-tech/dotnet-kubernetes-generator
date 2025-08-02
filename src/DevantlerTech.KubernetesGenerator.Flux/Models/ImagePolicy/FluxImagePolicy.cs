@@ -10,7 +10,7 @@ public class FluxImagePolicy
   /// <summary>
   /// Metadata of the ImagePolicy.
   /// </summary>
-  public required Metadata Metadata { get; set; }
+  public required NamespacedMetadata Metadata { get; set; }
 
   /// <summary>
   /// Spec of the ImagePolicy.

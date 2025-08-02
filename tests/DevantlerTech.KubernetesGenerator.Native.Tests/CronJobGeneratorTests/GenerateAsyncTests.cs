@@ -1,5 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.CronJob;
 using DevantlerTech.KubernetesGenerator.Native.Models.Job;
 using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
@@ -22,7 +22,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "cron-job",
         Namespace = "default"
@@ -75,7 +75,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "cron-job-with-command",
         Namespace = "default"
@@ -129,7 +129,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "cron-job-with-restart",
         Namespace = "default"
@@ -183,7 +183,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "cron-job-complete",
         Namespace = "production"
@@ -238,7 +238,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "cron-job-hierarchical",
         Namespace = "test"
@@ -310,7 +310,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = null!, // Null name
         Namespace = "default"
@@ -357,7 +357,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "", // Empty name
         Namespace = "default"
@@ -404,7 +404,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "test-cronjob",
         Namespace = "default"
@@ -478,7 +478,7 @@ public sealed class GenerateAsyncTests
     var generator = new CronJobGenerator();
     var model = new NativeCronJob
     {
-      Metadata = new Metadata
+      Metadata = new NamespacedMetadata
       {
         Name = "cron-job-no-namespace"
         // No namespace specified
