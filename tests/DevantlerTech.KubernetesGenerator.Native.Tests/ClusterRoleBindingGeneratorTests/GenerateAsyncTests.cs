@@ -20,7 +20,7 @@ public sealed class GenerateAsyncTests
     var generator = new ClusterRoleBindingGenerator();
     var model = new NativeClusterRoleBinding
     {
-      Metadata = new NamespacedMetadata { Name = "cluster-role-binding" },
+      Metadata = new ClusterScopedMetadata { Name = "cluster-role-binding" },
       RoleRef = new NativeRoleBindingRoleRef
       {
         Kind = NativeRoleBindingRoleRefKind.ClusterRole,
