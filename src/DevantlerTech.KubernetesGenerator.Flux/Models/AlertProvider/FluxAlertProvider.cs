@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Core.Models;
+
 namespace DevantlerTech.KubernetesGenerator.Flux.Models.AlertProvider;
 
 /// <summary>
@@ -8,7 +10,7 @@ public class FluxAlertProvider
   /// <summary>
   /// Metadata of the Alert Provider.
   /// </summary>
-  public required FluxNamespacedMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// Spec of the Alert Provider.

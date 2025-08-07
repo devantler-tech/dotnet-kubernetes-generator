@@ -1,5 +1,5 @@
 using System.Collections;
-using DevantlerTech.KubernetesGenerator.Flux.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Flux.Models.ImagePolicy;
 
 namespace DevantlerTech.KubernetesGenerator.Flux.Tests.FluxImagePolicyGeneratorTests;
@@ -14,7 +14,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Simple ImagePolicy - SemVer
     [new FluxImagePolicy
     {
-      Metadata = new FluxNamespacedMetadata
+      Metadata = new Metadata
       {
         Name = "image-policy-semver-simple",
       },
@@ -37,13 +37,14 @@ sealed class ClassData : IEnumerable<object[]>
     // Complex ImagePolicy - SemVer with filters
     [new FluxImagePolicy
     {
-      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>
-      {
-        { "key", "value" },
-      })
+      Metadata = new Metadata
       {
         Name = "image-policy-semver-complex",
-        Namespace = "test-namespace"
+        Namespace = "test-namespace",
+        Labels = new Dictionary<string, string>
+        {
+          { "key", "value" },
+        }
       },
       Spec = new FluxImagePolicySpec
       {
@@ -69,7 +70,7 @@ sealed class ClassData : IEnumerable<object[]>
     // ImagePolicy - Numerical
     [new FluxImagePolicy
     {
-      Metadata = new FluxNamespacedMetadata
+      Metadata = new Metadata
       {
         Name = "image-policy-numerical",
       },
@@ -92,7 +93,7 @@ sealed class ClassData : IEnumerable<object[]>
     // ImagePolicy - Alphabetical
     [new FluxImagePolicy
     {
-      Metadata = new FluxNamespacedMetadata
+      Metadata = new Metadata
       {
         Name = "image-policy-alphabetical",
       },

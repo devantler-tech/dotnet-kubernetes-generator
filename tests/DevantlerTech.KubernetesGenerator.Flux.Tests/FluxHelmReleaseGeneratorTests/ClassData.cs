@@ -1,4 +1,5 @@
 using System.Collections;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Flux.Models;
 using DevantlerTech.KubernetesGenerator.Flux.Models.HelmRelease;
 
@@ -13,7 +14,7 @@ sealed class ClassData : IEnumerable<object[]>
   [
     // Simple HelmRelease - Chart
     [new FluxHelmRelease(){
-      Metadata = new FluxNamespacedMetadata
+      Metadata = new Metadata
       {
         Name = "helm-release-chart-simple",
       },
@@ -30,14 +31,14 @@ sealed class ClassData : IEnumerable<object[]>
 
     // Complex HelmRelease - Chart
     [new FluxHelmRelease(){
-      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>
+      Metadata = new Metadata()
+      {
+        Name = "helm-release-chart-complex",
+        Namespace = "helm-release-chart-complex",
+        Labels = new Dictionary<string, string>
         {
           { "key", "value" },
         }
-      )
-      {
-        Name = "helm-release-chart-complex",
-        Namespace = "helm-release-chart-complex"
       },
       Spec = new FluxHelmReleaseSpec(
         new FluxHelmReleaseSpecChart
@@ -89,7 +90,7 @@ sealed class ClassData : IEnumerable<object[]>
 
     // Simple HelmRelease - ChartRef
     [new FluxHelmRelease(){
-      Metadata = new FluxNamespacedMetadata
+      Metadata = new Metadata
       {
         Name = "helm-release-chart-ref-simple",
       },
@@ -104,14 +105,14 @@ sealed class ClassData : IEnumerable<object[]>
 
     // Complex HelmRelease - ChartRef
     [new FluxHelmRelease(){
-      Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>
-        {
-          ["key"] = "value"
-        }
-      )
+      Metadata = new Metadata()
       {
         Name = "helm-release-chart-ref-complex",
         Namespace = "helm-release-chart-ref-complex",
+        Labels = new Dictionary<string, string>
+        {
+          ["key"] = "value"
+        }
       },
       Spec = new FluxHelmReleaseSpec(
         new FluxHelmReleaseSpecChartRef

@@ -1,4 +1,5 @@
 using System.Collections;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Flux.Models;
 using DevantlerTech.KubernetesGenerator.Flux.Models.Alert;
 
@@ -14,7 +15,7 @@ sealed class ClassData : IEnumerable<object[]>
     // Simple alert
     [new FluxAlert()
       {
-        Metadata = new FluxNamespacedMetadata
+        Metadata = new Metadata
         {
           Name = "alert-simple",
         },
@@ -38,14 +39,14 @@ sealed class ClassData : IEnumerable<object[]>
       // Complex alert
       [new FluxAlert
       {
-        Metadata = new FluxNamespacedMetadata(new Dictionary<string, string>
+        Metadata = new Metadata
+        {
+          Name = "alert-complex",
+          Namespace = "alert-complex",
+          Labels = new Dictionary<string, string>
           {
             ["key"] = "value"
           }
-        )
-        {
-          Name = "alert-complex",
-          Namespace = "alert-complex"
         },
         Spec = new FluxAlertSpec
         {
