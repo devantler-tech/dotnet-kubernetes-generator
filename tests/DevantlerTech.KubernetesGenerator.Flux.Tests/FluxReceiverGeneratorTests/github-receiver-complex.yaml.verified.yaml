@@ -1,0 +1,21 @@
+﻿---
+apiVersion: notification.toolkit.fluxcd.io/v1
+kind: Receiver
+metadata:
+  labels:
+    app: flux-receiver
+    env: production
+  name: github-receiver-complex
+  namespace: flux-system
+spec:
+  events:
+  - push
+  - pull_request
+  resources:
+  - kind: GitRepository
+    name: webapp
+  - kind: HelmRepository
+    name: charts.flux-system
+  secretRef:
+    name: github-webhook-token
+  type: github
