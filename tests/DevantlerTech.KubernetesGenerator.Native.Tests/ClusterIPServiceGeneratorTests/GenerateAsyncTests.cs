@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterIPServiceGenerat
 /// <summary>
 /// Tests for the <see cref="ClusterIPServiceGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated ClusterIP Service object.

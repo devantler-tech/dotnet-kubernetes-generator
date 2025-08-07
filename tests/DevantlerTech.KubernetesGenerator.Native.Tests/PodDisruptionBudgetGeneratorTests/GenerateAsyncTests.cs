@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodDisruptionBudgetGene
 /// <summary>
 /// Tests for the <see cref="PodDisruptionBudgetGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativePodDisruptionBudget object with MinAvailable.

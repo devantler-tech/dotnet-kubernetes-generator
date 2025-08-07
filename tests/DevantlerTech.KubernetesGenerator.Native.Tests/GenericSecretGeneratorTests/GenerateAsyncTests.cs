@@ -5,7 +5,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.GenericSecretGeneratorT
 /// <summary>
 /// Tests for the <see cref="GenericSecretGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated generic Secret object using NativeGenericSecret input.

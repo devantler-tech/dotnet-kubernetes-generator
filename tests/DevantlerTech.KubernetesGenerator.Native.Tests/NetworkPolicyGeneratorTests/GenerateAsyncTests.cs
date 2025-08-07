@@ -10,7 +10,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.NetworkPolicyGeneratorT
 /// <summary>
 /// Tests for the <see cref="NetworkPolicyGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativeNetworkPolicy object with comprehensive features.

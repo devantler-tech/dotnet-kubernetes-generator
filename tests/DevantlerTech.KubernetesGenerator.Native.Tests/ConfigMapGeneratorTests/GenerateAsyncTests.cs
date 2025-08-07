@@ -4,145 +4,112 @@ using DevantlerTech.KubernetesGenerator.Native.Models.ConfigMap;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.ConfigMapGeneratorTests;
 
-
 /// <summary>
 /// Tests for the <see cref="ConfigMapGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated NativeConfigMap object using kubectl create configmap with literal data.
+  /// Test data for valid ConfigMap generation scenarios.
   /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithLiteralData_ShouldGenerateAValidConfigMap()
-  {
-    // Arrange
-    var generator = new ConfigMapGenerator();
-    var model = new NativeConfigMap
+  public static TheoryData<NativeConfigMap, string> ValidConfigMapData =>
+    new()
     {
-      Metadata = new Metadata
       {
-        Name = "test-config",
-        Namespace = "default"
+        new NativeConfigMap
+        {
+          Metadata = new Metadata { Name = "test-config", Namespace = "default" },
+          Data = new Dictionary<string, string> { ["key1"] = "value1", ["key2"] = "value2" }
+        },
+        "config-map-literal.yaml"
       },
-      Data = new Dictionary<string, string>
       {
-        ["key1"] = "value1",
-        ["key2"] = "value2"
+        new NativeConfigMap
+        {
+          Metadata = new Metadata { Name = "test-config-hash" },
+          Data = new Dictionary<string, string>
+          {
+            ["database_url"] = "postgresql://localhost:5432/mydb",
+            ["api_key"] = "secret-api-key"
+          },
+          AppendHash = true
+        },
+        "config-map-literal-hash.yaml"
+      },
+      {
+        new NativeConfigMap
+        {
+          Metadata = new Metadata { Name = "test-empty", Namespace = "default" },
+          Data = new Dictionary<string, string>()
+        },
+        "config-map-empty.yaml"
       }
     };
 
-    // Act
-    string fileName = "config-map-literal.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
+  /// <summary>
+  /// Verifies the generated NativeConfigMap object with different configurations.
+  /// </summary>
+  /// <param name="model">The ConfigMap model to test.</param>
+  /// <param name="fileName">The expected output file name.</param>
+  /// <returns></returns>
+  [Theory]
+  [MemberData(nameof(ValidConfigMapData))]
+  public async Task GenerateAsync_WithValidConfiguration_ShouldGenerateAValidConfigMap(NativeConfigMap model, string fileName)
+  {
+    // Arrange
+    var generator = new ConfigMapGenerator();
 
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
+    // Act & Assert
+    await GenerateAndVerifyAsync(generator, model, fileName);
   }
 
   /// <summary>
-  /// Verifies the generated NativeConfigMap object using kubectl create configmap with literal data and append hash.
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the NativeConfigMap name is invalid.
   /// </summary>
+  /// <param name="name">The ConfigMap name to test.</param>
   /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithLiteralDataAndAppendHash_ShouldGenerateAValidConfigMap()
+  [Theory]
+  [InlineData("")]
+  [InlineData(null)]
+  public async Task GenerateAsync_WithInvalidConfigMapName_ShouldThrowKubernetesGeneratorException(string? name)
   {
     // Arrange
     var generator = new ConfigMapGenerator();
     var model = new NativeConfigMap
     {
-      Metadata = new Metadata
-      {
-        Name = "test-config-hash"
-      },
-      Data = new Dictionary<string, string>
-      {
-        ["database_url"] = "postgresql://localhost:5432/mydb",
-        ["api_key"] = "secret-api-key"
-      },
-      AppendHash = true
-    };
-
-    // Act
-    string fileName = "config-map-literal-hash.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
-  }
-
-  /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the NativeConfigMap name is empty.
-  /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithEmptyConfigMapName_ShouldThrowKubernetesGeneratorException()
-  {
-    // Arrange
-    var generator = new ConfigMapGenerator();
-    var model = new NativeConfigMap
-    {
-      Metadata = new Metadata
-      {
-        Name = ""
-      },
-      Data = new Dictionary<string, string>
-      {
-        ["key"] = "value"
-      }
+      Metadata = new Metadata { Name = name! },
+      Data = new Dictionary<string, string> { ["key"] = "value" }
     };
 
     // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() =>
+      generator.GenerateAsync(model, Path.GetTempFileName()));
   }
 
   /// <summary>
-  /// Verifies the generated NativeConfigMap object with empty or null data creates an empty ConfigMap.
-  /// Tests that both empty dictionary and null data scenarios produce identical output.
+  /// Helper method to generate a file and verify its content.
   /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithEmptyOrNullData_ShouldGenerateEmptyConfigMap()
+  /// <typeparam name="TModel">The model type.</typeparam>
+  /// <typeparam name="TGenerator">The generator type.</typeparam>
+  /// <param name="generator">The generator instance.</param>
+  /// <param name="model">The model to generate.</param>
+  /// <param name="fileName">The file name for verification.</param>
+  /// <returns>A task representing the async operation.</returns>
+  static async Task GenerateAndVerifyAsync<TModel, TGenerator>(
+    TGenerator generator,
+    TModel model,
+    string fileName)
+    where TGenerator : IKubernetesGenerator<TModel>
   {
-    // Arrange
-    var generator = new ConfigMapGenerator();
-    var model = new NativeConfigMap
-    {
-      Metadata = new Metadata
-      {
-        Name = "test-empty",
-        Namespace = "default"
-      },
-      Data = new Dictionary<string, string>() // Empty dictionary (null produces same result)
-    };
-
-    // Act
-    string fileName = "config-map-empty.yaml";
     string outputPath = Path.Combine(Path.GetTempPath(), fileName);
     if (File.Exists(outputPath))
       File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
 
-    // Assert
+    await generator.GenerateAsync(model, outputPath).ConfigureAwait(false);
+    string fileContent = await File.ReadAllTextAsync(outputPath).ConfigureAwait(false);
+
     _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
 
-    // Cleanup
     File.Delete(outputPath);
   }
 }

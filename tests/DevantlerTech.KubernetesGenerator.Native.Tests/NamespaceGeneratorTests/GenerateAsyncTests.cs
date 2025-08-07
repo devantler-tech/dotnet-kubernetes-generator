@@ -4,7 +4,6 @@ using DevantlerTech.KubernetesGenerator.Native.Models.Namespace;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.NamespaceGeneratorTests;
 
-
 /// <summary>
 /// Tests for the <see cref="NamespaceGenerator"/> class.
 /// </summary>
@@ -27,27 +26,19 @@ public sealed class GenerateAsyncTests
       }
     };
 
-    // Act
-    string fileName = "namespace.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
+    // Act & Assert
+    await GenerateAndVerifyAsync(generator, model, "namespace.yaml");
   }
 
   /// <summary>
-  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the namespace name is empty.
+  /// Verifies that a <see cref="KubernetesGeneratorException"/> is thrown when the namespace name is invalid.
   /// </summary>
+  /// <param name="name">The namespace name to test.</param>
   /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithEmptyNamespaceName_ShouldThrowKubernetesGeneratorException()
+  [Theory]
+  [InlineData("")]
+  [InlineData(null)]
+  public async Task GenerateAsync_WithInvalidNamespaceName_ShouldThrowKubernetesGeneratorException(string? name)
   {
     // Arrange
     var generator = new NamespaceGenerator();
@@ -55,11 +46,30 @@ public sealed class GenerateAsyncTests
     {
       Metadata = new ClusterScopedMetadata
       {
-        Name = ""
+        Name = name!
       }
     };
 
     // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => 
+      generator.GenerateAsync(model, Path.GetTempFileName()));
+  }
+
+  private static async Task GenerateAndVerifyAsync<TModel, TGenerator>(
+    TGenerator generator,
+    TModel model,
+    string fileName)
+    where TGenerator : IKubernetesGenerator<TModel>
+  {
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+
+    await generator.GenerateAsync(model, outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath);
+
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    File.Delete(outputPath);
   }
 }

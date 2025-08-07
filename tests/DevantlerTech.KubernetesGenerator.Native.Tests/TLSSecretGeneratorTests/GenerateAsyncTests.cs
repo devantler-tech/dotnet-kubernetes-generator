@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.TLSSecretGeneratorTests
 /// <summary>
 /// Tests for the <see cref="TLSSecretGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated TLS Secret object with certificate and key content.
@@ -34,7 +34,7 @@ public sealed class GenerateAsyncTests
     if (File.Exists(outputPath))
       File.Delete(outputPath);
     await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
+    string fileContent = await File.ReadAllTextAsync(outputPath).ConfigureAwait(false);
 
     // Assert
     if (!OperatingSystem.IsWindows())

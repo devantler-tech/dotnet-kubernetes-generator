@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ResourceQuotaGeneratorT
 /// <summary>
 /// Tests for the <see cref="ResourceQuotaGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativeResourceQuota object.

@@ -9,7 +9,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.CronJobGeneratorTests;
 /// <summary>
 /// Tests for the <see cref="CronJobGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativeCronJob object with image and schedule.

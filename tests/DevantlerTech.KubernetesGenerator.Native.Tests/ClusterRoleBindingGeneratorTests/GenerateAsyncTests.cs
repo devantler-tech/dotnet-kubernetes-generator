@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterRoleBindingGener
 /// <summary>
 /// Tests for the <see cref="ClusterRoleBindingGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativeClusterRoleBinding object with all properties set.

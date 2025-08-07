@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.DockerRegistrySecretGen
 /// <summary>
 /// Tests for the <see cref="DockerRegistrySecretGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated Docker registry Secret object.

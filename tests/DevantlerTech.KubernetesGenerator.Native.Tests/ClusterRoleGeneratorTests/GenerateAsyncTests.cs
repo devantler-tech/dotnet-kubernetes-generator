@@ -8,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ClusterRoleGeneratorTes
 /// <summary>
 /// Tests for the <see cref="ClusterRoleGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativeClusterRole object with basic rules.
