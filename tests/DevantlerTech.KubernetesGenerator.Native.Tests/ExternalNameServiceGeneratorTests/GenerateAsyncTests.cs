@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ExternalNameServiceGene
 /// <summary>
 /// Tests for the <see cref="ExternalNameServiceGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated ExternalName Service object.

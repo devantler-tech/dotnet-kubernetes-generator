@@ -10,7 +10,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.StatefulSetGeneratorTes
 /// <summary>
 /// Tests for the <see cref="StatefulSetGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativeStatefulSet object with all properties set.
