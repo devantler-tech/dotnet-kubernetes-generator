@@ -1,3 +1,5 @@
+using DevantlerTech.KubernetesGenerator.Core.Models;
+
 namespace DevantlerTech.KubernetesGenerator.Flux.Models.HelmRepository;
 
 /// <summary>
@@ -18,7 +20,7 @@ public class FluxHelmRepository
   /// <summary>
   /// Metadata of the HelmRepository.
   /// </summary>
-  public required FluxNamespacedMetadata Metadata { get; set; }
+  public required Metadata Metadata { get; set; }
 
   /// <summary>
   /// Spec of the HelmRepository.
