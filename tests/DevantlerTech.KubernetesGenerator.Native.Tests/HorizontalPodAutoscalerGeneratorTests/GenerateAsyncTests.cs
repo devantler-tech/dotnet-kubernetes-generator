@@ -1,5 +1,5 @@
 
-using DevantlerTech.KubernetesGenerator.Native.Models;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.HorizontalPodAutoscaler;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Tests.HorizontalPodAutoscalerGeneratorTests;

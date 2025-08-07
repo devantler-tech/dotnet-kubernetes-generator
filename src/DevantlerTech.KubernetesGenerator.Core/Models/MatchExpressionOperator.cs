@@ -1,4 +1,4 @@
-namespace DevantlerTech.KubernetesGenerator.Native.Models;
+namespace DevantlerTech.KubernetesGenerator.Core.Models;
 
 /// <summary>
 /// Enum for supported match expression operators.

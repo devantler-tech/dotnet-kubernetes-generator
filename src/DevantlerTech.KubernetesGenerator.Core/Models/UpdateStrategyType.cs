@@ -1,4 +1,4 @@
-namespace DevantlerTech.KubernetesGenerator.Native.Models;
+namespace DevantlerTech.KubernetesGenerator.Core.Models;
 
 /// <summary>
 /// Represents the update strategy type for Kubernetes workloads.

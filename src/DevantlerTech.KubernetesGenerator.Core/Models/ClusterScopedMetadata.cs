@@ -1,4 +1,4 @@
-namespace DevantlerTech.KubernetesGenerator.Native.Models;
+namespace DevantlerTech.KubernetesGenerator.Core.Models;
 
 /// <summary>
 /// Represents metadata for cluster-scoped resources that don't have a namespace.

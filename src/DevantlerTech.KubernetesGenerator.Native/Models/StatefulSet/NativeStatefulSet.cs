@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 
 namespace DevantlerTech.KubernetesGenerator.Native.Models.StatefulSet;
 
