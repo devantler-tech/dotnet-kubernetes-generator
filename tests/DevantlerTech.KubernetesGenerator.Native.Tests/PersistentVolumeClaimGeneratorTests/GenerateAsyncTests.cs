@@ -1,4 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Core;
+using DevantlerTech.KubernetesGenerator.Core.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolume;
 using DevantlerTech.KubernetesGenerator.Native.Models.PersistentVolumeClaim;
