@@ -1,5 +1,6 @@
 
 using DevantlerTech.KubernetesGenerator.Core.Models;
+using DevantlerTech.KubernetesGenerator.Native.Models;
 using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
 using DevantlerTech.KubernetesGenerator.Native.Models.StatefulSet;
 

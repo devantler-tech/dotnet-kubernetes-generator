@@ -1,4 +1,4 @@
-namespace DevantlerTech.KubernetesGenerator.Core.Models;
+namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
 /// Represents a node selector requirement for persistent volume node affinity.

@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace DevantlerTech.KubernetesGenerator.Core.Models;
+namespace DevantlerTech.KubernetesGenerator.Native.Models;
 
 /// <summary>
 /// Represents metadata for templates (labels and annotations only, no name or namespace).

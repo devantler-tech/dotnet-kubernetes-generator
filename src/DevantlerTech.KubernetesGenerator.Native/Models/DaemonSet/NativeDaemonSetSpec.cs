@@ -1,6 +1,5 @@
 using DevantlerTech.KubernetesGenerator.Native.Models.Pod;
 
-using DevantlerTech.KubernetesGenerator.Core.Models;
 namespace DevantlerTech.KubernetesGenerator.Native.Models.DaemonSet;
 
 /// <summary>

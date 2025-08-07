@@ -1,4 +1,3 @@
-using DevantlerTech.KubernetesGenerator.Core.Models;
 namespace DevantlerTech.KubernetesGenerator.Native.Models.Pod;
 
 /// <summary>
