@@ -1,0 +1,15 @@
+﻿---
+apiVersion: notification.toolkit.fluxcd.io/v1
+kind: Receiver
+metadata:
+  name: generic-receiver
+  namespace: flux-system
+spec:
+  events:
+  - ping
+  resources:
+  - kind: Kustomization
+    name: apps
+  secretRef:
+    name: webhook-token
+  type: generic
