@@ -1,6 +1,8 @@
 using DevantlerTech.Commons.Extensions;
 using DevantlerTech.KubernetesGenerator.Core;
 using DevantlerTech.KubernetesGenerator.Flux.Models.ImagePolicy;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace DevantlerTech.KubernetesGenerator.Flux;
 
@@ -56,6 +58,42 @@ public class FluxImagePolicyGenerator : FluxGenerator<FluxImagePolicy>
     arguments.AddIfNotNull("--filter-regex={0}", model.Spec.FilterTags?.Pattern);
     arguments.AddIfNotNull("--filter-extract={0}", model.Spec.FilterTags?.Extract);
 
-    await RunFluxAsync(outputPath, overwrite, arguments.AsReadOnly(), "Failed to generate Flux ImagePolicy object", cancellationToken).ConfigureAwait(false);
+    // Generate base YAML using flux CLI
+    var (exitCode, output) = await FluxCLI.Flux.RunAsync([.. arguments], silent: true, cancellationToken: cancellationToken).ConfigureAwait(false);
+    if (exitCode != 0)
+      throw new KubernetesGeneratorException($"Failed to generate Flux ImagePolicy object: {output}");
+
+    // Post-process YAML if ImageRepositoryRef has a namespace
+    if (!string.IsNullOrEmpty(model.Spec.ImageRepositoryRef.Namespace))
+    {
+      output = PostProcessYamlWithNamespace(output, model.Spec.ImageRepositoryRef.Namespace);
+    }
+
+    await YamlFileWriter.WriteToFileAsync(outputPath, output, overwrite, cancellationToken).ConfigureAwait(false);
+  }
+
+  static string PostProcessYamlWithNamespace(string yaml, string imageRepoNamespace)
+  {
+    var deserializer = new DeserializerBuilder()
+      .WithNamingConvention(CamelCaseNamingConvention.Instance)
+      .Build();
+
+    var serializer = new SerializerBuilder()
+      .WithNamingConvention(CamelCaseNamingConvention.Instance)
+      .Build();
+
+    // Parse the YAML document
+    var yamlObject = deserializer.Deserialize<Dictionary<object, object>>(yaml);
+
+    // Navigate to spec.imageRepositoryRef and add namespace
+    if (yamlObject.TryGetValue("spec", out object? specValue) && specValue is Dictionary<object, object> spec)
+    {
+      if (spec.TryGetValue("imageRepositoryRef", out object? imageRepoRefValue) && imageRepoRefValue is Dictionary<object, object> imageRepoRef)
+      {
+        imageRepoRef["namespace"] = imageRepoNamespace;
+      }
+    }
+
+    return serializer.Serialize(yamlObject);
   }
 }

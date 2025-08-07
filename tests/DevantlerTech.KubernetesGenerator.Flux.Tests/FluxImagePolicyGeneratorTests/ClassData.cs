@@ -50,7 +50,8 @@ sealed class ClassData : IEnumerable<object[]>
       {
         ImageRepositoryRef = new FluxImagePolicySpecImageRepositoryRef
         {
-          Name = "nginx"
+          Name = "nginx",
+          Namespace = "image-repo-namespace"
         },
         Policy = new FluxImagePolicySpecPolicy
         {
