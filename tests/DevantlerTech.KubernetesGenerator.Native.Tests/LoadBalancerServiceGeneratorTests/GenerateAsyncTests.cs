@@ -6,7 +6,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.LoadBalancerServiceGene
 /// <summary>
 /// Tests for the <see cref="LoadBalancerServiceGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated LoadBalancer Service object.

@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PriorityClassGeneratorT
 /// <summary>
 /// Tests for the <see cref="PriorityClassGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativePriorityClass object with all properties set.

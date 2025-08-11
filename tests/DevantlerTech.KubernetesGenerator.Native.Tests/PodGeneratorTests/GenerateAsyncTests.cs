@@ -8,7 +8,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.PodGeneratorTests;
 /// <summary>
 /// Tests for the <see cref="PodGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativePod object.

@@ -7,7 +7,7 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.JobGeneratorTests;
 /// <summary>
 /// Tests for the <see cref="JobGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
   /// Verifies the generated NativeJob object with image.
