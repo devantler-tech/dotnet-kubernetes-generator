@@ -1,0 +1,17 @@
+﻿---
+apiVersion: notification.toolkit.fluxcd.io/v1
+kind: Receiver
+metadata:
+  name: gitlab-receiver
+  namespace: gitlab-system
+spec:
+  events:
+  - push
+  - tag_push
+  - release
+  resources:
+  - kind: GitRepository
+    name: api-service
+  secretRef:
+    name: gitlab-webhook-secret
+  type: gitlab
