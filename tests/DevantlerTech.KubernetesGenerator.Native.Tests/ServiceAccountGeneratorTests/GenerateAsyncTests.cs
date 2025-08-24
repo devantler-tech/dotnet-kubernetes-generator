@@ -6,49 +6,28 @@ namespace DevantlerTech.KubernetesGenerator.Native.Tests.ServiceAccountGenerator
 /// <summary>
 /// Tests for the <see cref="ServiceAccountGenerator"/> class.
 /// </summary>
-public sealed class GenerateAsyncTests
+internal sealed class GenerateAsyncTests
 {
   /// <summary>
-  /// Verifies the generated ServiceAccount object with basic properties.
+  /// Test data for valid ServiceAccount generation scenarios.
   /// </summary>
-  /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithBasicProperties_ShouldGenerateAValidServiceAccount()
-  {
-    // Arrange
-    var generator = new ServiceAccountGenerator();
-    var model = new V1ServiceAccount
+  public static TheoryData<string, string?, string> ValidServiceAccountData =>
+    new()
     {
-      ApiVersion = "v1",
-      Kind = "ServiceAccount",
-      Metadata = new V1ObjectMeta
-      {
-        Name = "self-subject-review",
-        NamespaceProperty = "default"
-      }
+      { "self-subject-review", "default", "service-account.yaml" },
+      { "simple-service-account", null, "service-account-no-namespace.yaml" }
     };
-
-    // Act
-    string fileName = "service-account.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
-  }
 
   /// <summary>
-  /// Verifies the generated ServiceAccount object with only name (no namespace).
+  /// Verifies the generated ServiceAccount object with different configurations.
   /// </summary>
+  /// <param name="name">The ServiceAccount name.</param>
+  /// <param name="namespaceName">The namespace name (can be null).</param>
+  /// <param name="fileName">The expected output file name.</param>
   /// <returns></returns>
-  [Fact]
-  public async Task GenerateAsync_WithNameOnly_ShouldGenerateAValidServiceAccount()
+  [Theory]
+  [MemberData(nameof(ValidServiceAccountData))]
+  public async Task GenerateAsync_WithValidConfiguration_ShouldGenerateAValidServiceAccount(string name, string? namespaceName, string fileName)
   {
     // Arrange
     var generator = new ServiceAccountGenerator();
@@ -58,23 +37,13 @@ public sealed class GenerateAsyncTests
       Kind = "ServiceAccount",
       Metadata = new V1ObjectMeta
       {
-        Name = "simple-service-account"
+        Name = name,
+        NamespaceProperty = namespaceName
       }
     };
 
-    // Act
-    string fileName = "service-account-no-namespace.yaml";
-    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
-    if (File.Exists(outputPath))
-      File.Delete(outputPath);
-    await generator.GenerateAsync(model, outputPath);
-    string fileContent = await File.ReadAllTextAsync(outputPath);
-
-    // Assert
-    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
-
-    // Cleanup
-    File.Delete(outputPath);
+    // Act & Assert
+    await GenerateAndVerifyAsync(generator, model, fileName);
   }
 
   /// <summary>
@@ -92,6 +61,34 @@ public sealed class GenerateAsyncTests
     };
 
     // Act & Assert
-    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() => generator.GenerateAsync(model, Path.GetTempFileName()));
+    _ = await Assert.ThrowsAsync<KubernetesGeneratorException>(() =>
+      generator.GenerateAsync(model, Path.GetTempFileName()));
+  }
+
+  /// <summary>
+  /// Helper method to generate a file and verify its content.
+  /// </summary>
+  /// <typeparam name="TModel">The model type.</typeparam>
+  /// <typeparam name="TGenerator">The generator type.</typeparam>
+  /// <param name="generator">The generator instance.</param>
+  /// <param name="model">The model to generate.</param>
+  /// <param name="fileName">The file name for verification.</param>
+  /// <returns>A task representing the async operation.</returns>
+  static async Task GenerateAndVerifyAsync<TModel, TGenerator>(
+    TGenerator generator,
+    TModel model,
+    string fileName)
+    where TGenerator : IKubernetesGenerator<TModel>
+  {
+    string outputPath = Path.Combine(Path.GetTempPath(), fileName);
+    if (File.Exists(outputPath))
+      File.Delete(outputPath);
+
+    await generator.GenerateAsync(model, outputPath).ConfigureAwait(false);
+    string fileContent = await File.ReadAllTextAsync(outputPath).ConfigureAwait(false);
+
+    _ = await Verify(fileContent, extension: "yaml").UseFileName(fileName);
+
+    File.Delete(outputPath);
   }
 }
